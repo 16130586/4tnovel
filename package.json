@@ -1,0 +1,23 @@
+{
+  "name": "4tnovel",
+  "version": "1.0.0",
+  "description": "small project to improve web skills",
+  "main": "index.js",
+  "dependencies": {
+    "sass": "^1.14.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "compile:sass": "node-sass -w WebContent/resources/local/scss/main.scss WebContent/resources/local/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/16130586/4tnovel.git"
+  },
+  "author": "4tteam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/16130586/4tnovel/issues"
+  },
+  "homepage": "https://github.com/16130586/4tnovel#readme"
+}
