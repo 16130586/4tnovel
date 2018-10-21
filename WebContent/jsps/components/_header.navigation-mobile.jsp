@@ -1,6 +1,8 @@
 <style>
+ul{
+	margin: 0;
+}
 .dropdown-menu {
-	position: relative;
 	color: inherit;
 	background-color: red;
 }
@@ -35,14 +37,16 @@
 
 .dropdown-menu:hover .dropdown-menu:hover .dropdown-content--right {
 	display: inline-block;
-	width: 16rem;
+	width: 100%;
 }
 
 .vertical-menu--showcase, .horizontal-menu--showcase {
 	padding: 0rem;
 	list-style: none;
 }
-
+.vertical-menu--showcase{
+	margin : 0px;
+}
 .vertical-menu--showcase .menu-item, .horizontal-menu--showcase .menu-item
 	{
 	font-size: .7rem;
@@ -62,7 +66,7 @@
 	display:inline-block;
 }
 </style>
-<nav class="navigation-mobile" id="navigation-mobile">
+<nav class="navigation-mobile u-margin-left--1rem" id="navigation-mobile">
 	<div class="dropdown-menu u-inline-block">
 		<a class="dropdown-btn btn btn--orange-ghost"> <i
 			class="fas fa-bars 2x"></i>

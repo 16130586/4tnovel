@@ -19,26 +19,9 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I" crossorigin="anonymous"><link rel="stylesheet" href="resources/vendors/css/bootstrap-reboot.css" />	
 <link rel="stylesheet" href="resources/vendors/css/bootstrap-grid.css" />	
 <link rel="stylesheet" href="resources/local/css/style.css"/>
-<style>
-	#navigation-mobile , #navigation-desktop{
-		display: inline-block;
-	}
-	.main-logo--top{
-		display: inline-block;
-	}
-	.radius-logo{
-		border-radius: 50%;
-	}
-</style>
+
 </head>
 <body>
-	<header class="header--on-top">
-		<c:import url="../components/_header.navigation-mobile.jsp"></c:import>
-		<div class="main-logo--top">
-			<img class="radius-logo" src="http://via.placeholder.com/126x126">
-		</div>
-		<c:import url="../components/_header.navigation-desktop.jsp"></c:import>
-		<c:import url="../components/_header.user-functions.jsp"></c:import>
-	</header>
+	<c:import url="../components/_header.jsp"></c:import>
 </body>
 </html>

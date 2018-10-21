@@ -59,12 +59,22 @@
 .horizontal-menu--showcase .menu-item{
 	display:inline-block;
 }
+.u-margin-right--1rem{
+	margin-right: 1rem;
+}
+.u-margin-left--2rem{
+	margin-left: 2rem;
+}
+.u-margin-left--1rem{
+	margin-left: 1rem;
+}
+
 </style>
-	<nav class="navigation-desktop" id="navigation-desktop">
-		<ul class="horizontal-menu--showcase">
-			<li class="menu-item"><a href="#">Trang chu</a></li>
-			<li class="menu-item"><a href="#">Tim kiem</a></li>
-			<li class="menu-item">
+	<nav class="navigation-desktop u-margin-left--2rem" id="navigation-desktop">
+		<ul class="horizontal-menu--showcase ">
+			<li class="menu-item u-margin-right--1rem"><a href="#">Trang chu</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Tim kiem</a></li>
+			<li class="menu-item u-margin-right--1rem">
 				<div class="dropdown-menu">
 					<a class="dropdown-btn btn btn--orange-ghost">Tac pham</a>
 					<div class="dropdown-content--bottom">
@@ -77,7 +87,7 @@
 					</div>
 				</div>
 			</li>
-			<li class="menu-item">
+			<li class="menu-item u-margin-right--1rem">
 				<div class="dropdown-menu">
 					<a class="dropdown-btn btn btn--orange-ghost">Tam su</a>
 					<div class="dropdown-content--bottom">
@@ -90,8 +100,8 @@
 					</div>
 				</div>
 			</li>
-			<li class="menu-item"><a href="#">Thao luan</a></li>
-			<li class="menu-item"><a href="#">Dang nhap</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Thao luan</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Dang nhap</a></li>
 
 		</ul>
 	</nav>
