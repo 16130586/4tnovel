@@ -6,7 +6,9 @@
   "dependencies": {
     "sass": "^1.14.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bootstrap": "^4.1.3"
+  },
   "scripts": {
     "compile:sass": "node-sass -w WebContent/resources/local/scss/main.scss WebContent/resources/local/css/style.css"
   },
