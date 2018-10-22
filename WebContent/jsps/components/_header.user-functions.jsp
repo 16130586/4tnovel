@@ -1,8 +1,5 @@
-<style>
-	.u-margin-right--2rem{
-		margin-right: 2rem;
-	}
-</style>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <div class="user-functions u-inline-block" id="user-functions">
 	<ul class="horizontal-menu--showcase">
 		<li class="menu-item u-margin-right--2rem"><%@ include
