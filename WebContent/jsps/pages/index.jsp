@@ -22,6 +22,6 @@
 
 </head>
 <body>
-	<c:import url="../components/_header.jsp"></c:import>
+	<%@ include file="/jsps/components/_header.jsp" %>
 </body>
 </html>
