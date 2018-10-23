@@ -1,35 +1,14 @@
-<style>
-.u-inline-block {
-	display: inline-block;
-}
-.u-25vw{
-	width: 15vw !important;
-}
-.u-25vh{
-	height: 35vh !important;
-}
-.bg-red{
-	background-color : red;
-}
-.transformX-50{
-	transform: translateX(-50%) !important;
-}
-.transformX-75{
-	transform: translateX(-75%) !important;
-}
-.transformX-85{
-	transform: translateX(-85%) !important;
-}
-.auto-scroll-y{
-	overflow-y: scroll !important;
-}
-</style>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@
+taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="dropdown-menu">
 	<div class="dropdown-btn">
-		<i class="fa fa-heart 3x"></i>
+		<i class="fa fa-heart u-3x"></i>
 	</div>
-	<div class="dropdown-content--bottom u-25vw u-25vh bg-red transformX-50 auto-scroll-y">
-		asdasdasdas
+	<div id="boorkmark-content"class="dropdown-content--bottom u-25vw u-25vh u-transformX-75 u-auto-scroll-y custom-scroll-y u-border-full card--white">
+		<c:forEach begin="1" end="10">
+			<%@ include file="/jsps/components/_header.user-functions.user-bookmark.bookmark-line.jsp" %>
+		</c:forEach>
 	</div>
 </div>

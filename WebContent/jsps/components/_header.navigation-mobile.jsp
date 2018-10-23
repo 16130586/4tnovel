@@ -1,109 +1,43 @@
-<style>
-ul{
-	margin: 0;
-}
-.dropdown-menu {
-	color: inherit;
-	background-color: red;
-}
-
-.dropdown-menu .dropdown-btn {
-	display: block;
-}
-.dropdown-menu .dropdown-content--right , .dropdown-menu .dropdown-content--bottom{
-	width: 8rem;
-}
-.dropdown-menu .dropdown-content--bottom {
-	transition: all .7s;
-	position: absolute;
-	top: 0rem;
-	left: 0px;
-	display: none;
-	z-index: 100000;
-}
-
-.dropdown-menu .dropdown-content--right {
-	transition: all .7s;
-	position: absolute;
-	top: 0rem;
-	left: 100%; display : none;
-	z-index: 100000;
-	display: none;
-}
-
-.dropdown-menu:hover .dropdown-content--bottom {
-	display: block;
-}
-
-.dropdown-menu:hover .dropdown-menu:hover .dropdown-content--right {
-	display: inline-block;
-	width: 100%;
-}
-
-.vertical-menu--showcase, .horizontal-menu--showcase {
-	padding: 0rem;
-	list-style: none;
-}
-.vertical-menu--showcase{
-	margin : 0px;
-}
-.vertical-menu--showcase .menu-item, .horizontal-menu--showcase .menu-item
-	{
-	font-size: .7rem;
-	font-weight: 300;
-	border-bottom: 1px solid transparent;
-	transition: all .3s;
-}
-
-.vertical-menu--showcase .menu-item:first-child {
-	padding-top: .5rem;
-}
-
-.vertical-menu--showcase .menu-item:hover {
-	
-}
-.horizontal-menu--showcase .menu-item{
-	display:inline-block;
-}
-</style>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <nav class="navigation-mobile u-margin-left--1rem" id="navigation-mobile">
 	<div class="dropdown-menu u-inline-block">
-		<a class="dropdown-btn btn btn--orange-ghost"> <i
-			class="fas fa-bars 2x"></i>
+		<a class="dropdown-btn"> <i
+			class="fas fa-bars u-3x btn"></i>
 		</a>
 		<div class="dropdown-content--bottom">
 			<ul class="vertical-menu--showcase">
-				<li class="menu-item"><a href="#">Trang chu</a></li>
-				<li class="menu-item"><a href="#">Tim kiem</a></li>
+				<li class="menu-item"><a href="#">Trang Chủ</a></li>
+				<li class="menu-item"><a href="#">tìm kiếm</a></li>
 				<li class="menu-item">
 					<div class="dropdown-menu">
-						<a class="dropdown-btn btn btn--orange-ghost">Tac pham</a>
+						<a class="dropdown-btn" href="#">tác phẩm</a>
 						<div class="dropdown-content--right">
-							<ul class="horizontal-menu--showcase">
-								<li class="my-menu-item full-width btn--orange-ghost"><a
-									href="#" class="link-btn" target="_blank">Sang tac</a></li>
-								<li class="my-menu-item full-width btn--orange-ghost"><a
-									href="#" class="link-btn" target="_blank">Truyen dich</a></li>
+							<ul class="horizontal-menu--showcase u-width--18rem">
+								<li class="menu-item u-width--full"><a
+									href="#" class="" target="_blank" href="#">sáng tác</a></li>
+								<li class="menu-item u-width--full"><a
+									href="#" class="" target="_blank" href="#">truyện dịch</a></li>
 							</ul>
 						</div>
 					</div>
 				</li>
 				<li class="menu-item">
 					<div class="dropdown-menu">
-						<a class="dropdown-btn btn btn--orange-ghost">Tam su</a>
+						<a class="dropdown-btn" href="#">tâm sự</a>
 						<div class="dropdown-content--right">
-							<ul class="horizontal-menu--showcase">
-								<li class="my-menu-item full-width btn--orange-ghost"><a
-									href="#" class="link-btn" target="_blank">Nhom</a></li>
-								<li class="my-menu-item full-width btn--orange-ghost"><a
-									href="#" class="link-btn" target="_blank">Nguoi la</a></li>
+							<ul class="horizontal-menu--showcase u-width--18rem">
+								<li class="menu-item u-width--full"><a
+									href="#" class="" target="_blank" href="#">nhóm</a></li>
+								<li class="menu-item u-width--full"><a
+									href="#" class="" target="_blank" href="#">người lạ</a></li>
 							</ul>
 						</div>
 					</div>
 				</li>
-				<li class="menu-item"><a href="#">Thao luan</a></li>
-				<li class="menu-item"><a href="#">Dang nhap</a></li>
-				<li class="menu-item"><a href="#">Tro giup</a></li>
+				<li class="menu-item"><a href="#">Thảo luận</a></li>
+				<li class="menu-item"><a href="#">Đăng nhập</a></li>
+				<li class="menu-item"><a href="#">Trợ giúp</a></li>
 			</ul>
 		</div>
 	</div>

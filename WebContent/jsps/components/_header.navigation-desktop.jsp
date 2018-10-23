@@ -1,107 +1,37 @@
-<style>
-.dropdown-menu {
-	position: relative;
-	color: inherit;
-	background-color: red;
-}
-
-.dropdown-menu .dropdown-btn {
-	display: block;
-}
-
-.dropdown-menu .dropdown-content--bottom {
-	transition: all .7s;
-	position: absolute;
-	top: 100%;
-	left: 0px;
-	display: none;
-	z-index: 100000;
-}
-
-.dropdown-menu .dropdown-content--right {
-	transition: all .7s;
-	position: absolute;
-	top: 0rem;
-	left: 100%; display : none;
-	z-index: 100000;
-	display: none;
-}
-
-.dropdown-menu:hover .dropdown-content--bottom {
-	display: block;
-}
-
-.dropdown-menu:hover .dropdown-menu:hover .dropdown-content--right {
-	display: inline-block;
-	width: 16rem;
-}
-
-.vertical-menu--showcase, .horizontal-menu--showcase {
-	padding: 0rem;
-	list-style: none;
-}
-
-.vertical-menu--showcase .menu-item, .horizontal-menu--showcase .menu-item
-	{
-	font-size: .7rem;
-	font-weight: 300;
-	border-bottom: 1px solid transparent;
-	transition: all .3s;
-}
-
-.vertical-menu--showcase .menu-item:first-child {
-	padding-top: .5rem;
-}
-
-.vertical-menu--showcase .menu-item:hover {
-	
-}
-.horizontal-menu--showcase .menu-item{
-	display:inline-block;
-}
-.u-margin-right--1rem{
-	margin-right: 1rem;
-}
-.u-margin-left--2rem{
-	margin-left: 2rem;
-}
-.u-margin-left--1rem{
-	margin-left: 1rem;
-}
-
-</style>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 	<nav class="navigation-desktop u-margin-left--2rem" id="navigation-desktop">
 		<ul class="horizontal-menu--showcase ">
-			<li class="menu-item u-margin-right--1rem"><a href="#">Trang chu</a></li>
-			<li class="menu-item u-margin-right--1rem"><a href="#">Tim kiem</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Trang chủ</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Tìm kiếm</a></li>
 			<li class="menu-item u-margin-right--1rem">
 				<div class="dropdown-menu">
-					<a class="dropdown-btn btn btn--orange-ghost">Tac pham</a>
+					<a class="dropdown-btn btn " href="#">Tác phẩm</a>
 					<div class="dropdown-content--bottom">
 						<ul class="vertical-menu--showcase">
-							<li class="my-menu-item full-width btn--orange-ghost"><a
-								href="#" class="link-btn" target="_blank">Sang tac</a></li>
-							<li class="my-menu-item full-width btn--orange-ghost"><a
-								href="#" class="link-btn" target="_blank">Truyen dich</a></li>
+							<li class="menu-item u-width--full "><a
+								href="#" class="link-btn" target="_blank">Sáng tác</a></li>
+							<li class="menu-item u-width--full "><a
+								href="#" class="link-btn" target="_blank">truyện dịch</a></li>
 						</ul>
 					</div>
 				</div>
 			</li>
 			<li class="menu-item u-margin-right--1rem">
 				<div class="dropdown-menu">
-					<a class="dropdown-btn btn btn--orange-ghost">Tam su</a>
+					<a class="dropdown-btn btn " href="#">Tâm sự</a>
 					<div class="dropdown-content--bottom">
 						<ul class="vertical-menu--showcase">
-							<li class="my-menu-item full-width btn--orange-ghost"><a
-								href="#" class="link-btn" target="_blank">Nhom</a></li>
-							<li class="my-menu-item full-width btn--orange-ghost"><a
-								href="#" class="link-btn" target="_blank">Nguoi la</a></li>
+							<li class="menu-item u-width--full "><a
+								href="#" class="link-btn" target="_blank">Nhóm</a></li>
+							<li class="menu-item u-width--full "><a
+								href="#" class="link-btn" target="_blank">Người lạ</a></li>
 						</ul>
 					</div>
 				</div>
 			</li>
-			<li class="menu-item u-margin-right--1rem"><a href="#">Thao luan</a></li>
-			<li class="menu-item u-margin-right--1rem"><a href="#">Dang nhap</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Thảo Luận</a></li>
+			<li class="menu-item u-margin-right--1rem"><a href="#">Đăng nhập</a></li>
 
 		</ul>
 	</nav>
