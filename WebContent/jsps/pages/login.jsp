@@ -14,5 +14,6 @@
 <body>
 	<%@ include file="/jsps/components/_header.jsp" %>
 	<%@ include file="/jsps/components/_login-form.jsp"%>
+	<%@include file="/jsps/components/_footer.jsp" %>
 </body>
 </html>

@@ -24,5 +24,68 @@
 </head>
 <body>
 	<%@ include file="/jsps/components/_header.jsp" %>
+	<section class="section section-current-read">
+		<h2 class="section__title">Current read</h2>
+		<hr>
+		<div class="section__content">
+		<!-- lastestReadNovel -->
+			<%@include file="/jsps/components/_card-novel.jsp" %>
+		</div>
+	</section>
+	<section class="section section-threads">
+		<h2 class="section__title">Threads</h2>
+		<hr>
+		<div class="section__content">
+		<!-- //c:forEach var="thread" items="topFiveNewestThreads" -->
+			<%@include file="/jsps/components/_index.section.content.thread.jsp"%>
+		</div>
+	</section>
+	<section class="section section-new-trending">
+		<h2 class="section__title">New trending</h2>
+		<hr>
+		<div class="section__content">
+		<!-- //c:forEach var="novel" items="newTrendingNovels" -->
+			<c:forEach begin="1" end ="5">
+				<%@ include file="/jsps/components/_card-novel.jsp" %>
+			</c:forEach>
+		</div>
+	</section>
+	<section class="section section-weekly-top">
+		<h2 class="section__title">Weekly top</h2>
+		<hr>
+		<div class="section__content">
+		<!-- //c:forEach var="novel" items="weeklyTopNovels" -->
+			<c:forEach begin="1" end ="3">
+				<%@ include file="/jsps/components/_card-novel.jsp" %>
+			</c:forEach>
+		</div>
+	</section>
+	<section class="section section-lastest-update">
+		<h2 class="section__title">Lastest update</h2>
+		<hr>
+		<div class="section__content" id="lastestUpdateContent">
+		<!-- c:forEach var="novel" items="lastestUpdateNovels" -->
+			<c:forEach begin="1" end ="3">
+				<%@ include file="/jsps/components/_card-novel.jsp" %>
+			</c:forEach>
+		</div>
+		<div class="u-container-full--width">
+			<button id="loadMoreLastestUpdate" class="btn u-centered">LOAD MORE FOR ME</button>
+		</div>
+	</section>
+	<section class="section section-hot-comments">
+		<h2 class="section__title">Hot comments</h2>
+		<hr>
+		<div class="section__content" id="hotCommentContent">
+		<!-- //c:forEch var="comment" items="comments" -->
+			<c:forEach var="comment" begin="1" end ="5">
+				<%@include file="/jsps/components/_index.section.content.hot-comments.comment.jsp" %>
+			</c:forEach>
+		</div>
+		<div class="u-container-full--width">
+			<button id="loadMoreHotComments" class="btn u-centered">5 INTERESTING COMMENT</button>
+		</div>
+	</section>
+	<%@include file="/jsps/components/_footer.jsp" %>
 </body>
 </html>

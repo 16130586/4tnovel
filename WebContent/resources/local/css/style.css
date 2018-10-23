@@ -229,6 +229,15 @@ body {
   .forgot-form {
     width: 90vw; } }
 
+.section {
+  background-color: #F1F1F1; }
+  .section__title {
+    font-size: 2.4rem;
+    color: #66A5AD; }
+  .section__content {
+    margin-top: 1rem;
+    padding: .3rem; }
+
 .bookmark-line {
   padding: 1rem;
   display: flex;
@@ -329,3 +338,9 @@ body {
     width: 50vw !important; }
   .u-25vh {
     height: 40vh !important; } }
+
+.footer {
+  height: 30vh;
+  width: 100%;
+  margin-top: 10vh;
+  background-color: rgba(0, 0, 0, 0.4); }
