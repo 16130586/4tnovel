@@ -19,9 +19,11 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I" crossorigin="anonymous"><link rel="stylesheet" href="resources/vendors/css/bootstrap-reboot.css" />	
 <link rel="stylesheet" href="resources/vendors/css/bootstrap-grid.css" />	
 <link rel="stylesheet" href="resources/local/css/style.css"/>
+<link style="text/scss" rel="stylesheet" href="resources/local/scss/components/_card-novel.scss">
 
 </head>
 <body>
 	<c:import url="../components/_header.jsp"></c:import>
+	<c:import url="../components/_card-novel.jsp"></c:import>
 </body>
 </html>
