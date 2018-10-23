@@ -15,5 +15,6 @@
 <body>
 	<%@ include file="/jsps/components/_header.jsp" %>
 	<%@ include file="/jsps/components/_forgot-form.jsp"%>
+	<%@include file="/jsps/components/_footer.jsp" %>
 </body>
 </html>
