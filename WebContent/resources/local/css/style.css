@@ -14,6 +14,10 @@ body {
   background-repeat: repeat;
   background-position: center; }
 
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important; }
+
 html {
   font-size: 62.5%; }
 
@@ -31,11 +35,20 @@ body {
 .u-margin-left--2rem {
   margin-left: 2rem !important; }
 
+.u-margin-top--2rem {
+  margin-top: 2rem !important; }
+
+.u-margin-top--1rem {
+  margin-top: 1rem !important; }
+
 .u-margin-left--1rem {
   margin-left: 1rem !important; }
 
 .u-margin-bottom--2rem {
   margin-bottom: 2rem !important; }
+
+.u-margin-bottom--1rem {
+  margin-bottom: 1rem !important; }
 
 .u-inline-block {
   display: inline-block; }
@@ -112,6 +125,9 @@ body {
 .u-color-red {
   color: #DF3232 !important; }
 
+.u-color-white {
+  color: #F1F1F1 !important; }
+
 .u-centered {
   margin: auto; }
 
@@ -125,15 +141,16 @@ body {
   padding: 1rem;
   text-align: center;
   text-decoration: none;
-  color: inherit; }
+  color: inherit;
+  font-size: 1.6rem; }
   .btn-green {
     background-color: #6AB187;
     color: white;
     border: 0px;
     transition: .2s all; }
     .btn-green:hover {
-      transform: scale(1.001);
-      box-shadow: 0px 0px 2px 3px #7DA3A1; }
+      transform: scale(1.003);
+      box-shadow: 0px 0px 2px 3px rgba(125, 163, 161, 0.6); }
   .btn:hover {
     text-decoration: none; }
 
@@ -237,6 +254,24 @@ body {
   .section__content {
     margin-top: 1rem;
     padding: .3rem; }
+
+.card-novel {
+  border: 1px solid gray;
+  margin-left: 1rem;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.6); }
+  .card-novel .img-linking .novel-hero {
+    width: 20rem;
+    height: auto; }
+  .card-novel .novel-short-info {
+    width: 100%;
+    height: auto; }
+    .card-novel .novel-short-info .novel__title {
+      margin: auto; }
+    .card-novel .novel-short-info .novel__description {
+      text-align: justify; }
+  .card-novel .novel__gender {
+    background-color: lightsteelblue;
+    margin: 0px; }
 
 .bookmark-line {
   padding: 1rem;
