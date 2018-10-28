@@ -18,12 +18,12 @@
 					type="password" placeholder="your password" class="u-block u-centered u-margin-bottom--2rem"/>
 			</div>
 			<div class="u-width--full">
-				<a href="#" class="btn">Tạo mới tài khoản</a> <input type="submit"
+				<a href="register" class="btn">Tạo mới tài khoản</a> <input type="submit"
 					class="btn btn-green" value="Đăng nhập">
 			</div>
 		</form>
 	</div>
 	<div class="u-width--full u-align-center">
-			<a href="#" class="btn u-color-red">Tôi đã quên mật khẩu!</a>
+			<a href="forgot" class="btn u-color-red">Tôi đã quên mật khẩu!</a>
 		</div>
 </div>
