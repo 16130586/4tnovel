@@ -10,8 +10,7 @@
 <!-- the following to include all needed things 
 	font
 	font awesome icon
-	bootstrap reboot
-	bootstrap grid
+	bootstraps custom-mize if you have using button , grid-system
 	custom css
 -->
 <link
