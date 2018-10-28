@@ -7,14 +7,21 @@
 .u-margin-left--2rem {
     margin-left: 2rem !important;
 }
-
+.u-margin-top--2rem{
+	margin-top: 2rem !important;
+}
+.u-margin-top--1rem{
+	margin-top: 1rem !important;
+}
 .u-margin-left--1rem {
     margin-left: 1rem !important;
 }
 .u-margin-bottom--2rem{
 	margin-bottom: 2rem !important;
 }
-
+.u-margin-bottom--1rem{
+	margin-bottom: 1rem !important;
+}
 .u-inline-block {
     display: inline-block;
 }
@@ -90,6 +97,9 @@
 }
 .u-color-red{
 	color: $color-red-tomatoe !important;
+}
+.u-color-white{
+	color: $color-white-light !important;	
 }
 .u-centered{
 	margin:auto;
