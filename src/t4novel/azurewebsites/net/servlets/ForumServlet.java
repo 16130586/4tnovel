@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Threads
  */
-@WebServlet("/thread")
-public class ThreadServlet extends HttpServlet {
+@WebServlet("/forum")
+public class ForumServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ThreadServlet() {
+    public ForumServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +29,7 @@ public class ThreadServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		getServletContext().getRequestDispatcher("/jsps/pages/threads.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/jsps/pages/forum.jsp").forward(request, response);
 	}
 
 	/**
