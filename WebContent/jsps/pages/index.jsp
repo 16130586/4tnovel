@@ -13,6 +13,7 @@
 	bootstraps custom-mize if you have using button , grid-system
 	custom css
 -->
+
 <link
 	href="https://fonts.googleapis.com/css?family=Exo:400,400i,500,500i,800&amp;subset=vietnamese"
 	rel="stylesheet">
@@ -30,6 +31,7 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="resources/vendors/css/bootstrap-customize.css">
 <link rel="stylesheet" href="resources/local/css/style.css" />
+
 
 </head>
 <body>

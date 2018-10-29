@@ -1,0 +1,18 @@
+ .thread {
+    width: 85vw;
+    .table-host-align--right tr th:last-child, .table-host-align--right tr td:last-child {
+        text-align: right;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .thread {
+        table{
+            tr {
+                td:nth-child(3), td:nth-child(4), td:nth-child(5), th:nth-child(3), th:nth-child(4), th:nth-child(5) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
