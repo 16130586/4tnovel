@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ol,
+ul,
+dl {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
+body {
+    background-image: url("../imgs/dark-noise.png");
+    background-repeat: repeat;
+    background-position: center;
+}
+
+// using for reset bootstrap _grid.css
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+// end _gird.css reboot

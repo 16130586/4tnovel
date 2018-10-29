@@ -1,0 +1,17 @@
+.section {
+    background-color: $color-white-light;
+    &__title {
+        font-size: 2.4rem;
+        color: $color-blue-wave;
+    }
+    &__content {
+        margin-top: 1rem;
+        padding: .3rem;
+    } //	&-new-trending,
+    //    &-weekly-top,
+    //    &-lastest-update {
+    //		& > .card-novel:not:(last-child){
+    //			margin-bottom: .5rem;
+    //		}
+    //	}
+}
