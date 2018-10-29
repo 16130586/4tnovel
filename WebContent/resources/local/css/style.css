@@ -32,6 +32,9 @@ body {
 .u-margin-right--2rem {
   margin-right: 2rem !important; }
 
+.u-margin-right--05rem {
+  margin-right: .5rem; }
+
 .u-margin-left--2rem {
   margin-left: 2rem !important; }
 
@@ -134,6 +137,12 @@ body {
 .u-width--75 {
   width: 75%; }
 
+.u-width--10 {
+  width: 10%; }
+
+.u-width--50 {
+  width: 50%; }
+
 .card--white {
   background-color: #FFF0F5; }
 
@@ -153,6 +162,9 @@ body {
       box-shadow: 0px 0px 2px 3px rgba(125, 163, 161, 0.6); }
   .btn:hover {
     text-decoration: none; }
+
+.btn-group {
+  list-style: none; }
 
 .custom-scroll-y::-webkit-scrollbar {
   width: 5px !important; }
@@ -272,6 +284,10 @@ body {
   .card-novel .novel__gender {
     background-color: lightsteelblue;
     margin: 0px; }
+
+.link:hover, .link:active, .link:link, .link:visited {
+  text-decoration: none;
+  color: inherit; }
 
 .bookmark-line {
   padding: 1rem;
@@ -407,3 +423,12 @@ body {
       padding: 0; }
       .chap__setup ul li {
         padding-top: .6rem; }
+
+.thread {
+  width: 85vw; }
+  .thread .table-host-align--right tr th:last-child, .thread .table-host-align--right tr td:last-child {
+    text-align: right; }
+
+@media only screen and (max-width: 768px) {
+  .thread table tr td:nth-child(3), .thread table tr td:nth-child(4), .thread table tr td:nth-child(5), .thread table tr th:nth-child(3), .thread table tr th:nth-child(4), .thread table tr th:nth-child(5) {
+    display: none; } }
