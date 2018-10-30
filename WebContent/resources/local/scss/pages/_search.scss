@@ -33,5 +33,14 @@
             }
         }
     }
+    &-result {
+        background-color: #f7f7f7;
+        .btn {
+            padding: .1rem auto;
+        }
+        table {
+            margin-bottom: .5rem;
+        }
+    }
 }
     

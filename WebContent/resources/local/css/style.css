@@ -143,6 +143,12 @@ body {
 .u-width--50 {
   width: 50%; }
 
+.u-width--15 {
+  width: 15%; }
+
+.u-width--80 {
+  width: 80%; }
+
 .card--white {
   background-color: #FFF0F5; }
 
@@ -460,3 +466,9 @@ body {
       .search-form .search-advanced .genre-select-box {
         padding-left: 2rem;
         border-left: 1px solid #f5f5f5; }
+  .search-result {
+    background-color: #f7f7f7; }
+    .search-result .btn {
+      padding: .1rem auto; }
+    .search-result table {
+      margin-bottom: .5rem; }
