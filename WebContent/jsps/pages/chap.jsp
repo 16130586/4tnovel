@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/fontawesome.css" integrity="sha384-HU5rcgG/yUrsDGWsVACclYdzdCcn5yU8V/3V84zSrPDHwZEdjykadlgI6RHrxGrJ" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/vendors/css/bootstrap-customize.css">
     <link rel="stylesheet" href="resources/local/css/style.css" />
-    <meta charset="utf-8">
 </head>
 <body>
 	<%@ include file="/jsps/components/_header.jsp"%>
