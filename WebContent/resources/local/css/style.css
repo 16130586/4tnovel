@@ -149,6 +149,11 @@ body {
 .u-width--80 {
   width: 80%; }
 
+.u-text-overflow--hidden {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 .card--white {
   background-color: #FFF0F5; }
 
@@ -472,3 +477,49 @@ body {
       padding: .1rem auto; }
     .search-result table {
       margin-bottom: .5rem; }
+
+.detail {
+  background-color: #fafafa; }
+  .detail__top {
+    height: auto;
+    width: 75vw;
+    background-color: #efefef; }
+    .detail__top-cover {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      text-align: right; }
+      .detail__top-cover .img-cover {
+        width: auto;
+        height: 180px;
+        border: 1px solid black; }
+    .detail__top-info {
+      padding-top: 1rem;
+      padding-bottom: 2rem; }
+      .detail__top-info .btn {
+        margin: 1rem; }
+  .detail__body {
+    width: 75vw;
+    padding-bottom: 2rem;
+    padding-top: 2rem; }
+    .detail__body .tab {
+      background-color: #efefef;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #ccc; }
+      .detail__body .tab .tab-btn {
+        color: inherit;
+        text-transform: uppercase;
+        text-align: left;
+        border: none;
+        outline: none;
+        padding: .5rem;
+        width: 100%; }
+      .detail__body .tab .tab-content {
+        padding: 1.5rem;
+        background-color: #f7f7f7; }
+
+@media screen and (max-width: 768px) {
+  .detail__top-info {
+    text-align: center; }
+  .detail__top-cover {
+    display: none; } }
