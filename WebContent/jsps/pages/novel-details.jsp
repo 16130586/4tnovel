@@ -27,19 +27,24 @@
                         </h1>
                         <div>
                             <span class="u-block"> Người đăng: <a class="link u-color-blue" href="#">Watashi</a></span> 
-                            <span class="u-block"> Thể loại: 
-								<form action="search" method="post">
-									<input type="hidden" name="genre" value="advanture">
-									<button class="btn btn-belike-a">Advanture</button>
-								</form>
-								<form action="search" method="post">
-									<input type="hidden" name="genre" value="drama">
-									<button class="btn btn-belike-a">Drama</button>
-								</form>
-								<form action="search" method="post">
-									<input type="hidden" name="genre" value="school-life">
-									<button class="btn btn-belike-a">School life</button>
-								</form>   
+                            <span class="u-block">  
+								<ul class="horizontal-menu--showcase">
+									<li class="menu-item">
+									<form action="search" method="post">
+										<input type="hidden" name="genre" value="advanture">
+										<button class="btn btn-belike-a">Advanture</button>
+									</form></li>
+									<li class="menu-item">
+									<form action="search" method="post">
+										<input type="hidden" name="genre" value="drama">
+										<button class="btn btn-belike-a">Drama</button>
+									</form></li>
+									<li class="menu-item">
+									<form action="search" method="post">
+										<input type="hidden" name="genre" value="school-life">
+										<button class="btn btn-belike-a">School life</button>
+									</form></li>
+								</ul>   
 							</span>                   
 						</div>
                     </div>
