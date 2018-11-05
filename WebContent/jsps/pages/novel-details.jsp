@@ -27,7 +27,7 @@
                         </h1>
                         <div>
                             <span class="u-block"> Người đăng: <a class="link u-color-blue" href="#">Watashi</a></span> 
-                            <span class="u-block"> Thể loại: adult, hentai, ecchi, incest </span>
+                            <span class="u-block"> Thể loại: <a class="link" href="#">adult</a>, <a class="link" href="#">hentai</a>, <a class="link" href="#">ecchi</a>, <a class="link" href="#">incest</a> </span>
                         </div>
                     </div>
                     <div>
@@ -40,35 +40,35 @@
         <div class="detail__body u-centered">
             <section class="tab u-block">
                 <div>
-                    <button class="tab-btn u-2x" onclick="showOrHide('introduce')">Giới thiệu</button>
+                    <button class="btn tab-btn u-2x" onclick="showOrHide('introduce')">Giới thiệu</button>
                 </div>
                 <div id="introduce" class="tab-content" style="display: block">
                     Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph. A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. 
                 </div>
             </section>
             <section class="tab u-block">
-                <button class="tab-btn u-2x" onclick="showOrHide('note')">chú thích</button>
+                <button class="btn tab-btn u-2x" onclick="showOrHide('note')">chú thích</button>
                 <div id="note" class="tab-content" style="display: none">
                     Nothing... <br>
                     Surprise mother fucker!!!
                 </div>
             </section>
             <section class="tab u-block">
-                <button class="tab-btn u-2x" onclick="showOrHide('vol1')">vol1</button>
+                <button class="btn tab-btn u-2x" onclick="showOrHide('vol1')">vol1</button>
                 <div id="vol1" class="tab-content" style="display: none">
                     <a class="link u-block" href="#">Chương 1</a>
                     <a class="link u-block" href="#">Chương 2</a>
                 </div>
             </section>
             <section class="tab u-block">
-                <button class="tab-btn u-2x" onclick="showOrHide('vol2')">vol2</button>
+                <button class="btn tab-btn u-2x" onclick="showOrHide('vol2')">vol2</button>
                 <div id="vol2" class="tab-content" style="display: none">
                     <a class="link u-block" href="#">Chương 1</a>
                     <a class="link u-block" href="#">Chương 2</a>
                 </div>
             </section>
             <section class="tab u-block">
-                <button class="tab-btn u-2x" onclick="showOrHide('vol3')">vol3</button>
+                <button class="btn tab-btn u-2x" onclick="showOrHide('vol3')">vol3</button>
                 <div id="vol3" class="tab-content" style="display: none">
                     <a class="link u-block" href="#">Chương 1</a>
                     <a class="link u-block" href="#">Chương 2</a>
