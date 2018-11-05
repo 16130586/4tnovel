@@ -43,6 +43,11 @@ public class SearchServlet extends HttpServlet {
 		request.setCharacterEncoding( "UTF-8" );
 		String input = request.getParameter("input");
 		String[] genre = request.getParameterValues("genre");
+		if (genre != null) {
+			for (String g : genre) {
+				System.out.println(g);
+			}
+		}
 		getServletContext().getRequestDispatcher("/jsps/pages/search-result.jsp").forward(request, response);
 		
 		// lấy ra danh sách 20 phần tử đâu tiên từ query theo params trên

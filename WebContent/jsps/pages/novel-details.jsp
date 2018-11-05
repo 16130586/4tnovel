@@ -27,8 +27,21 @@
                         </h1>
                         <div>
                             <span class="u-block"> Người đăng: <a class="link u-color-blue" href="#">Watashi</a></span> 
-                            <span class="u-block"> Thể loại: <a class="link" href="#">adult</a>, <a class="link" href="#">hentai</a>, <a class="link" href="#">ecchi</a>, <a class="link" href="#">incest</a> </span>
-                        </div>
+                            <span class="u-block"> Thể loại: 
+								<form action="search" method="post">
+									<input type="hidden" name="genre" value="advanture">
+									<button class="btn btn-belike-a">Advanture</button>
+								</form>
+								<form action="search" method="post">
+									<input type="hidden" name="genre" value="drama">
+									<button class="btn btn-belike-a">Drama</button>
+								</form>
+								<form action="search" method="post">
+									<input type="hidden" name="genre" value="school-life">
+									<button class="btn btn-belike-a">School life</button>
+								</form>   
+							</span>                   
+						</div>
                     </div>
                     <div>
                         <button class="btn btn-info u-color-white">Đọc từ đầu</button>
