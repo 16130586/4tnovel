@@ -252,6 +252,16 @@ body {
     margin-bottom: 1rem;
     text-align: center; }
 
+.register-form {
+	width: 25vw;
+  	height: auto;
+  	background-color: #FFF0F5;
+  	border: 1px solid #7DA3A1;
+  	margin: auto;
+  	margin-top: 15vh;
+  	padding: 2rem;
+}
+
 @media only screen and (max-width: 600px) {
   .login-form {
     width: 90vw; } }
