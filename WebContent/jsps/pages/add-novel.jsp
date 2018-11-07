@@ -26,26 +26,30 @@
         Thêm truyện
         </p>
     </div>
-    <form action="AddServlet" method="post">
+    <form action="AddServlet" method="post" onsubmit="return checkCheckBoxes();">
         <table class="table u-2x u-centered u-width--95">
             <tr>
                 <td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu đề: <span style="color: red">*</span></label></td>
-                <td><input class="u-width--full" type="text" style="padding: .5rem" required></td>
+                <td><input class="u-width--full" type="text" style="padding: .5rem" name="title" required></td>
             </tr>
             <tr>
-                <td class="u-align-right u-vertical-align--middle"><label>Loại truyện:</label></td>
-                <td><select style="padding: .5rem">
-                        <option>Truyện dịch</option>
-                        <option>Sáng tác</option>
+                <td class="u-align-right u-vertical-align--middle"><label>Loại truyện: <span style="color: red">*</span></label></td>
+                <td><select name="type-novel" style="padding: .5rem">
+                        <option value="translate">Truyện dịch</option>
+                        <option value="compose">Sáng tác</option>
                     </select></td>
             </tr>
             <tr>
-                <td class="u-align-right u-vertical-align--middle"><label>Nhóm dịch:</label></td>
-                <td><select style="padding: .5rem">
+                <td class="u-align-right u-vertical-align--middle"><label>Nhóm dịch: <span style="color: red">*</span></label></td>
+                <td><select name="group" style="padding: .5rem">
+                	<option value=""></option>
                     </select></td>
             </tr>
             <tr>
-                <td class="u-align-right"><label>Thể loại:</label></td>
+                <td class="u-align-right">
+                <label>Thể loại: <span style="color: red">*</span></label>
+                <small class="u-block" style="color: red" id="check"></small>
+                </td>
                 <td class="genre">
                     <div class="row">
                     <div class="col-sm-3">
@@ -152,7 +156,15 @@
             </tr>
             <tr>
                 <td class="u-align-right"><label>Mô tả: <span style="color: red">*</span></label></td>
-                <td><textarea class="u-width--full" style="padding: .5rem" rows="7" required></textarea></td>
+                <td><textarea class="u-width--full" style="padding: .5rem" rows="7" name="description" required></textarea></td>
+            </tr>
+            <tr>
+				<td class="u-align-right u-vertical-align--middle"><label>Tình trạng: <span style="color: red">*</span></label></td>
+                <td><select name="status" style="padding: .5rem">
+                        <option value="complete">Hoàn thành</option>
+                        <option value="in-process">Đang tiến hành</option>
+                        <option value="pause">Tạm ngưng</option>
+                    </select></td>
             </tr>
         </table>
         <div class="u-align-center u-color-white">
@@ -162,5 +174,19 @@
     </form>
 	</div>
 	<%@include file="/jsps/components/_footer.jsp"%>
+	
+	<script type="text/javascript">
+    function checkCheckBoxes() {
+        var c = document.getElementsByName("genre");
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].checked == true) {
+                return true;
+            }
+        }
+        document.getElementById("check").innerHTML="pls check at least one";
+        return false;
+    }		
+	</script>
+	
 </body>
 </html>
