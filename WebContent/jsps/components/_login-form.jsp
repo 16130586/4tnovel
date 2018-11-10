@@ -1,3 +1,4 @@
+<%@page import="t4novel.azurewebsites.net.acessviasocial.common.SocialAccessConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div class="login-form">
@@ -6,7 +7,8 @@
 	<div class="login-form__social-login">
 		<a href="#" class="u-margin-right--2rem"><i
 			class="fab fa-facebook u-5x u-color-blue"> </i></a>
-		<a href="#"><i
+		<a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=<%=SocialAccessConstants.GOOGLE_REDIRECT_URI %>&response_type=code
+    &client_id=<%=SocialAccessConstants.GOOGLE_CLIENT_ID %>&approval_prompt=force"><i
 			class="fab fa-google-plus-square u-5x u-color-red"></i></a>
 	</div>
 	<hr>
