@@ -12,7 +12,7 @@
 				<input name="username" type="text" placeholder="Your username..." class="u-width--full u-2x"/>
 			</div>
 			<div class="u-margin-bottom--1rem">
-				<label for="email" class="u-2x">Mật khẩu</label>
+				<label for="email" class="u-2x">Mail</label>
 			</div>
 			<div class="u-margin-bottom--1rem">
 				<input name="email" type="email" placeholder="Your email..." class="u-width--full u-2x"/>
