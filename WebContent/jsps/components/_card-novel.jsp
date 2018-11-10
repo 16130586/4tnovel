@@ -20,9 +20,21 @@
 	<div class="row u-width--full">
 		<div class="col-lg-12 u-align-center novel__gender">
 			<ul class="horizontal-menu--showcase text-centered">
-				<li class="menu-item u-margin-right--2rem">Advance</li>
-				<li class="menu-item u-margin-right--2rem">Drama</li>
-				<li class="menu-item u-margin-right--2rem">School life</li>
+				<li class="menu-item u-margin-right--2rem">
+				<form action="search" method="post">
+					<input type="hidden" name="genre" value="advanture">
+					<button class="btn btn-belike-a">Advanture</button>
+				</form></li>
+				<li class="menu-item u-margin-right--2rem">
+				<form action="search" method="post">
+					<input type="hidden" name="genre" value="drama">
+					<button class="btn btn-belike-a">Drama</button>
+				</form></li>
+				<li class="menu-item u-margin-right--2rem">
+				<form action="search" method="post">
+					<input type="hidden" name="genre" value="school-life">
+					<button class="btn btn-belike-a">School life</button>
+				</form></li>
 
 			</ul>
 		</div>

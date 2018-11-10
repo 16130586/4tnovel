@@ -28,7 +28,7 @@
                 <table class="table table-dark table-bordered table-hover table-host-align--right">
                       <tr>
                         <th class="u-width--10">Chủ đề</th>
-                        <th class="u-width--50">Tiêu đề</th>
+                        <th>Tiêu đề</th>
                         <th class="u-width--10">Bình luận</th>
                         <th class="u-width--10">Lượt xem</th>
                         <th class="u-width--10">Ngày đăng</th>
