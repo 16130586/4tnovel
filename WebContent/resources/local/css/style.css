@@ -163,6 +163,10 @@ body {
   overflow: hidden;
   text-overflow: ellipsis; }
 
+.u-text--error-display {
+  color: #DF3232;
+  font-size: 1.8rem; }
+
 .card--white {
   background-color: #FFF0F5; }
 
