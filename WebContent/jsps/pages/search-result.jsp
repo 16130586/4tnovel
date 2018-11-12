@@ -18,9 +18,10 @@
     <link rel="stylesheet" href="resources/local/css/style.css" />
 </head>
 <body>
+	<div id="onTop"></div>
 	<%@ include file="/jsps/components/_header.jsp" %>
 	<div class="search">
-        <div id="onTop" class="u-width--80 u-centered">
+        <div class="u-width--80 u-centered">
             <h1>Kết quả tìm kiếm</h1>
         </div>
         <div class="search-result u-width--80 u-centered">
@@ -125,7 +126,7 @@
                 </ul> 
             </div>
         </div>
-        <a style="position: fixed; top: 60vh; right: 2rem;" href="#onTop" class="btn btn-success" ><i class="fas fa-arrow-up"></i></a>
+        <a style="position: fixed; top: 60vh; right: 2rem;" href="#onTop" class="btn btn-success u-color-white" ><i class="fas fa-arrow-up"></i></a>
     </div>
 	<%@ include file="/jsps/components/_footer.jsp" %>
 </body>

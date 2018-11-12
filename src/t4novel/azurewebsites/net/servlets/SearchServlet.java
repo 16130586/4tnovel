@@ -29,9 +29,9 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
-		String url = "";
-		if(type == null) url = "/jsps/pages/search.jsp";
+		String url = "/jsps/pages/search.jsp";
 		if("advanced".equals(type)) url = "/jsps/pages/search-advanced.jsp";
+		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 		
 	}
