@@ -20,13 +20,13 @@
 </head> 
 <body>
 	<%@ include file="/jsps/components/_header.jsp"%>
-	<div class="add-novel">
+	<div class="add">
     <div class="u-align-center">
         <p class="u-4x">
         Thêm truyện
         </p>
     </div>
-    <form action="AddServlet" method="post" onsubmit="return checkCheckBoxes();">
+    <form action="add" method="post" onsubmit="return checkCheckBoxes();">
         <table class="table u-2x u-centered u-width--95">
             <tr>
                 <td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu đề: <span style="color: red">*</span></label></td>

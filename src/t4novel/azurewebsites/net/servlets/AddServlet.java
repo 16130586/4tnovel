@@ -31,6 +31,12 @@ public class AddServlet extends HttpServlet {
 		if (type.equals("add-novel")) {
 			url = "/jsps/pages/add-novel.jsp";
 		}
+		if (type.equals("add-vol")) {
+			url = "/jsps/pages/add-vol.jsp";
+		}
+		if (type.equals("add-chapter")) {
+			url = "/jsps/pages/add-chapter.jsp";
+		}
 		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
