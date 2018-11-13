@@ -4,5 +4,7 @@
 <header id="header--on-top" class="header--on-top">
 	<%@ include file="/jsps/components/_header.navigation-mobile.jsp"%>
 	<%@ include file="/jsps/components/_header.navigation-desktop.jsp"%>
-	<%@ include file="/jsps/components/_header.user-functions.jsp"%>
+	<c:if test="${not empty account }">
+		<%@ include file="/jsps/components/_header.user-functions.jsp"%>
+	</c:if>
 </header>
