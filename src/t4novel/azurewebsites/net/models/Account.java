@@ -8,7 +8,7 @@ import t4novel.azurewebsites.net.sercurities.Role;
 public class Account {
 	private int id;
 	private Date dateCreate;
-	private String displayedName, userName, gmail;
+	private String displayedName, userName, gmail, password;
 	private List<Message> messages;
 	private List<BookMarkFolder> bookMarkFolders;
 	private Role role;
@@ -17,6 +17,9 @@ public class Account {
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
 	private boolean isBanned;
+
+	public Account() {
+	};
 
 	public Account(int id, Date dateCreate, String displayedName, String userName, String gmail, List<Message> messages,
 			List<BookMarkFolder> bookMarkFolders, Role role, boolean isAutoPassPushlishment, List<Thread> threads,
@@ -150,4 +153,11 @@ public class Account {
 		this.isBanned = isBanned;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

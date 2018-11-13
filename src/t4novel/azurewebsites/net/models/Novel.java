@@ -14,6 +14,45 @@ public class Novel {
 	private int like;
 	private List<Comment> comments;
 	private List<Account> follows;
+	private List<NovelGenre> genres;
+	private NovelStatus status;
+	private NovelKind kind;
+	private int groupId;
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	public Novel() {
+	}
+
+	public NovelKind getKind() {
+		return kind;
+	}
+
+	public void setKind(NovelKind kind) {
+		this.kind = kind;
+	}
+
+	public List<NovelGenre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<NovelGenre> genres) {
+		this.genres = genres;
+	}
+
+	public NovelStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(NovelStatus status) {
+		this.status = status;
+	}
 
 	public int getId() {
 		return id;
