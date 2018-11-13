@@ -1,11 +1,12 @@
 package t4novel.azurewebsites.net.acessviasocial.DAOService;
 
-import t4novel.azurewebsites.net.acessviasocial.DAOSUtils.DAOUtils;
+import java.sql.Connection;
+
 
 public class UserNameCheckingService extends EmailCheckingService implements DAOService {
 
-	public UserNameCheckingService(DAOUtils utils) {
-		super(utils);
+	public UserNameCheckingService(Connection connection) {
+		super(connection);
 	}
 
 }
