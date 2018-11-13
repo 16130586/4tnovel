@@ -15,12 +15,19 @@ public abstract class AbstractMappingForm {
 		assignDefaultErrorType();
 	}
 
+	/**
+	 * @author 16130586
+	 * @return trả về xem form có dính lỗi trong 1 tập lỗi không!
+	 */
 	public boolean isOnError() {
 		return !this.errors.isEmpty();
 	}
-	
 
-	public Map<String, String> getErrors(){
+	/**
+	 * @author 16130586
+	 * @return trả về 1 error message của 1 loại lỗi thuộc form
+	 */
+	public Map<String, String> getErrors() {
 		Map<String, String> filteredError = new HashMap<>();
 		for (String errorType : errorTypes) {
 			for (Entry<String, String> entry : errors.entrySet()) {
@@ -34,5 +41,21 @@ public abstract class AbstractMappingForm {
 		return filteredError;
 	}
 
+	/***
+	 * @author 16130586 
+	 * @return Một form luôn luôn có 1 tập các lỗi, mỗi lỗi thuộc 1
+	 *         type lỗi liên quan đến 1 field của form vì vậy khi khai báo một
+	 *         mapping form class phải override và khai báo tập lỗi, để làm đầu vào
+	 *         cho hàm getErrors()
+	 */
 	protected abstract void assignDefaultErrorType();
+
+	/**
+	 * @author 16130586
+	 * @return Một form luôn luôn có mục đích là submit để tạo ra java object
+	 *         instance của 1 class, vì vậy khi khai bào mapping form class phải
+	 *         override và khai báo ra instance nào được trả lại từ tập dữ liệu đầu
+	 *         vào của người dùng instance object đã định nghĩa ở concrete class
+	 */
+	public abstract Object getMappingData();
 }
