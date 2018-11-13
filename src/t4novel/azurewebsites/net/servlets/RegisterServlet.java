@@ -1,6 +1,7 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.acessviagoogle.utils.Genrator;
 import t4novel.azurewebsites.net.acessviasocial.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.acessviasocial.DAOService.EmailCheckingService;
 import t4novel.azurewebsites.net.acessviasocial.DAOService.UserNameCheckingService;
 import t4novel.azurewebsites.net.forms.RegisterForm;
+import t4novel.azurewebsites.net.models.Account;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -46,20 +49,28 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		DAOUtils daoUtil = DAOUtils.getInstance();
-		RegisterForm userSubmittedForm = new RegisterForm(request, new EmailCheckingService(daoUtil),
-				new UserNameCheckingService(daoUtil));
+		Connection cnn = daoUtil.getConnection();
+		Genrator genrator = Genrator.getInstance();
+		RegisterForm userSubmittedForm = new RegisterForm(request, new EmailCheckingService(cnn),
+				new UserNameCheckingService(cnn), genrator);
+
 		String url = "";
 		if (!userSubmittedForm.isOnError()) {
 			url = "/index";
 			// TODO write account to DTB
-			// TODO set account to ss
+			Account account = (Account) userSubmittedForm.getMappingData();
+			request.getSession().setAttribute("account", account);
+			response.sendRedirect("index");
 		} else {
 			url = "/jsps/pages/register.jsp";
 			for (Entry<String, String> errors : userSubmittedForm.getErrors().entrySet()) {
 				String errorName = errors.getKey() + "Error";
 				request.setAttribute(errorName, errors.getValue());
 			}
+			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}
-		getServletContext().getRequestDispatcher(url).forward(request, response);
+
+		daoUtil.close(cnn);
+		
 	}
 }
