@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import t4novel.azurewebsites.net.acessviagoogle.utils.Genrator;
 import t4novel.azurewebsites.net.acessviasocial.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.utils.Genrator;
 
 public class RegisterForm extends AbstractMappingForm {
 	private String userName, gmai, password, rePassword;
