@@ -120,7 +120,7 @@ public class RegisterForm extends AbstractMappingForm {
 
 	@Override
 	public Object getMappingData() {
-		if (!errors.isEmpty())
+		if (isOnError())
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT RegisterForm, getMappingData()");
 		Account rs = new Account();
