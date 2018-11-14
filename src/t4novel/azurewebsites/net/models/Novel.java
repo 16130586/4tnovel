@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Novel {
-	private int id;
+	private int id, accountOwnerId;
 	private String name;
 	private String description;
 	private List<Vol> vols;
@@ -19,6 +19,30 @@ public class Novel {
 	private NovelKind kind;
 	private int groupId;
 
+	public Novel() {
+	}
+
+	public Novel(int id, String name, String description, List<Vol> vols, Date dateUp, int view, Account owner,
+			int like, List<Comment> comments, List<Account> follows) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.vols = vols;
+		this.dateUp = dateUp;
+		this.view = view;
+		this.owner = owner;
+		this.like = like;
+		this.comments = comments;
+		this.follows = follows;
+	}
+
+	@Override
+	public String toString() {
+		return name + ", " + description + ", " + status.toString() + ", " + kind.toString() + ", " + groupId + ", "
+				+ genres.toString();
+	}
+
 	public int getGroupId() {
 		return groupId;
 	}
@@ -27,7 +51,12 @@ public class Novel {
 		this.groupId = groupId;
 	}
 
-	public Novel() {
+	public int getAccountOwnerId() {
+		return accountOwnerId;
+	}
+
+	public void setAccountOwnerId(int accountOwnerId) {
+		this.accountOwnerId = accountOwnerId;
 	}
 
 	public NovelKind getKind() {
@@ -134,18 +163,4 @@ public class Novel {
 		this.follows = follows;
 	}
 
-	public Novel(int id, String name, String description, List<Vol> vols, Date dateUp, int view, Account owner,
-			int like, List<Comment> comments, List<Account> follows) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.vols = vols;
-		this.dateUp = dateUp;
-		this.view = view;
-		this.owner = owner;
-		this.like = like;
-		this.comments = comments;
-		this.follows = follows;
-	}
 }

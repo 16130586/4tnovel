@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Chap {
 	private int id;
-	private String content;
+	private String content, title;
 	private Date dateUp;
 	private int view;
 	private int like;
 	private List<Comment> comments;
-	private Vol owner;
+	private Vol volOwner;
+	private int volOwnerId;
+	private int novelOwnerId;
 
 	public Chap(int id, String content, Date dateUp, int view, int like, List<Comment> comments, Vol owner) {
 		super();
@@ -20,7 +22,11 @@ public class Chap {
 		this.view = view;
 		this.like = like;
 		this.comments = comments;
-		this.owner = owner;
+		this.volOwner = owner;
+	}
+
+	public Chap() {
+
 	}
 
 	public int getId() {
@@ -37,6 +43,14 @@ public class Chap {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Date getDateUp() {
@@ -71,12 +85,28 @@ public class Chap {
 		this.comments = comments;
 	}
 
-	public Vol getOwner() {
-		return owner;
+	public Vol getVolOwner() {
+		return volOwner;
 	}
 
-	public void setOwner(Vol owner) {
-		this.owner = owner;
+	public void setVolOwner(Vol volOwner) {
+		this.volOwner = volOwner;
+	}
+
+	public int getVolOwnerId() {
+		return volOwnerId;
+	}
+
+	public void setVolOwnerId(int volOwnerId) {
+		this.volOwnerId = volOwnerId;
+	}
+
+	public int getNovelOwnerId() {
+		return novelOwnerId;
+	}
+
+	public void setNovelOwnerId(int novelOwnerId) {
+		this.novelOwnerId = novelOwnerId;
 	}
 
 }

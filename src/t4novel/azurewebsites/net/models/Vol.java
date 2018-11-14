@@ -4,11 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 public class Vol {
-	private int id;
+	private int id, accountOwnerId, novelOwnerId;
 	private List<Chap> chaps;
 	private Date dateUp;
-	private String description;
+	private String description, title;
 	private Novel owner;
+
 	public Vol(int id, List<Chap> chaps, Date dateUp, String description, Novel owner) {
 		super();
 		this.id = id;
@@ -17,35 +18,74 @@ public class Vol {
 		this.description = description;
 		this.owner = owner;
 	}
+
+	public int getAccountOwnerId() {
+		return accountOwnerId;
+	}
+
+	public void setAccountOwnerId(int accountOwnerId) {
+		this.accountOwnerId = accountOwnerId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getNovelOwnerId() {
+		return novelOwnerId;
+	}
+
+	public void setNovelOwnerId(int novelOwnerId) {
+		this.novelOwnerId = novelOwnerId;
+	}
+
+	public Vol() {
+
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public List<Chap> getChaps() {
 		return chaps;
 	}
+
 	public void setChaps(List<Chap> chaps) {
 		this.chaps = chaps;
 	}
+
 	public Date getDateUp() {
 		return dateUp;
 	}
+
 	public void setDateUp(Date dateUp) {
 		this.dateUp = dateUp;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Novel getOwner() {
 		return owner;
 	}
+
 	public void setOwner(Novel owner) {
 		this.owner = owner;
+		setNovelOwnerId(owner.getId());
 	}
-	
+
 }

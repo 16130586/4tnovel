@@ -1,9 +1,10 @@
 package t4novel.azurewebsites.net.models;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Thread {
-	private int id;
+	private int id, accountOwnerId;
 	private String title;
 	private String content;
 	private List<Comment> comments;
@@ -21,6 +22,14 @@ public class Thread {
 		this.blockAccounts = blockAccounts;
 		this.follows = follows;
 		this.owner = owner;
+	}
+
+	public int getAccountOwnerId() {
+		return accountOwnerId;
+	}
+
+	public void setAccountOwnerId(int accountOwnerId) {
+		this.accountOwnerId = accountOwnerId;
 	}
 
 	public int getId() {
@@ -77,6 +86,25 @@ public class Thread {
 
 	public void setOwner(Account owner) {
 		this.owner = owner;
+		setAccountOwnerId(owner.getId());
+	}
+
+	public void addComment(Comment cmt) {
+		if (this.comments == null)
+			this.comments = new LinkedList<>();
+		this.comments.add(cmt);
+	}
+
+	public void addBlockAccount(Account acc) {
+		if (this.blockAccounts == null)
+			this.blockAccounts = new LinkedList<>();
+		this.blockAccounts.add(acc);
+	}
+
+	public void addFollower(Account follower) {
+		if (this.follows == null)
+			this.follows = new LinkedList<>();
+		this.follows.add(follower);
 	}
 
 }

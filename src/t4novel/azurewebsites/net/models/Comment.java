@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Comment {
-	private int id;
+	private int id, accountOwnerId;
 	private Account owner;
 	private String content;
 	private Date time;
@@ -17,6 +17,14 @@ public class Comment {
 		this.content = content;
 		this.time = time;
 		this.replyComments = replyComments;
+	}
+
+	public int getAccountOwnerId() {
+		return accountOwnerId;
+	}
+
+	public void setAccountOwnerId(int accountOwnerId) {
+		this.accountOwnerId = accountOwnerId;
 	}
 
 	public int getId() {
