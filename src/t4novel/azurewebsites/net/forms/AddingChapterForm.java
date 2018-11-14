@@ -33,7 +33,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	@Override
 	public String toString() {
-		return title + "," +content + ", " + inNovel +", " + inVol;
+		return title + "," + content + ", " + inNovel + ", " + inVol;
 	}
 
 	public String getTitle() {
@@ -95,8 +95,8 @@ public class AddingChapterForm extends AbstractMappingForm {
 		rs.setDateUp(new Date());
 		rs.setTitle(getTitle());
 		rs.setContent(getContent());
-		rs.setVolID(getInVol());
-		rs.setNovelID(getInNovel());
+		rs.setVolOwnerId(getInVol());
+		rs.setNovelOwnerId(getInNovel());
 		return rs;
 	}
 
