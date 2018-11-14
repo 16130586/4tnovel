@@ -33,7 +33,7 @@ body {
   margin-right: 2rem !important; }
 
 .u-margin-right--05rem {
-  margin-right: .5rem; }
+  margin-right: .5rem !important; }
 
 .u-margin-left--2rem {
   margin-left: 2rem !important; }
@@ -52,6 +52,18 @@ body {
 
 .u-margin-bottom--1rem {
   margin-bottom: 1rem !important; }
+
+.u-align-left {
+  text-align: left !important; }
+
+.u-padding--05rem {
+  padding: .5rem !important; }
+
+.u-padding-bottom--05rem {
+  padding-bottom: .5rem !important; }
+
+.u-padding-right--05rem {
+  padding-right: .5rem !important; }
 
 .u-inline-block {
   display: inline-block; }
@@ -167,6 +179,9 @@ body {
   color: #DF3232;
   font-size: 1.8rem; }
 
+.u-row--1140 {
+  max-width: 1140px; }
+
 .card--white {
   background-color: #FFF0F5; }
 
@@ -218,7 +233,6 @@ body {
   .dropdown-menu .dropdown-btn {
     display: block; }
   .dropdown-menu .dropdown-content--right, .dropdown-menu .dropdown-content--bottom {
-    width: 8rem;
     transition: all .7s;
     position: absolute;
     display: none;
@@ -575,3 +589,21 @@ body {
   padding: 1rem; }
   .add .genre label {
     padding-left: .5rem; }
+
+.account-manage {
+  background-color: #f0f0f0; }
+  .account-manage__nav {
+    background-color: #fbfbfb;
+    padding: 1rem; }
+    .account-manage__nav .dropdown-content--bottom {
+      background-color: #fcfcfc; }
+      .account-manage__nav .dropdown-content--bottom .menu-item {
+        padding: .5rem; }
+  .account-manage__content {
+    background-color: #f7f7f7;
+    height: 750px;
+    overflow-y: scroll; }
+    .account-manage__content section > .row:first-child {
+      background-color: #fbfbfb; }
+    .account-manage__content .btn {
+      padding: .5rem 1rem .5rem 1rem !important; }
