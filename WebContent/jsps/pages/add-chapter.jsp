@@ -29,7 +29,7 @@
         <table class="table u-2x u-centered u-width--95">
             <tr>
                 <td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu đề: <span style="color: red">*</span></label></td>
-                <td><input class="u-width--full" type="text" style="padding: .5rem" required></td>
+                <td><input name="title" class="u-width--full" type="text" style="padding: .5rem" required></td>
             </tr>
             <tr>
                 <td></td>
@@ -37,21 +37,21 @@
             </tr>
             <tr>
                 <td class="u-align-right u-vertical-align--middle"><label>Thuộc truyện: <span style="color: red">*</span></label></td>
-                <td><select style="padding: .5rem" onchange="loadVol()">
-                        <option name="select-novel">A</option>
-                        <option name="select-novel">B</option>
-                        <option name="select-novel">C</option>
+                <td><select name="in-novel" style="padding: .5rem" onchange="loadVol()">
+                        <option value="112">A</option>
+                        <option value="113">B</option>
+                        <option value="114">C</option>
                     </select></td>
             </tr>
             <tr>
                 <td class="u-align-right u-vertical-align--middle"><label>Thuộc tập: <span style="color: red">*</span></label></td>
-                <td><select id="list-vol" style="padding: .5rem">
+                <td><select name="in-vol" id="list-vol" style="padding: .5rem">
                         
                     </select></td> 
             </tr>
             <tr>
                 <td class="u-align-right"><label>Nội dung: <span style="color: red">*</span></label></td>
-                <td><textarea class="u-width--full" style="padding: .5rem" rows="8" required></textarea></td>
+                <td><textarea name="content" class="u-width--full" style="padding: .5rem" rows="8" required></textarea></td>
             </tr>
         </table>
         <div class="u-align-center u-color-white">
