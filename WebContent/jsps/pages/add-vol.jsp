@@ -29,17 +29,18 @@
 	        <table class="table u-2x u-centered u-width--95">
 	            <tr>
 	                <td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu đề: <span style="color: red">*</span></label></td>
-	                <td><input class="u-width--full" type="text" style="padding: .5rem" required></td>
+	                <td><input name="title" class="u-width--full" type="text" style="padding: .5rem" required></td>
 	            </tr>
 	            <tr>
 	                <td class="u-align-right u-vertical-align--middle"><label>Thuộc truyện: <span style="color: red">*</span></label></td>
 	                <td><select name="in-novel" style="padding: .5rem">
-	                        <option value=""></option>
+	                	<!-- option value="novelOwnerID-Integer" -->
+	                        <option value="123123">NovelOwner Title - server genrated!</option>
 	                    </select></td>
 	            </tr>
 	            <tr>
 	                <td class="u-align-right"><label>Tóm tắt:</label></td>
-	                <td><textarea class="u-width--full" style="padding: .5rem" rows="7"></textarea></td>
+	                <td><textarea name="description" class="u-width--full" style="padding: .5rem" rows="7"></textarea></td>
 	            </tr>
 	        
 	        </table>
