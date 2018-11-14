@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import t4novel.azurewebsites.net.acessviasocial.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.acessviasocial.DAOService.EmailCheckingService;
 import t4novel.azurewebsites.net.acessviasocial.DAOService.UserNameCheckingService;
+import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.RegisterForm;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.utils.Genrator;
@@ -51,21 +52,25 @@ public class RegisterServlet extends HttpServlet {
 		DAOUtils daoUtil = DAOUtils.getInstance();
 		Connection cnn = daoUtil.getConnection();
 		Genrator genrator = Genrator.getInstance();
-		RegisterForm userSubmittedForm = new RegisterForm(request, new EmailCheckingService(cnn),
+		AbstractMappingForm userSubmittedForm = new RegisterForm(request, new EmailCheckingService(cnn),
 				new UserNameCheckingService(cnn), genrator);
 
 		String url = "";
 		if (!userSubmittedForm.isOnError()) {
 			url = "/index";
 			// TODO write account to DTB
+			
+			//
 			Account account = (Account) userSubmittedForm.getMappingData();
 			request.getSession().setAttribute("account", account);
 			response.sendRedirect("index");
 		} else {
 			url = "/jsps/pages/register.jsp";
-			for (Entry<String, String> errors : userSubmittedForm.getErrors().entrySet()) {
-				String errorName = errors.getKey() + "Error";
-				request.setAttribute(errorName, errors.getValue());
+			//mapping error to jsp!
+			//error == (errorType , errorMessage)
+			for (Entry<String, String> error : userSubmittedForm.getErrors().entrySet()) {
+				String errorName = error.getKey() + "Error";
+				request.setAttribute(errorName, error.getValue());
 			}
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}

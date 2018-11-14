@@ -23,7 +23,6 @@ public class EmailCheckingService implements DAOService {
 			ResultSet rs = stmt.executeQuery();
 			isExisted = rs.next();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
