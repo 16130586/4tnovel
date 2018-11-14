@@ -12,6 +12,7 @@ import t4novel.azurewebsites.net.models.NovelGenre;
 import t4novel.azurewebsites.net.models.NovelKind;
 import t4novel.azurewebsites.net.models.NovelStatus;
 import t4novel.azurewebsites.net.utils.Genrator;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingNovelForm extends AbstractMappingForm {
 	private String title, description;
@@ -28,7 +29,10 @@ public class AddingNovelForm extends AbstractMappingForm {
 		setGroupID(Integer.parseInt(request.getParameter("group")));
 		setKind(NovelKind.getNovelKind(Integer.parseInt(request.getParameter("type-novel"))));
 		setGenres(getGenresFormRequest(request));
-
+	}
+	
+	public AddingNovelForm(Genrator generator) {
+		this.idGenrator = generator;
 	}
 
 	private List<NovelGenre> getGenresFormRequest(HttpServletRequest request) {
@@ -55,8 +59,10 @@ public class AddingNovelForm extends AbstractMappingForm {
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
 			errors.put("titleEmpty", "Please make sure novel's title isn't empty");
+		} else if (StringUtil.isAllSpace(title)) {
+			errors.put("titleAllSpace", "Please remove all space and insert title!");
 		} else {
-			this.title = title;
+			this.title = title.trim();
 		}
 	}
 
@@ -67,8 +73,10 @@ public class AddingNovelForm extends AbstractMappingForm {
 	public void setDescription(String description) {
 		if (description == null || description.isEmpty()) {
 			errors.put("descriptionEmpty", "Please make sure novel's description isn't empty");
-		} else {
-			this.description = description;
+		} else if (StringUtil.isAllSpace(description)) {
+			errors.put("descriptionAllSpace", "Please remove all space and insert description!");
+		}else {
+			this.description = description.trim();
 		}
 	}
 
