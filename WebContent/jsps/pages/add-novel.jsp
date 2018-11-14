@@ -30,7 +30,7 @@
         <table class="table u-2x u-centered u-width--95">
             <tr>
                 <td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu đề: <span style="color: red">*</span></label></td>
-                <td><input class="u-width--full" type="text" style="padding: .5rem" name="title" required></td>
+                <td><input name="" class="u-width--full" type="text" style="padding: .5rem" name="title" required></td>
             </tr>
             <tr>
                 <td class="u-align-right u-vertical-align--middle"><label>Loại truyện: <span style="color: red">*</span></label></td>
