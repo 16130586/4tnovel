@@ -1,0 +1,28 @@
+.account-manage {
+    background-color: #f0f0f0;
+    
+    &__nav {
+        background-color: #fbfbfb;
+        padding: 1rem;
+        .dropdown-content--bottom {
+            background-color: #fcfcfc;
+            .menu-item {
+                padding: .5rem;
+            }
+        }
+    }
+    
+    &__content {
+        background-color: #f7f7f7;
+        height: 750px;
+        overflow-y: scroll;
+        section > .row:first-child {
+            background-color: #fbfbfb;
+        }
+        .btn {
+            padding: .5rem 1rem .5rem 1rem !important;
+        }
+    }
+}
+
+    

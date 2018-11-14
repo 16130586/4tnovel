@@ -27,10 +27,11 @@ public class ManageAccountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
-		String url = "";
-		if("ban".equals(type)) url = "/jsps/pages/search-account-to-ban.jsp";
-		if("delete".equals(type)) url = "/jsps/pages/search-account-to-delete.jsp";
-		if("grant-the-right-to-pin".equals(type)) url = "/jsps/pages/search-account-to-grant-the-right-to-pin.jsp";
+		String url = "/jsps/pages/account-manage.jsp";
+		if("password".equals(type)) url = "/jsps/pages/account-manage-password.jsp";
+		if("display-name".equals(type)) url = "/jsps/pages/account-manage-display-name.jsp";
+		if("mail".equals(type)) url = "/jsps/pages/account-manage-mail.jsp";
+		if("my-novel".equals(type)) url = "/jsps/pages/account-manage-my-novel.jsp";
 		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 		
