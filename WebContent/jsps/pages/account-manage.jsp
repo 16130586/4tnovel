@@ -20,44 +20,12 @@
 </head> 
 <body>
 	<div class="account-manage">
-        <div class="account-manage__nav row u-2x">
-            <div class="col-md-10 ">
-                <ul class="horizontal-menu--showcase ">
-                    <li class="menu-item u-margin-left--1rem "><a class="link " href="index">Trang chủ</a></li>
-                    <li class="menu-item u-margin-left--1rem "><a class="link " href="manage">Thông tin</a></li>
-                    <li class="menu-item u-margin-left--1rem "><a class="link " href="manage?type=my-novel">Truyện của tui</a></li>
-                    <li class="menu-item u-margin-left--1rem dropdown-menu">
-                        <a class="link " href="#">Thêm</a>
-                        <div class="dropdown-content--bottom">
-                            <ul class="vertical-menu--showcase">
-                                <li class="menu-item "><a class="link " href="add?type=add-novel">+Truyện</a></li>
-                                <li class="menu-item "><a class="link " href="add?type=add-vol ">+Tập</a></li>
-                                <li class="menu-item "><a class="link " href="add?type=add-chapter">+Chương</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
-            <div class="col-md-2 dropdown-menu ">
-                <a class="link " href="# ">Tài khoản</a>
-                <div class="dropdown-content--bottom ">
-                    <ul class="vertical-menu--showcase ">
-                        <li class="menu-item "><a class="link " href="manage ">displayname</a></li>
-                        <hr>
-                        <li class="menu-item "><a class="link " href="manage?type=display-name">Đổi tên</a></li>
-                        <li class="menu-item "><a class="link " href="manage?type=password">Đổi mật khẩu</a></li>
-                        <li class="menu-item "><a class="link " href="manage?type=mail">Đổi email</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <hr>
+        <%@ include file = "/jsps/components/_account-manage.header.jsp" %>
         <div class="account-manage__content u-centered u-row--1140 u-2x">
             <div>
                 <p class="u-3x u-align-center">Thông tin</p>
             </div>
-            <div class="row u-padding-bottom--05rem">
+            <div class="row u-padding-bottom--1-5rem">
                 <div class="col-md-5 u-align-right">
                     Tên:
                 </div>
@@ -66,7 +34,7 @@
                     <small><a class="link" href="manage?type=display-name">Thay đổi</a></small>
                 </div>
             </div>
-            <div class="row u-padding-bottom--05rem">
+            <div class="row u-padding-bottom--1-5rem">
                 <div class="col-md-5 u-align-right">
                     Tài khoản:
                 </div>
@@ -74,7 +42,7 @@
                     <input class="u-width--50" type="text" value="aspiration" disabled>
                 </div>
             </div>
-            <div class="row u-padding-bottom--05rem">
+            <div class="row u-padding-bottom--1-5rem">
                 <div class="col-md-5 u-align-right">
                     Mật khẩu:
                 </div>
@@ -83,7 +51,7 @@
                     <small><a class="link" href="manage?type=password">Thay đổi</a></small>
                 </div>
             </div>
-            <div class="row u-padding-bottom--05rem">
+            <div class="row u-padding-bottom--1-5rem">
                 <div class="col-md-5 u-align-right">
                     Email:
                 </div>
