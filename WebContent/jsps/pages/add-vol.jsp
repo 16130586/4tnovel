@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="resources/local/css/style.css" />
 </head> 
 <body>
-	<%@ include file="/jsps/components/_header.jsp"%>
+	<div class="account-manage">
+		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 	<div class="add">
 	    <div class="u-align-center">
 	        <p class="u-5x">Thêm tập</p>
@@ -52,6 +53,6 @@
 	    </form>
 	    
 	</div>
-	<%@include file="/jsps/components/_footer.jsp"%>
+	</div>
 </body>
 </html>
