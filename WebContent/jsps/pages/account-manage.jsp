@@ -12,56 +12,53 @@
 	bootstraps custom-mize if you have using button , grid-system
 	custom css
 -->
-	<link
+<link
 	href="https://fonts.googleapis.com/css?family=Exo:400,400i,500,500i,800&amp;subset=vietnamese"
 	rel="stylesheet">
-    <link rel="stylesheet" href="resources/vendors/css/bootstrap-customize.css">
-    <link rel="stylesheet" href="resources/local/css/style.css" />
-</head> 
+<link rel="stylesheet"
+	href="resources/vendors/css/bootstrap-customize.css">
+<link rel="stylesheet" href="resources/local/css/style.css" />
+</head>
 <body>
 	<div class="account-manage">
-        <%@ include file = "/jsps/components/_account-manage.header.jsp" %>
-        <div class="account-manage__content u-centered u-row--1140 u-2x">
-            <div>
-                <p class="u-3x u-align-center">Thông tin</p>
-            </div>
-            <div class="row u-padding-bottom--1-5rem">
-                <div class="col-md-5 u-align-right">
-                    Tên:
-                </div>
-                <div class="col-md-7">
-                    <input class="u-width--50" type="text" value="Tuyên" disabled>
-                    <small><a class="link" href="manage?type=display-name">Thay đổi</a></small>
-                </div>
-            </div>
-            <div class="row u-padding-bottom--1-5rem">
-                <div class="col-md-5 u-align-right">
-                    Tài khoản:
-                </div>
-                <div class="col-md-7">
-                    <input class="u-width--50" type="text" value="aspiration" disabled>
-                </div>
-            </div>
-            <div class="row u-padding-bottom--1-5rem">
-                <div class="col-md-5 u-align-right">
-                    Mật khẩu:
-                </div>
-                <div class="col-md-7">
-                    <input class="u-width--50" type="text" value="**********" disabled>
-                    <small><a class="link" href="manage?type=password">Thay đổi</a></small>
-                </div>
-            </div>
-            <div class="row u-padding-bottom--1-5rem">
-                <div class="col-md-5 u-align-right">
-                    Email:
-                </div>
-                <div class="col-md-7">
-                    <input class="u-width--50" type="text" value="abc@mail.ngu.heo" disabled>
-                    <small><a class="link" href="manage?type=mail">Thay đổi</a></small>
-                </div>
-            </div>
-            <br>
-        </div>
-    </div>
+		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
+
+		<div class="account-manage__content u-centered u-row--1140 u-2x">
+			<div>
+				<p class="u-3x u-align-center">Thông tin</p>
+			</div>
+			<div class="row u-padding-bottom--1-5rem">
+				<div class="col-md-5 u-align-right">Tên:</div>
+				<div class="col-md-7">
+					<input class="u-width--50" type="text" value="Tuyên" disabled>
+					<small><a class="link" href="manage?type=display-name">Thay
+							đổi</a></small>
+				</div>
+			</div>
+			<div class="row u-padding-bottom--1-5rem">
+				<div class="col-md-5 u-align-right">Tài khoản:</div>
+				<div class="col-md-7">
+					<input class="u-width--50" type="text" value="aspiration" disabled>
+				</div>
+			</div>
+			<div class="row u-padding-bottom--1-5rem">
+				<div class="col-md-5 u-align-right">Mật khẩu:</div>
+				<div class="col-md-7">
+					<input class="u-width--50" type="text" value="**********" disabled>
+					<small><a class="link" href="manage?type=password">Thay
+							đổi</a></small>
+				</div>
+			</div>
+			<div class="row u-padding-bottom--1-5rem">
+				<div class="col-md-5 u-align-right">Email:</div>
+				<div class="col-md-7">
+					<input class="u-width--50" type="text" value="abc@mail.ngu.heo"
+						disabled> <small><a class="link"
+						href="manage?type=mail">Thay đổi</a></small>
+				</div>
+			</div>
+			<br>
+		</div>
+	</div>
 </body>
 </html>

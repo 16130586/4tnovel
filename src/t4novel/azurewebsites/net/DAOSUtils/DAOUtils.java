@@ -1,4 +1,4 @@
-package t4novel.azurewebsites.net.acessviasocial.DAOSUtils;
+package t4novel.azurewebsites.net.DAOSUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

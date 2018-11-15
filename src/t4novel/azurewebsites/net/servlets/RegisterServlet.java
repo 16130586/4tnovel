@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import t4novel.azurewebsites.net.acessviasocial.DAOSUtils.DAOUtils;
-import t4novel.azurewebsites.net.acessviasocial.DAOService.EmailCheckingService;
-import t4novel.azurewebsites.net.acessviasocial.DAOService.UserNameCheckingService;
+import t4novel.azurewebsites.net.DAOSUtils.DAOUtils;
+import t4novel.azurewebsites.net.DAOService.EmailCheckingService;
+import t4novel.azurewebsites.net.DAOService.UserNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.RegisterForm;
 import t4novel.azurewebsites.net.models.Account;
