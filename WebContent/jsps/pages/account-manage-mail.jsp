@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-md-7">
                         <a href="#" class="btn btn-primary u-color-white">Gửi mã OTP</a>
-                        <small>Hết hạn sau 5p</small>
+                        <small>Hết hạn sau 5 phút</small>
                     </div>
                 </div>
                 <div class="row u-padding-bottom--05rem">

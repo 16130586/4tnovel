@@ -25,7 +25,7 @@
                 <ul class="horizontal-menu--showcase ">
                     <li class="menu-item u-margin-left--1rem "><a class="link " href="index">Trang chủ</a></li>
                     <li class="menu-item u-margin-left--1rem "><a class="link " href="manage">Thông tin</a></li>
-                    <li class="menu-item u-margin-left--1rem "><a class="link " href="manage?type=my-novel">Truyện của tui</a></li>
+                    <li class="menu-item u-margin-left--1rem "><a class="link " href="manage?type=my-novel">Truyện của tôi</a></li>
                     <li class="menu-item u-margin-left--1rem dropdown-menu">
                         <a class="link " href="#">Thêm</a>
                         <div class="dropdown-content--bottom">

@@ -45,7 +45,7 @@
                     <ul class="vertical-menu--showcase ">
                         <li class="menu-item "><a class="link " href="manage ">displayname</a></li>
                         <hr>
-                        <li class="menu-item "><a class="link " href="manage?type=display-name">Đổi tên</a></li>
+                        <li class="menu-item "><a class="link " href="manage?type=display-name">Đổi biệt hiệu</a></li>
                         <li class="menu-item "><a class="link " href="manage?type=password">Đổi mật khẩu</a></li>
                         <li class="menu-item "><a class="link " href="manage?type=mail">Đổi email</a></li>
                     </ul>
@@ -55,7 +55,7 @@
         <hr>
         <div class="account-manage__content u-row--1140 u-centered">
             <div>
-                <p class="u-3x u-align-center">Đổi tên</p>
+                <p class="u-3x u-align-center">Đổi biệt hiệu</p>
             </div>
             <form>
                 <div class="row u-padding-bottom--05rem">
