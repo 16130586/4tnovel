@@ -65,6 +65,9 @@ body {
 .u-padding-right--05rem {
   padding-right: .5rem !important; }
 
+.u-padding-bottom--1-5rem {
+  padding-bottom: 1.5rem !important; }
+
 .u-inline-block {
   display: inline-block; }
 
@@ -233,6 +236,7 @@ body {
   .dropdown-menu .dropdown-btn {
     display: block; }
   .dropdown-menu .dropdown-content--right, .dropdown-menu .dropdown-content--bottom {
+    width: 8rem;
     transition: all .7s;
     position: absolute;
     display: none;
@@ -596,7 +600,8 @@ body {
     background-color: #fbfbfb;
     padding: 1rem; }
     .account-manage__nav .dropdown-content--bottom {
-      background-color: #fcfcfc; }
+      background-color: #fcfcfc;
+      width: auto; }
       .account-manage__nav .dropdown-content--bottom .menu-item {
         padding: .5rem; }
   .account-manage__content {
