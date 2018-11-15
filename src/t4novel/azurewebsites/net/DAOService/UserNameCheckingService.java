@@ -1,4 +1,4 @@
-package t4novel.azurewebsites.net.acessviasocial.DAOService;
+package t4novel.azurewebsites.net.DAOService;
 
 import java.sql.Connection;
 

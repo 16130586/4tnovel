@@ -1,4 +1,4 @@
-package t4novel.azurewebsites.net.acessviasocial.DAOService;
+package t4novel.azurewebsites.net.DAOService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class EmailCheckingService implements DAOService {
+public class EmailCheckingService extends BaseDaoService implements DAOService {
 	private Connection cnn;
 
 	public EmailCheckingService(Connection databaseConnection) {
