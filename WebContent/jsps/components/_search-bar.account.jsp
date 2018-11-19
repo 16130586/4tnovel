@@ -5,7 +5,8 @@
         <div class="search-bar u-centered u-align-center u-2x row" style="padding: 1rem">
             <div class="col-sm-2">
                 <select name="type" class="input">
-                    <option value="account"><label>Tài khoản</label></option>
+                    <option value="user-name"><label>Tài khoản</label></option>
+                    <option value="display-name"><label>Biệt hiệu</label></option>
                     <option value="email"><label>Mail</label></option>
                 </select>
             </div>
