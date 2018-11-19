@@ -20,7 +20,11 @@ public class Group {
 		this.dateCreate = dateCreate;
 		this.owner = owner;
 	}
-
+	
+	public Group() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
