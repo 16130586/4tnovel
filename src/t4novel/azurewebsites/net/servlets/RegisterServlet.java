@@ -68,10 +68,7 @@ public class RegisterServlet extends HttpServlet {
 			url = "/jsps/pages/register.jsp";
 			//mapping error to jsp!
 			//error == (errorType , errorMessage)
-			for (Entry<String, String> error : userSubmittedForm.getErrors().entrySet()) {
-				String errorName = error.getKey() + "Error";
-				request.setAttribute(errorName, error.getValue());
-			}
+			userSubmittedForm.applyErrorsToUI(request);
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}
 
