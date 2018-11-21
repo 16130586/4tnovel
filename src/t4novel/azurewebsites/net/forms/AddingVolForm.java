@@ -17,20 +17,23 @@ public class AddingVolForm extends AbstractMappingForm {
 	public AddingVolForm(HttpServletRequest request, Genrator idGenrator) {
 		this.idGenrator = idGenrator;
 		setTitle(request.getParameter("title"));
-		try {
-			setNovelOwnerId(Integer.parseInt(request.getParameter("in-novel")));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		setNovelOwnerId(request.getParameter("in-novel"));
 		setDescription(request.getParameter("description"));
 	}
-	
+
+	private void setNovelOwnerId(String parameter) {
+		try {
+			setNovelOwnerId(Integer.parseInt(parameter));
+		} catch (NumberFormatException e) {
+			errors.put("novelOwnerIdNotFount", "Unknow owner novel id!");
+		}
+	}
+
 	@Override
 	public String toString() {
 		return title + ", " + description + ", " + novelOwnerId;
 	}
-	
+
 	public AddingVolForm(Genrator iDGenrator) {
 		this.idGenrator = iDGenrator;
 	}
@@ -49,7 +52,7 @@ public class AddingVolForm extends AbstractMappingForm {
 		}
 
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -72,7 +75,6 @@ public class AddingVolForm extends AbstractMappingForm {
 	@Override
 	protected void assignDefaultErrorType() {
 		errorTypes = Arrays.asList("title", "novelOwnerId");
-
 	}
 
 	@Override

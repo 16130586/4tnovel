@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelGenre;
 import t4novel.azurewebsites.net.models.NovelKind;
@@ -21,18 +22,36 @@ public class AddingNovelForm extends AbstractMappingForm {
 	private NovelKind kind;
 	private List<NovelGenre> genres;
 	private Genrator idGenrator;
+	private Account owner;
 
 	public AddingNovelForm(HttpServletRequest request, Genrator idGenrator) {
 		this.idGenrator = idGenrator;
+		this.owner = (Account) request.getAttribute("account");
 		setTitle(request.getParameter("title"));
 		setDescription(request.getParameter("description"));
-		setGroupID(Integer.parseInt(request.getParameter("group")));
-		setKind(NovelKind.getNovelKind(Integer.parseInt(request.getParameter("type-novel"))));
+		setGroupID(request.getParameter("group"));
+		setKind(request.getParameter("type-novel"));
 		setGenres(getGenresFormRequest(request));
 	}
-	
+
 	public AddingNovelForm(Genrator generator) {
 		this.idGenrator = generator;
+	}
+
+	private void setKind(String parameter) {
+		try {
+			setKind(NovelKind.getNovelKind(Integer.parseInt(parameter)));
+		} catch (NumberFormatException e) {
+			errors.put("kindNotFound", "Kind not found!");
+		}
+	}
+
+	private void setGroupID(String parameter) {
+		try {
+			setGroupID(Integer.parseInt(parameter));
+		} catch (NumberFormatException e) {
+			errors.put("groupIDNotFound", "GroupID not found!");
+		}
 	}
 
 	private List<NovelGenre> getGenresFormRequest(HttpServletRequest request) {
@@ -58,7 +77,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Please make sure novel's title isn't empty");
+			errors.put("titleEmpty", "Please make sure novel's title isn't empty!");
 		} else if (StringUtil.isAllSpace(title)) {
 			errors.put("titleAllSpace", "Please remove all space and insert title!");
 		} else {
@@ -72,10 +91,10 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setDescription(String description) {
 		if (description == null || description.isEmpty()) {
-			errors.put("descriptionEmpty", "Please make sure novel's description isn't empty");
+			errors.put("descriptionEmpty", "Please make sure novel's description isn't empty!");
 		} else if (StringUtil.isAllSpace(description)) {
 			errors.put("descriptionAllSpace", "Please remove all space and insert description!");
-		}else {
+		} else {
 			this.description = description.trim();
 		}
 	}
@@ -117,7 +136,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	@Override
 	protected void assignDefaultErrorType() {
-		errorTypes = Arrays.asList("title", "genre", "description");
+		errorTypes = Arrays.asList("title", "genre", "description", "kind" , "groupID");
 
 	}
 
@@ -138,6 +157,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 		rs.setGenres(getGenres());
 		rs.setKind(getKind());
 		rs.setGroupId(getGroupID());
+		rs.setOwner(owner);
 		return rs;
 	}
 
