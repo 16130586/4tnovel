@@ -1,9 +1,14 @@
 package t4novel.azurewebsites.net.models;
 
 import java.util.List;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Group {
+public class Group implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private List<Account> accounts;
 	private String name;
@@ -20,11 +25,11 @@ public class Group {
 		this.dateCreate = dateCreate;
 		this.owner = owner;
 	}
-	
+
 	public Group() {
-		
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}

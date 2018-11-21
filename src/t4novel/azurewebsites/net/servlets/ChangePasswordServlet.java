@@ -20,13 +20,13 @@ import t4novel.azurewebsites.net.forms.ChangePasswordForm;
  * Servlet implementation class ChangePassword
  */
 @WebServlet("/changePassword")
-public class ChangePassword extends HttpServlet {
+public class ChangePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangePassword() {
+    public ChangePasswordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,10 +53,7 @@ public class ChangePassword extends HttpServlet {
 		}
 		//mapping loi toi user interface
 		else {
-			for(Entry<String , String> error : changePasswordForm.getErrors().entrySet()) {
-				String errorName = error.getKey().concat("Error");
-				request.setAttribute(errorName, error.getValue());
-			}
+			changePasswordForm.applyErrorsToUI(request);
 		}
 	}
 

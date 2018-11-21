@@ -8,6 +8,7 @@ import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Group;
 import t4novel.azurewebsites.net.utils.Genrator;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingGroupForm extends AbstractMappingForm {
 	private String name;
@@ -37,6 +38,8 @@ public class AddingGroupForm extends AbstractMappingForm {
 	public void setName(String name) {
 		if (name == null || name.isEmpty()) {
 			errors.put("nameEmpty", "Please fill group name!");
+		}else if(StringUtil.isAllSpace(name)) {
+			errors.put("nameAllSpace", "Please remove your spaces and insert group name!");
 		} else {
 			// TODO write query to check correctPassword
 			boolean isExistedGroupName = existedGroupNameChecker.check(name,

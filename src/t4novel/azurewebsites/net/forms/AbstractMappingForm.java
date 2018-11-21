@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public abstract class AbstractMappingForm {
 	protected List<String> errorTypes = null;
 	protected Map<String, String> errors = null;
@@ -42,11 +45,10 @@ public abstract class AbstractMappingForm {
 	}
 
 	/***
-	 * @author 16130586 
-	 * @return Một form luôn luôn có 1 tập các lỗi, mỗi lỗi thuộc 1
-	 *         type lỗi liên quan đến 1 field của form vì vậy khi khai báo một
-	 *         mapping form class phải override và khai báo tập lỗi, để làm đầu vào
-	 *         cho hàm getErrors()
+	 * @author 16130586
+	 * @return Một form luôn luôn có 1 tập các lỗi, mỗi lỗi thuộc 1 type lỗi liên
+	 *         quan đến 1 field của form vì vậy khi khai báo một mapping form class
+	 *         phải override và khai báo tập lỗi, để làm đầu vào cho hàm getErrors()
 	 */
 	protected abstract void assignDefaultErrorType();
 
@@ -58,4 +60,11 @@ public abstract class AbstractMappingForm {
 	 *         vào của người dùng instance object đã định nghĩa ở concrete class
 	 */
 	public abstract Object getMappingData();
+
+	public void applyErrorsToUI(HttpServletRequest request) {
+		for (Entry<String, String> errorType : getErrors().entrySet()) {
+			String errorName = errorType.getKey().concat("Error");
+			request.setAttribute(errorName, errorType.getValue());
+		}
+	}
 }

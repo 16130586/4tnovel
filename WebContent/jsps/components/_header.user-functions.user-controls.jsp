@@ -7,7 +7,7 @@
 	<div id="user-controls" class="dropdown-content--bottom u-transformX-50 card">
 		<ul class="vertical-menu--showcase">
 			<li class="menu-item">
-				<a class="btn" href="#">Quản lý</a>
+				<a class="btn" href="manage">Quản lý</a>
 			</li>
 			<li class="menu-item ">
 				<a class="btn" href="#">Đăng xuất</a>
