@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
-import t4novel.azurewebsites.net.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
 import t4novel.azurewebsites.net.models.Chap;
@@ -47,13 +46,11 @@ public class AddingChapterServlet extends HttpServlet {
 		AbstractMappingForm form = new AddingChapterForm(request, genrator);
 		if(!form.isOnError()) {
 			//TODO writing to db , and something related
-			DAOUtils daoUtil = DAOUtils.getInstance();
-			Connection cnn = daoUtil.getConnection();
+			Connection cnn = (Connection) request.getAttribute("connection");
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
 			
 			chapDAO.insertChapter(chapter);
-			daoUtil.close(cnn);
 			// set sucessed for user
 			request.setAttribute("sucessed", "Adding new chapter done!");
 		}
