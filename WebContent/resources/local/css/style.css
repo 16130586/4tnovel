@@ -182,6 +182,13 @@ body {
   color: #DF3232;
   font-size: 1.8rem; }
 
+.u-paragraph {
+  font-szie: 1.8rem; }
+  .u-paragraph--failed {
+    color: #DF3232 !important; }
+  .u-paragraph--sucessed {
+    color: #28a745 !important; }
+
 .u-row--1140 {
   max-width: 1140px; }
 
