@@ -21,7 +21,7 @@ public class Account implements Serializable {
 	private List<Thread> threads;
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
-	private List<Group> jointGroups;
+	private List<Group> joinGroups;
 
 	private boolean isBanned;
 
@@ -168,11 +168,11 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 
-	public List<Group> getJointGroup() {
-		return jointGroups;
+	public List<Group> getJoinGroup() {
+		return joinGroups;
 	}
 
-	public void setJointGroup(List<Group> jointGroup) {
-		this.jointGroups = jointGroup;
+	public void setJoinGroup(List<Group> jointGroup) {
+		this.joinGroups = jointGroup;
 	}
 }

@@ -27,7 +27,7 @@
 				<p class="u-5x">Thêm chương</p>
 			</div>
 
-			<form action="add" method="post">
+			<form action="add?type=add-chapter" method="post">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu

@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,9 +23,9 @@ public class AddingVolForm extends AbstractMappingForm {
 
 	private void setNovelOwnerId(String parameter) {
 		try {
-			setNovelOwnerId(Integer.parseInt(parameter));
+			//setNovelOwnerId(Integer.parseInt(parameter));
 		} catch (NumberFormatException e) {
-			errors.put("novelOwnerIdNotFount", "Unknow owner novel id!");
+			//errors.put("novelOwnerIdNotFount", "Unknow owner novel id!");
 		}
 	}
 
@@ -84,10 +84,10 @@ public class AddingVolForm extends AbstractMappingForm {
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Vol rs = new Vol();
 		rs.setId(idGenrator.nextInt());
-		rs.setDateUp(new Date());
+		rs.setDateUp(new Date(1, 1, 1));
 		rs.setDescription(getDescription());
 		rs.setTitle(getTitle());
-		rs.setNovelOwnerId(getNovelOwnerId());
+		//rs.setNovelOwnerId(getNovelOwnerId());
 		return rs;
 	}
 
