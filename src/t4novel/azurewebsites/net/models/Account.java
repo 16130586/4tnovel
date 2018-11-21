@@ -1,11 +1,16 @@
 package t4novel.azurewebsites.net.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import t4novel.azurewebsites.net.sercurities.Role;
 
-public class Account {
+public class Account implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private Date dateCreate;
 	private String displayedName, userName, gmail, password;
@@ -16,6 +21,8 @@ public class Account {
 	private List<Thread> threads;
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
+	private List<Group> jointGroups;
+
 	private boolean isBanned;
 
 	public Account() {
@@ -159,5 +166,13 @@ public class Account {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Group> getJointGroup() {
+		return jointGroups;
+	}
+
+	public void setJointGroup(List<Group> jointGroup) {
+		this.jointGroups = jointGroup;
 	}
 }

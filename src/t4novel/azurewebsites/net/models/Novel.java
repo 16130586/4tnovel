@@ -1,9 +1,14 @@
 package t4novel.azurewebsites.net.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Novel {
+public class Novel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4535349598603561651L;
 	private int id, accountOwnerId;
 	private String name;
 	private String description;
@@ -18,6 +23,7 @@ public class Novel {
 	private NovelStatus status;
 	private NovelKind kind;
 	private int groupId;
+	
 
 	public Novel() {
 	}
@@ -136,6 +142,7 @@ public class Novel {
 	}
 
 	public void setOwner(Account owner) {
+		this.accountOwnerId  = owner.getId();
 		this.owner = owner;
 	}
 
