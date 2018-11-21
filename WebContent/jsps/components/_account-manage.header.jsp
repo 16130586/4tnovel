@@ -13,7 +13,9 @@
                         <li class="menu-item "><a class="link " href="add?type=add-novel">+Truyện</a></li>
                         <li class="menu-item "><a class="link " href="add?type=add-vol ">+Tập</a></li>
                         <li class="menu-item "><a class="link " href="add?type=add-chapter">+Chương</a></li>
-                        <li class="menu-item "><a class="link " href="add?type=add-chapter">+Nhóm</a></li>
+                        <li class="menu-item "><a class="link " href="add?type=add-group">+Nhóm</a></li>
+                        <li class="menu-item "><a class="link " href="add?type=add-member"
+                        									 style="white-space: nowrap;">+Thành viên</a></li>
                     </ul>
                 </div>
             </li>

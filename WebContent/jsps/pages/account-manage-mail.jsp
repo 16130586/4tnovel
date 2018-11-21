@@ -28,22 +28,6 @@
             <form>
                 <div class="row u-padding-bottom--1-5rem">
                     <div class="col-md-5 u-align-right">
-                        Nhập email hiện tại:
-                    </div>
-                    <div class="col-md-7">
-                        <input name="current-mail" class="u-width--50" type="mail" required>
-                    </div>
-                </div>
-                <div class="row u-padding-bottom--1-5rem">
-                    <div class="col-md-5 u-align-right">
-                    </div>
-                    <div class="col-md-7">
-                        <a href="#" class="btn btn-primary u-color-white">Gửi mã OTP</a>
-                        <small>Hết hạn sau 5 phút</small>
-                    </div>
-                </div>
-                <div class="row u-padding-bottom--1-5rem">
-                    <div class="col-md-5 u-align-right">
                         Nhập email mới:
                     </div>
                     <div class="col-md-7">
@@ -56,6 +40,8 @@
                     </div>
                     <div class="col-md-7">
                         <input name="otp" type="text" required>
+                        <a href="#" class="btn btn-primary u-color-white">Gửi mã OTP</a>
+                        <small>Hết hạn sau 5 phút</small>
                     </div>
                 </div>
                 <div class="row u-padding-bottom--1-5rem">

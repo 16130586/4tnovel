@@ -14,7 +14,7 @@
 	margin-top: 2rem !important;
 }
 .u-margin-top--1rem{
-	margin-top: 1rem !important;
+	margin-top: 1rem !important;ce
 }
 .u-margin-left--1rem {
     margin-left: 1rem !important;
@@ -154,6 +154,15 @@
 .u-text--error-display{
 	color: $color-red-tomatoe;
 	font-size: 1.8rem;
+}
+.u-paragraph{
+	font-szie: 1.8rem;
+	&--failed{
+		color: $color-red-tomatoe !important;
+	}
+	&--sucessed{
+		color: $color-green !important;
+	}	
 }
 .u-row--1140 {
 	max-width: 1140px;
