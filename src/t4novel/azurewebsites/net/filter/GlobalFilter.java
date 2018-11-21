@@ -54,6 +54,7 @@ public class GlobalFilter implements Filter {
 			System.out.println("accessing and get dts then get connect tion " + ds.getConnection());
 			cnn = ds.getConnection();
 			request.setAttribute("connection", cnn);
+
 		} catch (SQLTimeoutException  e) {
 			// TODO send Error take time too long bescause out of waiting time (10s)
 			e.printStackTrace();
