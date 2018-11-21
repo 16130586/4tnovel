@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/4TNOVEL">
+    <Resource name="jdbc/sqlserver" auth="Container" type="javax.sql.DataSource"
+               maxTotal="15" maxIdle="6" maxWaitMillis="10000"
+               username="thachpro44" password="mjsdhekoqa" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+               url="jdbc:sqlserver://localhost:6000;databaseName=4T"/>
+    
+</Context>
