@@ -8,17 +8,17 @@
 		</a>
 		<div class="dropdown-content--bottom">
 			<ul class="vertical-menu--showcase">
-				<li class="menu-item"><a href="#">Trang Chủ</a></li>
-				<li class="menu-item"><a href="#">tìm kiếm</a></li>
+				<li class="menu-item"><a href="index">Trang Chủ</a></li>
+				<li class="menu-item"><a href="search">tìm kiếm</a></li>
 				<li class="menu-item">
 					<div class="dropdown-menu">
 						<a class="dropdown-btn" href="#">tác phẩm</a>
 						<div class="dropdown-content--right">
 							<ul class="horizontal-menu--showcase u-width--18rem">
-								<li class="menu-item u-width--full"><a href="#" class=""
-									target="_blank" href="#">sáng tác</a></li>
-								<li class="menu-item u-width--full"><a href="#" class=""
-									target="_blank" href="#">truyện dịch</a></li>
+								<li class="menu-item u-width--full"><a class="link-btn"
+									target="_blank" href="see?author=user">sáng tác</a></li>
+								<li class="menu-item u-width--full"><a class="link-btn"
+									target="_blank" href="see?author=writer">truyện dịch</a></li>
 							</ul>
 						</div>
 					</div>
@@ -28,19 +28,18 @@
 						<a class="dropdown-btn" href="#">tâm sự</a>
 						<div class="dropdown-content--right">
 							<ul class="horizontal-menu--showcase u-width--18rem">
-								<li class="menu-item u-width--full"><a href="#" class=""
-									target="_blank" href="#">nhóm</a></li>
-								<li class="menu-item u-width--full"><a href="#" class=""
-									target="_blank" href="#">người lạ</a></li>
+								<li class="menu-item u-width--full"><a href="talk?target=group" class="link-btn"
+									target="_blank">nhóm</a></li>
+								<li class="menu-item u-width--full"><a href="talk?target=one" class="link-btn"
+									target="_blank">người lạ</a></li>
 							</ul>
 						</div>
 					</div>
 				</li>
-				<li class="menu-item"><a href="#">Thảo luận</a></li>
+				<li class="menu-item"><a href="forum">Thảo luận</a></li>
 				<c:if test="${empty account}">
-					<li class="menu-item"><a href="#">Đăng nhập</a></li>
+					<li class="menu-item"><a href="login">Đăng nhập</a></li>
 				</c:if>
-				<li class="menu-item"><a href="#">Trợ giúp</a></li>
 			</ul>
 		</div>
 	</div>
