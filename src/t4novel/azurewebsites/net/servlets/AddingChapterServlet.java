@@ -32,7 +32,7 @@ public class AddingChapterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		getServletContext().getRequestDispatcher("/jsps/pages/add-chapter.jsp").forward(request, response);
 	}
 
 	/**

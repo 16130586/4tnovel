@@ -32,7 +32,8 @@ public class AddingNovelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("forward here");
+		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
 	}
 
 	/**
