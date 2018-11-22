@@ -27,7 +27,7 @@ public class LoginViaGoogle extends HttpServlet {
      */
     public LoginViaGoogle() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**

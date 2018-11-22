@@ -3,12 +3,14 @@ package t4novel.azurewebsites.net.filter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLTimeoutException;
+import java.util.NoSuchElementException;
 
 import javax.sql.DataSource;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+
+import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.sercurities.SercureURLEngine;
+
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -22,8 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class GlobalFilter
  */
-@WebFilter("/*")
+@WebFilter(urlPatterns = "/*", dispatcherTypes = { DispatcherType.REQUEST, DispatcherType.FORWARD })
 public class GlobalFilter implements Filter {
+	static int requested = 0;
 
 	/**
 	 * Default constructor.
@@ -42,48 +45,69 @@ public class GlobalFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
+		// khi vao 1 url -> co quyen truy cap khong da ?
+		// quyen truy cap lay tu dau ? tu account
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
-		System.out.println("path info : " + servletRequest.getRequestURI());
-		// TODO xac dinh xem uri co can toi connection k, neu can thi cho
-		DataSource ds = (DataSource) request.getServletContext().getAttribute("datasource");
-		Connection cnn = null;
-		try {
-			System.out.println("get connection at: " + System.currentTimeMillis());
-			System.out.println("accessing and get dts then get connect tion " + ds.getConnection());
-			cnn = ds.getConnection();
-			request.setAttribute("connection", cnn);
+		HttpServletResponse servletResponse = (HttpServletResponse) response;
+		boolean isNeedLoginUrl = SercureURLEngine.isNeedLoginUrl(servletRequest.getServletPath(),
+				servletRequest.getMethod());
+		boolean isNeedDbConnection = SercureURLEngine.isNeedDbConnection(servletRequest.getServletPath(),
+				servletRequest.getMethod());
+		Account account = (Account) servletRequest.getAttribute("account");
 
-		} catch (SQLTimeoutException  e) {
-			// TODO send Error take time too long bescause out of waiting time (10s)
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO send error with 500
-			((HttpServletResponse) response).sendError(500);
+		if (isNeedLoginUrl && account == null) {
+			System.out.println("redirec on bad request");
+			servletResponse.sendRedirect("login");
+			return;
 		}
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
-		if (cnn != null) {
+		boolean isAllowedToAccess = false;
+		if (account != null) {
+			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), servletRequest.getServletPath());
+		}
+		if (isNeedLoginUrl && account != null && !isAllowedToAccess) {
+			System.out.println("sedding on bad request! " + servletRequest.getServletPath());
+			servletResponse.sendError(404);
+			return;
+		}
+
+		DataSource ds = null;
+		Connection cnn = null;
+
+		if (isNeedDbConnection) {
 			try {
-				
-				System.out.println("closing connection at : " + System.currentTimeMillis() + " " + cnn.getClass().hashCode());
-				cnn.close();
-				cnn = null;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				ds = (DataSource) request.getServletContext().getAttribute("datasource");
+				cnn = ds.getConnection();
+				request.setAttribute("connection", cnn);
+			} catch (NoSuchElementException e) {
+				System.out.println(servletRequest.getRequestURI() + "waiting too long!");
 				e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("Some error then send code 500 " + e.getMessage());
+				e.printStackTrace();
+				((HttpServletResponse) response).sendError(408);
+				return;
 			}
 
-		}
+			// pass the request along the filter chain
+			chain.doFilter(request, response);
+			if (cnn != null) {
+				try {
+					System.out.println(
+							"closing connection at : " + System.currentTimeMillis() + " " + cnn.getClass().hashCode());
+					cnn.close();
+					cnn = null;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 
+			}
+		}
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		System.out.println("Init global filter");
 	}
 
 }

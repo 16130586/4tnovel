@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Servlet implementation class AddServlet
  */
@@ -23,7 +22,6 @@ public class AddServlet extends HttpServlet {
 	 */
 	public AddServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -35,19 +33,18 @@ public class AddServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		String url = "";
 		if ("add-novel".equals(type)) {
-			url = "/jsps/pages/add-novel.jsp";
-		}
-		if ("add-vol".equals(type)) {
-			url = "/jsps/pages/add-vol.jsp";
-		}
-		if ("add-chapter".equals(type)) {
-			url = "/jsps/pages/add-chapter.jsp";
-		}
-		if ("add-group".equals(type)) {
-			url = "/jsps/pages/add-group.jsp";
-		}
-		if ("add-member".equals(type)) {
-			url = "/jsps/pages/add-member.jsp";
+			url = "/add-novel";
+		} else if ("add-vol".equals(type)) {
+			url = "/add-vol";
+		} else if ("add-chapter".equals(type)) {
+			url = "/add-chapter";
+		} else if ("add-group".equals(type)) {
+			url = "/add-group";
+		} else if ("add-member".equals(type)) {
+			url = "/add-member";
+		} else {
+			response.sendError(404);
+			return;
 		}
 
 		getServletContext().getRequestDispatcher(url).forward(request, response);
@@ -67,17 +64,21 @@ public class AddServlet extends HttpServlet {
 		if ("add-novel".equals(type)) {
 			url = "/add-novel";
 		}
-		if ("add-vol".equals(type)) {
+		else if ("add-vol".equals(type)) {
 			url = "/add-vol";
 		}
-		if ("add-chapter".equals(type)) {
+		else	if ("add-chapter".equals(type)) {
 			url = "/add-chapter";
 		}
-		if ("add-group".equals(type)) {
+		else if ("add-group".equals(type)) {
 			url = "/add-group";
 		}
-		if ("add-member".equals(type)) {
+		else	if ("add-member".equals(type)) {
 			url = "/add-member";
+		}
+		else {
+			response.sendError(404);
+			return;
 		}
 		System.out.println("forward!!! on add servlet");
 		getServletContext().getRequestDispatcher(url).forward(request, response);

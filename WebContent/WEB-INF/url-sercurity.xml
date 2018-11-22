@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<url-sercutiry>
+	<url pattern="">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/login">
+		<method name="get">
+			<login>false</login>
+			<connection>false</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/forgot">
+		<method name="get">
+			<login>false</login>
+			<connection>false</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/add">
+		<method name="get">
+			<login>true</login>
+			<connection>false</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/add-novel">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/add-vol">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/add-chapter">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/add-group">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/add-member">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/changePassword">
+		<method name="get">
+			<login>true</login>
+			<connection>false</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/forum">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage">
+		<method name="get">
+			<login>true</login>
+			<connection>false</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/detail">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/read">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/register">
+		<method name="post">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/search">
+		<method name="post">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/see">
+		<method name="get">
+			<login>false</login>
+			<connection>false</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+</url-sercutiry>

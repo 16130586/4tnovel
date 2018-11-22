@@ -2,7 +2,6 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import t4novel.azurewebsites.net.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.ExistedPasswordCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -28,7 +26,7 @@ public class ChangePasswordServlet extends HttpServlet {
      */
     public ChangePasswordServlet() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
 	/**
@@ -42,7 +40,7 @@ public class ChangePasswordServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection cnn = DAOUtils.getInstance().getConnection();
+		Connection cnn =(Connection) request.getAttribute("connection");
 		DAOService existedPasswordChecker = new ExistedPasswordCheckingService(cnn);
 		AbstractMappingForm changePasswordForm = new ChangePasswordForm(request, existedPasswordChecker);
 		if(!changePasswordForm.isOnError()) {
