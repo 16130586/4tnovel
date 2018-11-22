@@ -31,7 +31,6 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 			DataSource ds = (DataSource) envContext.lookup("jdbc/sqlserver");
 			ev.getServletContext().setAttribute("datasource", ds);
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

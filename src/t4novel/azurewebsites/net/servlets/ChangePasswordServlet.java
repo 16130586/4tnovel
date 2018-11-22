@@ -26,7 +26,7 @@ public class ChangePasswordServlet extends HttpServlet {
      */
     public ChangePasswordServlet() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
 	/**
