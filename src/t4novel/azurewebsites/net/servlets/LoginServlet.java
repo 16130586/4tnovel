@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import t4novel.azurewebsites.net.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.LoginCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -28,16 +27,13 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		DAOUtils daoUtil = DAOUtils.getInstance();
-		Connection cnn = daoUtil.getConnection();
+		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService loginCheckingService = new LoginCheckingService(cnn);
 		AbstractMappingForm loginForm = new LoginForm(request, loginCheckingService);
 		
@@ -58,7 +54,6 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		
-		daoUtil.close(cnn);
 	}
 
 	/**

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import t4novel.azurewebsites.net.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.DAOService.EmailCheckingService;
 import t4novel.azurewebsites.net.DAOService.UserNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -49,8 +48,7 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		DAOUtils daoUtil = DAOUtils.getInstance();
-		Connection cnn = daoUtil.getConnection();
+		Connection cnn = (Connection) request.getAttribute("connection");
 		Genrator genrator = Genrator.getInstance();
 		AbstractMappingForm userSubmittedForm = new RegisterForm(request, new EmailCheckingService(cnn),
 				new UserNameCheckingService(cnn), genrator);
@@ -72,7 +70,6 @@ public class RegisterServlet extends HttpServlet {
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}
 
-		daoUtil.close(cnn);
 		
 	}
 }
