@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class GlobalFilter
  */
-@WebFilter(urlPatterns = "/*", dispatcherTypes = {DispatcherType.REQUEST , DispatcherType.FORWARD})
+@WebFilter(urlPatterns = "/*", dispatcherTypes = { DispatcherType.REQUEST, DispatcherType.FORWARD })
 public class GlobalFilter implements Filter {
 	static int requested = 0;
 
@@ -54,25 +54,25 @@ public class GlobalFilter implements Filter {
 		boolean isNeedDbConnection = SercureURLEngine.isNeedDbConnection(servletRequest.getServletPath(),
 				servletRequest.getMethod());
 		Account account = (Account) servletRequest.getAttribute("account");
-		
+
 		if (isNeedLoginUrl && account == null) {
 			System.out.println("redirec on bad request");
 			servletResponse.sendRedirect("login");
 			return;
 		}
 		boolean isAllowedToAccess = false;
-		if(account != null) {
-			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole() , servletRequest.getServletPath());
+		if (account != null) {
+			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), servletRequest.getServletPath());
 		}
-		if(isNeedLoginUrl && account != null && !isAllowedToAccess) {
+		if (isNeedLoginUrl && account != null && !isAllowedToAccess) {
 			System.out.println("sedding on bad request! " + servletRequest.getServletPath());
 			servletResponse.sendError(404);
 			return;
 		}
-		
 
 		DataSource ds = null;
 		Connection cnn = null;
+
 		if (isNeedDbConnection) {
 			try {
 				ds = (DataSource) request.getServletContext().getAttribute("datasource");
@@ -87,21 +87,21 @@ public class GlobalFilter implements Filter {
 				((HttpServletResponse) response).sendError(408);
 				return;
 			}
-		}
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
-		if (cnn != null) {
-			try {
-				System.out.println(
-						"closing connection at : " + System.currentTimeMillis() + " " + cnn.getClass().hashCode());
-				cnn.close();
-				cnn = null;
-			} catch (SQLException e) {
-				e.printStackTrace();
+
+			// pass the request along the filter chain
+			chain.doFilter(request, response);
+			if (cnn != null) {
+				try {
+					System.out.println(
+							"closing connection at : " + System.currentTimeMillis() + " " + cnn.getClass().hashCode());
+					cnn.close();
+					cnn = null;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
 			}
-
 		}
-
 	}
 
 	/**

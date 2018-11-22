@@ -35,8 +35,8 @@
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
 								đề: <span style="color: red">*</span>
 						</label></td>
-						<td><input name="" class="u-width--full" type="text"
-							style="padding: .5rem" name="title" required></td>
+						<td><input name="title" class="u-width--full" type="text"
+							style="padding: .5rem" required></td>
 					</tr>
 					<tr>
 						<td colspan="3" class="u-align-center"><p class="u-paragraph--failed">${titleError}</p> </td>
@@ -57,10 +57,10 @@
 
 						<td><select name="group" style="padding: .5rem">
 								<!-- option value="nhom dich id" -->
-								<c:forEach var="group" items="${account.jointGroups}">
+								<c:forEach var="group" items="${account.joinGroups}">
 									<option value="${group.id }">${group.name }</option>
 								</c:forEach>
-						</select> <c:if test="${empty account.jointGroups}">
+						</select> <c:if test="${empty account.joinGroups}">
 								<a class="u-paragraph--sucessed u-margin-left--2rem"
 									href="add?type=add-group" target="_blank">Create new group
 									here!</a>
