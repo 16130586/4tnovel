@@ -23,7 +23,22 @@
         .btn {
             padding: .5rem 1rem .5rem 1rem !important;
         }
+        .admin-nav {
+            background-color: #2f353a;
+            label {
+                color: #e4e7ea; 
+                font-weight: 500;
+            }
+            .menu-item:hover {
+                background-color: #3e464d;
+            }
+            .menu-item {
+                padding-left: 1rem;
+                font-size: 1.7rem;
+            }
+        }
     }
+    
 }
 
     

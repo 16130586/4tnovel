@@ -32,6 +32,7 @@ public class ManageAccountServlet extends HttpServlet {
 		if("display-name".equals(type)) url = "/jsps/pages/account-manage-display-name.jsp";
 		if("mail".equals(type)) url = "/jsps/pages/account-manage-mail.jsp";
 		if("my-novel".equals(type)) url = "/jsps/pages/account-manage-my-novel.jsp";
+		if("admin".equals(type)) url = "/jsps/pages/account-manage-admin.jsp";
 		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 		

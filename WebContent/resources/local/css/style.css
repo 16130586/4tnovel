@@ -619,3 +619,13 @@ body {
       background-color: #fbfbfb; }
     .account-manage__content .btn {
       padding: .5rem 1rem .5rem 1rem !important; }
+    .account-manage__content .admin-nav {
+      background-color: #2f353a; }
+      .account-manage__content .admin-nav label {
+        color: #e4e7ea;
+        font-weight: 500; }
+      .account-manage__content .admin-nav .menu-item:hover {
+        background-color: #3e464d; }
+      .account-manage__content .admin-nav .menu-item {
+        padding-left: 1rem;
+        font-size: 1.7rem; }
