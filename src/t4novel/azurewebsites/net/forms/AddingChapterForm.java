@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.utils.Genrator;
@@ -92,7 +92,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Chap rs = new Chap();
 		rs.setId(idGenerator.nextInt());
-		rs.setDateUp(new Date());
+		rs.setDateUp(new Date(1,1,1));
 		rs.setTitle(getTitle());
 		rs.setContent(getContent());
 		rs.setVolOwnerId(getInVol());

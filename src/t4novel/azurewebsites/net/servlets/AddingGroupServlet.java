@@ -2,7 +2,6 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.models.Group;
 
-import t4novel.azurewebsites.net.DAOSUtils.DAOUtils;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.ExistedDisplayedNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -53,7 +51,7 @@ public class AddingGroupServlet extends HttpServlet {
 		// TODO adding catching error on jsp form
 		// TODO adding catching success on jsp form
 		Genrator idGenrator = Genrator.getInstance();
-		Connection databaseConnection = DAOUtils.getInstance().getConnection();
+		Connection databaseConnection = (Connection) request.getAttribute("connection");
 		DAOService existedGroupNameChecker = new ExistedDisplayedNameCheckingService(databaseConnection);
 		AbstractMappingForm submitedForm = new AddingGroupForm(request, idGenrator, existedGroupNameChecker);
 		if (!submitedForm.isOnError()) {
