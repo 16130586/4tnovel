@@ -7,9 +7,11 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
+
+import t4novel.azurewebsites.net.sercurities.SercureURLEngine;
 @WebListener
 public class ConfigurationOnLifeContainerLifeCircle implements ServletContextListener {
-
+	private static final String URL_SERCURITY_PATH = "/WEB-INF/url-sercurity.xml";
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// saving idGenrator
@@ -22,6 +24,7 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 		// loading idGenrator
 		// loading dbConnectionBroker
 		System.out.println("server loading");
+		SercureURLEngine.loadURLPatterns(ev.getServletContext().getRealPath(URL_SERCURITY_PATH));
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
