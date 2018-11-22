@@ -537,8 +537,7 @@ body {
     .search-result table {
       margin-bottom: .5rem; }
   .search-account {
-    width: 1140px;
-    background-color: #f3f3f3; }
+    width: 1140px; }
     .search-account .search-bar {
       width: 80%; }
   .search .account-info {
@@ -613,7 +612,7 @@ body {
         padding: .5rem; }
   .account-manage__content {
     background-color: #f7f7f7;
-    height: 750px;
+    height: 700px;
     overflow-y: scroll; }
     .account-manage__content section > .row:first-child {
       background-color: #fbfbfb; }

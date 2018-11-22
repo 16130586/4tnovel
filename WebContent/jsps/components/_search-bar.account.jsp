@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div class="search-account u-centered">
-    <form method="post">
+    <form action="search?type=account" method="post">
         <div class="search-bar u-centered u-align-center u-2x row" style="padding: 1rem">
             <div class="col-sm-2">
                 <select name="type" class="input">
