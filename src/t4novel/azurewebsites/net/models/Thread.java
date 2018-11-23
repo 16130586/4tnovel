@@ -12,6 +12,10 @@ public class Thread {
 	private List<Account> follows;
 	private Account owner;
 
+	public Thread() {
+		
+	}
+	
 	public Thread(int id, String title, String content, List<Comment> comments, List<Account> blockAccounts,
 			List<Account> follows, Account owner) {
 		super();

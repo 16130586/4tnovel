@@ -119,7 +119,7 @@ public class Account implements Serializable {
 	public void setAutoPassPushlishment(boolean isAutoPassPushlishment) {
 		this.isAutoPassPushlishment = isAutoPassPushlishment;
 	}
-
+	
 	public List<Thread> getThreads() {
 		return threads;
 	}

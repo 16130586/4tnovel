@@ -9,6 +9,10 @@ public class BookMark {
 	private Date time;
 	private String title;
 
+	public BookMark() {
+		
+	}
+	
 	public BookMark(String title) {
 		super();
 		this.title = title;
