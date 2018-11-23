@@ -9,20 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
-import t4novel.azurewebsites.net.utils.Genrator;
 
 public class RegisterForm extends AbstractMappingForm {
 	private String userName, gmai, password, rePassword;
 	private boolean isAcceptedRule;
 	private DAOService emailService, usernameService;
-	private Genrator genrator;
 
-	public RegisterForm(HttpServletRequest request, DAOService checkingEmailService, DAOService usernameService,
-			Genrator genrator) {
+	public RegisterForm(HttpServletRequest request, DAOService checkingEmailService,
+			DAOService usernameService) {
 		super();
 		this.emailService = checkingEmailService;
 		this.usernameService = usernameService;
-		this.genrator = genrator;
 		setUserName(request.getParameter("username"));
 		setEmail(request.getParameter("email"));
 		setPassword(request.getParameter("password"));
@@ -124,7 +121,6 @@ public class RegisterForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT RegisterForm, getMappingData()");
 		Account rs = new Account();
-		rs.setId(this.genrator.nextInt());
 		rs.setDateCreate(new Date());
 		rs.setGmail(this.gmai);
 		rs.setUserName(this.userName);

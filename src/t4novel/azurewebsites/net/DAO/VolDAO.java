@@ -18,13 +18,12 @@ public class VolDAO {
 
 	public void insertVol(Vol vol) {
 		PreparedStatement stmt;
-		String querry = "INSERT INTO VOL (ID, ID_LN, DESCRIBE, DATEUP) VALUES (?, ?, ?, ?)";
+		String querry = "INSERT INTO VOL (ID_LN, DESCRIBE, DATEUP) VALUES (?, ?, ?)";
 		try {
 			stmt = cnn.prepareStatement(querry);
-			stmt.setInt(1, vol.getId());
-			stmt.setInt(2, vol.getNovelOwnerId());
-			stmt.setString(3, vol.getDescription());
-			stmt.setDate(4, (Date) vol.getDateUp());
+			stmt.setInt(1, vol.getNovelOwnerId());
+			stmt.setString(2, vol.getDescription());
+			stmt.setDate(3, (Date) vol.getDateUp());
 			ResultSet rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -117,14 +117,13 @@ public class NovelDAO {
 
 	public void insertNovel(Novel novel) {
 		PreparedStatement stmt;
-		String querry = "INSERT INTO LN (ID, NAME, DESCRIBE, DATEUP, IDOWNER) VALUES (?, ?, ?, ?, ?)";
+		String querry = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER) VALUES (?, ?, ?, ?)";
 		try {
 			stmt = cnn.prepareStatement(querry);
-			stmt.setInt(1, novel.getId());
-			stmt.setString(2, novel.getName());
-			stmt.setString(3, novel.getDescription());
-			stmt.setDate(4, (Date) novel.getDateUp());
-			stmt.setInt(5, novel.getAccountOwnerId());
+			stmt.setString(1, novel.getName());
+			stmt.setString(2, novel.getDescription());
+			stmt.setDate(3, (Date) novel.getDateUp());
+			stmt.setInt(4, novel.getAccountOwnerId());
 			stmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

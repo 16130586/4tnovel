@@ -13,7 +13,6 @@ import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingVolForm;
 import t4novel.azurewebsites.net.models.Vol;
-import t4novel.azurewebsites.net.utils.Genrator;
 
 /**
  * Servlet implementation class AddingVolServlet
@@ -42,8 +41,7 @@ public class AddingVolServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Genrator idGenrator = Genrator.getInstance();
-		AbstractMappingForm form = new AddingVolForm(request, idGenrator);
+		AbstractMappingForm form = new AddingVolForm(request);
 		if(!form.isOnError()) {
 			//TODO writing to db , and something related
 			Connection cnn = (Connection) request.getAttribute("connection");

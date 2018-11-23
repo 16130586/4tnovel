@@ -15,7 +15,6 @@ import t4novel.azurewebsites.net.DAOService.UserNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.RegisterForm;
 import t4novel.azurewebsites.net.models.Account;
-import t4novel.azurewebsites.net.utils.Genrator;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -49,9 +48,8 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Connection cnn = (Connection) request.getAttribute("connection");
-		Genrator genrator = Genrator.getInstance();
 		AbstractMappingForm userSubmittedForm = new RegisterForm(request, new EmailCheckingService(cnn),
-				new UserNameCheckingService(cnn), genrator);
+				new UserNameCheckingService(cnn));
 
 		String url = "";
 		if (!userSubmittedForm.isOnError()) {

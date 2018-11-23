@@ -7,17 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Group;
-import t4novel.azurewebsites.net.utils.Genrator;
 import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingGroupForm extends AbstractMappingForm {
 	private String name;
-	private Genrator idGenrator;
 	private DAOService existedGroupNameChecker;
 	private Account ownerAcc;
 	
-	public AddingGroupForm(HttpServletRequest request, Genrator idGenrator, DAOService existedGroupNameChecker) {
-		this.idGenrator = idGenrator;
+	public AddingGroupForm(HttpServletRequest request, DAOService existedGroupNameChecker) {
 		this.existedGroupNameChecker = existedGroupNameChecker;
 		setName(request.getParameter("group-name"));
 		this.ownerAcc = (Account) request.getSession().getAttribute("account");
@@ -59,14 +56,6 @@ public class AddingGroupForm extends AbstractMappingForm {
 		this.existedGroupNameChecker = existedGroupNameChecker;
 	}
 
-	public Genrator getIdGenrator() {
-		return idGenrator;
-	}
-
-	public void setIdGenrator(Genrator idGenrator) {
-		this.idGenrator = idGenrator;
-	}
-
 	@Override
 	protected void assignDefaultErrorType() {
 		errorTypes = Arrays.asList("name");		
@@ -78,7 +67,6 @@ public class AddingGroupForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingGroupForm, getMappingData()");
 		Group rs = new Group();
-		rs.setId(idGenrator.nextInt());
 		rs.setName(getName());
 		rs.setOwner(getOwnerAcc());
 		return rs;

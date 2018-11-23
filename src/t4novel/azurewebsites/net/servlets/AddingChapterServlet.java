@@ -13,7 +13,6 @@ import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.utils.Genrator;
 
 /**
  * Servlet implementation class AddingChapterServlet
@@ -41,8 +40,7 @@ public class AddingChapterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Genrator genrator = Genrator.getInstance();
-		AbstractMappingForm form = new AddingChapterForm(request, genrator);
+		AbstractMappingForm form = new AddingChapterForm(request);
 		if(!form.isOnError()) {
 			//TODO writing to db , and something related
 			Connection cnn = (Connection) request.getAttribute("connection");

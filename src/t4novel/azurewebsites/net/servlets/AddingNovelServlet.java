@@ -13,7 +13,6 @@ import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingNovelForm;
 import t4novel.azurewebsites.net.models.Novel;
-import t4novel.azurewebsites.net.utils.Genrator;
 
 /**
  * Servlet implementation class AddingNovelServlet
@@ -44,8 +43,7 @@ public class AddingNovelServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Genrator idGenrator = Genrator.getInstance();
-		AbstractMappingForm form = new AddingNovelForm(request, idGenrator);
+		AbstractMappingForm form = new AddingNovelForm(request);
 		
 		if(!form.isOnError()) {
 			//TODO write to dtb , apply to account 

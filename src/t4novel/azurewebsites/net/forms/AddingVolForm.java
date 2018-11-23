@@ -6,16 +6,13 @@ import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import t4novel.azurewebsites.net.models.Vol;
-import t4novel.azurewebsites.net.utils.Genrator;
 import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingVolForm extends AbstractMappingForm {
 	private String title, description;
 	private int novelOwnerId;
-	private Genrator idGenrator;
 
-	public AddingVolForm(HttpServletRequest request, Genrator idGenrator) {
-		this.idGenrator = idGenrator;
+	public AddingVolForm(HttpServletRequest request) {
 		setTitle(request.getParameter("title"));
 		setNovelOwnerId(request.getParameter("in-novel"));
 		setDescription(request.getParameter("description"));
@@ -32,10 +29,6 @@ public class AddingVolForm extends AbstractMappingForm {
 	@Override
 	public String toString() {
 		return title + ", " + description + ", " + novelOwnerId;
-	}
-
-	public AddingVolForm(Genrator iDGenrator) {
-		this.idGenrator = iDGenrator;
 	}
 
 	public String getTitle() {
@@ -83,7 +76,6 @@ public class AddingVolForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Vol rs = new Vol();
-		rs.setId(idGenrator.nextInt());
 		rs.setDateUp(new Date(1, 1, 1));
 		rs.setDescription(getDescription());
 		rs.setTitle(getTitle());

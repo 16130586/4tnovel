@@ -4,17 +4,14 @@ import java.util.Arrays;
 import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.utils.Genrator;
 import t4novel.azurewebsites.net.utils.StringUtil;;
 
 public class AddingChapterForm extends AbstractMappingForm {
 
 	private String title, content;
 	private int inVol, inNovel;
-	private Genrator idGenerator;
 
-	public AddingChapterForm(HttpServletRequest request, Genrator generator) {
-		this.idGenerator = generator;
+	public AddingChapterForm(HttpServletRequest request) {
 		setTitle(request.getParameter("title"));
 		setContent(request.getParameter("content"));
 		try {
@@ -25,10 +22,6 @@ public class AddingChapterForm extends AbstractMappingForm {
 			errors.put("inVolNumberFormat", "Please format inVol!");
 			e.printStackTrace();
 		}
-	}
-
-	public AddingChapterForm(Genrator idGenrator) {
-		this.idGenerator = idGenrator;
 	}
 
 	@Override
@@ -91,7 +84,6 @@ public class AddingChapterForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Chap rs = new Chap();
-		rs.setId(idGenerator.nextInt());
 		rs.setDateUp(new Date(1,1,1));
 		rs.setTitle(getTitle());
 		rs.setContent(getContent());

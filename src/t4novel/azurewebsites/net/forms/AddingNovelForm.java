@@ -12,7 +12,6 @@ import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelGenre;
 import t4novel.azurewebsites.net.models.NovelKind;
 import t4novel.azurewebsites.net.models.NovelStatus;
-import t4novel.azurewebsites.net.utils.Genrator;
 import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingNovelForm extends AbstractMappingForm {
@@ -21,21 +20,15 @@ public class AddingNovelForm extends AbstractMappingForm {
 	private NovelStatus status;
 	private NovelKind kind;
 	private List<NovelGenre> genres;
-	private Genrator idGenrator;
 	private Account owner;
 
-	public AddingNovelForm(HttpServletRequest request, Genrator idGenrator) {
-		this.idGenrator = idGenrator;
+	public AddingNovelForm(HttpServletRequest request) {
 		this.owner = (Account) request.getAttribute("account");
 		setTitle(request.getParameter("title"));
 		setDescription(request.getParameter("description"));
 		setGroupID(request.getParameter("group"));
 		setKind(request.getParameter("type-novel"));
 		setGenres(getGenresFormRequest(request));
-	}
-
-	public AddingNovelForm(Genrator generator) {
-		this.idGenrator = generator;
 	}
 
 	private void setKind(String parameter) {
@@ -150,7 +143,6 @@ public class AddingNovelForm extends AbstractMappingForm {
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingNovelForm, getMappingData()");
 		}
 		Novel rs = new Novel();
-		rs.setId(idGenrator.nextInt());
 		rs.setName(getTitle());
 		rs.setDescription(getDescription());
 		rs.setStatus(getStatus());

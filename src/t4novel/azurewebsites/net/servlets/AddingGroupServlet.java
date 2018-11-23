@@ -15,7 +15,6 @@ import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.ExistedDisplayedNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingGroupForm;
-import t4novel.azurewebsites.net.utils.Genrator;
 
 /**
  * Servlet implementation class AddingGroupServlet
@@ -50,10 +49,9 @@ public class AddingGroupServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO adding catching error on jsp form
 		// TODO adding catching success on jsp form
-		Genrator idGenrator = Genrator.getInstance();
 		Connection databaseConnection = (Connection) request.getAttribute("connection");
 		DAOService existedGroupNameChecker = new ExistedDisplayedNameCheckingService(databaseConnection);
-		AbstractMappingForm submitedForm = new AddingGroupForm(request, idGenrator, existedGroupNameChecker);
+		AbstractMappingForm submitedForm = new AddingGroupForm(request, existedGroupNameChecker);
 		if (!submitedForm.isOnError()) {
 			Group group = (Group) submitedForm.getMappingData();
 			// TODO write to db both group and account owner group
