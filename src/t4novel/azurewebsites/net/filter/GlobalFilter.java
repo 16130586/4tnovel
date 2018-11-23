@@ -53,7 +53,7 @@ public class GlobalFilter implements Filter {
 				servletRequest.getMethod());
 		boolean isNeedDbConnection = SercureURLEngine.isNeedDbConnection(servletRequest.getServletPath(),
 				servletRequest.getMethod());
-		Account account = (Account) servletRequest.getAttribute("account");
+		Account account = (Account) servletRequest.getSession().getAttribute("account");
 		if (isNeedLoginUrl && account == null) {
 			System.out.println("redirec on bad request");
 			servletResponse.sendRedirect("login");
@@ -92,8 +92,8 @@ public class GlobalFilter implements Filter {
 			chain.doFilter(request, response);
 			if (cnn != null) {
 				try {
-					System.out.println(
-							"closing connection at : " + System.currentTimeMillis() + " " + cnn.hashCode());
+//					System.out.println(
+//							"closing connection at : " + System.currentTimeMillis() + " " + cnn.hashCode());
 					cnn.close();
 					cnn = null;
 				} catch (SQLException e) {

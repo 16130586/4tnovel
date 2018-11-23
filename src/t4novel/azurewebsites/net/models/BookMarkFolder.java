@@ -7,6 +7,10 @@ public class BookMarkFolder {
 	private List<BookMark> bookMarks;
 	private String title;
 
+	public BookMarkFolder() {
+		
+	}
+	
 	public BookMarkFolder(int id, List<BookMark> bookMarks, String title) {
 		super();
 		this.id = id;

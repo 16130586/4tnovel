@@ -10,7 +10,7 @@
 				<a class="btn" href="manage">Quản lý</a>
 			</li>
 			<li class="menu-item ">
-				<a class="btn" href="#">Đăng xuất</a>
+				<a class="btn" href="logout">Đăng xuất</a>
 			</li>
 		</ul>
 	</div>

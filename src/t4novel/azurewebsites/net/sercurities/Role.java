@@ -9,6 +9,13 @@ public enum Role {
 
 	private List<String> allowedUris;
 
+	public int getIntValue() {
+		for (int i = 0; i < values().length; i++)
+			if (this == values()[i])
+				return i;
+		return 0;
+	}
+
 	public static Role getRole(int role) {
 		return Role.values()[role];
 	}
@@ -27,16 +34,18 @@ public enum Role {
 	public List<String> getAllowedUris() {
 		return allowedUris;
 	}
-	public void addAllowedUri(String uri){
-		if(this.allowedUris == null)
+
+	public void addAllowedUri(String uri) {
+		if (this.allowedUris == null)
 			this.allowedUris = new LinkedList<>();
-		if(!this.allowedUris.contains(uri))
+		if (!this.allowedUris.contains(uri))
 			this.allowedUris.add(uri);
 	}
 
 	public void setAllowedUris(List<String> allowedUris) {
 		this.allowedUris = allowedUris;
 	}
+
 	@Override
 	public String toString() {
 		return this.name();
