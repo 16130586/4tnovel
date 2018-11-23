@@ -67,8 +67,8 @@ public class SercureURLEngine {
 					Node currentMethodNode = methodNodes.item(j);
 					String methodName = ((Element) currentMethodNode).getAttribute("name");
 
-					Node loginChildNode = getNodeName("login", currentMethodNode);
-					Node dbConnectionNeededNode = getNodeName("connection", currentMethodNode);
+					Node loginChildNode = getNodeByName("login", currentMethodNode);
+					Node dbConnectionNeededNode = getNodeByName("connection", currentMethodNode);
 
 					boolean loginNeeded = getLoginNeeded(loginChildNode);
 					boolean dbConnectionNeeded = getDbConnectionNeeded(dbConnectionNeededNode);
@@ -92,7 +92,7 @@ public class SercureURLEngine {
 		}
 	}
 
-	private static Node getNodeName(String name, Node parent) {
+	private static Node getNodeByName(String name, Node parent) {
 		NodeList childs = parent.getChildNodes();
 		for (int i = 0; i < childs.getLength(); i++) {
 			Node current = childs.item(i);
