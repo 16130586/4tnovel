@@ -1,9 +1,11 @@
 package t4novel.azurewebsites.net.models;
 
 public enum NovelKind {
-	COMPOSE("Compose") , TRANSLATE("Translate");
+	COMPOSE(0, "Compose") , TRANSLATE(1, "Translate");
+	private int val;
 	private String text;
-	private NovelKind(String text) {
+	private NovelKind(int val, String text) {
+		this.val = val;
 		this.text = text;
 	}
 	public static NovelKind getNovelKind(int val) {
@@ -13,5 +15,8 @@ public enum NovelKind {
 	}
 	public String toText() {
 		return this.text;
+	}
+	public int getValue() {
+		return this.val;
 	}
 }

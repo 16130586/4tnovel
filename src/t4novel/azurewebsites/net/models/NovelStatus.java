@@ -14,7 +14,7 @@ public enum NovelStatus {
 		return this.value;
 	}
 
-	public NovelStatus toEnum(int value) {
+	public static NovelStatus getNovelStatus(int value) {
 		if (value < NovelStatus.values().length)
 			return NovelStatus.values()[value];
 		throw new IllegalArgumentException(
