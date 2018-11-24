@@ -33,7 +33,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	private void setKind(String parameter) {
 		try {
-			setKind(NovelKind.getNovelKind(Integer.parseInt(parameter)));
+			setKind(NovelKind.getNovelKind(parameter));
 		} catch (NumberFormatException e) {
 			errors.put("kindNotFound", "Kind not found!");
 		}
