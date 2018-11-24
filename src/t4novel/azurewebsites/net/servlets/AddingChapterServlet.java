@@ -47,7 +47,7 @@ public class AddingChapterServlet extends HttpServlet {
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
 			
-			chapDAO.insertChapter(chapter);
+			chapDAO.insertChap(chapter);
 			// set sucessed for user
 			request.setAttribute("sucessed", "Adding new chapter done!");
 		}
