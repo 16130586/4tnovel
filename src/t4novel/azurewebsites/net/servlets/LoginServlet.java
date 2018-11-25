@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if(!loginForm.isOnError()) {
 			Account account = (Account) loginForm.getMappingData();
-			account = accountDAO.getAccount(account.getUserName());
+			account = accountDAO.getAccountByUsername(account.getUserName());
 			request.getSession().setAttribute("account", account);
 			response.sendRedirect("index");
 			System.out.println("suceess!");

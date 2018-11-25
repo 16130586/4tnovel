@@ -9,7 +9,11 @@ public class Comment {
 	private String content;
 	private Date time;
 	private List<Comment> replyComments;
-
+	
+	public Comment() {
+		
+	}
+	
 	public Comment(int id, Account owner, String content, Date time, List<Comment> replyComments) {
 		super();
 		this.id = id;

@@ -3,7 +3,7 @@ package t4novel.azurewebsites.net.models;
 import java.util.Date;
 
 public class BookMark {
-	private int id;
+	private int id, bookmarkFolderId;
 	private String description;
 	private String url;
 	private Date time;
@@ -24,6 +24,14 @@ public class BookMark {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getBookmarkFolderId() {
+		return bookmarkFolderId;
+	}
+
+	public void setBookmarkFolderId(int bookmarkFolderId) {
+		this.bookmarkFolderId = bookmarkFolderId;
 	}
 
 	public String getDescription() {
