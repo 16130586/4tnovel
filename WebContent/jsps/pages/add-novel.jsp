@@ -28,8 +28,9 @@
 				<p class="u-4x">Thêm truyện</p>
 				<p class="u-paragraph--sucessed">${sucessed}</p>
 			</div>
-			<form action="add?type=add-novel" method="POST"
-				onsubmit="return checkCheckBoxes();">
+			<form action="add" method="POST"
+				onsubmit="return checkCheckBoxes();" enctype="multipart/form-data">
+				<input type="hidden" name="type" value="add-novel">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
@@ -46,8 +47,8 @@
 								truyện: <span style="color: red">*</span>
 						</label></td>
 						<td><select name="type-novel" style="padding: .5rem">
-								<option value="0">Sáng tác</option>
-								<option value="1">Truyện dịch</option>
+								<option value="compose">Sáng tác</option>
+								<option value="translate">Truyện dịch</option>
 						</select></td>
 					</tr>
 					<tr>
@@ -57,15 +58,15 @@
 
 						<td><select name="group" style="padding: .5rem">
 								<!-- option value="nhom dich id" -->
-								<c:forEach var="group" items="${account.joinGroups}">
-									<option value="${group.id }">${group.name }</option>
+								<c:forEach var="group" items="${account.getJoinGroup()}">
+									<option value="${group.getId() }">${group.getName() }</option>
 								</c:forEach>
-						</select> <c:if test="${empty account.joinGroups}">
+								<option value="1">1</option>
+						</select> <c:if test="${empty account.getJoinGroup()}">
 								<a class="u-paragraph--sucessed u-margin-left--2rem"
 									href="add?type=add-group" target="_blank">Create new group
 									here!</a>
 							</c:if></td>
-
 
 					</tr>
 					<tr>
@@ -228,6 +229,11 @@
 								<option value="1">Đang tiến hành</option>
 								<option value="2">Tạm ngưng</option>
 						</select></td>
+					</tr>
+					<tr>
+						<td class="u-align-right u-vertical-align--middle"><label>Ảnh bìa:</label>
+						</td>
+						<td><input type="file" name="image" size="50" accept="imamge/*"></td>
 					</tr>
 				</table>
 				<div class="u-align-center u-color-white">

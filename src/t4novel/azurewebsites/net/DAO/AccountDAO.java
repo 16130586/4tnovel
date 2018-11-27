@@ -20,19 +20,18 @@ public class AccountDAO {
 	
 	public void insertAccount(Account account) {
 		PreparedStatement stmt;
-		String query = "INSERT INTO ACCOUNT (ID, DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, DATECREATE, ROLE, ISAUTO, ISBANNED) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, DATECREATE, ROLE, ISAUTO, ISBANNED) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, account.getId());
-			stmt.setString(2, account.getDisplayedName());
-			stmt.setString(3, account.getUserName());
-			stmt.setString(4, account.getPassword());
-			stmt.setString(5, account.getGmail());
-			stmt.setDate(6,(Date) account.getDateCreate());
-			stmt.setInt(7, 2);
+			stmt.setString(1, account.getDisplayedName());
+			stmt.setString(2, account.getUserName());
+			stmt.setString(3, account.getPassword());
+			stmt.setString(4, account.getGmail());
+			stmt.setDate(5,(Date) account.getDateCreate());
+			stmt.setInt(6, 1);
+			stmt.setString(7, "NO");
 			stmt.setString(8, "NO");
-			stmt.setString(9, "NO");
 			stmt.executeQuery();
 			
 			System.out.println("Insert account completed!");
@@ -51,7 +50,7 @@ public class AccountDAO {
 			stmt.setString(2, account.getPassword());
 			stmt.setString(3, account.isAutoPassPushlishment() ? "YES" : "NO");
 			stmt.setString(4, account.isBanned() ? "YES" : "NO");
-			
+			stmt.executeUpdate();
 			System.out.println("Update account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();

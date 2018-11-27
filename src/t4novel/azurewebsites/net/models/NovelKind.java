@@ -1,12 +1,8 @@
 package t4novel.azurewebsites.net.models;
 
 public enum NovelKind {
-	COMPOSE("Compose") , TRANSLATE("Translate");
-	private String name;
-	private NovelKind(String name) {
-		this.name = name;
-	}
-	
+	COMPOSE(), TRANSLATE();
+
 	public static NovelKind getNovelKind(String name) {
 		for (NovelKind kind : NovelKind.values()) {
 			if (kind.toText().equalsIgnoreCase(name))
@@ -14,8 +10,8 @@ public enum NovelKind {
 		}
 		return null;
 	}
-	
+
 	public String toText() {
-		return this.name;
+		return this.name();
 	}
 }
