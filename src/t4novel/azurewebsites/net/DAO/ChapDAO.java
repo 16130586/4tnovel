@@ -27,8 +27,7 @@ public class ChapDAO {
 			stmt.setInt(1, chap.getVolOwnerId());
 			stmt.setString(2, chap.getContent());
 			stmt.setDate(3, (Date) chap.getDateUp());
-			ResultSet rs = stmt.executeQuery();
-			
+			stmt.executeUpdate();
 			System.out.println("Insert chap completed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,7 +56,7 @@ public class ChapDAO {
 		return chap;
 	}
 	
-	public List<Chap> getChapByVolID(int volID) {
+	public List<Chap> getChapsByVolID(int volID) {
 		LinkedList<Chap> listChap = new LinkedList<>();
 		PreparedStatement stmt;
 		String querry = "SELECT * FROM CHAP WHERE ID_VOL = ?";
@@ -87,7 +86,7 @@ public class ChapDAO {
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chapID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete chap completed!");
 		} catch (Exception e) {
@@ -126,6 +125,7 @@ public class ChapDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, chap.getContent());
 			stmt.setInt(2, chap.getId());
+			stmt.executeUpdate();
 			
 			System.out.println("Update chap completed");
 		} catch (Exception e) {

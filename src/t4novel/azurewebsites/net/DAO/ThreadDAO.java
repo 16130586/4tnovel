@@ -17,12 +17,14 @@ public class ThreadDAO {
 	
 	public void insertThread(Thread thread) {
 		PreparedStatement stmt;
-		String query = "INSERT INTO THREAD(TITLE, ID_OWNDER) VALUES (?, ?)";
+		String query = "INSERT INTO THREAD(TITLE, CONTENT, ID_OWNDER) VALUES (?, ?, ?)";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, thread.getTitle());
-			stmt.setInt(2, thread.getAccountOwnerId());
+			stmt.setString(2, thread.getContent());
+			stmt.setInt(3, thread.getAccountOwnerId());
+			stmt.executeUpdate();
 			
 			System.out.println("Insert thread completed!");
 		} catch (Exception e) {
@@ -43,7 +45,8 @@ public class ThreadDAO {
 				Thread thread = new Thread();
 				thread.setId(rs.getInt(1));
 				thread.setTitle(rs.getString(2));
-				thread.setAccountOwnerId(rs.getInt(3));
+				thread.setContent(rs.getString(3));
+				thread.setAccountOwnerId(rs.getInt(4));
 				listThread.add(thread);
 			}
 		} catch (Exception e) {
@@ -64,7 +67,8 @@ public class ThreadDAO {
 				Thread thread = new Thread();
 				thread.setId(rs.getInt(1));
 				thread.setTitle(rs.getString(2));
-				thread.setAccountOwnerId(rs.getInt(3));
+				thread.setContent(rs.getString(3));
+				thread.setAccountOwnerId(rs.getInt(4));
 				listThread.add(thread);
 			}
 		} catch (Exception e) {
@@ -75,13 +79,14 @@ public class ThreadDAO {
 	
 	public void updateThread(Thread thread) {
 		PreparedStatement stmt;
-		String query = "UPDATE THREAD SET TITLE = ? WHERE ID = ?";
+		String query = "UPDATE THREAD SET TITLE = ?, CONTENT = ? WHERE ID = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, thread.getTitle());
-			stmt.setInt(2, thread.getId());
-			stmt.executeQuery();
+			stmt.setString(2, thread.getContent());
+			stmt.setInt(3, thread.getId());
+			stmt.executeUpdate();
 			
 			System.out.println("Update thread completed!");
 		} catch (Exception e) {
@@ -102,7 +107,8 @@ public class ThreadDAO {
 				thread = new Thread();
 				thread.setId(rs.getInt(1));
 				thread.setTitle(rs.getString(2));
-				thread.setAccountOwnerId(rs.getInt(3));
+				thread.setContent(rs.getString(3));
+				thread.setAccountOwnerId(rs.getInt(4));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,12 +119,12 @@ public class ThreadDAO {
 	
 	public void deleteThreadByID(int threadID) {
 		PreparedStatement stmt;
-		String query = "DELETE * FROM THREAD WHERE ID = ?";
+		String query = "DELETE FROM THREAD WHERE ID = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, threadID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete thread completed!");
 		} catch (Exception e) {

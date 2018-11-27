@@ -70,7 +70,7 @@ public class BookmarkFolderDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmarkFolder.getAccountOnwerID());
 			stmt.setString(2, bookmarkFolder.getTitle());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Insert bookmark folder completed!");
 		} catch (Exception e) {
@@ -85,7 +85,7 @@ public class BookmarkFolderDAO {
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, folderID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete bookmark folder completed!");
 		} catch (Exception e) {
@@ -101,7 +101,7 @@ public class BookmarkFolderDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, bookmakFolder.getTitle());
 			stmt.setInt(2, bookmakFolder.getId());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Update bookmark folder completed!");
 		} catch (Exception e) {
