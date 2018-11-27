@@ -5,12 +5,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.servlet.http.Part;
 
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelGenre;
@@ -24,65 +21,58 @@ public class NovelDAO {
 		this.cnn = databaseConnection;
 	}
 
-	public List<Novel> getNovelsUser(int accountId) {
+	public List<Novel> getNovelsByUserId(int accountId) throws Exception {
 		PreparedStatement stmt;
 		ResultSet rs;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
 		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where IDOWNER = ?";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, accountId);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				tmp = new Novel();
-				tmp.setId(rs.getInt(1));
-				tmp.setName(rs.getString(2));
-				tmp.setDescription(rs.getString(3));
-				tmp.setDateUp(rs.getDate(4));
-				tmp.setAccountOwnerId(rs.getInt(5));
-				tmp.setKind(NovelKind.getNovelKind(rs.getString(6)));
-				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt(7)));
-				tmp.setGenres(getGenres(rs.getInt(1)));
-				tmp.setEncodeImg(getEncodeImage(rs.getInt(1)));
-				result.add(tmp);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, accountId);
+		rs = stmt.executeQuery();
+		while(rs.next()) {
+			int id = rs.getInt("ID"); 
+			tmp = new Novel();
+			tmp.setId(id);
+			tmp.setName(rs.getString("NAME"));
+			tmp.setDescription(rs.getString("DESCRIBE"));
+			tmp.setDateUp(rs.getDate("DATEUP"));
+			tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
+			tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
+			tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+			tmp.setGenres(getGenres(id));
+			tmp.setEncodeImg(getEncodeImage(id));
+			result.add(tmp);
 		}
 		return result;
 	}
 	
-	public List<Novel> getNovelsByName(String name) {
+	public List<Novel> searchNovelsByNamePattern(String name) throws Exception {
 		PreparedStatement stmt;
 		ResultSet rs;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
 		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where NAME like '%?%'";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setString(1, name);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				tmp = new Novel();
-				tmp.setId(rs.getInt(1));
-				tmp.setName(rs.getString(2));
-				tmp.setDescription(rs.getString(3));
-				tmp.setDateUp(rs.getDate(4));
-				tmp.setAccountOwnerId(rs.getInt(5));
-				tmp.setKind(NovelKind.getNovelKind(rs.getString(6)));
-				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt(7)));
-				tmp.setGenres(getGenres(rs.getInt(1)));
-				tmp.setEncodeImg(getEncodeImage(rs.getInt(1)));
-				result.add(tmp);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		stmt = cnn.prepareStatement(query);
+		stmt.setString(1, name);
+		rs = stmt.executeQuery();
+		while(rs.next()) {
+			tmp = new Novel();
+			tmp.setId(rs.getInt(1));
+			tmp.setName(rs.getString(2));
+			tmp.setDescription(rs.getString(3));
+			tmp.setDateUp(rs.getDate(4));
+			tmp.setAccountOwnerId(rs.getInt(5));
+			tmp.setKind(NovelKind.getNovelKind(rs.getString(6)));
+			tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt(7)));
+			tmp.setGenres(getGenres(rs.getInt(1)));
+			tmp.setEncodeImg(getEncodeImage(rs.getInt(1)));
+			result.add(tmp);
 		}
 		return result;
 	}
 	
-	public List<Novel> getNovelsBySearchAdvance(List<NovelGenre> genres, int statusVal, String kind, String name) {
+	public List<Novel> searchByAdvance(List<NovelGenre> genres, int statusVal, String kind, String name) throws Exception {
 		PreparedStatement stmt;
 		List<Novel> result = new LinkedList<>();
 		
@@ -91,42 +81,12 @@ public class NovelDAO {
 		if(name != null && !name.isEmpty()) {
 			query += "AND NAME = " + name;
 		}
-		try {
-			stmt = cnn.prepareStatement(query.toString());
-			stmt.setInt(1, statusVal);
-			stmt.setString(2, kind);
-			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				if (isExistGenresInNovel(rs.getInt(1), genres)) {
-					tmp = new Novel();
-					tmp.setId(rs.getInt(1));
-					tmp.setName(rs.getString(2));
-					tmp.setDescription(rs.getString(3));
-					tmp.setDateUp(rs.getDate(4));
-					tmp.setAccountOwnerId(rs.getInt(5));
-					tmp.setKind(NovelKind.getNovelKind(rs.getString(6)));
-					tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt(7)));
-					tmp.setGenres(getGenres(rs.getInt(1)));
-					tmp.setEncodeImg(getEncodeImage(rs.getInt(1)));
-					result.add(tmp);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	public List<Novel> getAllNovel() {
-		PreparedStatement stmt;
-		ResultSet rs;
-		List<Novel> result = new LinkedList<>();
-		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN";
-		try {
-			stmt = cnn.prepareStatement(query);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
+		stmt = cnn.prepareStatement(query.toString());
+		stmt.setInt(1, statusVal);
+		stmt.setString(2, kind);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			if (isExistGenresInNovel(rs.getInt(1), genres)) {
 				tmp = new Novel();
 				tmp.setId(rs.getInt(1));
 				tmp.setName(rs.getString(2));
@@ -139,8 +99,30 @@ public class NovelDAO {
 				tmp.setEncodeImg(getEncodeImage(rs.getInt(1)));
 				result.add(tmp);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List<Novel> getAllNovel() throws Exception {
+		PreparedStatement stmt;
+		ResultSet rs;
+		List<Novel> result = new LinkedList<>();
+		Novel tmp;
+		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN";
+		stmt = cnn.prepareStatement(query);
+		rs = stmt.executeQuery();
+		while(rs.next()) {
+			tmp = new Novel();
+			tmp.setId(rs.getInt(1));
+			tmp.setName(rs.getString(2));
+			tmp.setDescription(rs.getString(3));
+			tmp.setDateUp(rs.getDate(4));
+			tmp.setAccountOwnerId(rs.getInt(5));
+			tmp.setKind(NovelKind.getNovelKind(rs.getString(6)));
+			tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt(7)));
+			tmp.setGenres(getGenres(tmp.getId()));
+			tmp.setEncodeImg(getEncodeImage(tmp.getId()));
+			result.add(tmp);
 		}
 		return result;
 	}
@@ -148,31 +130,37 @@ public class NovelDAO {
 	/**
 	 * delete data in LN, IMAGE, GENRE table
 	 * @param idNovel
+	 * @throws Exception 
 	 */
-	public void delNovelById(int idNovel) {
+	public void delNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt;
 		String query = "delete from LN where ID = ?";
 		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			stmt.executeUpdate();
+			cnn.setAutoCommit(false);
 			deleteImageById(idNovel);  //delete image
 			deleteGenres(idNovel); //delete genre
 			// TODO : delete in vol, chap, comment, bm, bmFolder... table
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, idNovel);
+			stmt.executeUpdate();
+			cnn.commit();
+			cnn.setAutoCommit(true);
 		} catch (Exception e) {
-			e.printStackTrace();
+			cnn.rollback();
+			throw e;
 		}
 	}
 	
 	/**
-	 * Image need be updated separately by using Part when user upload file img.
+	 * Image need be updated separately by using FileItem when user upload file img.
 	 * @param novel
 	 */
-	public void updateNovel(Novel novel) {
+	public void updateNovel(Novel novel) throws Exception {
 		PreparedStatement stmt;
 		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? where ID = ?";
 		
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, novel.getName());
 			stmt.setString(2, novel.getDescription());
@@ -181,34 +169,48 @@ public class NovelDAO {
 			stmt.setInt(5, novel.getId());
 			updateGenres(novel.getId(), novel.getGenres());
 			stmt.executeUpdate();
+			cnn.commit();
+			cnn.setAutoCommit(true);
 		} catch (Exception e) {
-			e.printStackTrace();
+			cnn.rollback();
+			throw e;
 		}
 	}
 	
 	/**
-	 * Image need be inserted separately by using Part when user upload file img.
+	 * Image need be inserted separately by using FileItem when user upload file img.
 	 * @param novel
+	 * @throws Exception 
 	 */
-	public void insertNovel(Novel novel) {
+	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt;
 		String query = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS) VALUES (?, ?, ?, ?, ?, ?)";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setString(1, novel.getName());
-			stmt.setString(2, novel.getDescription());
-			stmt.setDate(3, (Date) novel.getDateUp());
-			stmt.setInt(4, novel.getAccountOwnerId());
-			stmt.setString(5, novel.getKind().toText());
-			stmt.setInt(6, novel.getStatus().getValue());
-			insertGenres(novel.getId(), novel.getGenres());
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		stmt = cnn.prepareStatement(query);
+		stmt.setString(1, novel.getName());
+		stmt.setString(2, novel.getDescription());
+		stmt.setDate(3, new Date(novel.getDateUp().getTime()));
+		stmt.setInt(4, novel.getAccountOwnerId());
+		stmt.setString(5, novel.getKind().toText());
+		stmt.setInt(6, novel.getStatus().getValue());
+		stmt.executeUpdate();
+		insertGenres(getMaxID(), novel.getGenres());
 	}
 	
-	public boolean isExistGenresInNovel(int idNovel, List<NovelGenre> genres) {
+	public int getMaxID() {
+		int result = 0;
+		PreparedStatement stmt;
+		try {
+			stmt = cnn.prepareStatement("select max(ID) from LN");
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next())
+				result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public boolean isExistGenresInNovel(int idNovel, List<NovelGenre> genres) throws Exception {
 		for (NovelGenre n : genres) {
 			if (!isExistGenreInNovel(idNovel, n))
 				return false;
@@ -216,138 +218,109 @@ public class NovelDAO {
 		return true;
 	}
 	
-	public boolean isExistGenreInNovel(int idNovel, NovelGenre genre) {
+	public boolean isExistGenreInNovel(int idNovel, NovelGenre genre) throws Exception {
 		String query = "select * from GENRE where IDNOVEL = ? AND VALUE = ?";
 		PreparedStatement stmt;
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			stmt.setInt(2, genre.getValue());
-			return stmt.executeQuery().next();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return false;
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		stmt.setInt(2, genre.getValue());
+		return stmt.executeQuery().next();
 	}
 	
-	public List<NovelGenre> getGenres(int idNovel) {
+	public List<NovelGenre> getGenres(int idNovel) throws Exception {
 		List<NovelGenre> result = new LinkedList<>();
 		PreparedStatement stmt;
 		String query = "select VALUE from GENRE where IDNOVEL = ?";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				result.add(NovelGenre.getGenre(rs.getInt(1)));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			result.add(NovelGenre.getGenre(rs.getInt(1)));
 		}
 		return result;
 	}
 	
-	public void insertGenres(int idNovel, List<NovelGenre> genres) {
+	public void insertGenres(int idNovel, List<NovelGenre> genres) throws Exception {
 		PreparedStatement stmt;
 		String query = "insert into GENRE (IDNOVEL, VALUE) values (?, ?)";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			
-			for (NovelGenre genre : genres) {
-				stmt.setInt(2, genre.getValue());
-				stmt.executeUpdate();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		
+		for (NovelGenre genre : genres) {
+			stmt.setInt(2, genre.getValue());
+			stmt.executeUpdate();
 		}
 	}
 	
-	public void deleteGenres(int idNovel) {
+	public void deleteGenres(int idNovel) throws Exception {
 		PreparedStatement stmt;
 		String query = "delete from GENRE where IDNOVEL = ?";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			stmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		stmt.executeUpdate();
 	}
 	
-	public void updateGenres(int idNovel, List<NovelGenre> genres) {
-		deleteGenres(idNovel);
-		insertGenres(idNovel, genres);
+	public void updateGenres(int idNovel, List<NovelGenre> genres) throws Exception {
+		try {
+			cnn.setAutoCommit(false);
+			deleteGenres(idNovel);
+			insertGenres(idNovel, genres);
+			cnn.commit();
+			cnn.setAutoCommit(true);
+		} catch (Exception e) {
+			cnn.rollback();
+			throw e;
+		}
 	}
 	/**
 	 * get encode String by using Base64
+	 * @throws Exception 
 	 */
-	public String getEncodeImage(int idNovel) {
+	public String getEncodeImage(int idNovel) throws Exception {
 		String query = "select IMG from IMAGE where IDOWNER = ? and TYPE = 'NOVEL'";
 		PreparedStatement stmt;
 		String result = "";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				result = getEncode(rs.getBytes(1));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			result = getEncode(rs.getBytes(1));
 		}
 		return result;
 	}
 	
-	public void insertImage(int idNovel, Part filePart) {
-		InputStream in;
+	public void insertImage(int idNovel, InputStream in) throws Exception {
 		String query;
 		PreparedStatement stmt;
-		try {
-			in = filePart.getInputStream();
-			query = ("insert into IMAGE (IDOWNER, IMG, TYPE) values (?, ?, 'NOVEL')");
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
+		query = ("insert into IMAGE (IDOWNER, IMG, TYPE) values (?, ?, 'NOVEL')");
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		if (in != null)
 			stmt.setBlob(2, in);
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		else
+			stmt.setBytes(2, new byte[0]);
+		stmt.executeUpdate();
 	}
 	
-	public void updateImage(int idNovel, Part filePart){
-		InputStream in;
+	public void updateImage(int idNovel, InputStream in) throws Exception{
 		String query;
 		PreparedStatement stmt;
-		try {
-			in = filePart.getInputStream();
-			query = ("update IMAGE set IMG = ? where ID = ? and TYPE = 'NOVEL'");
-			stmt = cnn.prepareStatement(query);
-			stmt.setBlob(1, in);
-			stmt.setInt(2, idNovel);
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		query = ("update IMAGE set IMG = ? where IDOWNER = ? and TYPE = 'NOVEL'");
+		stmt = cnn.prepareStatement(query);
+		stmt.setBlob(1, in);
+		stmt.setInt(2, idNovel);
+		stmt.executeUpdate();
 	}
 	
-	public void deleteImageById(int idNovel) {
+	public void deleteImageById(int idNovel) throws Exception {
 		PreparedStatement stmt;
-		String query = "delete from IMAGE where ID = ? and TYPE = 'NOVEL";
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, idNovel);
-			stmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		String query = "delete from IMAGE where IDOWNER = ? and TYPE = 'NOVEL'";
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idNovel);
+		stmt.executeUpdate();
 	}
 
 	public String getEncode(byte[] buf) {
 		return Base64.getEncoder().encodeToString(buf);
 	}
-	
 }

@@ -1,6 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -23,20 +24,25 @@ public class AddingNovelForm extends AbstractMappingForm {
 	private Account owner;
 
 	public AddingNovelForm(HttpServletRequest request) {
-		this.owner = (Account) request.getAttribute("account");
-		setTitle(request.getParameter("title"));
-		setDescription(request.getParameter("description"));
-		setGroupID(request.getParameter("group"));
-		setKind(request.getParameter("type-novel"));
+		this.owner = (Account) request.getSession().getAttribute("account");
+		setTitle((String) request.getAttribute("title"));
+		setDescription((String) request.getAttribute("description"));
+		setGroupID((String) request.getAttribute("group"));
+		setKind((String) request.getAttribute("type-novel"));
 		setGenres(getGenresFormRequest(request));
+		setStatus((String) request.getAttribute("status"));
+	}
+
+	private void setStatus(String parameter) {
+		try {
+			setStatus(NovelStatus.getNovelStatus(Integer.parseInt(parameter)));
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+		}
 	}
 
 	private void setKind(String parameter) {
-		try {
-			setKind(NovelKind.getNovelKind(parameter));
-		} catch (NumberFormatException e) {
-			errors.put("kindNotFound", "Kind not found!");
-		}
+		this.kind  = NovelKind.getNovelKind(parameter);
 	}
 
 	private void setGroupID(String parameter) {
@@ -48,7 +54,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 	}
 
 	private List<NovelGenre> getGenresFormRequest(HttpServletRequest request) {
-		String[] rawGenreStrings = request.getParameterValues("genre");
+		List<String> rawGenreStrings = (LinkedList<String>) request.getAttribute("genres");
 		if (rawGenreStrings == null)
 			return null;
 		List<NovelGenre> genres = new LinkedList<>();
@@ -60,7 +66,6 @@ public class AddingNovelForm extends AbstractMappingForm {
 						"The genre is invalid form user to serser at AddingNovelForm with getGenresFormRequest!");
 			}
 		}
-
 		return genres;
 	}
 
@@ -145,6 +150,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 		Novel rs = new Novel();
 		rs.setName(getTitle());
 		rs.setDescription(getDescription());
+		rs.setDateUp(new Date());
 		rs.setStatus(getStatus());
 		rs.setGenres(getGenres());
 		rs.setKind(getKind());
