@@ -143,7 +143,7 @@ GO
 CREATE TABLE [dbo].[COMMENT](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_OWNER] bigint NULL,
-	[CONTENT] text NULL,
+	[CONTENT] nvarchar NULL,
 	[CREATETIME] [time](7) NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -186,12 +186,53 @@ GO
 CREATE TABLE [dbo].[LN](
 	[ID] bigint identity(1,1) NOT NULL,
 	[NAME] [nvarchar](50) NULL,
-	[DESCRIBE] text NULL,
+	[DESCRIBE] ntext NULL,
 	[DATEUP] [date] NULL,
 	[IDOWNER] bigint NULL,
+	[KIND] varchar(20) NULL,
+	[STATUS] int NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[IMAGE]    Script Date: 10/17/2018 13:50:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[IMAGE](
+	[ID] bigint identity(1,1) not null,
+	[IDOWNER] bigint null,
+	[TYPE] varchar(20) null,
+	[IMG] image NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[GENRE]    Script Date: 10/17/2018 13:50:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[GENRE](
+	[IDNOVEL] bigint NOT NULL,
+	[VALUE] int NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDNOVEL] ASC,
+	[VALUE] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -226,8 +267,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[THREAD](
 	[ID] bigint identity(1,1) NOT NULL,
-	[TITLE] text NULL,
-	[CONTENT] text NULL,
+	[TITLE] nvarchar NULL,
+	[CONTENT] nvarchar NULL,
 	[ID_OWNER] bigint NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -268,7 +309,7 @@ CREATE TABLE [dbo].[VOL](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_LN] bigint NULL,
 	[TITLE] [nvarchar](50) NOT NULL,
-	[DESCRIBE] text NULL,
+	[DESCRIBE] nvarchar NULL,
 	[DATEUP] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -310,7 +351,7 @@ CREATE TABLE [dbo].[BM](
 	[ID_BMFOLDER]bigint NULL,
 	[URL] text NULL,
 	[TIME_BM] [time](7) NULL,
-	[TITLE] text NULL,
+	[TITLE] nvarchar NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -349,7 +390,7 @@ GO
 CREATE TABLE [dbo].[CHAP](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_VOL] bigint NULL,
-	[CONTENT] text NULL,
+	[CONTENT] nvarchar NULL,
 	[DATEUP] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -406,6 +447,10 @@ REFERENCES [dbo].[ACCOUNT] ([ID])
 GO
 /****** Object:  ForeignKey [FK__VOL__ID_LN__3E52440B]    Script Date: 10/17/2018 13:50:56 ******/
 ALTER TABLE [dbo].[VOL]  WITH CHECK ADD FOREIGN KEY([ID_LN])
+REFERENCES [dbo].[LN] ([ID])
+GO
+/****** Object:  ForeignKey [FK__VOL__ID_GENRE__3E52asdzx]    Script Date: 10/17/2018 13:50:56 ******/
+ALTER TABLE [dbo].[GENRE]  WITH CHECK ADD FOREIGN KEY([IDNOVEL])
 REFERENCES [dbo].[LN] ([ID])
 GO
 /****** Object:  ForeignKey [FK__PUBLISH_C__ID_CM__208CD6FA]    Script Date: 10/17/2018 13:50:56 ******/
