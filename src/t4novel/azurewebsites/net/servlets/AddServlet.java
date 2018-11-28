@@ -1,10 +1,8 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,9 +20,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * Servlet implementation class AddServlet
  */
 @WebServlet("/add")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 2MB
-maxFileSize = 1024 * 1024 * 50, // 50MB
-maxRequestSize = 1024 * 1024 * 50) // 50MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 4MB
+maxFileSize = 1024 * 1024 * 100, // 100MB
+maxRequestSize = 1024 * 1024 * 100) // 100MB
 public class AddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -70,16 +68,18 @@ public class AddServlet extends HttpServlet {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		List<String> genres = new LinkedList<>();
+		String tmp;
 		try {
 			List<FileItem> listFiles = upload.parseRequest(request);
 			for (FileItem fileItem : listFiles) {
 				if (!fileItem.isFormField()) {
 					request.setAttribute("fileImage", fileItem);
 				} else {
+					tmp = new String(fileItem.get(), "utf-8");
 					if ("genre".equals(fileItem.getFieldName()))
-						genres.add(fileItem.getString());
+						genres.add(tmp);
 					else
-						request.setAttribute(fileItem.getFieldName(), fileItem.getString());
+						request.setAttribute(fileItem.getFieldName(), tmp);
 				}
 			}
 			request.setAttribute("genres", genres);
