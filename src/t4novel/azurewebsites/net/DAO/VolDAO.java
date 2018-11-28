@@ -20,12 +20,13 @@ public class VolDAO {
 
 	public void insertVol(Vol vol) {
 		PreparedStatement stmt;
-		String query = "INSERT INTO VOL (ID_LN, DESCRIBE, DATEUP) VALUES (?, ?, ?)";
+		String query = "INSERT INTO VOL (ID_LN, TITLE, DESCRIBE, DATEUP) VALUES (?, ?, ?, ?)";
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, vol.getNovelOwnerId());
-			stmt.setString(2, vol.getDescription());
-			stmt.setDate(3, (Date) vol.getDateUp());
+			stmt.setString(2, vol.getTitle());
+			stmt.setString(3, vol.getDescription());
+			stmt.setDate(4, (Date) vol.getDateUp());
 			stmt.executeQuery();
 			
 			System.out.println("Insert vol completed!");
@@ -47,8 +48,9 @@ public class VolDAO {
 				vol = new Vol();
 				vol.setId(rs.getInt(1));
 				vol.setNovelOwnerId(rs.getInt(2));
-				vol.setDescription(rs.getString(3));
-				vol.setDateUp(rs.getDate(4));
+				vol.setTitle(rs.getString(3));
+				vol.setDescription(rs.getString(4));
+				vol.setDateUp(rs.getDate(5));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,30 +59,7 @@ public class VolDAO {
 		return vol;
 	}
 
-	public List<Vol> getAllVol() {
-		LinkedList<Vol> listVol = new LinkedList<>();
-		PreparedStatement stmt;
-		String query = "SELECT * FROM VOL";
-		
-		try {
-			stmt = cnn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				Vol vol = new Vol();
-				vol.setId(rs.getInt(1));
-				vol.setNovelOwnerId(rs.getInt(2));
-				vol.setDescription(rs.getString(3));
-				vol.setDateUp(rs.getDate(4));
-				listVol.add(vol);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return listVol;
-	}
-
-	public List<Vol> getVolByNovel(int novelID) {
+	public List<Vol> getVolsOfNovel(int novelID) {
 		LinkedList<Vol> listVol = new LinkedList<>();
 		PreparedStatement stmt;
 		String query = "SELECT * FROM VOL WHERE ID_LN = ?";
@@ -93,8 +72,9 @@ public class VolDAO {
 				Vol vol = new Vol();
 				vol.setId(rs.getInt(1));
 				vol.setNovelOwnerId(rs.getInt(2));
-				vol.setDescription(rs.getString(3));
-				vol.setDateUp(rs.getDate(4));
+				vol.setTitle(rs.getString(3));
+				vol.setDescription(rs.getString(4));
+				vol.setDateUp(rs.getDate(5));
 				listVol.add(vol);
 			}
 		} catch (Exception e) {
@@ -106,13 +86,14 @@ public class VolDAO {
 	
 	public void updateVol(Vol vol) {
 		PreparedStatement stmt;
-		String query = "UPDATE VOL SET DESCRIBE = ? WHERE ID = ?";
+		String query = "UPDATE VOL SET TITLE = ?, DESCRIBE = ? WHERE ID = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
-			stmt.setString(1, vol.getDescription());
-			stmt.setInt(2, vol.getId());
-			stmt.executeQuery();
+			stmt.setString(1, vol.getTitle());
+			stmt.setString(2, vol.getDescription());
+			stmt.setInt(3, vol.getId());
+			stmt.executeUpdate();
 			
 			System.out.println("Update vol completed!");
 		} catch (Exception e) {
@@ -121,12 +102,12 @@ public class VolDAO {
 	
 	public void deleteVolByID(int volID) {
 		PreparedStatement stmt;
-		String query = "DELETE * FROM VOL WHERE ID = ?";
+		String query = "DELETE FROM VOL WHERE ID = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {
@@ -134,14 +115,14 @@ public class VolDAO {
 		}
 	}
 	
-	public void deleteVolByNovel(int novelID) {
+	public void deleteVolsOfNovel(int novelID) {
 		PreparedStatement stmt;
-		String query = "DELETE * FROM VOL WHERE ID_LN = ?";
+		String query = "DELETE FROM VOL WHERE ID_LN = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, novelID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {

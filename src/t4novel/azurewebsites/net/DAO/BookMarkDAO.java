@@ -51,7 +51,7 @@ private Connection cnn;
 			stmt.setString(2, bookmark.getUrl());
 			stmt.setDate(3,(Date) bookmark.getTime());
 			stmt.setString(4, bookmark.getTitle());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Insert bookmark completed!");
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ private Connection cnn;
 			stmt.setString(1, bookmark.getUrl());
 			stmt.setString(2, bookmark.getTitle());
 			stmt.setInt(3, bookmark.getId());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Update bookmark completed!");
 		} catch (Exception e) {
@@ -78,12 +78,12 @@ private Connection cnn;
 	
 	public void deleteBookmarkByID(int bookmarkID) {
 		PreparedStatement stmt;
-		String query = "DELETE * FROM BOOKMARK WHERE ID = ?";
+		String query = "DELETE FROM BOOKMARK WHERE ID = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmarkID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete bookmark completed!");
 		} catch (Exception e) {

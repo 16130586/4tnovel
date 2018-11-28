@@ -26,7 +26,7 @@ public class CommentDAO {
 			stmt.setInt(1, comment.getAccountOwnerId());
 			stmt.setString(2, comment.getContent());
 			stmt.setDate(3, (Date) comment.getTime());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Insert comment completed!");
 		} catch (SQLException e) {
@@ -112,7 +112,7 @@ public class CommentDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, comment.getContent());
 			stmt.setInt(2, comment.getId());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Update comment completed!");
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public class CommentDAO {
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, commentID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
@@ -136,12 +136,12 @@ public class CommentDAO {
 	
 	public void deleteVolByUser(int userID) {
 		PreparedStatement stmt;
-		String query = "DELETE * FROM VOL WHERE ID_OWNER = ?";
+		String query = "DELETE FROM VOL WHERE ID_OWNER = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, userID);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			
 			System.out.println("Delete comment completed!");
 		} catch (Exception e) {

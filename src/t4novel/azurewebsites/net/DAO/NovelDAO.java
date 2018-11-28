@@ -44,6 +44,8 @@ public class NovelDAO {
 			tmp.setEncodeImg(getEncodeImage(id));
 			result.add(tmp);
 		}
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	
@@ -69,6 +71,8 @@ public class NovelDAO {
 			tmp.setEncodeImg(getEncodeImage(rs.getInt(1)));
 			result.add(tmp);
 		}
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	
@@ -100,6 +104,8 @@ public class NovelDAO {
 				result.add(tmp);
 			}
 		}
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	
@@ -124,6 +130,8 @@ public class NovelDAO {
 			tmp.setEncodeImg(getEncodeImage(tmp.getId()));
 			result.add(tmp);
 		}
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	
@@ -149,6 +157,7 @@ public class NovelDAO {
 			cnn.rollback();
 			throw e;
 		}
+		stmt.close();
 	}
 	
 	/**
@@ -175,6 +184,7 @@ public class NovelDAO {
 			cnn.rollback();
 			throw e;
 		}
+		stmt.close();
 	}
 	
 	/**
@@ -194,19 +204,19 @@ public class NovelDAO {
 		stmt.setInt(6, novel.getStatus().getValue());
 		stmt.executeUpdate();
 		insertGenres(getMaxID(), novel.getGenres());
+		stmt.close();
 	}
 	
-	public int getMaxID() {
+	public int getMaxID() throws Exception {
 		int result = 0;
 		PreparedStatement stmt;
-		try {
-			stmt = cnn.prepareStatement("select max(ID) from LN");
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next())
-				result = rs.getInt(1);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ResultSet rs;
+		stmt = cnn.prepareStatement("select max(ID) from LN");
+		rs = stmt.executeQuery();
+		if (rs.next())
+			result = rs.getInt(1);
+		rs.close();
+		stmt.close();
 		return result;
 	}
 
@@ -219,12 +229,17 @@ public class NovelDAO {
 	}
 	
 	public boolean isExistGenreInNovel(int idNovel, NovelGenre genre) throws Exception {
+		boolean result = false;
 		String query = "select * from GENRE where IDNOVEL = ? AND VALUE = ?";
 		PreparedStatement stmt;
 		stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, idNovel);
 		stmt.setInt(2, genre.getValue());
-		return stmt.executeQuery().next();
+		ResultSet rs = stmt.executeQuery();
+		result = rs.next();
+		rs.close();
+		stmt.close();
+		return result;
 	}
 	
 	public List<NovelGenre> getGenres(int idNovel) throws Exception {
@@ -237,6 +252,8 @@ public class NovelDAO {
 		while (rs.next()) {
 			result.add(NovelGenre.getGenre(rs.getInt(1)));
 		}
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	
@@ -250,6 +267,7 @@ public class NovelDAO {
 			stmt.setInt(2, genre.getValue());
 			stmt.executeUpdate();
 		}
+		stmt.close();
 	}
 	
 	public void deleteGenres(int idNovel) throws Exception {
@@ -258,6 +276,7 @@ public class NovelDAO {
 		stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, idNovel);
 		stmt.executeUpdate();
+		stmt.close();
 	}
 	
 	public void updateGenres(int idNovel, List<NovelGenre> genres) throws Exception {
@@ -286,6 +305,8 @@ public class NovelDAO {
 		if (rs.next()) {
 			result = getEncode(rs.getBytes(1));
 		}
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	
@@ -300,6 +321,7 @@ public class NovelDAO {
 		else
 			stmt.setBytes(2, new byte[0]);
 		stmt.executeUpdate();
+		stmt.close();
 	}
 	
 	public void updateImage(int idNovel, InputStream in) throws Exception{
@@ -310,14 +332,16 @@ public class NovelDAO {
 		stmt.setBlob(1, in);
 		stmt.setInt(2, idNovel);
 		stmt.executeUpdate();
+		stmt.close();
 	}
-	
+
 	public void deleteImageById(int idNovel) throws Exception {
 		PreparedStatement stmt;
 		String query = "delete from IMAGE where IDOWNER = ? and TYPE = 'NOVEL'";
 		stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, idNovel);
 		stmt.executeUpdate();
+		stmt.close();
 	}
 
 	public String getEncode(byte[] buf) {
