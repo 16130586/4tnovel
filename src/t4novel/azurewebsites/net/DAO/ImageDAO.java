@@ -7,8 +7,13 @@ import java.sql.ResultSet;
 import java.util.Base64;
 
 public class ImageDAO {
+	private Connection cnn;
 	
-	public static void insertImage(int idOwner, String type, InputStream in, Connection cnn) throws Exception {
+	public ImageDAO(Connection cnn) {
+		this.cnn = cnn;
+	}
+	
+	public void insertImage(int idOwner, String type, InputStream in) throws Exception {
 		String query;
 		PreparedStatement stmt = null;
 		query = ("insert into IMAGE (IDOWNER, IMG, TYPE) values (?, ?, ?)");
@@ -25,41 +30,50 @@ public class ImageDAO {
 			stmt.close();
 		}
 	}
-	
 
-	public static void updateImage(int idOwner, String type, InputStream in, Connection cnn) throws Exception{
+	public void updateImage(int idOwner, String type, InputStream in) throws Exception{
 		String query;
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		query = ("update IMAGE set IMG = ? where IDOWNER = ?");
-		stmt = cnn.prepareStatement(query);
-		stmt.setBlob(1, in);
-		stmt.setInt(2, idOwner);
-		stmt.executeUpdate();
-		stmt.close();
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setBlob(1, in);
+			stmt.setInt(2, idOwner);
+			stmt.executeUpdate();
+		} finally {
+			stmt.close();
+		}
 	}
 	
-	public static void deleteImageById(int idOwner, String type, Connection cnn) throws Exception {
-		PreparedStatement stmt;
+	public void deleteImageById(int idOwner, String type) throws Exception {
+		PreparedStatement stmt = null;
 		String query = "delete from IMAGE where IDOWNER = ? and TYPE = ?";
-		stmt = cnn.prepareStatement(query);
-		stmt.setInt(1, idOwner);
-		stmt.setString(2, type);
-		stmt.executeUpdate();
-		stmt.close();
-	}
-	public static String getEncodeImage(int idOwner, String type, Connection cnn) throws Exception {
-		String query = "select IMG from IMAGE where IDOWNER = ? and TYPE = ?";
-		PreparedStatement stmt;
-		String result = "";
-		stmt = cnn.prepareStatement(query);
-		stmt.setInt(1, idOwner);
-		stmt.setString(2, type);
-		ResultSet rs = stmt.executeQuery();
-		if (rs.next()) {
-			result = getEncode(rs.getBytes(1));
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, idOwner);
+			stmt.setString(2, type);
+			stmt.executeUpdate();
+		} finally {
+			stmt.close();
 		}
-		rs.close();
-		stmt.close();
+	}
+	public String getEncodeImage(int idOwner, String type) throws Exception {
+		String query = "select IMG from IMAGE where IDOWNER = ? and TYPE = ?";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String result = "";
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, idOwner);
+			stmt.setString(2, type);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				result = getEncode(rs.getBytes(1));
+			}
+		} finally {
+			rs.close();
+			stmt.close();
+		}
 		return result;
 	}
 	
