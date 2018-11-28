@@ -51,7 +51,7 @@ private Connection cnn;
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmark.getBookmarkFolderId());
 			stmt.setString(2, bookmark.getUrl());
-			stmt.setDate(3,(Date) bookmark.getTime());
+			stmt.setDate(3, new Date(bookmark.getTime().getTime()));
 			stmt.setString(4, bookmark.getTitle());
 			stmt.executeUpdate();
 			stmt.close();

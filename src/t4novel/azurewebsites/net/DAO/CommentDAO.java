@@ -25,7 +25,7 @@ public class CommentDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, comment.getAccountOwnerId());
 			stmt.setString(2, comment.getContent());
-			stmt.setDate(3, (Date) comment.getTime());
+			stmt.setDate(3, new Date(comment.getTime().getTime()));
 			stmt.executeUpdate();
 			stmt.close();
 			

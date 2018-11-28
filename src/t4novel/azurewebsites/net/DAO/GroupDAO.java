@@ -24,7 +24,7 @@ public class GroupDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, group.getName());
 			stmt.setString(2, group.getDescription());
-			stmt.setDate(3,(Date) group.getDateCreate());
+			stmt.setDate(3, new Date(group.getDateCreate().getTime()));
 			stmt.setInt(4, group.getOwner().getId());
 			stmt.executeUpdate();
 			stmt.close();

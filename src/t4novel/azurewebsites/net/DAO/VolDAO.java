@@ -26,7 +26,7 @@ public class VolDAO {
 			stmt.setInt(1, vol.getNovelOwnerId());
 			stmt.setString(2, vol.getTitle());
 			stmt.setString(3, vol.getDescription());
-			stmt.setDate(4, (Date) vol.getDateUp());
+			stmt.setDate(4, new Date(vol.getDateUp().getTime()));
 			stmt.executeUpdate();
 			stmt.close();
 			

@@ -26,7 +26,7 @@ public class ChapDAO {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chap.getVolOwnerId());
 			stmt.setString(2, chap.getContent());
-			stmt.setDate(3, (Date) chap.getDateUp());
+			stmt.setDate(3, new Date(chap.getDateUp().getTime()));
 			stmt.executeUpdate();
 			stmt.close();
 			System.out.println("Insert chap completed!");
