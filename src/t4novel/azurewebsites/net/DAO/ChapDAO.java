@@ -28,6 +28,7 @@ public class ChapDAO {
 			stmt.setString(2, chap.getContent());
 			stmt.setDate(3, (Date) chap.getDateUp());
 			stmt.executeUpdate();
+			stmt.close();
 			System.out.println("Insert chap completed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,6 +50,8 @@ public class ChapDAO {
 				chap.setContent(rs.getString(3));
 				chap.setDateUp(rs.getDate(4));
 			}
+			rs.close();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -72,6 +75,8 @@ public class ChapDAO {
 				chap.setDateUp(rs.getDate(4));
 				listChap.add(chap);
 			}
+			rs.close();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -87,6 +92,7 @@ public class ChapDAO {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chapID);
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Delete chap completed!");
 		} catch (Exception e) {
@@ -110,6 +116,8 @@ public class ChapDAO {
 				chap.setDateUp(rs.getDate(4));
 				listChap.add(chap);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -126,6 +134,7 @@ public class ChapDAO {
 			stmt.setString(1, chap.getContent());
 			stmt.setInt(2, chap.getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Update chap completed");
 		} catch (Exception e) {

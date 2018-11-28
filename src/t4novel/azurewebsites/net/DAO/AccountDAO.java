@@ -33,7 +33,7 @@ public class AccountDAO {
 			stmt.setString(7, "NO");
 			stmt.setString(8, "NO");
 			stmt.executeUpdate();
-			
+			stmt.close();
 			System.out.println("Insert account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class AccountDAO {
 			stmt.setString(4, account.isBanned() ? "YES" : "NO");
 			stmt.setInt(5, account.getId());
 			stmt.executeUpdate();
-			
+			stmt.close();
 			System.out.println("Update account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,6 +82,8 @@ public class AccountDAO {
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
 				//account.setBookMarkFolders(bmFolderDAO.getBookmarkFolders(account.getId()));
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,6 +115,8 @@ public class AccountDAO {
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
 				//account.setBookMarkFolders(bmFolderDAO.getBookmarkFolders(account.getId()));
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,6 +133,7 @@ public class AccountDAO {
 			stmt.setInt(1, AccountID);
 			stmt.executeUpdate();
 			
+			stmt.close();
 			System.out.println("Delete account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,6 +161,8 @@ public class AccountDAO {
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
 				listAccount.add(account);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

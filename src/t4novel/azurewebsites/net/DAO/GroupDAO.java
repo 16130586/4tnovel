@@ -27,6 +27,7 @@ public class GroupDAO {
 			stmt.setDate(3,(Date) group.getDateCreate());
 			stmt.setInt(4, group.getOwner().getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Insert group completed!");
 		} catch (Exception e) {
@@ -68,6 +69,8 @@ public class GroupDAO {
 				group.setDateCreate(rs.getDate(4));
 				group.setOwner(accountDAO.getAccountByID(rs.getInt(5)));
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,6 +86,7 @@ public class GroupDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, group.getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Delete group completed");
 		} catch (Exception e) {

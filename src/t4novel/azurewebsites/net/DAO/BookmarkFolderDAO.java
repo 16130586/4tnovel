@@ -32,6 +32,8 @@ public class BookmarkFolderDAO {
 				bmFolder.setTitle(rs.getString(3));
 				listBookmarkFolder.add(bmFolder);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,6 +57,8 @@ public class BookmarkFolderDAO {
 				bmFolder.setTitle(rs.getString(3));
 				listBookmarkFolder.add(bmFolder);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,6 +75,7 @@ public class BookmarkFolderDAO {
 			stmt.setInt(1, bookmarkFolder.getAccountOnwerID());
 			stmt.setString(2, bookmarkFolder.getTitle());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Insert bookmark folder completed!");
 		} catch (Exception e) {
@@ -86,6 +91,7 @@ public class BookmarkFolderDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, folderID);
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Delete bookmark folder completed!");
 		} catch (Exception e) {
@@ -102,6 +108,7 @@ public class BookmarkFolderDAO {
 			stmt.setString(1, bookmakFolder.getTitle());
 			stmt.setInt(2, bookmakFolder.getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Update bookmark folder completed!");
 		} catch (Exception e) {

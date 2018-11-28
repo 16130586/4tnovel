@@ -25,6 +25,7 @@ public class ThreadDAO {
 			stmt.setString(2, thread.getContent());
 			stmt.setInt(3, thread.getAccountOwnerId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Insert thread completed!");
 		} catch (Exception e) {
@@ -49,6 +50,8 @@ public class ThreadDAO {
 				thread.setAccountOwnerId(rs.getInt(4));
 				listThread.add(thread);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,6 +74,8 @@ public class ThreadDAO {
 				thread.setAccountOwnerId(rs.getInt(4));
 				listThread.add(thread);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,6 +92,7 @@ public class ThreadDAO {
 			stmt.setString(2, thread.getContent());
 			stmt.setInt(3, thread.getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Update thread completed!");
 		} catch (Exception e) {
@@ -110,6 +116,8 @@ public class ThreadDAO {
 				thread.setContent(rs.getString(3));
 				thread.setAccountOwnerId(rs.getInt(4));
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -125,7 +133,7 @@ public class ThreadDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, threadID);
 			stmt.executeUpdate();
-			
+			stmt.close();			
 			System.out.println("Delete thread completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
