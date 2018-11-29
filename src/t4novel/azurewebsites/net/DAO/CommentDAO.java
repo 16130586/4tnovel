@@ -19,7 +19,7 @@ public class CommentDAO {
 	}
 	
 	public void insertComment(Comment comment) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "INSERT INTO COMMENT (ID_OWNER, CONTENT, CREATETIME) VALUES (?, ?, ?)";
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -31,18 +31,26 @@ public class CommentDAO {
 			System.out.println("Insert comment completed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public Comment getCommentByID(int commentID) {
 		Comment comment = null;
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String query = "SELECT * FROM COMMENT WHERE ID = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, commentID);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			if (rs.next()) {
 				comment = new Comment();
 				comment.setId(rs.getInt(1));
@@ -52,43 +60,30 @@ public class CommentDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return comment;
 	}
 
-	public List<Comment> getAllVol() {
+	public List<Comment> getCommentByUser(int userID) {
 		LinkedList<Comment> listComment = new LinkedList<>();
-		PreparedStatement stmt;
-		String query = "SELECT * FROM VOL";
-		
-		try {
-			stmt = cnn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				Comment comment = new Comment();
-				comment.setId(rs.getInt(1));
-				comment.setAccountOwnerId(rs.getInt(2));
-				comment.setContent(rs.getString(3));
-				comment.setTime(rs.getDate(4));
-				listComment.add(comment);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return listComment;
-	}
-
-	public List<Comment> getVolByUser(int userID) {
-		LinkedList<Comment> listComment = new LinkedList<>();
-		PreparedStatement stmt;
-		String query = "SELECT * FROM VOL WHERE ID_OWNER = ?";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM COMMENT WHERE ID_OWNER = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, userID);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			if (rs.next()) {
 				Comment comment = new Comment();
 				comment.setId(rs.getInt(1));
@@ -99,13 +94,22 @@ public class CommentDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return listComment;
 	}
 	
 	public void updateComment(Comment comment) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "UPDATE COMMENT SET CONTENT= ? WHERE ID = ?";
 		
 		try {
@@ -116,11 +120,19 @@ public class CommentDAO {
 			
 			System.out.println("Update comment completed!");
 		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void deleteCommentByID(int commentID) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "DELETE * FROM COMMENT WHERE ID = ?";
 		
 		try {
@@ -131,21 +143,13 @@ public class CommentDAO {
 			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-	
-	public void deleteVolByUser(int userID) {
-		PreparedStatement stmt;
-		String query = "DELETE FROM VOL WHERE ID_OWNER = ?";
-		
-		try {
-			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, userID);
-			stmt.executeUpdate();
-			
-			System.out.println("Delete comment completed!");
-		} catch (Exception e) {
-			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

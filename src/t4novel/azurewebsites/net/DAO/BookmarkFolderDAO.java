@@ -3,6 +3,7 @@ package t4novel.azurewebsites.net.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,20 +11,21 @@ import t4novel.azurewebsites.net.models.BookMarkFolder;
 
 public class BookmarkFolderDAO {
 	private Connection cnn;
-	
+
 	public BookmarkFolderDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
-	
+
 	public List<BookMarkFolder> getBookmarkFolderByUser(int userID){
 		LinkedList<BookMarkFolder> listBookmarkFolder = new LinkedList<>();
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String query = "SELECT * FROM BMFOLDER WHERE ID_ACC = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, userID);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				BookMarkFolder bmFolder = new BookMarkFolder();
@@ -34,20 +36,30 @@ public class BookmarkFolderDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
+		 
 		return listBookmarkFolder;
 	}
-	
-	public List<BookMarkFolder> getAllBookmarkFolder(){
+
+	public List<BookMarkFolder> getAllBookmarkFolder() {
 		LinkedList<BookMarkFolder> listBookmarkFolder = new LinkedList<>();
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String query = "SELECT * FROM BMFOLDER";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
-			
+			rs = stmt.executeQuery();
+
 			while (rs.next()) {
 				BookMarkFolder bmFolder = new BookMarkFolder();
 				bmFolder.setId(rs.getInt(1));
@@ -57,55 +69,84 @@ public class BookmarkFolderDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
+
 		return listBookmarkFolder;
 	}
-	
+
 	public void insertBookmarkFolder(BookMarkFolder bookmarkFolder) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "INSERT INTO BMFOLDER (ID_ACC, TITLE) VALUES (?, ?)";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmarkFolder.getAccountOnwerID());
 			stmt.setString(2, bookmarkFolder.getTitle());
 			stmt.executeUpdate();
-			
+
 			System.out.println("Insert bookmark folder completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	public void deleteBookmarkFolderByID(int folderID) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "DELETE FROM BMFOLDER WHERE ID = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, folderID);
 			stmt.executeUpdate();
-			
+
 			System.out.println("Delete bookmark folder completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	public void updateBookmarkFolder(BookMarkFolder bookmakFolder) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "UPDATE BMFOLDER SET TITLE = ? WHERE ID = ?";
-		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, bookmakFolder.getTitle());
 			stmt.setInt(2, bookmakFolder.getId());
 			stmt.executeUpdate();
-			
+
 			System.out.println("Update bookmark folder completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

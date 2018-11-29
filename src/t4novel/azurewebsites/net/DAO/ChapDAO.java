@@ -20,7 +20,7 @@ public class ChapDAO {
 	}
 
 	public void insertChap(Chap chap) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String querry = "INSERT INTO CHAP (ID_VOL, CONTENT, DATEUP) VALUES (?, ?, ?)";
 		try {
 			stmt = cnn.prepareStatement(querry);
@@ -31,17 +31,25 @@ public class ChapDAO {
 			System.out.println("Insert chap completed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public Chap getChapByID(int chapID) {
 		Chap chap = null;
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String querry = "SELECT * FROM CHAP WHERE ID = ?";
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chapID);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			if (rs.next()) {
 				chap = new Chap();
 				chap.setId(rs.getInt(1));
@@ -51,6 +59,15 @@ public class ChapDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return chap;
@@ -58,12 +75,14 @@ public class ChapDAO {
 	
 	public List<Chap> getChapsByVolID(int volID) {
 		LinkedList<Chap> listChap = new LinkedList<>();
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String querry = "SELECT * FROM CHAP WHERE ID_VOL = ?";
+		
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, volID);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			if (rs.next()) {
 				Chap chap = new Chap();
 				chap.setId(rs.getInt(1));
@@ -74,13 +93,22 @@ public class ChapDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return listChap;
 	}
 	
 	public void deleteChapByID(int chapID) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String querry = "DELETE FROM CHAP WHERE ID = ?";
 		
 		try {
@@ -91,17 +119,25 @@ public class ChapDAO {
 			System.out.println("Delete chap completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public List<Chap> getAllChap(){
 		LinkedList<Chap> listChap = new LinkedList<>();
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String querry = "SELECT * FROM CHAP";
 		
 		try {
 			stmt = cnn.prepareStatement(querry);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Chap chap = new Chap();
 				chap.setId(rs.getInt(1));
@@ -112,13 +148,22 @@ public class ChapDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return listChap;
 	}
 	
 	public void updateChap(Chap chap) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "UPDATE CHAP set CONTENT = ? WHERE ID = ?";
 		
 		try {
@@ -130,6 +175,13 @@ public class ChapDAO {
 			System.out.println("Update chap completed");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

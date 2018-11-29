@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,13 +19,14 @@ private Connection cnn;
 	
 	public List<BookMark> getBookmarkByFolder(int folderID){
 		LinkedList<BookMark> listBookmark = new LinkedList<>();
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String query = "SELECT * FROM BM WHERE ID_BMFOLDER = ?";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, folderID);
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				BookMark bm = new BookMark();
@@ -36,13 +38,22 @@ private Connection cnn;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return listBookmark;
 	}
 	
 	public void insertBookmark(BookMark bookmark) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "INSERT INTO BOOKMARK (ID_BMFOLDER, URL, TIME_BM, TITLE) VALUES (?, ?, ?, ?)";
 		
 		try {
@@ -56,11 +67,18 @@ private Connection cnn;
 			System.out.println("Insert bookmark completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void updateBookmark(BookMark bookmark) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "UPDATE BOOKMARK SET URL = ?, TITLE = ? WHERE ID = ?";
 		
 		try {
@@ -73,11 +91,18 @@ private Connection cnn;
 			System.out.println("Update bookmark completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void deleteBookmarkByID(int bookmarkID) {
-		PreparedStatement stmt;
+		PreparedStatement stmt = null;
 		String query = "DELETE FROM BOOKMARK WHERE ID = ?";
 		
 		try {
@@ -88,6 +113,13 @@ private Connection cnn;
 			System.out.println("Delete bookmark completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
