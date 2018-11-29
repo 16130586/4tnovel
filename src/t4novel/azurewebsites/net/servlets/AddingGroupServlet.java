@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Group;
-
+import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.ExistedDisplayedNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -28,7 +29,7 @@ public class AddingGroupServlet extends HttpServlet {
 	 */
 	public AddingGroupServlet() {
 		super();
-		
+
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class AddingGroupServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		getServletContext().getRequestDispatcher("/jsps/pages/add-group.jsp").forward(request, response);
 	}
 
@@ -53,8 +54,14 @@ public class AddingGroupServlet extends HttpServlet {
 		DAOService existedGroupNameChecker = new ExistedDisplayedNameCheckingService(databaseConnection);
 		AbstractMappingForm submitedForm = new AddingGroupForm(request, existedGroupNameChecker);
 		if (!submitedForm.isOnError()) {
+			// open transaction
 			Group group = (Group) submitedForm.getMappingData();
-			// TODO write to db both group and account owner group
+			GroupDAO groupDAO = new GroupDAO(databaseConnection);
+			group.setId(groupDAO.getNextID());
+			groupDAO.insertGroup(group);
+			groupDAO.insertMemberToAGroup((Account) request.getSession().getAttribute("account"), group);
+			// close transaction
+			// try catch => xay ra loi trong chuoi hanh dong => roll back lai het
 			System.out.println("ok not error then set success");
 			request.setAttribute("sucessed", "Adding new group successfully!");
 		} else {

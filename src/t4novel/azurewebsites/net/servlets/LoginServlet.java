@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
+import t4novel.azurewebsites.net.DAO.BookMarkDAO;
+import t4novel.azurewebsites.net.DAO.BookmarkFolderDAO;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.LoginCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -44,11 +46,13 @@ public class LoginServlet extends HttpServlet {
 		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService loginCheckingService = new LoginCheckingService(cnn);
 		AccountDAO accountDAO = new AccountDAO(cnn);
+		BookmarkFolderDAO bookmarkFolderDAO = new BookmarkFolderDAO(cnn);
 		AbstractMappingForm loginForm = new LoginForm(request, loginCheckingService);
 		
 		if(!loginForm.isOnError()) {
 			Account account = (Account) loginForm.getMappingData();
 			account = accountDAO.getAccountByUsername(account.getUserName());
+			account.setBookMarkFolders(bookmarkFolderDAO.getBookmarkFolderByUser(account.getId()));
 			request.getSession().setAttribute("account", account);
 			response.sendRedirect("index");
 			System.out.println("suceess!");
