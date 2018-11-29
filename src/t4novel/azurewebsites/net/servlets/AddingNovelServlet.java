@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+
+import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingNovelForm;
@@ -18,6 +21,7 @@ import t4novel.azurewebsites.net.models.Novel;
  * Servlet implementation class AddingNovelServlet
  */
 @WebServlet("/add-novel")
+
 public class AddingNovelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,7 +46,10 @@ public class AddingNovelServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
+
 		AbstractMappingForm form = new AddingNovelForm(request);
 		
 		if(!form.isOnError()) {
@@ -52,7 +59,18 @@ public class AddingNovelServlet extends HttpServlet {
 			NovelDAO novelDAO = new NovelDAO(cnn);
 			
 			Novel novel = (Novel) form.getMappingData();
-			novelDAO.insertNovel(novel);
+			try {
+				novelDAO.insertNovel(novel);
+				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
+				if (fileImage != null)
+					novelDAO.insertImageNovel(novelDAO.getMaxID(), fileImage.getInputStream());
+				else {
+					novelDAO.insertImageNovel(novelDAO.getMaxID(), null);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			System.out.println("adding novel sucessed!	");
 			System.out.println("sucessed");

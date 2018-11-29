@@ -28,12 +28,11 @@ public class AccountDAO {
 			stmt.setString(2, account.getUserName());
 			stmt.setString(3, account.getPassword());
 			stmt.setString(4, account.getGmail());
-			stmt.setDate(5,(Date) account.getDateCreate());
-			stmt.setInt(6, 2);
+			stmt.setDate(5, new Date(account.getDateCreate().getTime()));
+			stmt.setInt(6, 1);
 			stmt.setString(7, "NO");
 			stmt.setString(8, "NO");
 			stmt.executeUpdate();
-			
 			System.out.println("Insert account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,7 +58,6 @@ public class AccountDAO {
 			stmt.setString(4, account.isBanned() ? "YES" : "NO");
 			stmt.setInt(5, account.getId());
 			stmt.executeUpdate();
-			
 			System.out.println("Update account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,7 +157,6 @@ public class AccountDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, AccountID);
 			stmt.executeUpdate();
-			
 			System.out.println("Delete account completed!");
 		} catch (Exception e) {
 			e.printStackTrace();

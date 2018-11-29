@@ -26,8 +26,9 @@ public class VolDAO {
 			stmt.setInt(1, vol.getNovelOwnerId());
 			stmt.setString(2, vol.getTitle());
 			stmt.setString(3, vol.getDescription());
-			stmt.setDate(4, (Date) vol.getDateUp());
-			stmt.executeQuery();
+			stmt.setDate(4, new Date(vol.getDateUp().getTime()));
+			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Insert vol completed!");
 		} catch (SQLException e) {
@@ -60,6 +61,8 @@ public class VolDAO {
 				vol.setDescription(rs.getString(4));
 				vol.setDateUp(rs.getDate(5));
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -95,6 +98,8 @@ public class VolDAO {
 				vol.setDateUp(rs.getDate(5));
 				listVol.add(vol);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -121,6 +126,7 @@ public class VolDAO {
 			stmt.setString(2, vol.getDescription());
 			stmt.setInt(3, vol.getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Update vol completed!");
 		} catch (Exception e) {
@@ -143,6 +149,7 @@ public class VolDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {
@@ -165,6 +172,7 @@ public class VolDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, novelID);
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {

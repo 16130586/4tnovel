@@ -1,19 +1,28 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map.Entry;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 /**
  * Servlet implementation class AddServlet
  */
 @WebServlet("/add")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 4MB
+maxFileSize = 1024 * 1024 * 100, // 100MB
+maxRequestSize = 1024 * 1024 * 100) // 100MB
 public class AddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,10 +65,29 @@ public class AddServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			System.out.println(entry.getKey() + " " + Arrays.toString(entry.getValue()));
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		List<String> genres = new LinkedList<>();
+		String tmp;
+		try {
+			List<FileItem> listFiles = upload.parseRequest(request);
+			for (FileItem fileItem : listFiles) {
+				if (!fileItem.isFormField()) {
+					request.setAttribute("fileImage", fileItem);
+				} else {
+					tmp = new String(fileItem.get(), "utf-8");
+					if ("genre".equals(fileItem.getFieldName()))
+						genres.add(tmp);
+					else
+						request.setAttribute(fileItem.getFieldName(), tmp);
+				}
+			}
+			request.setAttribute("genres", genres);
+		} catch (FileUploadException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		String type = request.getParameter("type");
+		String type = (String) request.getAttribute("type");
 		String url = "";
 		if ("add-novel".equals(type)) {
 			url = "/add-novel";

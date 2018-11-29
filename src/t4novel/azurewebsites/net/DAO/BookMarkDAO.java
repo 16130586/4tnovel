@@ -36,6 +36,8 @@ private Connection cnn;
 				bm.setTitle(rs.getString(5));
 				listBookmark.add(bm);
 			}
+			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -60,10 +62,10 @@ private Connection cnn;
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmark.getBookmarkFolderId());
 			stmt.setString(2, bookmark.getUrl());
-			stmt.setDate(3,(Date) bookmark.getTime());
+			stmt.setDate(3, new Date(bookmark.getTime().getTime()));
 			stmt.setString(4, bookmark.getTitle());
 			stmt.executeUpdate();
-			
+			stmt.close();
 			System.out.println("Insert bookmark completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,6 +89,7 @@ private Connection cnn;
 			stmt.setString(2, bookmark.getTitle());
 			stmt.setInt(3, bookmark.getId());
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Update bookmark completed!");
 		} catch (Exception e) {
@@ -109,6 +112,7 @@ private Connection cnn;
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmarkID);
 			stmt.executeUpdate();
+			stmt.close();
 			
 			System.out.println("Delete bookmark completed!");
 		} catch (Exception e) {

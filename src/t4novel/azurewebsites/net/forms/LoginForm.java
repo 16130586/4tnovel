@@ -12,7 +12,6 @@ import t4novel.azurewebsites.net.models.Account;
 public class LoginForm extends AbstractMappingForm {
 	private String userName;
 	private String password;
-	private int id;
 	private DAOService loginCheckingService;
 	
 	public LoginForm(HttpServletRequest request, DAOService loginService) {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAOService.EmailCheckingService;
 import t4novel.azurewebsites.net.DAOService.UserNameCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -53,11 +54,13 @@ public class RegisterServlet extends HttpServlet {
 
 		String url = "";
 		if (!userSubmittedForm.isOnError()) {
+			AccountDAO accDAO = new AccountDAO(cnn); 
 			url = "/index";
 			// TODO write account to DTB
 			
 			//
 			Account account = (Account) userSubmittedForm.getMappingData();
+			accDAO.insertAccount(account);
 			request.getSession().setAttribute("account", account);
 			response.sendRedirect("index");
 		} else {

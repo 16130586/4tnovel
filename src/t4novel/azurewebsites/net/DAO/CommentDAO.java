@@ -11,13 +11,13 @@ import java.util.List;
 import t4novel.azurewebsites.net.models.Comment;
 
 public class CommentDAO {
-	
+
 	private Connection cnn;
 
 	public CommentDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
-	
+
 	public void insertComment(Comment comment) {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO COMMENT (ID_OWNER, CONTENT, CREATETIME) VALUES (?, ?, ?)";
@@ -25,9 +25,9 @@ public class CommentDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, comment.getAccountOwnerId());
 			stmt.setString(2, comment.getContent());
-			stmt.setDate(3, (Date) comment.getTime());
+			stmt.setDate(3, new Date(comment.getTime().getTime()));
 			stmt.executeUpdate();
-			
+
 			System.out.println("Insert comment completed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,7 +46,7 @@ public class CommentDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM COMMENT WHERE ID = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, commentID);
@@ -70,7 +70,7 @@ public class CommentDAO {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return comment;
 	}
 
@@ -79,7 +79,7 @@ public class CommentDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM COMMENT WHERE ID_OWNER = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, userID);
@@ -104,20 +104,20 @@ public class CommentDAO {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return listComment;
 	}
-	
+
 	public void updateComment(Comment comment) {
 		PreparedStatement stmt = null;
 		String query = "UPDATE COMMENT SET CONTENT= ? WHERE ID = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, comment.getContent());
 			stmt.setInt(2, comment.getId());
 			stmt.executeUpdate();
-			
+
 			System.out.println("Update comment completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,16 +130,36 @@ public class CommentDAO {
 			}
 		}
 	}
-	
+
 	public void deleteCommentByID(int commentID) {
 		PreparedStatement stmt = null;
 		String query = "DELETE * FROM COMMENT WHERE ID = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, commentID);
 			stmt.executeUpdate();
-			
+			System.out.println("Delete comment completed!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void deleteVolByUser(int userID) {
+		PreparedStatement stmt = null;
+		String query = "DELETE FROM VOL WHERE ID_OWNER = ?";
+
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, userID);
+			stmt.executeUpdate();
 			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
