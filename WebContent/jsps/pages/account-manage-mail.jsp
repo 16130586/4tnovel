@@ -25,7 +25,7 @@
             <div>
                 <p class="u-3x u-align-center">Đổi email</p>
             </div>
-            <form>
+            <form action="changeEmail" method="post">
                 <div class="row u-padding-bottom--1-5rem">
                     <div class="col-md-5 u-align-right">
                         Nhập email mới:
