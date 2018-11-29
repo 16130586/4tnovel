@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ExistedDisplayedNameCheckingService extends BaseDaoService implements DAOService {
+public class ExisteddNameCheckingService extends BaseDaoService implements DAOService {
 
-	public ExistedDisplayedNameCheckingService(Connection databaseConnection) {
+	public ExisteddNameCheckingService(Connection databaseConnection) {
 		super(databaseConnection);
 	}
 
