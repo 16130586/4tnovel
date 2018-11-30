@@ -101,8 +101,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[GROUPACC](
 	[ID] bigint identity(1,1) NOT NULL,
-	[NAME] [nvarchar](50) NULL,
-	[DESCRIBE] [nvarchar](100) NULL,
+	[NAME] ntext NULL,
+	[DESCRIBE] ntext NULL,
 	[DATECREATE] [date] NULL,
 	[IDOWNER] bigint NULL,
 PRIMARY KEY CLUSTERED 
@@ -143,7 +143,7 @@ GO
 CREATE TABLE [dbo].[COMMENT](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_OWNER] bigint NULL,
-	[CONTENT] nvarchar NULL,
+	[CONTENT] ntext NULL,
 	[CREATETIME] [time](7) NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -164,7 +164,7 @@ CREATE TABLE [dbo].[MESS](
 	[ID] bigint identity(1,1) NOT NULL,
 	[CONTENT] text NULL,
 	[TIME_MESS] [time](7) NULL,
-	[URL] [nvarchar](200) NULL,
+	[URL] ntext NULL,
 	[TYPE_MESS] [nvarchar](20) NULL,
 	[FROM_ID] bigint NULL,
 	[TO_ID] bigint NULL,
@@ -185,7 +185,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[LN](
 	[ID] bigint identity(1,1) NOT NULL,
-	[NAME] [nvarchar](50) NULL,
+	[NAME] ntext NULL,
 	[DESCRIBE] ntext NULL,
 	[DATEUP] [date] NULL,
 	[IDOWNER] bigint NULL,
@@ -248,7 +248,7 @@ GO
 CREATE TABLE [dbo].[BMFOLDER](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_ACC] bigint NULL,
-	[TITLE] [nvarchar](100) NULL,
+	[TITLE] ntext NULL,
 	[ISPARENT] [char](3) NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -267,8 +267,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[THREAD](
 	[ID] bigint identity(1,1) NOT NULL,
-	[TITLE] nvarchar NULL,
-	[CONTENT] nvarchar NULL,
+	[TITLE] ntext NULL,
+	[CONTENT] ntext NULL,
 	[ID_OWNER] bigint NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -308,8 +308,8 @@ GO
 CREATE TABLE [dbo].[VOL](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_LN] bigint NULL,
-	[TITLE] [nvarchar](50) NOT NULL,
-	[DESCRIBE] nvarchar NULL,
+	[TITLE] ntext NOT NULL,
+	[DESCRIBE] ntext NULL,
 	[DATEUP] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -351,7 +351,7 @@ CREATE TABLE [dbo].[BM](
 	[ID_BMFOLDER]bigint NULL,
 	[URL] text NULL,
 	[TIME_BM] [time](7) NULL,
-	[TITLE] nvarchar NULL,
+	[TITLE] ntext NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -390,7 +390,8 @@ GO
 CREATE TABLE [dbo].[CHAP](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_VOL] bigint NULL,
-	[CONTENT] nvarchar NULL,
+	[ID_NOVEL] bigint NULL,
+	[CONTENT] ntext NULL,
 	[DATEUP] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -472,4 +473,9 @@ GO
 /****** Object:  ForeignKey [FK__CHAP__ID_VOL__3493CFA7]    Script Date: 10/17/2018 13:50:56 ******/
 ALTER TABLE [dbo].[CHAP]  WITH CHECK ADD FOREIGN KEY([ID_VOL])
 REFERENCES [dbo].[VOL] ([ID])
+GO
+
+/****** Object:  ForeignKey [FK__CHAP__ID_VOL__3493CFA7]    Script Date: 10/17/2018 13:50:56 ******/
+ALTER TABLE [dbo].[CHAP]  WITH CHECK ADD FOREIGN KEY([ID_NOVEL])
+REFERENCES [dbo].LN ([ID])
 GO
