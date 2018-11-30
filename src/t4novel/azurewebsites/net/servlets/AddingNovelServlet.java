@@ -2,14 +2,20 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
@@ -22,7 +28,9 @@ import t4novel.azurewebsites.net.models.Novel;
  * Servlet implementation class AddingNovelServlet
  */
 @WebServlet("/add-novel")
-
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 4MB
+maxFileSize = 1024 * 1024 * 100, // 100MB
+maxRequestSize = 1024 * 1024 * 100) // 100MB
 public class AddingNovelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -50,6 +58,29 @@ public class AddingNovelServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
+		
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		List<String> genres = new LinkedList<>();
+		String tmp;
+		try {
+			List<FileItem> listFiles = upload.parseRequest(request);
+			for (FileItem fileItem : listFiles) {
+				if (fileItem.isFormField()) {
+					tmp = new String(fileItem.get(), "utf-8");
+					if ("genre".equals(fileItem.getFieldName()))
+						genres.add(tmp);
+					else
+						request.setAttribute(fileItem.getFieldName(), tmp);
+				}
+				if (!fileItem.isFormField())
+					request.setAttribute("fileImage", fileItem);
+				
+			}
+			request.setAttribute("genres", genres);
+		} catch (FileUploadException e1) {
+			e1.printStackTrace();
+		}
 
 		AbstractMappingForm form = new AddingNovelForm(request);
 		

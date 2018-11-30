@@ -30,7 +30,6 @@
 			</div>
 			<form action="add-novel" method="POST"
 				onsubmit="return checkCheckBoxes();" enctype="multipart/form-data">
-				<input type="hidden" name="type" value="add-novel">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
