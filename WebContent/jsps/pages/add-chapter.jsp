@@ -46,7 +46,7 @@
 								truyện: <span style="color: red">*</span>
 						</label></td>
 						<td><select name="in-novel" id="novel" style="padding: .5rem"
-							onchange="loadVol(this.selectedIndex)">
+							onchange="openVol(this.selectedIndex)">
 								<option value="112">A</option>
 								<option value="113">B</option>
 								<option value="114">C</option>
