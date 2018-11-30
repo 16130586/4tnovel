@@ -61,7 +61,6 @@
 								<c:forEach var="group" items="${account.getJoinGroup()}">
 									<option value="${group.getId() }">${group.getName() }</option>
 								</c:forEach>
-								<option value="1">1</option>
 						</select> <c:if test="${empty account.getJoinGroup()}">
 								<a class="u-paragraph--sucessed u-margin-left--2rem"
 									href="add?type=add-group" target="_blank">Create new group
