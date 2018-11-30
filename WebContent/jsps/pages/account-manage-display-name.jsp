@@ -60,6 +60,11 @@
 						<a href="#" class="btn btn-danger u-color-white">Hủy</a>
 					</div>
 				</div>
+				<c:if test="${not empty sucessed}">
+					<div class="row u-padding-bottom--1-5rem">
+						<p class="u-paragraph--sucessed">${sucessed}</p>
+					</div>
+				</c:if>
 			</form>
 		</div>
 	</div>
