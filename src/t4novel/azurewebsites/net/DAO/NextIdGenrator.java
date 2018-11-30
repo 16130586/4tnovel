@@ -13,15 +13,17 @@ public class NextIdGenrator {
 	}
 
 	public int nextAutoIncrementFromTable(String tableName, Connection cnn) {
+		System.out.println("table name " + tableName);
 		int result = -1;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT MAX(ID) FROM ?";
+		String query = "SELECT MAX(ID) AS MAXID FROM " + tableName;
+		System.out.println(query);
 		try {
 			stmt = cnn.prepareStatement(query);
-			stmt.setString(1, tableName);
 			rs = stmt.executeQuery();
-			result = rs.getInt(1);
+			rs.next();
+			result = rs.getInt("MAXID") + 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
