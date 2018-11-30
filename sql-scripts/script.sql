@@ -143,7 +143,7 @@ GO
 CREATE TABLE [dbo].[COMMENT](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_OWNER] bigint NULL,
-	[CONTENT] nvarchar NULL,
+	[CONTENT] ntext NULL,
 	[CREATETIME] datetime default getdate() NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -267,8 +267,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[THREAD](
 	[ID] bigint identity(1,1) NOT NULL,
-	[TITLE] nvarchar NULL,
-	[CONTENT] nvarchar NULL,
+	[TITLE] ntext NULL,
+	[CONTENT] ntext NULL,
 	[ID_OWNER] bigint NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -351,7 +351,7 @@ CREATE TABLE [dbo].[BM](
 	[ID_BMFOLDER]bigint NULL,
 	[URL] text NULL,
 	[TIME_BM] datetime default getdate() NULL,
-	[TITLE] nvarchar NULL,
+	[TITLE] ntext NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
