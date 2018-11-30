@@ -250,4 +250,18 @@
 			<role>2</role>
 		</method>
 	</url>
-</url-sercutiry>
+	<url pattern="/search-account">
+		<method name="get">
+			<login>true</login>
+			<connection>false</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+</url-sercutiry> 
