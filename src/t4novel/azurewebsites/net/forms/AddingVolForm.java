@@ -17,6 +17,10 @@ public class AddingVolForm extends AbstractMappingForm {
 		setNovelOwnerId(request.getParameter("in-novel"));
 		setDescription(request.getParameter("description"));
 	}
+	
+	public AddingVolForm() {
+		
+	}
 
 	private void setNovelOwnerId(String parameter) {
 		try {
@@ -76,10 +80,10 @@ public class AddingVolForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Vol rs = new Vol();
-		rs.setDateUp(new Date(1, 1, 1));
+		rs.setDateUp(new java.util.Date());
 		rs.setDescription(getDescription());
 		rs.setTitle(getTitle());
-		//rs.setNovelOwnerId(getNovelOwnerId());
+		rs.setNovelOwnerId(getNovelOwnerId());
 		return rs;
 	}
 
