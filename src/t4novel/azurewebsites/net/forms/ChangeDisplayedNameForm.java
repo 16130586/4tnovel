@@ -28,7 +28,6 @@ public class ChangeDisplayedNameForm extends AbstractMappingForm {
 		if (currentPassword == null || currentPassword.isEmpty()) {
 			errors.put("currentPasswordEmpty", "Please fill your current password!");
 		} else {
-			// TODO write query to check correctPassword
 			boolean isCorrectPassword = existedPasswordChecker.check(currentAccount.getId() + "", currentPassword,
 					"SELECT USERNAME FROM ACCOUNT WHERE ID=? AND PASSWORD=?");
 			if (!isCorrectPassword) {
@@ -46,7 +45,6 @@ public class ChangeDisplayedNameForm extends AbstractMappingForm {
 		if (newDisplayName == null || newDisplayName.isEmpty()) {
 			errors.put("newDisplayNameEmpty", "Please fill new display name!");
 		} else {
-			// TODO write query to check correctPassword
 			boolean isExistedDisplayName = isExistedDisplayedNameChecker.check(newDisplayName,
 					"SELECT USERNAME FROM ACCOUNT WHERE DISPLAYEDNAME = ?");
 			if (isExistedDisplayName) {

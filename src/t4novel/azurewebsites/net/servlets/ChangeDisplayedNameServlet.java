@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,45 +24,54 @@ import t4novel.azurewebsites.net.models.Account;
 @WebServlet("/changeNickname")
 public class ChangeDisplayedNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ChangeDisplayedNameServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ChangeDisplayedNameServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection cnn =(Connection) request.getAttribute("connection");
-		DAOService existedPasswordChecker = new ExistedPasswordCheckingService(cnn);
-		DAOService existedDisplayedName = new ExisteddNameCheckingService(cnn);
-		AbstractMappingForm changeDisplayedNameForm = new ChangeDisplayedNameForm(request, existedPasswordChecker, existedDisplayedName);
-		if(!changeDisplayedNameForm.isOnError()) {
-			String newDisplayedName = (String)changeDisplayedNameForm.getMappingData();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Connection cnn = (Connection) request.getAttribute("connection");
+		DAOService correctPasswordChecker = new ExistedPasswordCheckingService(cnn);
+		DAOService existedDisplayedNameChecker = new ExisteddNameCheckingService(cnn);
+		AbstractMappingForm changeDisplayedNameForm = new ChangeDisplayedNameForm(request, correctPasswordChecker,
+				existedDisplayedNameChecker);
+		if (!changeDisplayedNameForm.isOnError()) {
+			String newDisplayedName = (String) changeDisplayedNameForm.getMappingData();
 			AccountDAO accountDAO = new AccountDAO(cnn);
+
 			Account account = (Account) request.getSession().getAttribute("account");
+
 			account.setDisplayedName(newDisplayedName);
 			accountDAO.updateAccount(account);
+
 			request.getSession().setAttribute("account", account);
-			request.setAttribute("sucessed", "Changed displayed name successfully!");
+
 			response.sendRedirect("manage");
 		}
-		//mapping loi toi user interface
+		// mapping loi toi user interface
 		else {
 			changeDisplayedNameForm.applyErrorsToUI(request);
-			getServletContext().getRequestDispatcher("/jsps/pages/account-manage-display-name.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/jsps/pages/account-manage-display-name.jsp").forward(request,
+					response);
 		}
 	}
 
