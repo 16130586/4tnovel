@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.sercurities.Role;
 
 public class RegisterForm extends AbstractMappingForm {
 	private String userName, gmai, password, rePassword;
@@ -121,10 +122,10 @@ public class RegisterForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT RegisterForm, getMappingData()");
 		Account rs = new Account();
-		rs.setDateCreate(new Date());
 		rs.setGmail(this.gmai);
 		rs.setUserName(this.userName);
 		rs.setPassword(this.password);
+		rs.setRole(Role.USER);
 		return rs;
 	}
 
