@@ -1,6 +1,7 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class Account implements Serializable {
 	private List<Group> joinGroups;
 
 	private boolean isBanned;
+
+	public Account(int id) {
+		this.id = id;
+	};
 
 	public Account() {
 	};
@@ -119,7 +124,7 @@ public class Account implements Serializable {
 	public void setAutoPassPushlishment(boolean isAutoPassPushlishment) {
 		this.isAutoPassPushlishment = isAutoPassPushlishment;
 	}
-	
+
 	public List<Thread> getThreads() {
 		return threads;
 	}
@@ -174,5 +179,27 @@ public class Account implements Serializable {
 
 	public void setJoinGroup(List<Group> jointGroup) {
 		this.joinGroups = jointGroup;
+		System.out.println("is joint group null ? " + (jointGroup == null ));
+	}
+
+	public Group getGroup(int rootGroupId) {
+		Group rs = null;
+		for (Group gr : joinGroups) {
+			if (rootGroupId == gr.getId()) {
+				rs = gr;
+				break;
+			}
+		}
+		return rs;
+	}
+
+	public List<Group> getOwnerGroups() {
+		List<Group> rs = new ArrayList<>(joinGroups.size());
+		for(Group gr : joinGroups) {
+			if(gr.getOwner().getId() == this.id) {
+				rs.add(gr);
+			}
+		}
+		return rs;
 	}
 }
