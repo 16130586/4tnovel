@@ -19,7 +19,7 @@ public class NovelDAO {
 	public NovelDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
-	
+
 	public List<Novel> getNovelsByUserId(int accountId) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -30,8 +30,8 @@ public class NovelDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, accountId);
 			rs = stmt.executeQuery();
-			while(rs.next()) {
-				int idNovel = rs.getInt("ID"); 
+			while (rs.next()) {
+				int idNovel = rs.getInt("ID");
 				tmp = new Novel();
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
@@ -43,23 +43,26 @@ public class NovelDAO {
 				result.add(tmp);
 			}
 		} finally {
-			rs.close();
-			stmt.close();		
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
 		return result;
 	}
-	
+
 	public List<Novel> searchNovelsByNamePattern(String name) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where NAME like '%"+name+"%'";
+		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where NAME like '%" + name
+				+ "%'";
 		try {
 			stmt = cnn.prepareStatement(query);
 			rs = stmt.executeQuery();
-			while(rs.next()) {
-				int idNovel = rs.getInt("ID"); 
+			while (rs.next()) {
+				int idNovel = rs.getInt("ID");
 				tmp = new Novel();
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
@@ -72,18 +75,19 @@ public class NovelDAO {
 			}
 		} finally {
 			rs.close();
-			stmt.close();		
+			stmt.close();
 		}
 		return result;
 	}
-	
-	public List<Novel> searchByAdvance(List<NovelGenre> genres, int statusVal, String kind, String name) throws Exception {
+
+	public List<Novel> searchByAdvance(List<NovelGenre> genres, int statusVal, String kind, String name)
+			throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
 		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where STATUS = ? and KIND = ?";
-		if(name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty()) {
 			query += "AND NAME = " + name;
 		}
 		try {
@@ -91,8 +95,8 @@ public class NovelDAO {
 			stmt.setInt(1, statusVal);
 			stmt.setString(2, kind);
 			rs = stmt.executeQuery();
-			while(rs.next()) {
-				int idNovel = rs.getInt("ID"); 
+			while (rs.next()) {
+				int idNovel = rs.getInt("ID");
 				if (isExistGenresInNovel(idNovel, genres)) {
 					tmp = new Novel();
 					tmp.setId(idNovel);
@@ -107,11 +111,11 @@ public class NovelDAO {
 			}
 		} finally {
 			rs.close();
-			stmt.close();		
+			stmt.close();
 		}
 		return result;
 	}
-	
+
 	public void delNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "delete from LN where ID = ?";
@@ -129,11 +133,11 @@ public class NovelDAO {
 			cnn.setAutoCommit(true);
 		}
 	}
-	
+
 	public void updateNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? where ID = ?";
-		
+
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
@@ -152,7 +156,7 @@ public class NovelDAO {
 			cnn.setAutoCommit(true);
 		}
 	}
-	
+
 	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS) VALUES (?, ?, ?, ?, ?, ?)";
@@ -170,13 +174,12 @@ public class NovelDAO {
 		} catch (Exception e) {
 			cnn.rollback();
 			throw e;
-		}
-		finally {
+		} finally {
 			stmt.close();
 			cnn.setAutoCommit(true);
 		}
 	}
-	
+
 	public synchronized int getMaxID() throws Exception {
 		int result = 0;
 		PreparedStatement stmt = null;
@@ -196,39 +199,39 @@ public class NovelDAO {
 	public boolean isExistGenresInNovel(int idNovel, List<NovelGenre> genres) throws Exception {
 		return isExistGenresInNovel(idNovel, genres);
 	}
-	
+
 	public boolean isExistGenreInNovel(int idNovel, NovelGenre genre, GenreDAO genreDAO) throws Exception {
 		return genreDAO.isExistGenreInNovel(idNovel, genre);
 	}
-	
+
 	public List<NovelGenre> getGenres(int idNovel, GenreDAO genreDAO) throws Exception {
 		return genreDAO.getGenres(idNovel);
 	}
-	
+
 	public void insertGenres(int idNovel, List<NovelGenre> genres, GenreDAO genreDAO) throws Exception {
 		genreDAO.insertGenres(idNovel, genres);
 	}
-	
+
 	public void deleteGenres(int idNovel, GenreDAO genreDAO) throws Exception {
 		genreDAO.deleteGenres(idNovel);
 	}
-	
+
 	public void updateGenres(int idNovel, List<NovelGenre> genres, GenreDAO genreDAO) throws Exception {
 		genreDAO.updateGenres(idNovel, genres);
 	}
-	
+
 	public String getEncodeImageById(int idNovel, ImageDAO imgDAO) throws Exception {
 		return imgDAO.getEncodeImage(idNovel, "NOVEL");
 	}
-	
+
 	public void insertImageNovel(int idNovel, InputStream in, ImageDAO imgDAO) throws Exception {
 		imgDAO.insertImage(idNovel, "NOVEL", in);
 	}
-	
+
 	public void deleteImageNovelById(int idNovel, ImageDAO imgDAO) throws Exception {
 		imgDAO.deleteImageById(idNovel, "NOVEL");
 	}
-	
+
 	public void updateImageNovelById(int idNovel, InputStream in, ImageDAO imgDAO) throws Exception {
 		imgDAO.updateImage(idNovel, "NOVEL", in);
 	}
