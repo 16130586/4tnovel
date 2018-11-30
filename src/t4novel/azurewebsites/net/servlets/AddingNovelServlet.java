@@ -64,12 +64,12 @@ public class AddingNovelServlet extends HttpServlet {
 			Novel novel = (Novel) form.getMappingData();
 			try {
 				novelDAO.insertNovel(novel);
-				novelDAO.insertGenres(novelDAO.getMaxID(), novel.getGenres(), genreDAO);
+				novelDAO.insertGenres(NovelDAO.getMaxID(cnn), novel.getGenres(), genreDAO);
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
 				if (fileImage != null)
-					novelDAO.insertImageNovel(novelDAO.getMaxID(), fileImage.getInputStream(), imgDAO);
+					novelDAO.insertImageNovel(NovelDAO.getMaxID(cnn), fileImage.getInputStream(), imgDAO);
 				else {
-					novelDAO.insertImageNovel(novelDAO.getMaxID(), null, imgDAO);
+					novelDAO.insertImageNovel(NovelDAO.getMaxID(cnn), null, imgDAO);
 				}
 				
 			} catch (Exception e) {
