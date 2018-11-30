@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,12 +37,22 @@
 							required>
 					</div>
 				</div>
+				<c:if test="${not empty currentPasswordError}">
+					<div class="row u-padding-bottom--1-5rem">
+						<p class="u-paragraph--failed u-centered">${currentPasswordError}</p>
+					</div>
+				</c:if>
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5 u-align-right">Nhập tên mới:</div>
 					<div class="col-md-7">
 						<input name="new-name" class="u-width--50" type="text" required>
 					</div>
 				</div>
+				<c:if test="${not empty newDisplayNameError}">
+					<div class="row u-padding-bottom--1-5rem">
+						<p class="u-paragraph--failed u-centered">${newDisplayNameError}</p>
+					</div>
+				</c:if>
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5"></div>
 					<div class="col-md-7">
