@@ -20,9 +20,9 @@ public class AddingVolForm extends AbstractMappingForm {
 
 	private void setNovelOwnerId(String parameter) {
 		try {
-			//setNovelOwnerId(Integer.parseInt(parameter));
+			setNovelOwnerId(Integer.parseInt(parameter));
 		} catch (NumberFormatException e) {
-			//errors.put("novelOwnerIdNotFount", "Unknow owner novel id!");
+			errors.put("novelOwnerIdNotFount", "Unknow owner novel id!");
 		}
 	}
 
@@ -79,7 +79,7 @@ public class AddingVolForm extends AbstractMappingForm {
 		rs.setDateUp(new Date(1, 1, 1));
 		rs.setDescription(getDescription());
 		rs.setTitle(getTitle());
-		//rs.setNovelOwnerId(getNovelOwnerId());
+		rs.setNovelOwnerId(getNovelOwnerId());
 		return rs;
 	}
 
