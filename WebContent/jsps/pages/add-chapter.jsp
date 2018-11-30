@@ -45,7 +45,7 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								truyện: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="in-novel" style="padding: .5rem"
+						<td><select name="in-novel" id="novel" style="padding: .5rem"
 							onchange="loadVol(this.selectedIndex)">
 								<option value="112">A</option>
 								<option value="113">B</option>
@@ -56,17 +56,17 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								tập: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="in-vol" id="list-vol" style="padding: .5rem">
+						<td><select name="in-vol" style="padding: .5rem">
 								<option value="">1</option>
 						        <option value="">2</option>
 						        <option value="">3</option>
 							</select>
-							<select name="in-vol" id="list-vol" style="padding: .5rem">
+							<select name="in-vol" style="padding: .5rem">
 								<option value="">1</option>
 						        <option value="">2</option>
 						        <option value="">3</option>
 							</select>
-							<select name="in-vol" id="list-vol" style="padding: .5rem">
+							<select name="in-vol" style="padding: .5rem">
 							<option value="">1</option>
 					        <option value="">2</option>
 					        <option value="">3</option>
