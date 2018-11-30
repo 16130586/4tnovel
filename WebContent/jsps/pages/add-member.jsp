@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,40 +25,36 @@
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div class="account-manage__content u-row--1140 u-centered">
 			<div>
-                <p class="u-3x u-align-center">Thêm thành viên</p>
-            </div>
-            <form>
-            	<div class="row u-padding-bottom--1-5rem">
-                    <div class="col-md-5 u-align-right">
-                        Chọn nhóm:
-                    </div>
-                    <div class="col-md-7">
-                        <select name="id-group">
-                        	<option value="">ABC</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="search">
-                	<%@ include file = "/jsps/components/_search-bar.account.jsp" %>
-                	<div class="u-centered u-width--75">
-			            <div class="account-info row">
-			                <div class="col-sm-2 u-align-right"><img class="img" src="http://via.placeholder.com/330x330"></div>
-			                <div class="col-sm-10"><p class="u-2x">Name</p></div>
-			                <input type="hidden" name="id-account" value="">
-			            </div>
-			        </div>
-                </div>
-                
-                <div class="row u-padding-bottom--1-5rem">
-                    <div class="col-md-5"></div>
-                    <div class="col-md-7">
-                        <button class="btn btn-primary u-color-white">Thêm</button>
-                        <a href="#" class="btn btn-danger u-color-white">Hủy</a>
-                    </div>
-                </div>
-            </form>
+				<p class="u-3x u-align-center">Thêm thành viên</p>
+			</div>
+			<div class="search">
+				<%@ include file="/jsps/components/_search-bar.account.jsp"%>
+			</div>
+			<form action="add-member" method="post">
+				<div class="row u-padding-bottom--1-5rem ">
+					<div class="col-md-5 u-align-right">Chọn nhóm:</div>
+					<div class="col-md-7">
+						<select name="id-group">
+							<!-- c:for de in option and value -->
+							<c:forEach var="group" items="${ownerGroups}">
+								<option value="${group.id}">${group.name }</option>
+							</c:forEach>
+							
+						</select>
+						<!--  adding link to adding group if ownergroup is null -->
+					</div>
+				</div>
+				<input id="hidenAccountId" type="hidden" name="id-acc" value="${searchResultAccount.id}">
+				<div class="row u-padding-bottom--1-5rem">
+					<div class="col-md-5"></div>
+					<div class="col-md-7">
+						<button class="btn btn-primary u-color-white" type="submit">Thêm</button>
+						<a href="#" class="btn btn-danger u-color-white">Hủy</a>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
+
 </body>
 </html>
