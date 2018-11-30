@@ -64,7 +64,7 @@ public class ChangeDisplayedNameServlet extends HttpServlet {
 			accountDAO.updateAccount(account);
 
 			request.getSession().setAttribute("account", account);
-
+			request.setAttribute("sucessed", "Change new display name done!");
 			response.sendRedirect("manage");
 		}
 		// mapping loi toi user interface
