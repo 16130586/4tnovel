@@ -202,4 +202,8 @@ public class Account implements Serializable {
 		}
 		return rs;
 	}
+	public void addJoinGroup(Group g) {
+		if(!this.joinGroups.contains(g))
+			this.joinGroups.add(g);
+	}
 }

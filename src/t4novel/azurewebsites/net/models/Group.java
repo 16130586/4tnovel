@@ -77,8 +77,17 @@ public class Group implements Serializable {
 	public void setOwner(Account owner) {
 		this.owner = owner;
 	}
+
 	public void addMember(Account ac) {
 		this.accounts.add(ac);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Group))
+			return false;
+		Group otherGroup = (Group) obj;
+		return this.id == otherGroup.id;
 	}
 
 }
