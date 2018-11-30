@@ -49,6 +49,10 @@ public class AddingGroupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
+		
 		System.out.println("post adding group");
 		Connection databaseConnection = (Connection) request.getAttribute("connection");
 		DAOService existedGroupNameChecker = new ExisteddNameCheckingService(databaseConnection);

@@ -10,7 +10,7 @@ import t4novel.azurewebsites.net.models.Group;
 import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingGroupForm extends AbstractMappingForm {
-	private String name;
+	private String name, description;
 	private DAOService existedGroupNameChecker;
 	private Account ownerAcc;
 	
@@ -18,6 +18,18 @@ public class AddingGroupForm extends AbstractMappingForm {
 		this.existedGroupNameChecker = existedGroupNameChecker;
 		setName(request.getParameter("group-name"));
 		this.ownerAcc = (Account) request.getSession().getAttribute("account");
+		setDescription(request.getParameter("description"));
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		if (description == null || description.isEmpty()) 
+			this.description = "";
+		else
+			this.description = description;
 	}
 
 	public Account getOwnerAcc() {
@@ -69,6 +81,7 @@ public class AddingGroupForm extends AbstractMappingForm {
 		Group rs = new Group();
 		rs.setName(getName());
 		rs.setOwner(getOwnerAcc());
+		rs.setDescription(getDescription());
 		return rs;
 	}
 }
