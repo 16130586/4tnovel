@@ -27,7 +27,7 @@
 			<div>
 				<p class="u-3x u-align-center">Thêm nhóm</p>
 			</div>
-			<form method="post" action="add?type=add-group">
+			<form method="post" action="add-group">
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5 u-align-right">
 						Tên nhóm: <span style="color: red">*</span>
