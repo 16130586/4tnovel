@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
 
 /**
@@ -20,38 +22,51 @@ import t4novel.azurewebsites.net.models.Chap;
 @WebServlet("/add-chapter")
 public class AddingChapterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddingChapterServlet() {
-        super();
-        
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AddingChapterServlet() {
+		super();
+
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		if (hostAccount.getOwnNovels() == null)
+			try {
+				Connection cnn = (Connection) request.getAttribute("connection");
+				NovelDAO novelDao = new NovelDAO(cnn);
+				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendError(500);
+			}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-chapter.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		AbstractMappingForm form = new AddingChapterForm(request);
-		if(!form.isOnError()) {
-			//TODO writing to db , and something related
+		if (!form.isOnError()) {
+			// TODO writing to db , and something related
 			Connection cnn = (Connection) request.getAttribute("connection");
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
-			
+
 			chapDAO.insertChap(chapter);
 			// set sucessed for user
 			request.setAttribute("sucessed", "Adding new chapter done!");
-		}
-		else {
+		} else {
 			form.applyErrorsToUI(request);
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-vol.jsp").forward(request, response);
