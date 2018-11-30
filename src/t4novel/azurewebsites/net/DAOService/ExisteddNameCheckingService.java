@@ -5,37 +5,34 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginCheckingService extends BaseDaoService implements DAOService {
+public class ExisteddNameCheckingService extends BaseDaoService implements DAOService {
 
-	public LoginCheckingService(Connection databaseConnection) {
+	public ExisteddNameCheckingService(Connection databaseConnection) {
 		super(databaseConnection);
 	}
 
 	@Override
-	public boolean check(String data1, String data2, String onQuery) {
-		PreparedStatement stmt = null;
+	public boolean check(String data, String onQuery) {
+		PreparedStatement stm = null;
 		boolean isExisted = false;
 		ResultSet rs = null;
 		try {
-			stmt = cnn.prepareStatement(onQuery);
-			stmt.setString(1, data1);
-			stmt.setString(2, data2);
-			rs = stmt.executeQuery();
+			stm = cnn.prepareStatement(onQuery);
+			stm.setString(1, data);
+			rs = stm.executeQuery();
 			isExisted = rs.next();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
-				if (stmt != null)
-					stmt.close();
+				if (stm != null)
+					stm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
 		return isExisted;
 	}
-
 }

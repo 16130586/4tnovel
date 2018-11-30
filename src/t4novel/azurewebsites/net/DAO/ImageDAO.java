@@ -77,7 +77,6 @@ public class ImageDAO {
 		return result;
 	}
 	
-//	public getEncodesImage()
 	
 	public static String getEncode(byte[] buf) {
 		return Base64.getEncoder().encodeToString(buf);

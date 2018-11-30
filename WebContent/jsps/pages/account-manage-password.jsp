@@ -25,7 +25,7 @@
             <div>
                 <p class="u-3x u-align-center">Đổi mật khẩu</p>
             </div>
-            <form>
+            <form action="changePassword" method="post">
                 <div class="row u-padding-bottom--1-5rem">
                     <div class="col-md-5 u-align-right">
                         Nhập mật khẩu hiện tại:

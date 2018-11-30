@@ -28,7 +28,7 @@
 			<div>
 				<p class="u-3x u-align-center">Đổi biệt hiệu</p>
 			</div>
-			<form>
+			<form action="changeNickname" method="post">
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5 u-align-right">Nhập mật khẩu hiện tại:</div>
 					<div class="col-md-7">
