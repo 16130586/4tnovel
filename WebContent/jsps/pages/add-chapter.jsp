@@ -46,8 +46,8 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								truyện: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="in-novel" style="padding: .5rem"
-							onchange="loadVol()">
+						<td><select id="novel" name="in-novel" style="padding: .5rem"
+							onchange="openVol(this.selectedIndex)">
 								<c:forEach var="novel" items="${account.ownNovels}">
 									<option value="${novel.id }">${novel.name }</option>
 								</c:forEach>
@@ -57,23 +57,13 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								tập: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="in-vol" style="padding: .5rem">
-								<option value="">1</option>
-						        <option value="">2</option>
-						        <option value="">3</option>
-							</select>
-							<select name="in-vol" style="padding: .5rem">
-								<option value="">1</option>
-						        <option value="">2</option>
-						        <option value="">3</option>
-							</select>
-							<select name="in-vol" style="padding: .5rem">
-							<option value="">1</option>
-					        <option value="">2</option>
-					        <option value="">3</option>
-							</select>
-							
-						</td>
+						<td><c:forEach var="novel" items="${account.ownNovels}">
+								<select name="in-vol" style="padding: .5rem">
+									<c:forEach var="vol" items="${novel.vols}">
+										<option value="${vol.id}">${vol.title}</option>
+									</c:forEach>
+								</select>
+							</c:forEach></td>
 					</tr>
 					<tr>
 						<td class="u-align-right"><label>Nội dung: <span
@@ -90,7 +80,7 @@
 
 		</div>
 
-	<script>
+		<script>
 	    function openVol(x) {
 	        var vols = document.getElementsByName('in-vol');
 	        for (var i = 0; i < vols.length; i++) {
@@ -104,6 +94,6 @@
 	        }
 	    }
 	</script>
-</div>
+	</div>
 </body>
 </html>
