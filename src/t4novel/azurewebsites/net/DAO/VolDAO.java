@@ -18,21 +18,21 @@ public class VolDAO {
 		this.cnn = databaseConnection;
 	}
 
-	public void insertVol(Vol vol) {
+	public void insertVol(Vol vol) throws SQLException {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO VOL (ID_LN, TITLE, DESCRIBE, DATEUP) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO VOL (ID_LN, TITLE, DESCRIBE ) VALUES (?, ?, ? )";
 		try {
 			stmt = cnn.prepareStatement(query);
+			System.out.println(vol.getNovelOwnerId() + " " + vol.getTitle() + " " + vol.getDescription() );
 			stmt.setInt(1, vol.getNovelOwnerId());
 			stmt.setString(2, vol.getTitle());
 			stmt.setString(3, vol.getDescription());
-			stmt.setDate(4, new Date(vol.getDateUp().getTime()));
 			stmt.executeUpdate();
 			stmt.close();
 			
 			System.out.println("Insert vol completed!");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw e;
 		} finally {
 			try {
 				if (stmt != null)
