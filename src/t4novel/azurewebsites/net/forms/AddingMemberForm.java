@@ -1,6 +1,8 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,14 +11,14 @@ public class AddingMemberForm extends AbstractMappingForm {
 	
 	public AddingMemberForm(HttpServletRequest request) {
 		try {
-			setIdAcc(Integer.parseInt(request.getParameter("id-acccount")));
+			System.out.println(" on parsing request" + request.getParameter("id-acc"));
+			setIdAcc(Integer.parseInt(request.getParameter("id-acc")));
 			setIdGroup(Integer.parseInt(request.getParameter("id-group")));
 		} catch (Exception e) {
 			errors.put("idGroupFormat", "Please format group!");
 			errors.put("idAccountFormat", "Please account!");
 			e.printStackTrace();		}
 	}
-	
 	public int getIdGroup() {
 		return idGroup;
 	}
@@ -43,7 +45,10 @@ public class AddingMemberForm extends AbstractMappingForm {
 		if (isOnError())
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingMemberForm, getMappingData()");
-		return null;
+		Map<String, Integer> rs = new HashMap<>();
+		rs.put("needToAddAccountId", getIdAcc());
+		rs.put("addToGroupId", getIdGroup());
+		return rs;
 	}
 
 }
