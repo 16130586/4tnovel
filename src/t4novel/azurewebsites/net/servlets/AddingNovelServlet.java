@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 
+import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -57,15 +58,18 @@ public class AddingNovelServlet extends HttpServlet {
 			Connection cnn = (Connection) request.getAttribute("connection");
 
 			NovelDAO novelDAO = new NovelDAO(cnn);
+			ImageDAO imgDAO = new ImageDAO(cnn);
+			GenreDAO genreDAO = new GenreDAO(cnn);
 			
 			Novel novel = (Novel) form.getMappingData();
 			try {
 				novelDAO.insertNovel(novel);
+				novelDAO.insertGenres(novelDAO.getMaxID(), novel.getGenres(), genreDAO);
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
 				if (fileImage != null)
-					novelDAO.insertImageNovel(novelDAO.getMaxID(), fileImage.getInputStream());
+					novelDAO.insertImageNovel(novelDAO.getMaxID(), fileImage.getInputStream(), imgDAO);
 				else {
-					novelDAO.insertImageNovel(novelDAO.getMaxID(), null);
+					novelDAO.insertImageNovel(novelDAO.getMaxID(), null, imgDAO);
 				}
 				
 			} catch (Exception e) {

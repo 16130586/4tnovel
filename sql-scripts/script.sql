@@ -80,7 +80,7 @@ CREATE TABLE [dbo].[ACCOUNT](
 	[USERNAME] [nvarchar](50)NOT NULL,
 	[PASSWORD] [nvarchar](50)NOT NULL,
 	[EMAIL] [nvarchar](50)NOT NULL,
-	[DATECREATE] [date]NOT NULL,
+	[DATECREATE] datetime default getdate() NULL,
 	[ROLE] int NOT NULL,
 	[ISAUTO] char(3) NULL,
 	[ISBAN] char(3) NULL
@@ -101,9 +101,9 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[GROUPACC](
 	[ID] bigint identity(1,1) NOT NULL,
-	[NAME] ntext NULL,
-	[DESCRIBE] ntext NULL,
-	[DATECREATE] [date] NULL,
+	[NAME] [nvarchar](50) NULL,
+	[DESCRIBE] [nvarchar](100) NULL,
+	[DATECREATE] datetime default getdate() NULL,
 	[IDOWNER] bigint NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -144,7 +144,7 @@ CREATE TABLE [dbo].[COMMENT](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_OWNER] bigint NULL,
 	[CONTENT] ntext NULL,
-	[CREATETIME] [time](7) NULL,
+	[CREATETIME] datetime default getdate() NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -163,8 +163,8 @@ GO
 CREATE TABLE [dbo].[MESS](
 	[ID] bigint identity(1,1) NOT NULL,
 	[CONTENT] text NULL,
-	[TIME_MESS] [time](7) NULL,
 	[URL] ntext NULL,
+	[TIME_MESS] datetime default getdate() NULL,
 	[TYPE_MESS] [nvarchar](20) NULL,
 	[FROM_ID] bigint NULL,
 	[TO_ID] bigint NULL,
@@ -187,7 +187,7 @@ CREATE TABLE [dbo].[LN](
 	[ID] bigint identity(1,1) NOT NULL,
 	[NAME] ntext NULL,
 	[DESCRIBE] ntext NULL,
-	[DATEUP] [date] NULL,
+	[DATEUP] datetime default getdate() NULL,
 	[IDOWNER] bigint NULL,
 	[KIND] varchar(20) NULL,
 	[STATUS] int NULL,
@@ -310,7 +310,7 @@ CREATE TABLE [dbo].[VOL](
 	[ID_LN] bigint NULL,
 	[TITLE] ntext NOT NULL,
 	[DESCRIBE] ntext NULL,
-	[DATEUP] [date] NULL,
+	[DATEUP] datetime default getdate() NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -350,7 +350,7 @@ CREATE TABLE [dbo].[BM](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_BMFOLDER]bigint NULL,
 	[URL] text NULL,
-	[TIME_BM] [time](7) NULL,
+	[TIME_BM] datetime default getdate() NULL,
 	[TITLE] ntext NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -370,7 +370,7 @@ GO
 CREATE TABLE [dbo].[JOININ](
 	[ID_ACC] bigint NOT NULL,
 	[ID_GROUP] bigint NOT NULL,
-	[DATEJOIN] [date] NULL,
+	[DATEJOIN] datetime default getdate() NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID_ACC] ASC,
@@ -392,7 +392,7 @@ CREATE TABLE [dbo].[CHAP](
 	[ID_VOL] bigint NULL,
 	[ID_NOVEL] bigint NULL,
 	[CONTENT] ntext NULL,
-	[DATEUP] [date] NULL,
+	[DATEUP] datetime default getdate() NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

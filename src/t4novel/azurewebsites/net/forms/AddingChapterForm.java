@@ -23,6 +23,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 			e.printStackTrace();
 		}
 	}
+	
+	public AddingChapterForm() {
+	}
 
 	@Override
 	public String toString() {
@@ -84,7 +87,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Chap rs = new Chap();
-		rs.setDateUp(new Date(1,1,1));
+		rs.setDateUp(new java.util.Date());
 		rs.setTitle(getTitle());
 		rs.setContent(getContent());
 		rs.setVolOwnerId(getInVol());

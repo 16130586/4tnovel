@@ -74,44 +74,38 @@ public class NovelDAO {
 				result.add(tmp);
 			}
 		} finally {
-			rs.close();
-			stmt.close();
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();		
 		}
 		return result;
 	}
-
-	public List<Novel> searchByAdvance(List<NovelGenre> genres, int statusVal, String kind, String name)
-			throws Exception {
+	
+	public Novel getNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		List<Novel> result = new LinkedList<>();
-		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where STATUS = ? and KIND = ?";
-		if (name != null && !name.isEmpty()) {
-			query += "AND NAME = " + name;
-		}
+		Novel result = null;
+		String query = "select * from LN where ID = ?";
 		try {
-			stmt = cnn.prepareStatement(query.toString());
-			stmt.setInt(1, statusVal);
-			stmt.setString(2, kind);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, idNovel);
 			rs = stmt.executeQuery();
-			while (rs.next()) {
-				int idNovel = rs.getInt("ID");
-				if (isExistGenresInNovel(idNovel, genres)) {
-					tmp = new Novel();
-					tmp.setId(idNovel);
-					tmp.setName(rs.getString("NAME"));
-					tmp.setDescription(rs.getString("DESCRIBE"));
-					tmp.setDateUp(rs.getDate("DATEUP"));
-					tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
-					tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
-					tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
-					result.add(tmp);
-				}
+			if (rs.next()) {
+				result = new Novel();
+				result.setId(idNovel);
+				result.setName(rs.getString("NAME"));
+				result.setDescription(rs.getString("DESCRIBE"));
+				result.setDateUp(rs.getDate("DATEUP"));
+				result.setAccountOwnerId(rs.getInt("IDOWNER"));
+				result.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
+				result.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
 			}
 		} finally {
-			rs.close();
-			stmt.close();
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
 		return result;
 	}
@@ -180,7 +174,7 @@ public class NovelDAO {
 		}
 	}
 
-	public synchronized int getMaxID() throws Exception {
+	public static synchronized int getMaxID(Connection cnn) throws Exception {
 		int result = 0;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -190,18 +184,81 @@ public class NovelDAO {
 			if (rs.next())
 				result = rs.getInt(1);
 		} finally {
-			rs.close();
+			if (rs != null)
+				rs.close();
 			stmt.close();
 		}
 		return result;
 	}
-
-	public boolean isExistGenresInNovel(int idNovel, List<NovelGenre> genres) throws Exception {
-		return isExistGenresInNovel(idNovel, genres);
+	/**
+	 * select IDNOVEL from genre where value in (?, ?...)  group by idnovel having count(distinct value) = ?
+	 * order by idnovel offset ? rows fetch next ? rows only;
+	 */
+	private String buildGetIdNovelsByGenresQuery(List<NovelGenre> genres) {
+		StringBuffer query = new StringBuffer("select IDNOVEL from genre");
+		boolean isEmptyGenres = genres.isEmpty();
+		if (!isEmptyGenres) {
+			query.append(" where value in (");
+			for (int i = 0; i < genres.size(); i++) {
+				if (i == genres.size()-1) 
+					query.append("?)");
+				else 
+					query.append("?,");
+			}
+		}
+		query.append(" group by idnovel");
+		if (!isEmptyGenres) {
+			query.append(" having count(distinct value) = ?");
+		}
+		return query.toString();
 	}
-
-	public boolean isExistGenreInNovel(int idNovel, NovelGenre genre, GenreDAO genreDAO) throws Exception {
-		return genreDAO.isExistGenreInNovel(idNovel, genre);
+	
+	public List<Novel> getNovelsByGenres(List<NovelGenre> genres , int offset , int limit) throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Novel> result = new LinkedList<>();
+		StringBuffer query = new StringBuffer(buildGetIdNovelsByGenresQuery(genres));
+		query.append(" order by idnovel offset ? rows fetch next ? rows only");
+		try {
+			stmt = cnn.prepareStatement(query.toString());
+			for (int i = 0; i < genres.size(); i++) {
+				stmt.setInt(i+1, genres.get(i).getValue());
+			}
+			stmt.setInt(genres.size()+1, genres.size());
+			stmt.setInt(genres.size()+2, offset);
+			stmt.setInt(genres.size()+3, limit);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				result.add(getNovelById(rs.getInt(1)));
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			stmt.close();
+		}
+		return result;
+		
+	}
+	// select IDNOVEL from genre where value in (?..)  group by idnovel having count(distinct value) = ?
+	public int getAmountAcceptNovelBy(List<NovelGenre> genres) throws Exception {
+		int result = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = buildGetIdNovelsByGenresQuery(genres);
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			for (int i = 1; i <= genres.size(); i++) {
+				stmt.setInt(i, genres.get(i).getValue());
+			}
+			rs = stmt.executeQuery();
+			result = rs.getRow();
+		} finally {
+			if (rs != null)
+				rs.close();
+			stmt.close();
+		}
+		return result;
 	}
 
 	public List<NovelGenre> getGenres(int idNovel, GenreDAO genreDAO) throws Exception {

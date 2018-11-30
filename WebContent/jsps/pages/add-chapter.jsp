@@ -20,7 +20,7 @@
 	href="resources/vendors/css/bootstrap-customize.css">
 <link rel="stylesheet" href="resources/local/css/style.css" />
 </head>
-<body onload="loadVol()">
+<body onload="openVol(document.getElementById('novel').selectedIndex)">
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div class="add">
@@ -57,10 +57,23 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								tập: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="in-vol" id="list-vol"
-							style="padding: .5rem">
-
-						</select></td>
+						<td><select name="in-vol" style="padding: .5rem">
+								<option value="">1</option>
+						        <option value="">2</option>
+						        <option value="">3</option>
+							</select>
+							<select name="in-vol" style="padding: .5rem">
+								<option value="">1</option>
+						        <option value="">2</option>
+						        <option value="">3</option>
+							</select>
+							<select name="in-vol" style="padding: .5rem">
+							<option value="">1</option>
+					        <option value="">2</option>
+					        <option value="">3</option>
+							</select>
+							
+						</td>
 					</tr>
 					<tr>
 						<td class="u-align-right"><label>Nội dung: <span
@@ -76,44 +89,21 @@
 			</form>
 
 		</div>
-		<script>
-			var a = [ "1", "2", "3" ];
-			var b = [ "4", "5", "6" ];
-			var c = [ "7", "8", "9" ];
-			function loadVol() {
-				var x = document.getElementsByName("select-novel");
-				var temp;
-				var result;
-				for (var i = 0; i < x.length; i++) {
-					if (x[i].selected == true) {
-						temp = x[i].text;
-						break;
-					}
-				}
-				switch (temp) {
-				case "A":
-					result = a;
-					break;
-				case "B":
-					result = b;
-					break;
-				case "C":
-					result = c
-					break;
-				default:
 
-				}
-				var y = document.getElementById("list-vol");
-				y.innerHTML = "";
-				var option;
-				for (var i = 0; i < result.length; i++) {
-					option = document.createElement("option");
-					option.setAttribute("name", "select-vol");
-					option.text = result[i];
-					y.add(option);
-				}
-			}
-		</script>
-	</div>
+	<script>
+	    function openVol(x) {
+	        var vols = document.getElementsByName('in-vol');
+	        for (var i = 0; i < vols.length; i++) {
+	            if (i == x) {
+	                vols[i].style.display = 'block';
+	                vols[i].selectedIndex = 0;
+	                continue;
+	            }
+	            vols[i].style.display = 'none';
+	            vols[i].selectedIndex = -1;
+	        }
+	    }
+	</script>
+</div>
 </body>
 </html>
