@@ -18,6 +18,8 @@ public class AccountDAO {
 		this.cnn = databaseConnection;
 	}
 	
+	
+	
 	public void insertAccount(Account account) {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, DATECREATE, ROLE, ISAUTO, ISBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -80,6 +82,84 @@ public class AccountDAO {
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, username);
+			rs = stmt.executeQuery();
+			if(!rs.next()) return account;
+			if (rs.getString(3) != null) {
+				account = new Account();
+				account.setId(rs.getInt(1));
+				account.setDisplayedName(rs.getString(2));
+				account.setUserName(rs.getString(3));
+				account.setPassword(rs.getString(4));
+				account.setGmail(rs.getString(5));
+				account.setDateCreate(rs.getDate(6));
+				account.setRole(Role.getRole(rs.getInt(7)));
+				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
+				account.setBanned(rs.getString(9).equals("YES") ? true : false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return account;
+	}
+	
+	public Account getAccountByNickname(String nickname) {
+		Account account = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM ACCOUNT WHERE DISPLAYEDNAME = ?"; 
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, nickname);
+			rs = stmt.executeQuery();
+			if(!rs.next()) return account;
+			if (rs.getString(3) != null) {
+				account = new Account();
+				account.setId(rs.getInt(1));
+				account.setDisplayedName(rs.getString(2));
+				account.setUserName(rs.getString(3));
+				account.setPassword(rs.getString(4));
+				account.setGmail(rs.getString(5));
+				account.setDateCreate(rs.getDate(6));
+				account.setRole(Role.getRole(rs.getInt(7)));
+				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
+				account.setBanned(rs.getString(9).equals("YES") ? true : false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return account;
+	}
+	
+	public Account getAccountByEmail(String email) {
+		Account account = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM ACCOUNT WHERE EMAIL = ?"; 
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, email);
 			rs = stmt.executeQuery();
 			if(!rs.next()) return account;
 			if (rs.getString(3) != null) {
