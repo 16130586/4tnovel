@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
+import t4novel.azurewebsites.net.models.Novel;
+import t4novel.azurewebsites.net.models.Vol;
 
 /**
  * Servlet implementation class AddingChapterServlet
@@ -37,7 +41,11 @@ public class AddingChapterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		// because of lazy loading!
 		if (hostAccount.getOwnNovels() == null)
 			try {
 				Connection cnn = (Connection) request.getAttribute("connection");
@@ -47,6 +55,22 @@ public class AddingChapterServlet extends HttpServlet {
 				e.printStackTrace();
 				response.sendError(500);
 			}
+		// because of making for lazy loading! then we have to loading vols in
+		// ownerNovels
+		Connection cnn = (Connection) request.getAttribute("connection");
+		VolDAO volDao = new VolDAO(cnn);
+		for (Novel ownNovel : hostAccount.getOwnNovels()) {
+			List<Vol> volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+			ownNovel.setVols(volsOfCurrentNovel);
+			System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
+
+		}
+
+		for (Novel own : hostAccount.getOwnNovels()) {
+			for (Vol vol : own.getVols()) {
+				System.out.println(own.getName() + " have " + vol.getTitle());
+			}
+		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-chapter.jsp").forward(request, response);
 	}
 
