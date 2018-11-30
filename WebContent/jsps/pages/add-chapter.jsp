@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
 				<p class="u-5x">Thêm chương</p>
 			</div>
 
-			<form action="add" method="post">
+			<form action="add-chapter" method="post">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
@@ -47,9 +48,9 @@
 						</label></td>
 						<td><select name="in-novel" style="padding: .5rem"
 							onchange="loadVol()">
-								<option value="112">A</option>
-								<option value="113">B</option>
-								<option value="114">C</option>
+								<c:forEach var="novel" items="${account.ownNovels}">
+									<option value="${novel.id }">${novel.name }</option>
+								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
