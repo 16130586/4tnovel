@@ -21,8 +21,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @WebServlet("/add")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 4MB
-maxFileSize = 1024 * 1024 * 100, // 100MB
-maxRequestSize = 1024 * 1024 * 100) // 100MB
+		maxFileSize = 1024 * 1024 * 100, // 100MB
+		maxRequestSize = 1024 * 1024 * 100) // 100MB
 public class AddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -65,46 +65,46 @@ public class AddServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		List<String> genres = new LinkedList<>();
-		String tmp;
-		try {
-			List<FileItem> listFiles = upload.parseRequest(request);
-			for (FileItem fileItem : listFiles) {
-				if (!fileItem.isFormField()) {
-					request.setAttribute("fileImage", fileItem);
-				} else {
-					tmp = new String(fileItem.get(), "utf-8");
-					if ("genre".equals(fileItem.getFieldName()))
-						genres.add(tmp);
-					else
-						request.setAttribute(fileItem.getFieldName(), tmp);
-				}
-			}
-			request.setAttribute("genres", genres);
-		} catch (FileUploadException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
 		String type = (String) request.getAttribute("type");
 		String url = "";
+		System.out.println("add type " + type);
 		if ("add-novel".equals(type)) {
 			url = "/add-novel";
-		}
-		else if ("add-vol".equals(type)) {
+		} else if ("add-vol".equals(type)) {
 			url = "/add-vol";
-		}
-		else	if ("add-chapter".equals(type)) {
+			// only parsing when request to add-vol , it have to upload a piture, that's why!
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			List<String> genres = new LinkedList<>();
+			String tmp;
+			try {
+				List<FileItem> listFiles = upload.parseRequest(request);
+				for (FileItem fileItem : listFiles) {
+					if (!fileItem.isFormField()) {
+						request.setAttribute("fileImage", fileItem);
+					} else {
+						tmp = new String(fileItem.get(), "utf-8");
+						if ("genre".equals(fileItem.getFieldName()))
+							genres.add(tmp);
+						else
+							request.setAttribute(fileItem.getFieldName(), tmp);
+					}
+				}
+				request.setAttribute("genres", genres);
+			} catch (FileUploadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		} else if ("add-chapter".equals(type)) {
 			url = "/add-chapter";
-		}
-		else if ("add-group".equals(type)) {
+		} else if ("add-group".equals(type)) {
 			url = "/add-group";
-		}
-		else	if ("add-member".equals(type)) {
+		} else if ("add-member".equals(type)) {
 			url = "/add-member";
-		}
-		else {
+		} else {
+			System.out.println(request.getPathInfo() + "   " + request.getServletPath());
 			response.sendError(404);
 			return;
 		}
