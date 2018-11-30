@@ -28,9 +28,9 @@
 				<p class="u-3x u-align-center">Thông tin</p>
 			</div>
 			<div class="row u-padding-bottom--1-5rem">
-				<div class="col-md-5 u-align-right">Tên:</div>
+				<div class="col-md-5 u-align-right">Bí danh:</div>
 				<div class="col-md-7">
-					<input class="u-width--50" type="text" value="Tuyên" disabled>
+					<input class="u-width--50" type="text" value="${account.displayedName}" disabled>
 					<small><a class="link" href="manage?type=display-name">Thay
 							đổi</a></small>
 				</div>
@@ -38,13 +38,13 @@
 			<div class="row u-padding-bottom--1-5rem">
 				<div class="col-md-5 u-align-right">Tài khoản:</div>
 				<div class="col-md-7">
-					<input class="u-width--50" type="text" value="aspiration" disabled>
+					<input class="u-width--50" type="text" value="${account.userName }" disabled>
 				</div>
 			</div>
 			<div class="row u-padding-bottom--1-5rem">
 				<div class="col-md-5 u-align-right">Mật khẩu:</div>
 				<div class="col-md-7">
-					<input class="u-width--50" type="text" value="**********" disabled>
+					<input class="u-width--50" type="text" value="*************************" disabled>
 					<small><a class="link" href="manage?type=password">Thay
 							đổi</a></small>
 				</div>
@@ -52,7 +52,7 @@
 			<div class="row u-padding-bottom--1-5rem">
 				<div class="col-md-5 u-align-right">Email:</div>
 				<div class="col-md-7">
-					<input class="u-width--50" type="text" value="abc@mail.ngu.heo"
+					<input class="u-width--50" type="text" value="${account.gmail }"
 						disabled> <small><a class="link"
 						href="manage?type=mail">Thay đổi</a></small>
 				</div>
