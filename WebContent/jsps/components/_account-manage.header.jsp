@@ -32,6 +32,7 @@
                 <li class="menu-item "><a class="link " href="manage?type=display-name">Đổi tên</a></li>
                 <li class="menu-item "><a class="link " href="manage?type=password">Đổi mật khẩu</a></li>
                 <li class="menu-item "><a class="link " href="manage?type=mail">Đổi email</a></li>
+                <li class="menu-item "><a class="link " href="logout">Đăng xuất</a></li>
             </ul>
         </div>
     </div>
