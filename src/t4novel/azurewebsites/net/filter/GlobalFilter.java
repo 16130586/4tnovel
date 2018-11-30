@@ -70,7 +70,7 @@ public class GlobalFilter implements Filter {
 		}
 
 		DataSource ds = null;
-		Connection cnn = null;
+		Connection cnn = (Connection) servletRequest.getAttribute("connection");
 
 		if (isNeedDbConnection) {
 			try {
@@ -85,7 +85,7 @@ public class GlobalFilter implements Filter {
 				e.printStackTrace();
 				((HttpServletResponse) response).sendError(408);
 				return;
-			}
+			} 
 		}
 
 			// pass the request along the filter chain
