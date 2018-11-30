@@ -29,7 +29,7 @@
 				<p class="u-paragraph--sucessed">${sucessed}</p>
 			</div>
 
-			<form action="add?type=add-vol" method="post">
+			<form action="add-vol" method="post">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
@@ -52,7 +52,7 @@
 						<td><select name="in-novel" style="padding: .5rem">
 								<!-- option value="novelOwnerID-Integer" -->
 								<c:forEach var="novel" items="${account.ownNovels}">
-									<option value="${novel.id }">${novel.name}</option>
+									<option value="${novel.id}">${novel.name}</option>
 								</c:forEach>
 
 						</select> <c:if test="${empty account.ownNovels}">
