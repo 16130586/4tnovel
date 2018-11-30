@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="account-manage__nav row u-2x">
     <div class="col-md-10 ">
         <ul class="horizontal-menu--showcase ">
@@ -27,7 +28,12 @@
         <a class="link " href="# ">Tài khoản</a>
         <div class="dropdown-content--bottom ">
             <ul class="vertical-menu--showcase ">
-                <li class="menu-item "><a class="link " href="manage ">displayname</a></li>
+            	<c:if test="${not empty account.displayedName}">
+                	<li class="menu-item "><a class="link " href="manage ">${account.displayedName }</a></li>
+                </c:if>
+                <c:if test="${empty account.displayedName}">
+                	<li class="menu-item "><a class="link " href="manage ">${account.userName}</a></li>
+                </c:if>
                 <hr>
                 <li class="menu-item "><a class="link " href="manage?type=display-name">Đổi tên</a></li>
                 <li class="menu-item "><a class="link " href="manage?type=password">Đổi mật khẩu</a></li>
