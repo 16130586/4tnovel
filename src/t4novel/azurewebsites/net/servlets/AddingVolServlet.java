@@ -41,15 +41,14 @@ public class AddingVolServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
-		if (hostAccount.getOwnNovels() == null)
-			try {
-				Connection cnn = (Connection) request.getAttribute("connection");
-				NovelDAO novelDao = new NovelDAO(cnn);
-				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-				response.sendError(500);
-			}
+		try {
+			Connection cnn = (Connection) request.getAttribute("connection");
+			NovelDAO novelDao = new NovelDAO(cnn);
+			hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(500);
+		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-vol.jsp").forward(request, response);
 	}
 
@@ -67,7 +66,7 @@ public class AddingVolServlet extends HttpServlet {
 		if (!form.isOnError()) {
 			// TODO writing to db , and something related
 			Connection cnn = (Connection) request.getAttribute("connection");
-			
+
 			VolDAO VolDAO = new VolDAO(cnn);
 			Vol vol = (Vol) form.getMappingData();
 			try {
@@ -75,7 +74,7 @@ public class AddingVolServlet extends HttpServlet {
 				VolDAO.insertVol(vol);
 				request.setAttribute("sucessed", "Adding new chapter done!");
 				cnn.setAutoCommit(true);
-			} catch ( Exception e) {
+			} catch (Exception e) {
 				try {
 					cnn.rollback();
 				} catch (SQLException e1) {
@@ -83,8 +82,7 @@ public class AddingVolServlet extends HttpServlet {
 				}
 				e.printStackTrace();
 			}
-			
-			
+
 		} else {
 			form.applyErrorsToUI(request);
 		}

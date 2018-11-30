@@ -54,7 +54,8 @@ public class AddingNovelForm extends AbstractMappingForm {
 	}
 
 	private List<NovelGenre> getGenresFormRequest(HttpServletRequest request) {
-		List<String> rawGenreStrings = (LinkedList<String>) request.getAttribute("genres");
+		@SuppressWarnings("unchecked")
+		List<String> rawGenreStrings = (List<String>) request.getAttribute("genres");
 		if (rawGenreStrings == null)
 			return null;
 		List<NovelGenre> genres = new LinkedList<>();

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Group;
+import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.ExisteddNameCheckingService;
@@ -60,11 +61,14 @@ public class AddingGroupServlet extends HttpServlet {
 		if (!submitedForm.isOnError()) {
 			// open transaction
 			try {
+				//dtb
 				databaseConnection.setAutoCommit(false);
 				Group group = (Group) submitedForm.getMappingData();
 				GroupDAO groupDAO = new GroupDAO(databaseConnection);
 				group.setId(groupDAO.getNextID());
 				groupDAO.insertGroup(group);
+				//ram
+				
 				groupDAO.insertMemberToGroup((Account) request.getSession().getAttribute("account"), group);
 				databaseConnection.commit();
 				databaseConnection.setAutoCommit(true);

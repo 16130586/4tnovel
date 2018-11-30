@@ -28,9 +28,8 @@
 				<p class="u-4x">Thêm truyện</p>
 				<p class="u-paragraph--sucessed">${sucessed}</p>
 			</div>
-			<form action="add" method="POST"
+			<form action="add-novel" method="POST"
 				onsubmit="return checkCheckBoxes();" enctype="multipart/form-data">
-				<input type="hidden" name="type" value="add-novel">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
@@ -58,10 +57,10 @@
 
 						<td><select name="group" style="padding: .5rem">
 								<!-- option value="nhom dich id" -->
-								<c:forEach var="group" items="${account.getJoinGroup()}">
-									<option value="${group.getId() }">${group.getName() }</option>
+								<c:forEach var="group" items="${account.getOwnerGroups()}">
+									<option value="${group.id}">${group.name}</option>
 								</c:forEach>
-						</select> <c:if test="${empty account.getJoinGroup()}">
+						</select> <c:if test="${empty account.getOwnerGroups()}">
 								<a class="u-paragraph--sucessed u-margin-left--2rem"
 									href="add?type=add-group" target="_blank">Create new group
 									here!</a>
