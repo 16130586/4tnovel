@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import javax.sql.DataSource;
 
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.sercurities.Role;
 import t4novel.azurewebsites.net.sercurities.SercureURLEngine;
 
 import javax.servlet.DispatcherType;
@@ -55,12 +56,17 @@ public class GlobalFilter implements Filter {
 				servletRequest.getMethod());
 		Account account = (Account) servletRequest.getSession().getAttribute("account");
 		if (isNeedLoginUrl && account == null) {
-			System.out.println("redirec on bad request");
 			servletResponse.sendRedirect("login");
 			return;
 		}
+		// di dc toi day gom 2 th, 1 la url k can login va account == null, 2 la k can login va account != null
 		boolean isAllowedToAccess = false;
-		if (account != null) {
+		// default for GUESS 
+		if(account == null) {
+			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(Role.GUESS, servletRequest.getServletPath());
+		}
+		// other type of user
+		else  {
 			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), servletRequest.getServletPath());
 		}
 		if (isNeedLoginUrl && account != null && !isAllowedToAccess) {
@@ -92,8 +98,6 @@ public class GlobalFilter implements Filter {
 			chain.doFilter(request, response);
 			if (cnn != null) {
 				try {
-//					System.out.println(
-//							"closing connection at : " + System.currentTimeMillis() + " " + cnn.hashCode());
 					cnn.close();
 					cnn = null;
 				} catch (SQLException e) {

@@ -22,7 +22,7 @@ public class AccountDAO {
 	
 	public void insertAccount(Account account) {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, DATECREATE, ROLE, ISAUTO, ISBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, ROLE, ISAUTO, ISBAN) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -30,10 +30,9 @@ public class AccountDAO {
 			stmt.setString(2, account.getUserName());
 			stmt.setString(3, account.getPassword());
 			stmt.setString(4, account.getGmail());
-			stmt.setDate(5, new Date(account.getDateCreate().getTime()));
-			stmt.setInt(6, 1);
+			stmt.setInt(5, account.getRole().getIntValue());
+			stmt.setString(6, "NO");
 			stmt.setString(7, "NO");
-			stmt.setString(8, "NO");
 			stmt.executeUpdate();
 			System.out.println("Insert account completed!");
 		} catch (Exception e) {
