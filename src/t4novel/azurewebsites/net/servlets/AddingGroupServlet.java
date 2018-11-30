@@ -49,8 +49,7 @@ public class AddingGroupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO adding catching error on jsp form
-		// TODO adding catching success on jsp form
+		System.out.println("post adding group");
 		Connection databaseConnection = (Connection) request.getAttribute("connection");
 		DAOService existedGroupNameChecker = new ExisteddNameCheckingService(databaseConnection);
 		AbstractMappingForm submitedForm = new AddingGroupForm(request, existedGroupNameChecker);
@@ -62,9 +61,10 @@ public class AddingGroupServlet extends HttpServlet {
 				GroupDAO groupDAO = new GroupDAO(databaseConnection);
 				group.setId(groupDAO.getNextID());
 				groupDAO.insertGroup(group);
-				groupDAO.insertMemberToAGroup((Account) request.getSession().getAttribute("account"), group);
+				groupDAO.insertMemberToGroup((Account) request.getSession().getAttribute("account"), group);
 				databaseConnection.commit();
 				databaseConnection.setAutoCommit(true);
+				System.out.println("NEW GROUP DONE!");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				try {
@@ -79,7 +79,6 @@ public class AddingGroupServlet extends HttpServlet {
 		} else {
 			System.out.println("on error");
 			submitedForm.applyErrorsToUI(request);
-			// forward nguoc tro lai ve form
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-group.jsp").forward(request, response);
 	}
