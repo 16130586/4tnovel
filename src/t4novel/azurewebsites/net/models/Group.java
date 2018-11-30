@@ -77,5 +77,8 @@ public class Group implements Serializable {
 	public void setOwner(Account owner) {
 		this.owner = owner;
 	}
+	public void addMember(Account ac) {
+		this.accounts.add(ac);
+	}
 
 }
