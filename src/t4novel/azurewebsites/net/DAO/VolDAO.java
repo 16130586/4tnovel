@@ -89,7 +89,7 @@ public class VolDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, novelID);
 			rs = stmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				Vol vol = new Vol();
 				vol.setId(rs.getInt(1));
 				vol.setNovelOwnerId(rs.getInt(2));
