@@ -6,19 +6,26 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import t4novel.azurewebsites.net.DAOService.BaseDaoService;
+import t4novel.azurewebsites.net.DAOService.ExistedMemberInGroupCheckingService;
+
 public class AddingMemberForm extends AbstractMappingForm {
 	private int idGroup, idAcc;
-	
-	public AddingMemberForm(HttpServletRequest request) {
+	private BaseDaoService existedMemberChecking;
+
+	public AddingMemberForm(HttpServletRequest request, ExistedMemberInGroupCheckingService existedMemberChecking) {
+		this.existedMemberChecking = existedMemberChecking;
 		try {
 			System.out.println(" on parsing request" + request.getParameter("id-acc"));
-			setIdAcc(Integer.parseInt(request.getParameter("id-acc")));
 			setIdGroup(Integer.parseInt(request.getParameter("id-group")));
+			setIdAcc(Integer.parseInt(request.getParameter("id-acc")));
 		} catch (Exception e) {
 			errors.put("idGroupFormat", "Please format group!");
 			errors.put("idAccountFormat", "Please account!");
-			e.printStackTrace();		}
+			e.printStackTrace();
+		}
 	}
+
 	public int getIdGroup() {
 		return idGroup;
 	}
@@ -32,7 +39,16 @@ public class AddingMemberForm extends AbstractMappingForm {
 	}
 
 	public void setIdAcc(int idAcc) {
-		this.idAcc = idAcc;
+		System.out.println(idAcc);
+		System.out.println(idGroup);
+		if (existedMemberChecking.check(idAcc + "", this.idGroup + "",
+				"SELECT ID_ACC FROM JOININ WHERE ID_ACC = ? AND ID_GROUP = ?") == true) {
+			errors.put("idAccExistedInGroup", "Account existed in group!");
+			System.out.println("existed member");
+		} else {
+			System.out.println("not existed member");
+			this.idAcc = idAcc;
+		}
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
+import t4novel.azurewebsites.net.DAOService.ExistedMemberInGroupCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingMemberForm;
 import t4novel.azurewebsites.net.models.Account;
@@ -68,9 +69,10 @@ public class AddingMemberServlet extends HttpServlet {
 			}
 			
 		}
-		AbstractMappingForm form = new AddingMemberForm(request);
+		Connection cnn = (Connection) request.getAttribute("connection");
+		ExistedMemberInGroupCheckingService existedMemberChecking = new ExistedMemberInGroupCheckingService(cnn);
+		AbstractMappingForm form = new AddingMemberForm(request, existedMemberChecking);
 		if (!form.isOnError()) {
-			Connection cnn = (Connection) request.getAttribute("connection");
 			GroupDAO groupDao = new GroupDAO(cnn);
 			Map<String, Integer> data = (Map<String, Integer>) form.getMappingData();
 			int targetAccountId = data.get("needToAddAccountId"), rootGroupId = data.get("addToGroupId");

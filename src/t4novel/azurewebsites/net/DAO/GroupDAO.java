@@ -177,7 +177,7 @@ public class GroupDAO {
 			}
 		}
 	}
-
+	
 	public int getNextID() {
 		NextIdGenrator genrator = NextIdGenrator.getGenrator();
 		return genrator.nextAutoIncrementFromTable("GROUPACC", cnn);

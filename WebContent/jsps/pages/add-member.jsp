@@ -27,6 +27,14 @@
 			<div>
 				<p class="u-3x u-align-center">Thêm thành viên</p>
 			</div>
+			<div class="row u-margin-bottom--1rem">
+					<c:if test="${not empty sucessed}">
+						<p class="u-paragraph--sucessed u-centered">${sucessed}</p>
+					</c:if>
+					<c:if test="${not empty idAccError}">
+						<p class="u-paragraph--failed u-centered">${idAccError}</p>
+					</c:if>
+				</div>
 			<div class="search">
 				<%@ include file="/jsps/components/_search-bar.account.jsp"%>
 			</div>
