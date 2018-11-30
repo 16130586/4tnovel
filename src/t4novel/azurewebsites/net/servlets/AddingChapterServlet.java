@@ -46,15 +46,14 @@ public class AddingChapterServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		// because of lazy loading!
-		if (hostAccount.getOwnNovels() == null)
-			try {
-				Connection cnn = (Connection) request.getAttribute("connection");
-				NovelDAO novelDao = new NovelDAO(cnn);
-				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-				response.sendError(500);
-			}
+		try {
+			Connection cnn = (Connection) request.getAttribute("connection");
+			NovelDAO novelDao = new NovelDAO(cnn);
+			hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(500);
+		}
 		// because of making for lazy loading! then we have to loading vols in
 		// ownerNovels
 		Connection cnn = (Connection) request.getAttribute("connection");

@@ -11,11 +11,11 @@
                 <a class="link " href="#">Thêm</a>
                 <div class="dropdown-content--bottom">
                     <ul class="vertical-menu--showcase">
-                        <li class="menu-item "><a class="link " href="add?type=add-novel">+Truyện</a></li>
-                        <li class="menu-item "><a class="link " href="add?type=add-vol ">+Tập</a></li>
-                        <li class="menu-item "><a class="link " href="add?type=add-chapter">+Chương</a></li>
-                        <li class="menu-item "><a class="link " href="add?type=add-group">+Nhóm</a></li>
-                        <li class="menu-item "><a class="link " href="add?type=add-member"
+                        <li class="menu-item "><a class="link " href="add-novel">+Truyện</a></li>
+                        <li class="menu-item "><a class="link " href="add-vol">+Tập</a></li>
+                        <li class="menu-item "><a class="link " href="add-chapter">+Chương</a></li>
+                        <li class="menu-item "><a class="link " href="add-group">+Nhóm</a></li>
+                        <li class="menu-item "><a class="link " href="add-member"
                         									 style="white-space: nowrap;">+Thành viên</a></li>
                     </ul>
                 </div>
