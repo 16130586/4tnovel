@@ -8,4 +8,13 @@ public class StringUtil {
 		}
 		return false;
 	}
+
+	public static String toAsterisk(String userName) {
+		StringBuilder bd = new StringBuilder();
+		bd.append(userName.charAt(0) + ""  + userName.charAt(1));
+		for(int i = 2 ; i < userName.length() ; i ++) {
+			bd.append("*");
+		}
+		return bd.toString();
+	}
 }
