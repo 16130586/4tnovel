@@ -18,30 +18,29 @@ public class CommentDAO {
 		this.cnn = databaseConnection;
 	}
 
-	public void insertComment(Comment comment) {
+	public void insertComment(Comment comment) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO COMMENT (ID_OWNER, CONTENT, CREATETIME) VALUES (?, ?, ?)";
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, comment.getAccountOwnerId());
 			stmt.setString(2, comment.getContent());
 			stmt.setDate(3, new Date(comment.getTime().getTime()));
 			stmt.executeUpdate();
-
+			cnn.commit();
 			System.out.println("Insert comment completed!");
 		} catch (SQLException e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 
-	public Comment getCommentByID(int commentID) {
+	public Comment getCommentByID(int commentID) throws Exception {
 		Comment comment = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -61,20 +60,16 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
 
 		return comment;
 	}
 
-	public List<Comment> getCommentByUser(int userID) {
+	public List<Comment> getCommentByUser(int userID) throws Exception {
 		LinkedList<Comment> listComment = new LinkedList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -95,81 +90,75 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-
 		return listComment;
 	}
 
-	public void updateComment(Comment comment) {
+	public void updateComment(Comment comment) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "UPDATE COMMENT SET CONTENT= ? WHERE ID = ?";
 
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, comment.getContent());
 			stmt.setInt(2, comment.getId());
 			stmt.executeUpdate();
-
+			cnn.commit();
 			System.out.println("Update comment completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 
-	public void deleteCommentByID(int commentID) {
+	public void deleteCommentByID(int commentID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE * FROM COMMENT WHERE ID = ?";
 
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, commentID);
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 
-	public void deleteVolByUser(int userID) {
+	public void deleteVolByUser(int userID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM VOL WHERE ID_OWNER = ?";
 
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, userID);
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 }

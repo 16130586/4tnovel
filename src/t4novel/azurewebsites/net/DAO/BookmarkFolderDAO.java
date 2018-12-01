@@ -16,17 +16,17 @@ public class BookmarkFolderDAO {
 		this.cnn = databaseConnection;
 	}
 
-	public List<BookMarkFolder> getBookmarkFolderByUser(int userID){
+	public List<BookMarkFolder> getBookmarkFolderByUser(int userID) throws Exception {
 		LinkedList<BookMarkFolder> listBookmarkFolder = new LinkedList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM BMFOLDER WHERE ID_ACC = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, userID);
 			rs = stmt.executeQuery();
-			
+
 			while (rs.next()) {
 				BookMarkFolder bmFolder = new BookMarkFolder();
 				bmFolder.setId(rs.getInt(1));
@@ -34,25 +34,18 @@ public class BookmarkFolderDAO {
 				bmFolder.setTitle(rs.getString(3));
 				listBookmarkFolder.add(bmFolder);
 			}
-			rs.close();
-			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		 
 		return listBookmarkFolder;
 	}
 
-	public List<BookMarkFolder> getAllBookmarkFolder() {
+	public List<BookMarkFolder> getAllBookmarkFolder() throws Exception {
 		LinkedList<BookMarkFolder> listBookmarkFolder = new LinkedList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -74,80 +67,75 @@ public class BookmarkFolderDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-
 		return listBookmarkFolder;
 	}
 
-	public void insertBookmarkFolder(BookMarkFolder bookmarkFolder) {
+	public void insertBookmarkFolder(BookMarkFolder bookmarkFolder) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO BMFOLDER (ID_ACC, TITLE) VALUES (?, ?)";
 
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmarkFolder.getAccountOnwerID());
 			stmt.setString(2, bookmarkFolder.getTitle());
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Insert bookmark folder completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 
-	public void deleteBookmarkFolderByID(int folderID) {
+	public void deleteBookmarkFolderByID(int folderID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM BMFOLDER WHERE ID = ?";
 
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, folderID);
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Delete bookmark folder completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 
-	public void updateBookmarkFolder(BookMarkFolder bookmakFolder) {
+	public void updateBookmarkFolder(BookMarkFolder bookmakFolder) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "UPDATE BMFOLDER SET TITLE = ? WHERE ID = ?";
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, bookmakFolder.getTitle());
 			stmt.setInt(2, bookmakFolder.getId());
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Update bookmark folder completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 }
