@@ -9,20 +9,13 @@ import t4novel.azurewebsites.net.models.Account;
 
 public class ChangePasswordForm extends AbstractMappingForm {
 	private String currentPassword, newPassword, reEnteredPassword;
-	private DAOService existedPasswordChecker;
 	private Account currentAccount;
 
-	public ChangePasswordForm(HttpServletRequest request, DAOService existedPasswordChecker) {
-		this.existedPasswordChecker = existedPasswordChecker;
+	public ChangePasswordForm(HttpServletRequest request) {
 		this.currentAccount = (Account) request.getSession().getAttribute("account");
 		setCurrentPassword(request.getParameter("current-pw"));
 		setNewPassword(request.getParameter("new-pw"));
 		setReEnteredPassword(request.getParameter("re-new-pw"));
-
-	}
-
-	public ChangePasswordForm(DAOService existedPasswordChecker) {
-		this.existedPasswordChecker = existedPasswordChecker;
 	}
 
 	public Account getCurrentAccount() {
@@ -39,13 +32,12 @@ public class ChangePasswordForm extends AbstractMappingForm {
 
 	public void setCurrentPassword(String currentPassword) {
 		if (currentPassword == null || currentPassword.isEmpty()) {
-			errors.put("currentPasswordEmpty", "Please fill your current password!");
+			errors.put("currentPasswordEmpty", "Hãy điền vào mật khẩu hiện tại!");
 		} else {
 			// TODO write query to check correctPassword
-			boolean isCorrectPassword = existedPasswordChecker.check(currentAccount.getId() + "", currentPassword,
-					"SELECT USERNAME FROM ACCOUNT WHERE ID=? AND PASSWORD=?");
+			boolean isCorrectPassword = this.currentAccount.getPassword().equals(currentPassword);
 			if (!isCorrectPassword) {
-				errors.put("currentPasswordInCorrect", "Please correct your password!");
+				errors.put("currentPasswordInCorrect", "Sai mật khẩu hiện tại!");
 			} else
 				this.currentPassword = currentPassword;
 		}
@@ -57,9 +49,9 @@ public class ChangePasswordForm extends AbstractMappingForm {
 
 	public void setNewPassword(String newPassword) {
 		if (newPassword == null || newPassword.isEmpty()) {
-			errors.put("newPasswordEmpty", "Please fill your current password!");
+			errors.put("newPasswordEmpty", "Hãy điền vào mật khẩu mới!");
 		} else if (newPassword.length() < 8) {
-			errors.put("newPasswordTooShort", "Please choose other stronger password!");
+			errors.put("newPasswordTooShort", "Hãy chọn mật khẩu mạnh hơn!");
 		} else
 			this.newPassword = newPassword;
 	}
@@ -72,10 +64,10 @@ public class ChangePasswordForm extends AbstractMappingForm {
 		if (!isOnError() && newPassword.equals(reEnteredPassword)) {
 			this.reEnteredPassword = reEnteredPassword;
 		} else if (reEnteredPassword == null || reEnteredPassword.isEmpty()) {
-			errors.put("reNewPasswordEmpty", "Please fill your re-enter password!");
+			errors.put("reNewPasswordEmpty", "Hãy nhập lại mật khẩu mới!");
 		} else if (!reEnteredPassword.equals(newPassword)) {
 			System.out.println(reEnteredPassword + " --><---" + this.newPassword);
-			errors.put("reNewPasswordNotMatch", "Please match your repassword and password!");
+			errors.put("reNewPasswordNotMatch", "Nhập lại mật khẩu không trùng khớp");
 		}
 	}
 

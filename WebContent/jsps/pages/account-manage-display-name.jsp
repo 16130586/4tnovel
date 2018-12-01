@@ -35,24 +35,22 @@
 					<div class="col-md-7">
 						<input name="current-pw" class="u-width--50" type="password"
 							required>
+						<c:if test="${not empty currentPasswordError}">
+							<p class="u-paragraph--failed u-centered">${currentPasswordError}</p>
+						</c:if>
 					</div>
 				</div>
-				<c:if test="${not empty currentPasswordError}">
-					<div class="row u-padding-bottom--1-5rem">
-						<p class="u-paragraph--failed u-centered">${currentPasswordError}</p>
-					</div>
-				</c:if>
+
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5 u-align-right">Nhập tên mới:</div>
 					<div class="col-md-7">
 						<input name="new-name" class="u-width--50" type="text" required>
+						<c:if test="${not empty newDisplayNameError}">
+							<p class="u-paragraph--failed u-centered">${newDisplayNameError}</p>
+						</c:if>
 					</div>
 				</div>
-				<c:if test="${not empty newDisplayNameError}">
-					<div class="row u-padding-bottom--1-5rem">
-						<p class="u-paragraph--failed u-centered">${newDisplayNameError}</p>
-					</div>
-				</c:if>
+
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5"></div>
 					<div class="col-md-7">

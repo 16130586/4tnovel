@@ -13,7 +13,7 @@ public class AddingGroupForm extends AbstractMappingForm {
 	private String name, description;
 	private DAOService existedGroupNameChecker;
 	private Account ownerAcc;
-	
+
 	public AddingGroupForm(HttpServletRequest request, DAOService existedGroupNameChecker) {
 		this.existedGroupNameChecker = existedGroupNameChecker;
 		setName(request.getParameter("group-name"));
@@ -26,7 +26,7 @@ public class AddingGroupForm extends AbstractMappingForm {
 	}
 
 	public void setDescription(String description) {
-		if (description == null || description.isEmpty()) 
+		if (description == null || description.isEmpty())
 			this.description = "";
 		else
 			this.description = description;
@@ -46,15 +46,14 @@ public class AddingGroupForm extends AbstractMappingForm {
 
 	public void setName(String name) {
 		if (name == null || name.isEmpty()) {
-			errors.put("nameEmpty", "Please fill group name!");
-		}else if(StringUtil.isAllSpace(name)) {
-			errors.put("nameAllSpace", "Please remove your spaces and insert group name!");
+			errors.put("nameEmpty", "Hãy điền vào tên nhóm!");
+		} else if (StringUtil.isAllSpace(name)) {
+			errors.put("nameAllSpace", "Tên nhóm không hợp lệ!");
 		} else {
 			// TODO write query to check correctPassword
-			boolean isExistedGroupName = existedGroupNameChecker.check(name,
-					"SELECT ID FROM GROUPACC WHERE NAME = ?");
+			boolean isExistedGroupName = existedGroupNameChecker.check(name, "SELECT ID FROM GROUPACC WHERE NAME = ?");
 			if (isExistedGroupName) {
-				errors.put("nameExisted", "Please use other group name!");
+				errors.put("nameExisted", "Tên nhóm đã tồn tại! Hãy sử dụng tên nhóm khác!");
 			} else
 				this.name = name;
 		}
@@ -70,7 +69,7 @@ public class AddingGroupForm extends AbstractMappingForm {
 
 	@Override
 	protected void assignDefaultErrorType() {
-		errorTypes = Arrays.asList("name");		
+		errorTypes = Arrays.asList("name");
 	}
 
 	@Override
