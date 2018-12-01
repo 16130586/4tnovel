@@ -72,11 +72,14 @@ public class MailUtils {
 		Transport.send(message);
 	}
 
-	public void remember(Integer accountId , String verifyCode) {
+	public static void remember(Integer accountId , String verifyCode) {
 		MailUtils.verifyCodesPool.put(accountId, verifyCode);
 	}
-	public void remove(Integer accountId) {
+	public static void remove(Integer accountId) {
 		MailUtils.verifyCodesPool.remove(accountId);
+	}
+	public static String get(Integer accountId) {
+		return MailUtils.verifyCodesPool.get(accountId);
 	}
 
 	public static void killVerifyCodesPool() {
