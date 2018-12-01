@@ -33,6 +33,9 @@
 						<input name="new-mail" class="u-width--50" type="mail" required>
 					</div>
 				</div>
+				<div class="col-md-12 u-align-center">
+						<p class="u-paragraph--failed u-centered">${newMailError}</p>
+					</div>
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5 u-align-right">Nhập mã xác nhận:</div>
 					<div class="col-md-7">
@@ -42,7 +45,15 @@
 						<small id="textDisplayer" style="color: #009624; font-size: 2rem;">Hết
 							hạn sau 5 phút</small>
 					</div>
+					<c:if test="${empty verifyCodeError}">
+						<div class="col-md-12 u-align-center">
+							<p class="u-paragraph--failed u-centered">${reVerifyCodeError}</p>
+						</div>
+					</c:if>
 				</div>
+				<div class="col-md-12 u-padding-bottom--1rem u-align-center">
+						<p class="u-paragraph--failed u-centered">${verifyCodeError}</p>
+					</div>
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5"></div>
 					<div class="col-md-7">
