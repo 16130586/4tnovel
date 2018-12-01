@@ -8,8 +8,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
-import t4novel.azurewebsites.net.sercurities.Role;
 import t4novel.azurewebsites.net.sercurities.SercureURLEngine;
+import t4novel.azurewebsites.net.utils.MailUtils;
 @WebListener
 public class ConfigurationOnLifeContainerLifeCircle implements ServletContextListener {
 	private static final String URL_SERCURITY_PATH = "/WEB-INF/url-sercurity.xml";
@@ -17,7 +17,7 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// saving idGenrator
 		// closing dbConnectionBroker
-
+		MailUtils.killVerifyCodesPool();
 	}
 
 	@Override
