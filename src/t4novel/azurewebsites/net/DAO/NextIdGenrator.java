@@ -18,7 +18,6 @@ public class NextIdGenrator {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT MAX(ID) AS MAXID FROM " + tableName;
-		System.out.println(query);
 		try {
 			stmt = cnn.prepareStatement(query);
 			rs = stmt.executeQuery();
