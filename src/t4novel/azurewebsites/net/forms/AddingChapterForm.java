@@ -1,10 +1,9 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
-import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.utils.StringUtil;;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingChapterForm extends AbstractMappingForm {
 

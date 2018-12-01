@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.EmailCheckingService;
-import t4novel.azurewebsites.net.DAOService.ExistedPasswordCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.ChangeEmailForm;
 
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.utils.MailUtils;
 
 /**
  * Servlet implementation class ChangeEmail
@@ -28,6 +28,7 @@ public class ChangeEmailServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
+
 	public ChangeEmailServlet() {
 		super();
 
@@ -41,21 +42,21 @@ public class ChangeEmailServlet extends HttpServlet {
 			throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/jsps/pages/account-manage-mail.jsp").forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Account account = (Account) request.getSession().getAttribute("account");
+		
 		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService existedEmailChecker = new EmailCheckingService(cnn);
+		
+		request.setAttribute("verifyCodeOnServer", MailUtils.get(account.getId()));
+		
 		AbstractMappingForm changeEmailForm = new ChangeEmailForm(request, existedEmailChecker);
 		if (!changeEmailForm.isOnError()) {
 			String newEmail = (String) changeEmailForm.getMappingData();
 			// TODO write newPassword to database
 			AccountDAO accountDAO = new AccountDAO(cnn);
-			Account account = (Account) request.getSession().getAttribute("account");
+			
 			account.setGmail(newEmail);
 			// write to dadabse
 			try {
@@ -64,9 +65,13 @@ public class ChangeEmailServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			// write to ram
+			MailUtils.remove(account.getId());
 			request.getSession().setAttribute("account", account);
 			request.setAttribute("sucessed", "Changed email successfully!");
+			
 			response.sendRedirect("manage");
+			
+			
 		}
 		// mapping loi toi user interface
 		else {

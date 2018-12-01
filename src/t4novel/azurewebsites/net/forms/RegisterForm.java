@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.sercurities.Role;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class RegisterForm extends AbstractMappingForm {
 	private String userName, gmai, password, rePassword;
@@ -63,10 +64,7 @@ public class RegisterForm extends AbstractMappingForm {
 	}
 
 	private void setEmail(String userData) {
-		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
-				Pattern.CASE_INSENSITIVE);
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(userData);
-		if (!matcher.find()) {
+		if (!StringUtil.isValidEmail(userData)) {
 			errors.put("gmailInvalid", "Please make sure correct email form!");
 			return;
 		}
