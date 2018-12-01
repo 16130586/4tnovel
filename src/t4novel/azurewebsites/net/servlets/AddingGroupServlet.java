@@ -53,7 +53,7 @@ public class AddingGroupServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
-		
+
 		System.out.println("post adding group");
 		Connection databaseConnection = (Connection) request.getAttribute("connection");
 		DAOService existedGroupNameChecker = new ExisteddNameCheckingService(databaseConnection);
@@ -61,15 +61,18 @@ public class AddingGroupServlet extends HttpServlet {
 		if (!submitedForm.isOnError()) {
 			// open transaction
 			try {
-				//dtb
+				// dtb
 				databaseConnection.setAutoCommit(false);
+				Account account = (Account) request.getSession().getAttribute("account");
 				Group group = (Group) submitedForm.getMappingData();
 				GroupDAO groupDAO = new GroupDAO(databaseConnection);
 				group.setId(groupDAO.getNextID());
 				groupDAO.insertGroup(group);
-				//ram
-				
-				groupDAO.insertMemberToGroup((Account) request.getSession().getAttribute("account"), group);
+				groupDAO.insertMemberToGroup(account, group);
+				account.addJoinGroup(group);
+				// ram
+				request.setAttribute("account", account);
+
 				databaseConnection.commit();
 				databaseConnection.setAutoCommit(true);
 				System.out.println("NEW GROUP DONE!");
@@ -83,12 +86,11 @@ public class AddingGroupServlet extends HttpServlet {
 			}
 			// try catch => xay ra loi trong chuoi hanh dong => roll back lai het
 			System.out.println("ok not error then set success");
-			request.setAttribute("sucessed", "Adding new group successfully!");
+			request.setAttribute("sucessed", "Thêm nhóm thành công!");
 		} else {
 			System.out.println("on error");
 			submitedForm.applyErrorsToUI(request);
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-group.jsp").forward(request, response);
 	}
-
 }

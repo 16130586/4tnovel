@@ -42,22 +42,40 @@ public class SearchAccountServlet extends HttpServlet {
 		Account account = null;
 		String type = request.getParameter("type");
 		String searchParam = request.getParameter("input");
+
 		switch (type) {
 		case "user-name":
-			account = accountDAO.getAccountByUsername(searchParam);
+			// get data from database
+			try {
+				account = accountDAO.getAccountByUsername(searchParam);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 		case "display-name":
-			account = accountDAO.getAccountByNickname(searchParam);
+			// get data from database
+			try {
+				account = accountDAO.getAccountByNickname(searchParam);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 		case "email":
-			account = accountDAO.getAccountByEmail(searchParam);
+			// get data from database
+			try {
+				account = accountDAO.getAccountByEmail(searchParam);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 		default:
 			break;
+		}
+		if (account == null) {
+			request.setAttribute("searchResultError", "Không tìm thấy tài khoản!");
 		}
 		request.setAttribute("searchResultAccount", account);
 		request.setAttribute("forwardToDoGet", true);
 		getServletContext().getRequestDispatcher("/add-member").forward(request, response);
 	}
-
 }

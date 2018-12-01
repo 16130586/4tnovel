@@ -25,16 +25,20 @@ public class TestAddingChapter {
 		}
 
 		AddingChapterForm form = new AddingChapterForm();
-		form.setTitle("chương 1");
+		form.setTitle("chÆ°Æ¡ng 1");
 		form.setContent(
-				"Được dịch từ tiếng Anh-Trong lý thuyết văn học, văn bản là bất kỳ đối tượng nào có thể \"đọc\", cho dù đối tượng này là tác phẩm văn học, biển báo, sắp xếp các tòa nhà trên khối thành phố hoặc kiểu quần áo. Đó là một tập hợp các dấu hiệu truyền đạt một số loại thông điệp mang tính thông tin.");
+				"Ä�Æ°á»£c dá»‹ch tá»« tiáº¿ng Anh-Trong lÃ½ thuyáº¿t vÄƒn há»�c, vÄƒn báº£n lÃ  báº¥t ká»³ Ä‘á»‘i tÆ°á»£ng nÃ o cÃ³ thá»ƒ \"Ä‘á»�c\", cho dÃ¹ Ä‘á»‘i tÆ°á»£ng nÃ y lÃ  tÃ¡c pháº©m vÄƒn há»�c, biá»ƒn bÃ¡o, sáº¯p xáº¿p cÃ¡c tÃ²a nhÃ  trÃªn khá»‘i thÃ nh phá»‘ hoáº·c kiá»ƒu quáº§n Ã¡o. Ä�Ã³ lÃ  má»™t táº­p há»£p cÃ¡c dáº¥u hiá»‡u truyá»�n Ä‘áº¡t má»™t sá»‘ loáº¡i thÃ´ng Ä‘iá»‡p mang tÃ­nh thÃ´ng tin.");
 		form.setInNovel(1);
 		form.setInVol(1);
 		if (!form.isOnError() && cnn != null) {
 			// TODO writing to db , and something related
 			Chap chap = (Chap) form.getMappingData();
 			ChapDAO chapDAO = new ChapDAO(cnn);
-			chapDAO.insertChap(chap);
+			try {
+				chapDAO.insertChap(chap);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			// set sucessed for user
 			System.out.println("suceess!");
 		} else {

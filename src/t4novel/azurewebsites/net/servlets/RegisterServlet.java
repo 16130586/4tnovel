@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	public RegisterServlet() {
 		super();
-		// 
+		//
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		getServletContext().getRequestDispatcher("/jsps/pages/register.jsp").forward(request, response);
 	}
 
@@ -54,23 +54,26 @@ public class RegisterServlet extends HttpServlet {
 
 		String url = "";
 		if (!userSubmittedForm.isOnError()) {
-			AccountDAO accDAO = new AccountDAO(cnn); 
+			AccountDAO accDAO = new AccountDAO(cnn);
 			url = "/index";
-			// TODO write account to DTB
-			
-			//
 			Account account = (Account) userSubmittedForm.getMappingData();
-			accDAO.insertAccount(account);
+			account.setId(accDAO.getNextID());
+
+			try {
+				accDAO.insertAccount(account);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			request.getSession().setAttribute("account", account);
 			response.sendRedirect("index");
 		} else {
 			url = "/jsps/pages/register.jsp";
-			//mapping error to jsp!
-			//error == (errorType , errorMessage)
+			// mapping error to jsp!
+			// error == (errorType , errorMessage)
 			userSubmittedForm.applyErrorsToUI(request);
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}
 
-		
 	}
 }
