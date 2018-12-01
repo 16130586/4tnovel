@@ -12,14 +12,14 @@ public class ExistedPasswordCheckingService extends BaseDaoService implements DA
 	}
 
 	@Override
-	public boolean check(String data1, String data2, String onQuery) {
+	public boolean check(String accId, String pwd, String onQuery) {
 		PreparedStatement stmt = null;
 		boolean isExisted = false;
 		ResultSet rs = null;
 		try {
 			stmt = cnn.prepareStatement(onQuery);
-			stmt.setInt(1, Integer.parseInt(data1));
-			stmt.setString(2, data2);
+			stmt.setInt(1, Integer.parseInt(accId));
+			stmt.setString(2, pwd);
 			rs = stmt.executeQuery();
 			isExisted = rs.next();
 		} catch (SQLException e) {
