@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-7">
                         <input name="otp" type="text" required>
-                        <a href="#" class="btn btn-primary u-color-white">Gửi mã OTP</a>
+                        <a href="#" class="btn btn-primary u-color-white">Gửi mã xác nhận</a>
                         <small>Hết hạn sau 5 phút</small>
                     </div>
                 </div>
