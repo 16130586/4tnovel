@@ -36,13 +36,17 @@ public class ChangeEmailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/jsps/pages/account-manage-mail.jsp").forward(request, response);
+		response.sendError(404);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
+		
 		Connection cnn =(Connection) request.getAttribute("connection");
 		DAOService existedPasswordChecker = new ExistedPasswordCheckingService(cnn);
 		AbstractMappingForm changeEmailForm = new ChangeEmailForm(request, existedPasswordChecker);
