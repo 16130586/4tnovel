@@ -1,10 +1,9 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
-import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.utils.StringUtils;;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingChapterForm extends AbstractMappingForm {
 
@@ -39,7 +38,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
 			errors.put("titleEmpty", "Please fill in title!");
-		} else if (StringUtils.isAllSpace(title)) {
+		} else if (StringUtil.isAllSpace(title)) {
 			errors.put("titleAllSpace", "Please remove all space and insert title!");
 		} else {
 			this.title = title.trim();
@@ -53,7 +52,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 	public void setContent(String content) {
 		if (content == null || content.isEmpty()) {
 			errors.put("contentEmpty", "Please fill in content!");
-		} else if (StringUtils.isAllSpace(content)) {
+		} else if (StringUtil.isAllSpace(content)) {
 			errors.put("contentAllSpace", "Please remove all space and insert content!");
 		} else {
 			this.content = content.trim();
