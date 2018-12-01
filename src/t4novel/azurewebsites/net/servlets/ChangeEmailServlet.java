@@ -16,6 +16,7 @@ import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.ChangeEmailForm;
 
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.utils.MailUtils;
 
 /**
  * Servlet implementation class ChangeEmail
@@ -43,14 +44,19 @@ public class ChangeEmailServlet extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Account account = (Account) request.getSession().getAttribute("account");
+		
 		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService existedEmailChecker = new EmailCheckingService(cnn);
+		
+		request.setAttribute("verifyCodeOnServer", MailUtils.get(account.getId()));
+		
 		AbstractMappingForm changeEmailForm = new ChangeEmailForm(request, existedEmailChecker);
 		if (!changeEmailForm.isOnError()) {
 			String newEmail = (String) changeEmailForm.getMappingData();
 			// TODO write newPassword to database
 			AccountDAO accountDAO = new AccountDAO(cnn);
-			Account account = (Account) request.getSession().getAttribute("account");
+			
 			account.setGmail(newEmail);
 			// write to dadabse
 			try {
@@ -59,9 +65,13 @@ public class ChangeEmailServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			// write to ram
+			MailUtils.remove(account.getId());
 			request.getSession().setAttribute("account", account);
 			request.setAttribute("sucessed", "Changed email successfully!");
+			
 			response.sendRedirect("manage");
+			
+			
 		}
 		// mapping loi toi user interface
 		else {
