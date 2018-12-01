@@ -22,10 +22,10 @@ public class ExpiringMap<K, V> extends AbstractMap<K, V> implements Runnable, Ma
 		movingTasking.start();
 	}
 
-	public void kill() throws InterruptedException {
+	public void kill() {
 		this.alive = false;
 		if(movingTasking.isAlive()) {
-			movingTasking.interrupt();
+				movingTasking.interrupt();
 		}
 	}
 
@@ -92,7 +92,7 @@ public class ExpiringMap<K, V> extends AbstractMap<K, V> implements Runnable, Ma
 
 				}
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				System.out.println("server forces to ExpiringMap - verifyCodesPool die!");
 			}
 		}
 	}
