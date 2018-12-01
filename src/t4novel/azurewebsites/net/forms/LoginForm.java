@@ -13,7 +13,7 @@ public class LoginForm extends AbstractMappingForm {
 	private String userName;
 	private String password;
 	private DAOService loginCheckingService;
-	
+
 	public LoginForm(HttpServletRequest request, DAOService loginService) {
 		this.loginCheckingService = loginService;
 		setUserName(request.getParameter("username"));
@@ -26,12 +26,11 @@ public class LoginForm extends AbstractMappingForm {
 
 	public void setUserName(String username) {
 		if (username == null || username.isEmpty()) {
-			errors.put("usernameEmpty", "Please fill in your username!");
+			errors.put("userNameEmpty", "Hãy điền vào tài khoản!");
 			System.out.println("emptyUsername");
 		} else {
 			this.userName = username;
 		}
-		
 	}
 
 	public String getPassword() {
@@ -40,24 +39,23 @@ public class LoginForm extends AbstractMappingForm {
 
 	public void setPassword(String password) {
 		if (password == null || password.isEmpty()) {
-			errors.put("passwordEmpty", "Please fill in your password!");
+			errors.put("passwordEmpty", "Hãy điền vào mật khẩu!");
 		} else {
-			boolean existed = loginCheckingService.check(userName, password, "SELECT ID FROM ACCOUNT WHERE USERNAME = ? AND PASSWORD = ?");
+			boolean existed = loginCheckingService.check(userName, password,
+					"SELECT ID FROM ACCOUNT WHERE USERNAME = ? AND PASSWORD = ?");
 			System.out.println("account existed : " + existed);
 			if (existed == true) {
 				this.password = password;
 			} else {
-				errors.put("passwordWrong", "Wrong username or password!");
-				errors.put("userNameWrong", "Wrong username or password!");
+				errors.put("passwordWrong", "Sai tài khoản hoặc mật khẩu!");
 			}
 		}
-		
 	}
 
 	@Override
 	protected void assignDefaultErrorType() {
 		errorTypes = Arrays.asList("password", "userName");
-		
+
 	}
 
 	@Override
@@ -71,6 +69,5 @@ public class LoginForm extends AbstractMappingForm {
 		rs.setPassword(this.password);
 		return rs;
 	}
-	
-	
+
 }
