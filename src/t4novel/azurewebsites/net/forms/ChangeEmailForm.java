@@ -6,17 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class ChangeEmailForm extends AbstractMappingForm {
 	private DAOService existedEmailChecker;
 	private String newEmail;
-	private String codeOTP, reCodeOTP;
+	private String verifyCode, reVerifyCode;
 	private Account currentAccount;
 
 	public ChangeEmailForm(HttpServletRequest request, DAOService existedEmailChecker) {
 		this.existedEmailChecker = existedEmailChecker;
 		setNewEmail(request.getParameter("new-mail"));
-		setReCodeOTP(request.getParameter("otp"));
+		setVerifyCode((String) request.getAttribute("verifyCodeOnServer"));
+		setReVerifyCode(request.getParameter("otp"));
 		this.currentAccount = (Account) request.getSession().getAttribute("account");
 	}
 
@@ -26,39 +28,45 @@ public class ChangeEmailForm extends AbstractMappingForm {
 
 	public void setNewEmail(String newEmail) {
 		if (newEmail == null || newEmail.isEmpty()) {
-			errors.put("newEmailEmpty", "Hãy điền vào email!");
-		} else {
-			// TODO write query to check correctPassword
+			errors.put("newMailEmpty", "Hãy điền vào email!");
+		} 
+		else if (!StringUtil.isValidEmail(newEmail)){
+			errors.put("newMailInvalid", "Hãy điền đúng định đạng Email!");
+		}
+		else {
 			boolean isExistedEmail = existedEmailChecker.check(newEmail, "SELECT USERNAME FROM ACCOUNT WHERE EMAIl= ?");
 			if (isExistedEmail) {
-				errors.put("newEmailExisted", "Email đã tồn tại!");
+				errors.put("newMailExisted", "Email mới đã được đăng ký!");
 			} else
 				this.newEmail = newEmail;
 		}
 	}
 
-	public String getCodeOTP() {
-		return codeOTP;
+	public String getVerifyCode() {
+		return verifyCode;
 	}
 
-	public void setCodeOTP(String codeOTP) {
-		this.codeOTP = codeOTP;
+	public void setVerifyCode(String verifyCode) {
+		if (verifyCode == null) {
+			errors.put("verifyCodeExprire", "Mã xác nhận đã hết hạn!");
+		} else
+			this.verifyCode = verifyCode;
 	}
 
-	public String getReCodeOTP() {
-		return reCodeOTP;
+	public String getReVerifyCode() {
+		return reVerifyCode;
 	}
 
-	public void setReCodeOTP(String reCodeOTP) {
+	public void setReVerifyCode(String reCodeOTP) {
 		if (reCodeOTP == null || reCodeOTP.isEmpty()) {
-			errors.put("reCodeOTPEmpty", "Hãy nhập vào mã OTP!");
+			errors.put("reVerifyCodeEmpty", "Hãy Nhập vào mã xác nhận!");
 			return;
 		}
-		if (!reCodeOTP.equalsIgnoreCase(codeOTP)) {
-			errors.put("reCodeOTPInCorrect", "Sai mã OTP!");
+		if (!reCodeOTP.equalsIgnoreCase(verifyCode)) {
+			errors.put("reVerifyCodeInCorrect", "Mã xác nhận không tồn tại!");
 			return;
 		}
-		this.reCodeOTP = reCodeOTP;
+		this.reVerifyCode = reCodeOTP;
 
 	}
 
@@ -80,7 +88,7 @@ public class ChangeEmailForm extends AbstractMappingForm {
 
 	@Override
 	protected void assignDefaultErrorType() {
-		errorTypes = Arrays.asList("newMail", "reCodeOTP");
+		errorTypes = Arrays.asList("newMail", "reVerifyCode" , "verifyCode");
 
 	}
 
