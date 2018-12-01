@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Novel implements Serializable{
+public class Novel implements Serializable {
 	/**
 	 * 
 	 */
@@ -26,7 +26,6 @@ public class Novel implements Serializable{
 	private NovelKind kind;
 	private int groupId;
 	private String encodeImg;
-	
 
 	public Novel() {
 	}
@@ -83,16 +82,17 @@ public class Novel implements Serializable{
 	public void setGenres(List<NovelGenre> genres) {
 		this.genres = genres;
 	}
+
 	// parse from string values to list genre > set
 	public static List<NovelGenre> parseStringToGenres(String inp) {
 		StringTokenizer st = new StringTokenizer(inp, ",");
 		List<NovelGenre> genres = new LinkedList<>();
-		while(st.hasMoreElements()) {
+		while (st.hasMoreElements()) {
 			genres.add(NovelGenre.getGenre(Integer.parseInt(st.nextToken())));
 		}
 		return genres;
 	}
-	
+
 	public NovelStatus getStatus() {
 		return status;
 	}
@@ -154,7 +154,7 @@ public class Novel implements Serializable{
 	}
 
 	public void setOwner(Account owner) {
-		this.accountOwnerId  = owner.getId();
+		this.accountOwnerId = owner.getId();
 		this.owner = owner;
 	}
 
@@ -181,11 +181,11 @@ public class Novel implements Serializable{
 	public void setFollows(List<Account> follows) {
 		this.follows = follows;
 	}
-	
+
 	public String genreToString() {
 		StringBuffer sb = new StringBuffer();
 		for (NovelGenre genre : genres) {
-			sb.append(genre.getValue()+ ",");
+			sb.append(genre.getValue() + ",");
 		}
 		return sb.toString();
 	}
@@ -197,6 +197,5 @@ public class Novel implements Serializable{
 	public void setEncodeImg(String encodeImg) {
 		this.encodeImg = encodeImg;
 	}
-	
-	
+
 }

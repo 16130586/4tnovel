@@ -50,7 +50,6 @@
 							<c:forEach var="group" items="${ownerGroups}">
 								<option value="${group.id}">${group.name }</option>
 							</c:forEach>
-
 						</select>
 						<!--  adding link to adding group if ownergroup is null -->
 					</div>

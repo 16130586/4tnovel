@@ -56,7 +56,7 @@ public class NovelDAO {
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where NAME like '%" + name
+		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where NAME like N'%" + name
 				+ "%'";
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -77,11 +77,11 @@ public class NovelDAO {
 			if (rs != null)
 				rs.close();
 			if (stmt != null)
-				stmt.close();		
+				stmt.close();
 		}
 		return result;
 	}
-	
+
 	public Novel getNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -190,9 +190,11 @@ public class NovelDAO {
 		}
 		return result;
 	}
+
 	/**
-	 * select IDNOVEL from genre where value in (?, ?...)  group by idnovel having count(distinct value) = ?
-	 * order by idnovel offset ? rows fetch next ? rows only;
+	 * select IDNOVEL from genre where value in (?, ?...) group by idnovel having
+	 * count(distinct value) = ? order by idnovel offset ? rows fetch next ? rows
+	 * only;
 	 */
 	private String buildGetIdNovelsByGenresQuery(List<NovelGenre> genres) {
 		StringBuffer query = new StringBuffer("select IDNOVEL from genre");
@@ -200,9 +202,9 @@ public class NovelDAO {
 		if (!isEmptyGenres) {
 			query.append(" where value in (");
 			for (int i = 0; i < genres.size(); i++) {
-				if (i == genres.size()-1) 
+				if (i == genres.size() - 1)
 					query.append("?)");
-				else 
+				else
 					query.append("?,");
 			}
 		}
@@ -212,8 +214,8 @@ public class NovelDAO {
 		}
 		return query.toString();
 	}
-	
-	public List<Novel> getNovelsByGenres(List<NovelGenre> genres , int offset , int limit) throws Exception {
+
+	public List<Novel> getNovelsByGenres(List<NovelGenre> genres, int offset, int limit) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
@@ -222,11 +224,11 @@ public class NovelDAO {
 		try {
 			stmt = cnn.prepareStatement(query.toString());
 			for (int i = 0; i < genres.size(); i++) {
-				stmt.setInt(i+1, genres.get(i).getValue());
+				stmt.setInt(i + 1, genres.get(i).getValue());
 			}
-			stmt.setInt(genres.size()+1, genres.size());
-			stmt.setInt(genres.size()+2, offset);
-			stmt.setInt(genres.size()+3, limit);
+			stmt.setInt(genres.size() + 1, genres.size());
+			stmt.setInt(genres.size() + 2, offset);
+			stmt.setInt(genres.size() + 3, limit);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				result.add(getNovelById(rs.getInt(1)));
@@ -237,15 +239,17 @@ public class NovelDAO {
 			stmt.close();
 		}
 		return result;
-		
+
 	}
-	// select IDNOVEL from genre where value in (?..)  group by idnovel having count(distinct value) = ?
+
+	// select IDNOVEL from genre where value in (?..) group by idnovel having
+	// count(distinct value) = ?
 	public int getAmountAcceptNovelBy(List<NovelGenre> genres) throws Exception {
 		int result = 0;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = buildGetIdNovelsByGenresQuery(genres);
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			for (int i = 1; i <= genres.size(); i++) {
