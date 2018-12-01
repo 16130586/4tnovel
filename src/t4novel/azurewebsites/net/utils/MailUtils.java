@@ -83,6 +83,6 @@ public class MailUtils {
 	}
 
 	public static void killVerifyCodesPool() {
-		verifyCodesPool.kill();
-	}
+			verifyCodesPool.kill();
+		}
 }
