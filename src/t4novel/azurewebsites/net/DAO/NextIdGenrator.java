@@ -12,13 +12,12 @@ public class NextIdGenrator {
 
 	}
 
-	public int nextAutoIncrementFromTable(String tableName, Connection cnn) {
+	public int nextAutoIncrementFromTable(String tableName, Connection cnn) throws Exception {
 		System.out.println("table name " + tableName);
 		int result = -1;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT MAX(ID) AS MAXID FROM " + tableName;
-		System.out.println(query);
 		try {
 			stmt = cnn.prepareStatement(query);
 			rs = stmt.executeQuery();
@@ -27,15 +26,10 @@ public class NextIdGenrator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
 		return result;
 	}

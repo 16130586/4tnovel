@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -50,10 +51,8 @@ public class ChangeDisplayedNameServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Connection cnn = (Connection) request.getAttribute("connection");
-		DAOService correctPasswordChecker = new ExistedPasswordCheckingService(cnn);
 		DAOService existedDisplayedNameChecker = new ExisteddNameCheckingService(cnn);
-		AbstractMappingForm changeDisplayedNameForm = new ChangeDisplayedNameForm(request, correctPasswordChecker,
-				existedDisplayedNameChecker);
+		AbstractMappingForm changeDisplayedNameForm = new ChangeDisplayedNameForm(request, existedDisplayedNameChecker);
 		if (!changeDisplayedNameForm.isOnError()) {
 			String newDisplayedName = (String) changeDisplayedNameForm.getMappingData();
 			AccountDAO accountDAO = new AccountDAO(cnn);
@@ -61,8 +60,13 @@ public class ChangeDisplayedNameServlet extends HttpServlet {
 			Account account = (Account) request.getSession().getAttribute("account");
 
 			account.setDisplayedName(newDisplayedName);
-			accountDAO.updateAccount(account);
-
+			// write to databse
+			try {
+				accountDAO.updateAccount(account);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			// write to caches
 			request.getSession().setAttribute("account", account);
 			request.setAttribute("sucessed", "Change new display name done!");
 			response.sendRedirect("manage");

@@ -12,27 +12,26 @@ public class ChangeEmailForm extends AbstractMappingForm {
 	private String newEmail;
 	private String codeOTP, reCodeOTP;
 	private Account currentAccount;
-	
+
 	public ChangeEmailForm(HttpServletRequest request, DAOService existedEmailChecker) {
 		this.existedEmailChecker = existedEmailChecker;
 		setNewEmail(request.getParameter("new-mail"));
 		setReCodeOTP(request.getParameter("otp"));
 		this.currentAccount = (Account) request.getSession().getAttribute("account");
 	}
-	
+
 	public String getNewEmail() {
 		return newEmail;
 	}
 
 	public void setNewEmail(String newEmail) {
 		if (newEmail == null || newEmail.isEmpty()) {
-			errors.put("newEmailEmpty", "please fill new email!");
+			errors.put("newEmailEmpty", "Hãy điền vào email!");
 		} else {
 			// TODO write query to check correctPassword
-			boolean isExistedEmail = existedEmailChecker.check(newEmail,
-					"SELECT USERNAME FROM ACCOUNT WHERE EMAIl= ?");
+			boolean isExistedEmail = existedEmailChecker.check(newEmail, "SELECT USERNAME FROM ACCOUNT WHERE EMAIl= ?");
 			if (isExistedEmail) {
-				errors.put("newEmailExisted", "Please use other email!");
+				errors.put("newEmailExisted", "Email đã tồn tại!");
 			} else
 				this.newEmail = newEmail;
 		}
@@ -52,15 +51,15 @@ public class ChangeEmailForm extends AbstractMappingForm {
 
 	public void setReCodeOTP(String reCodeOTP) {
 		if (reCodeOTP == null || reCodeOTP.isEmpty()) {
-			errors.put("reCodeOTPEmpty", "please fill OTP code!");
+			errors.put("reCodeOTPEmpty", "Hãy nhập vào mã OTP!");
 			return;
 		}
 		if (!reCodeOTP.equalsIgnoreCase(codeOTP)) {
-			errors.put("reCodeOTPInCorrect", "please correct your OTP code");
+			errors.put("reCodeOTPInCorrect", "Sai mã OTP!");
 			return;
-		} 
+		}
 		this.reCodeOTP = reCodeOTP;
-		
+
 	}
 
 	public Account getCurrentAccount() {
@@ -82,7 +81,7 @@ public class ChangeEmailForm extends AbstractMappingForm {
 	@Override
 	protected void assignDefaultErrorType() {
 		errorTypes = Arrays.asList("newMail", "reCodeOTP");
-		
+
 	}
 
 	@Override
@@ -92,5 +91,5 @@ public class ChangeEmailForm extends AbstractMappingForm {
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT ChangeEmailForm, getMappingData()");
 		return newEmail;
 	}
-	
+
 }

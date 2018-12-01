@@ -22,25 +22,30 @@ public class TestAddingVol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		AddingVolForm form = new AddingVolForm();
 		form.setTitle("tập 1");
 		form.setNovelOwnerId(1);
 		form.setDescription("mô tả tập 1");
-		if(!form.isOnError() && cnn != null) {
-			//TODO writing to db , and something related
+		if (!form.isOnError() && cnn != null) {
+			// TODO writing to db , and something related
 			VolDAO VolDAO = new VolDAO(cnn);
 			Vol vol = (Vol) form.getMappingData();
-			
-			VolDAO.insertVol(vol);
+
+			try {
+				VolDAO.insertVol(vol);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// set sucessed for user
 			System.out.println("suceess!");
-		}
-		else {
+		} else {
 			System.out.println("eror!");
 		}
 		cnn.close();
 	}
+
 	public static void main(String[] args) {
 		try {
 			doPost();

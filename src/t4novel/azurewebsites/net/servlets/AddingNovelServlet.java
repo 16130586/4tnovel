@@ -29,36 +29,40 @@ import t4novel.azurewebsites.net.models.Novel;
  */
 @WebServlet("/add-novel")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 4MB
-maxFileSize = 1024 * 1024 * 100, // 100MB
-maxRequestSize = 1024 * 1024 * 100) // 100MB
+		maxFileSize = 1024 * 1024 * 100, // 100MB
+		maxRequestSize = 1024 * 1024 * 100) // 100MB
 public class AddingNovelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddingNovelServlet() {
-        super();
-        
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AddingNovelServlet() {
+		super();
+
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("forward here");
 		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
-		
+
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		List<String> genres = new LinkedList<>();
@@ -75,7 +79,7 @@ public class AddingNovelServlet extends HttpServlet {
 				}
 				if (!fileItem.isFormField())
 					request.setAttribute("fileImage", fileItem);
-				
+
 			}
 			request.setAttribute("genres", genres);
 		} catch (FileUploadException e1) {
@@ -83,15 +87,15 @@ public class AddingNovelServlet extends HttpServlet {
 		}
 
 		AbstractMappingForm form = new AddingNovelForm(request);
-		
-		if(!form.isOnError()) {
-			//TODO write to dtb , apply to account 
+
+		if (!form.isOnError()) {
+			// TODO write to dtb , apply to account
 			Connection cnn = (Connection) request.getAttribute("connection");
 
 			NovelDAO novelDAO = new NovelDAO(cnn);
 			ImageDAO imgDAO = new ImageDAO(cnn);
 			GenreDAO genreDAO = new GenreDAO(cnn);
-			
+
 			Novel novel = (Novel) form.getMappingData();
 			try {
 				novelDAO.insertNovel(novel);
@@ -102,17 +106,16 @@ public class AddingNovelServlet extends HttpServlet {
 				else {
 					novelDAO.insertImageNovel(NovelDAO.getMaxID(cnn), null, imgDAO);
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			System.out.println("adding novel sucessed!	");
 			System.out.println("sucessed");
 			// TODO if success then set sucess for user
-			request.setAttribute("sucessed", "Adding new novel done!");
-		}
-		else {
+			request.setAttribute("sucessed", "Thêm truyện thành công!");
+		} else {
 			form.applyErrorsToUI(request);
 			System.out.println("error!");
 			System.out.println(form.getErrors().entrySet().iterator().next());

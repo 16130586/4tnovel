@@ -9,29 +9,28 @@ import t4novel.azurewebsites.net.models.Account;
 
 public class ChangeDisplayedNameForm extends AbstractMappingForm {
 	private String currentPassword, newDisplayName;
-	private DAOService existedPasswordChecker, isExistedDisplayedNameChecker;
+	private DAOService  isExistedDisplayedNameChecker;
 	private Account currentAccount;
-	
-	public ChangeDisplayedNameForm(HttpServletRequest request, DAOService existedPasswordChecker, DAOService isExistedDisplayedName) {
-		this.existedPasswordChecker = existedPasswordChecker;
+
+	public ChangeDisplayedNameForm(HttpServletRequest request,
+			DAOService isExistedDisplayedName) {
 		this.isExistedDisplayedNameChecker = isExistedDisplayedName;
 		this.currentAccount = (Account) request.getSession().getAttribute("account");
 		setCurrentPassword(request.getParameter("current-pw"));
 		setNewDisplayName(request.getParameter("new-name"));
 	}
-	
+
 	public String getCurrentPassword() {
 		return currentPassword;
 	}
 
 	public void setCurrentPassword(String currentPassword) {
 		if (currentPassword == null || currentPassword.isEmpty()) {
-			errors.put("currentPasswordEmpty", "Please fill your current password!");
+			errors.put("currentPasswordEmpty", "Hãy điền vào mật khẩu!");
 		} else {
-			boolean isCorrectPassword = existedPasswordChecker.check(currentAccount.getId() + "", currentPassword,
-					"SELECT USERNAME FROM ACCOUNT WHERE ID=? AND PASSWORD=?");
+			boolean isCorrectPassword = currentAccount.getPassword().equals(currentPassword);
 			if (!isCorrectPassword) {
-				errors.put("currentPasswordInCorrect", "Please correct your password!");
+				errors.put("currentPasswordInCorrect", "Sai mật khẩu!");
 			} else
 				this.currentPassword = currentPassword;
 		}
@@ -43,25 +42,17 @@ public class ChangeDisplayedNameForm extends AbstractMappingForm {
 
 	public void setNewDisplayName(String newDisplayName) {
 		if (newDisplayName == null || newDisplayName.isEmpty()) {
-			errors.put("newDisplayNameEmpty", "Please fill new display name!");
+			errors.put("newDisplayNameEmpty", "Hãy điền vào bí danh mới!S");
 		} else {
 			boolean isExistedDisplayName = isExistedDisplayedNameChecker.check(newDisplayName,
 					"SELECT USERNAME FROM ACCOUNT WHERE DISPLAYEDNAME = ?");
 			if (isExistedDisplayName) {
-				errors.put("newDisplayNameExisted", "Please use other display name!");
+				errors.put("newDisplayNameExisted", "Bí danh đã tồn tại!");
 			} else
 				this.newDisplayName = newDisplayName;
 		}
 	}
 
-	public DAOService getExistedPasswordChecker() {
-		return existedPasswordChecker;
-	}
-
-	public void setExistedPasswordChecker(DAOService existedPasswordChecker) {
-		this.existedPasswordChecker = existedPasswordChecker;
-	}
-	
 	public DAOService getIsExistedDisplayedName() {
 		return isExistedDisplayedNameChecker;
 	}
@@ -90,5 +81,5 @@ public class ChangeDisplayedNameForm extends AbstractMappingForm {
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT ChangeDisplayedName, getMappingData()");
 		return newDisplayName;
 	}
-	
+
 }

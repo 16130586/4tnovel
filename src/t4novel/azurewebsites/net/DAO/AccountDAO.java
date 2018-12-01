@@ -13,17 +13,15 @@ import t4novel.azurewebsites.net.sercurities.Role;
 
 public class AccountDAO {
 	private Connection cnn;
-	
+
 	public AccountDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
-	
-	
-	
-	public void insertAccount(Account account) {
+
+	public void insertAccount(Account account) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, ROLE, ISAUTO, ISBAN) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, account.getDisplayedName());
@@ -38,20 +36,16 @@ public class AccountDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (stmt != null)
+				stmt.close();
 		}
 	}
-	
-	public void updateAccount(Account account) {
+
+	public void updateAccount(Account account) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, ISAUTO = ?, ISBAN = ? WHERE ID = ?";
-		
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, account.getDisplayedName());
 			stmt.setString(2, account.getPassword());
@@ -59,30 +53,30 @@ public class AccountDAO {
 			stmt.setString(4, account.isBanned() ? "YES" : "NO");
 			stmt.setInt(5, account.getId());
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Update account completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
 		}
 	}
-	
-	public Account getAccountByUsername(String username) {
+
+	public Account getAccountByUsername(String username) throws Exception {
 		Account account = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM ACCOUNT WHERE USERNAME = ?"; 
-		
+		String query = "SELECT * FROM ACCOUNT WHERE USERNAME = ?";
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
-			if(!rs.next()) return account;
+			if (!rs.next())
+				return account;
 			if (rs.getString(3) != null) {
 				account = new Account();
 				account.setId(rs.getInt(1));
@@ -98,30 +92,26 @@ public class AccountDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		
 		return account;
 	}
-	
-	public Account getAccountByNickname(String nickname) {
+
+	public Account getAccountByNickname(String nickname) throws Exception {
 		Account account = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM ACCOUNT WHERE DISPLAYEDNAME = ?"; 
-		
+		String query = "SELECT * FROM ACCOUNT WHERE DISPLAYEDNAME = ?";
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, nickname);
 			rs = stmt.executeQuery();
-			if(!rs.next()) return account;
+			if (!rs.next())
+				return account;
 			if (rs.getString(3) != null) {
 				account = new Account();
 				account.setId(rs.getInt(1));
@@ -137,30 +127,26 @@ public class AccountDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		
 		return account;
 	}
-	
-	public Account getAccountByEmail(String email) {
+
+	public Account getAccountByEmail(String email) throws Exception {
 		Account account = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM ACCOUNT WHERE EMAIL = ?"; 
-		
+		String query = "SELECT * FROM ACCOUNT WHERE EMAIL = ?";
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, email);
 			rs = stmt.executeQuery();
-			if(!rs.next()) return account;
+			if (!rs.next())
+				return account;
 			if (rs.getString(3) != null) {
 				account = new Account();
 				account.setId(rs.getInt(1));
@@ -176,30 +162,26 @@ public class AccountDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		
 		return account;
 	}
-	
-	public Account getAccountByID(int accountID) {
+
+	public Account getAccountByID(int accountID) throws Exception {
 		Account account = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM ACCOUNT WHERE ID = ?"; 
-		
+		String query = "SELECT * FROM ACCOUNT WHERE ID = ?";
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, accountID);
 			rs = stmt.executeQuery();
-			if(!rs.next()) return account;
+			if (!rs.next())
+				return account;
 			if (rs.getString(3) != null) {
 				account = new Account();
 				account.setId(rs.getInt(1));
@@ -215,37 +197,37 @@ public class AccountDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		
 		return account;
 	}
-	
-	public void deleteAccountByID(int AccountID) {
+
+	public void deleteAccountByID(int AccountID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM ACCOUTN WHERE ID = ?";
-		
+
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, AccountID);
 			stmt.executeUpdate();
+			cnn.commit();
 			System.out.println("Delete account completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
 		}
+	}
+
+	public int getNextID() throws Exception {
+		NextIdGenrator genrator = NextIdGenrator.getGenrator();
+		return genrator.nextAutoIncrementFromTable("ACCOUNT", cnn);
 	}
 }

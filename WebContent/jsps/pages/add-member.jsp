@@ -28,13 +28,16 @@
 				<p class="u-3x u-align-center">Thêm thành viên</p>
 			</div>
 			<div class="row u-margin-bottom--1rem">
-					<c:if test="${not empty sucessed}">
-						<p class="u-paragraph--sucessed u-centered">${sucessed}</p>
-					</c:if>
-					<c:if test="${not empty idAccError}">
-						<p class="u-paragraph--failed u-centered">${idAccError}</p>
-					</c:if>
-				</div>
+				<c:if test="${not empty sucessed}">
+					<p class="u-paragraph--sucessed u-centered">${sucessed}</p>
+				</c:if>
+				<c:if test="${not empty idAccError}">
+					<p class="u-paragraph--failed u-centered">${idAccError}</p>
+				</c:if>
+				<c:if test="${not empty searchResultError}">
+					<p class="u-paragraph--failed u-centered">${searchResultError}</p>
+				</c:if>
+			</div>
 			<div class="search">
 				<%@ include file="/jsps/components/_search-bar.account.jsp"%>
 			</div>
@@ -47,12 +50,13 @@
 							<c:forEach var="group" items="${ownerGroups}">
 								<option value="${group.id}">${group.name }</option>
 							</c:forEach>
-							
+
 						</select>
 						<!--  adding link to adding group if ownergroup is null -->
 					</div>
 				</div>
-				<input id="hidenAccountId" type="hidden" name="id-acc" value="${searchResultAccount.id}">
+				<input id="hidenAccountId" type="hidden" name="id-acc"
+					value="${searchResultAccount.id}">
 				<div class="row u-padding-bottom--1-5rem">
 					<div class="col-md-5"></div>
 					<div class="col-md-7">

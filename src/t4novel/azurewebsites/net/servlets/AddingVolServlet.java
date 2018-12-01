@@ -72,7 +72,7 @@ public class AddingVolServlet extends HttpServlet {
 			try {
 				cnn.setAutoCommit(false);
 				VolDAO.insertVol(vol);
-				request.setAttribute("sucessed", "Adding new chapter done!");
+				request.setAttribute("sucessed", "Thêm tập thành công!");
 				cnn.setAutoCommit(true);
 			} catch (Exception e) {
 				try {

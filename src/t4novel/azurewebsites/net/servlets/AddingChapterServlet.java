@@ -58,8 +58,15 @@ public class AddingChapterServlet extends HttpServlet {
 		// ownerNovels
 		Connection cnn = (Connection) request.getAttribute("connection");
 		VolDAO volDao = new VolDAO(cnn);
+
 		for (Novel ownNovel : hostAccount.getOwnNovels()) {
-			List<Vol> volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+			List<Vol> volsOfCurrentNovel = null;
+			// dtb
+			try {
+				volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			ownNovel.setVols(volsOfCurrentNovel);
 			System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
 
@@ -81,18 +88,21 @@ public class AddingChapterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		AbstractMappingForm form = new AddingChapterForm(request);
 		if (!form.isOnError()) {
-			// TODO writing to db , and something related
 			Connection cnn = (Connection) request.getAttribute("connection");
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
-
-			chapDAO.insertChap(chapter);
+			// write data to database
+			try {
+				chapDAO.insertChap(chapter);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			// set sucessed for user
-			request.setAttribute("sucessed", "Adding new chapter done!");
+			request.setAttribute("sucessed", "Thêm chương thành công!");
 		} else {
 			form.applyErrorsToUI(request);
 		}
-		getServletContext().getRequestDispatcher("/jsps/pages/add-vol.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/jsps/pages/add-chapter.jsp").forward(request, response);
 	}
 
 }

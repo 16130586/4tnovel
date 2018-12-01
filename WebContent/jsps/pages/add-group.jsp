@@ -34,10 +34,13 @@
 					</div>
 					<div class="col-md-7">
 						<input name="group-name" class="u-width--50" type="text" required>
+						<c:if test="${not empty nameError}">
+							<p class="u-paragraph--failed u-centered">${nameError}</p>
+						</c:if>
 					</div>
 				</div>
 				<div class="row u-padding-bottom--1-5rem">
-					<div class="col-md-5 u-align-right">Mô tả: </div>
+					<div class="col-md-5 u-align-right">Mô tả:</div>
 					<div class="col-md-7">
 						<textarea name="description" class="u-width--50" rows="5"></textarea>
 					</div>
@@ -45,9 +48,6 @@
 				<div class="row u-margin-bottom--1rem">
 					<c:if test="${not empty sucessed}">
 						<p class="u-paragraph--sucessed u-centered">${sucessed}</p>
-					</c:if>
-					<c:if test="${not empty nameError}">
-						<p class="u-paragraph--failed u-centered">${nameError}</p>
 					</c:if>
 				</div>
 				<div class="row u-padding-bottom--1-5rem">
