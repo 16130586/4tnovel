@@ -20,8 +20,19 @@ public class AddingMemberForm extends AbstractMappingForm {
 			setIdGroup(Integer.parseInt(request.getParameter("id-group")));
 			setIdAcc(Integer.parseInt(request.getParameter("id-acc")));
 		} catch (Exception e) {
+			String type = request.getParameter("type");
+			switch (type) {
+			case "user-name":
+				type = "tài khoản";
+				break;
+			case "display-name":
+				type = "biệt danh";
+				break;
+			default:
+				break;
+			}
 			errors.put("idGroupFormat", "Please format group!");
-			errors.put("idAccountFormat", "Please account!");
+			errors.put("idAccountFormat", "Hãy điền " + type + " vào ô tìm kiếm");
 			e.printStackTrace();
 		}
 	}
@@ -39,14 +50,12 @@ public class AddingMemberForm extends AbstractMappingForm {
 	}
 
 	public void setIdAcc(int idAcc) {
-		System.out.println(idAcc);
-		System.out.println(idGroup);
 		if (existedMemberChecking.check(idAcc + "", this.idGroup + "",
 				"SELECT ID_ACC FROM JOININ WHERE ID_ACC = ? AND ID_GROUP = ?") == true) {
-			errors.put("idAccExistedInGroup", "Account existed in group!");
-			System.out.println("existed member");
+			errors.put("idAccExistedInGroup", "Tài khoản này đã là thành viên của nhóm!");
+			System.out.println("member id " + idAcc + " existed in group id " + this.idGroup);
 		} else {
-			System.out.println("not existed member");
+			System.out.println("member id " + idAcc + " not existed in group id " + this.idGroup);
 			this.idAcc = idAcc;
 		}
 	}

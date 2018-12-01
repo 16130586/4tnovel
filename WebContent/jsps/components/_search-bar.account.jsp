@@ -27,7 +27,7 @@
 	<div class="u-width--80 u-centered u-2x">
 		<table class="table table-hover table-dark">
 			<!-- c:for de do du lieu ra -->
-			<c:if test="${ not empty searchResultAccount}">
+			<c:if test="${not empty searchResultAccount}">
 				<tr class="row">
 					<td class="col-md-3">Username</td>
 					<td class="col-md-3">Nickname</td>
@@ -35,12 +35,12 @@
 					<td class="col-md-3">Action</td>
 				</tr>
 				<tr class="row">
-					<td class="col-md-3"> ${searchResultAccount.userName}</td>
-					<td class="col-md-3"> ${searchResultAccount.displayedName}</td>
-					<td class="col-md-3"> ${searchResultAccount.gmail}</td>
-					<td class="col-md-3">
-						<input name="idAccount" id="accountResultId" onclick="mappingId()" type="radio" value="${searchResultAccount.id}"> 
-						<label for="account1">Chọn</label>
+					<td class="col-md-3">${searchResultAccount.userName}</td>
+					<td class="col-md-3">${searchResultAccount.displayedName}</td>
+					<td class="col-md-3">${searchResultAccount.gmail}</td>
+					<td class="col-md-3"><input name="idAccount"
+						id="accountResultId" onclick="mappingId()" type="radio"
+						value="${searchResultAccount.id}"> <label for="account1">Chọn</label>
 					</td>
 				</tr>
 			</c:if>
