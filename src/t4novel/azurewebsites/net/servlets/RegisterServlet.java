@@ -57,9 +57,9 @@ public class RegisterServlet extends HttpServlet {
 			AccountDAO accDAO = new AccountDAO(cnn);
 			url = "/index";
 			Account account = (Account) userSubmittedForm.getMappingData();
-			account.setId(accDAO.getNextID());
 
 			try {
+				account.setId(accDAO.getNextID());
 				accDAO.insertAccount(account);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -69,8 +69,6 @@ public class RegisterServlet extends HttpServlet {
 			response.sendRedirect("index");
 		} else {
 			url = "/jsps/pages/register.jsp";
-			// mapping error to jsp!
-			// error == (errorType , errorMessage)
 			userSubmittedForm.applyErrorsToUI(request);
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}

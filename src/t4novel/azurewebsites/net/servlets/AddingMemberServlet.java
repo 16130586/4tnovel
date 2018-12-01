@@ -59,15 +59,16 @@ public class AddingMemberServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		//using for when searchAccount got account but it's on post method wants to forward to doGet, this's trick not is good practice!
-		if(request.getAttribute("forwardToDoGet") != null) {
-			if((Boolean) (request.getAttribute("forwardToDoGet"))) {
+
+		// using for when searchAccount got account but it's on post method wants to
+		// forward to doGet, this's trick not is good practice!
+		if (request.getAttribute("forwardToDoGet") != null) {
+			if ((Boolean) (request.getAttribute("forwardToDoGet"))) {
 				blindOnwerGroups(request); // on forward from another servle
 				getServletContext().getRequestDispatcher("/jsps/pages/add-member.jsp").forward(request, response);
 				return;
 			}
-			
+
 		}
 		Connection cnn = (Connection) request.getAttribute("connection");
 		ExistedMemberInGroupCheckingService existedMemberChecking = new ExistedMemberInGroupCheckingService(cnn);
@@ -76,13 +77,18 @@ public class AddingMemberServlet extends HttpServlet {
 			GroupDAO groupDao = new GroupDAO(cnn);
 			Map<String, Integer> data = (Map<String, Integer>) form.getMappingData();
 			int targetAccountId = data.get("needToAddAccountId"), rootGroupId = data.get("addToGroupId");
-			
+
 			Account targetAccount = new Account(targetAccountId),
 					hostAccount = (Account) request.getSession().getAttribute("account");
 			Group targetGroup = hostAccount.getGroup(rootGroupId);
-			System.out.println(rootGroupId +  " "  + hostAccount.getUserName() + " target group "  +  targetGroup.getName());
+			System.out
+					.println(rootGroupId + " " + hostAccount.getUserName() + " target group " + targetGroup.getName());
 			// write to db
-			groupDao.insertMemberToGroup(targetAccount, targetGroup);
+			try {
+				groupDao.insertMemberToGroup(targetAccount, targetGroup);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			// write to ram
 			targetGroup.addMember(targetAccount);
 			request.setAttribute("sucessed", "Adding a new member to a group is done!");
@@ -90,7 +96,7 @@ public class AddingMemberServlet extends HttpServlet {
 		} else {
 			form.applyErrorsToUI(request);
 		}
-		
+
 		blindOnwerGroups(request);
 		getServletContext().getRequestDispatcher("/jsps/pages/add-member.jsp").forward(request, response);
 	}

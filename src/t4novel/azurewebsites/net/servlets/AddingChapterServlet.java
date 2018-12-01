@@ -58,8 +58,15 @@ public class AddingChapterServlet extends HttpServlet {
 		// ownerNovels
 		Connection cnn = (Connection) request.getAttribute("connection");
 		VolDAO volDao = new VolDAO(cnn);
+
 		for (Novel ownNovel : hostAccount.getOwnNovels()) {
-			List<Vol> volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+			List<Vol> volsOfCurrentNovel = null;
+			// dtb
+			try {
+				volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			ownNovel.setVols(volsOfCurrentNovel);
 			System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
 
@@ -91,11 +98,11 @@ public class AddingChapterServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			// set sucessed for user
-			request.setAttribute("sucessed", "Adding new chapter done!");
+			request.setAttribute("sucessed", "Thêm chương thành công!");
 		} else {
 			form.applyErrorsToUI(request);
 		}
-		getServletContext().getRequestDispatcher("/jsps/pages/add-vol.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/jsps/pages/add-chapter.jsp").forward(request, response);
 	}
 
 }

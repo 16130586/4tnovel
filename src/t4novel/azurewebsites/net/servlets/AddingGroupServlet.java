@@ -66,9 +66,14 @@ public class AddingGroupServlet extends HttpServlet {
 				Account account = (Account) request.getSession().getAttribute("account");
 				Group group = (Group) submitedForm.getMappingData();
 				GroupDAO groupDAO = new GroupDAO(databaseConnection);
-				group.setId(groupDAO.getNextID());
-				groupDAO.insertGroup(group);
-				groupDAO.insertMemberToGroup(account, group);
+
+				try {
+					group.setId(groupDAO.getNextID());
+					groupDAO.insertGroup(group);
+					groupDAO.insertMemberToGroup(account, group);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				account.addJoinGroup(group);
 				// ram
 				request.setAttribute("account", account);

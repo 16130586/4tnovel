@@ -26,6 +26,7 @@
 		<div class="add">
 			<div class="u-align-center">
 				<p class="u-5x">Thêm chương</p>
+				<p class="u-paragraph--sucessed">${sucessed}</p>
 			</div>
 
 			<form action="add-chapter" method="post">
@@ -81,19 +82,19 @@
 		</div>
 
 		<script>
-	    function openVol(x) {
-	        var vols = document.getElementsByName('in-vol');
-	        for (var i = 0; i < vols.length; i++) {
-	            if (i == x) {
-	                vols[i].style.display = 'block';
-	                vols[i].selectedIndex = 0;
-	                continue;
-	            }
-	            vols[i].style.display = 'none';
-	            vols[i].selectedIndex = -1;
-	        }
-	    }
-	</script>
+			function openVol(x) {
+				var vols = document.getElementsByName('in-vol');
+				for (var i = 0; i < vols.length; i++) {
+					if (i == x) {
+						vols[i].style.display = 'block';
+						vols[i].selectedIndex = 0;
+						continue;
+					}
+					vols[i].style.display = 'none';
+					vols[i].selectedIndex = -1;
+				}
+			}
+		</script>
 	</div>
 </body>
 </html>

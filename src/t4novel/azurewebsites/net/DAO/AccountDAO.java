@@ -226,7 +226,7 @@ public class AccountDAO {
 		}
 	}
 
-	public int getNextID() {
+	public int getNextID() throws Exception {
 		NextIdGenrator genrator = NextIdGenrator.getGenrator();
 		return genrator.nextAutoIncrementFromTable("ACCOUNT", cnn);
 	}

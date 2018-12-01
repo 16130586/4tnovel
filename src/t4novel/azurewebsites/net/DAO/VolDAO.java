@@ -18,37 +18,35 @@ public class VolDAO {
 		this.cnn = databaseConnection;
 	}
 
-	public void insertVol(Vol vol) throws SQLException {
+	public void insertVol(Vol vol) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO VOL (ID_LN, TITLE, DESCRIBE ) VALUES (?, ?, ? )";
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
-			System.out.println(vol.getNovelOwnerId() + " " + vol.getTitle() + " " + vol.getDescription() );
 			stmt.setInt(1, vol.getNovelOwnerId());
 			stmt.setString(2, vol.getTitle());
 			stmt.setString(3, vol.getDescription());
 			stmt.executeUpdate();
 			stmt.close();
-			
+			cnn.commit();
 			System.out.println("Insert vol completed!");
 		} catch (SQLException e) {
+			cnn.rollback();
 			throw e;
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 
-	public Vol getVolByID(int volID) {
+	public Vol getVolByID(int volID) throws Exception {
 		Vol vol = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM VOL WHERE ID = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
@@ -61,30 +59,24 @@ public class VolDAO {
 				vol.setDescription(rs.getString(4));
 				vol.setDateUp(rs.getDate(5));
 			}
-			rs.close();
-			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		
+
 		return vol;
 	}
 
-	public List<Vol> getVolsOfNovel(int novelID) {
+	public List<Vol> getVolsOfNovel(int novelID) throws Exception {
 		LinkedList<Vol> listVol = new LinkedList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM VOL WHERE ID_LN = ?";
-		
+
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, novelID);
@@ -98,92 +90,83 @@ public class VolDAO {
 				vol.setDateUp(rs.getDate(5));
 				listVol.add(vol);
 			}
-			rs.close();
-			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
 		}
-		
+
 		return listVol;
 	}
-	
-	public void updateVol(Vol vol) {
+
+	public void updateVol(Vol vol) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "UPDATE VOL SET TITLE = ?, DESCRIBE = ? WHERE ID = ?";
-		
+
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, vol.getTitle());
 			stmt.setString(2, vol.getDescription());
 			stmt.setInt(3, vol.getId());
 			stmt.executeUpdate();
 			stmt.close();
-			
+			cnn.commit();
 			System.out.println("Update vol completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
-	
-	public void deleteVolByID(int volID) {
+
+	public void deleteVolByID(int volID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM VOL WHERE ID = ?";
-		
+
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
 			stmt.executeUpdate();
 			stmt.close();
-			
+			cnn.commit();
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
-	
-	public void deleteVolsOfNovel(int novelID) {
+
+	public void deleteVolsOfNovel(int novelID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM VOL WHERE ID_LN = ?";
-		
+
 		try {
+			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, novelID);
 			stmt.executeUpdate();
 			stmt.close();
-			
+			cnn.commit();
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
 		}
 	}
 }

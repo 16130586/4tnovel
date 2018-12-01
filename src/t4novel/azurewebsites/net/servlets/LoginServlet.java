@@ -65,23 +65,25 @@ public class LoginServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			List<Group> joinGroups = groupDAO.getJoinGroups(account.getId());
-			for (Group gr : joinGroups) {
-				gr.setAccounts(groupDAO.getAllMemberFromGroup(gr.getId()));
+			List<Group> joinGroups = null;
+			// get data from database
+			try {
+				joinGroups = groupDAO.getJoinGroups(account.getId());
+				for (Group gr : joinGroups) {
+					gr.setAccounts(groupDAO.getAllMemberFromGroup(gr.getId()));
+				}
+			} catch (Exception e) {
 			}
 			account.setJoinGroup(joinGroups);
 
 			request.getSession().setAttribute("account", account);
 			response.sendRedirect("index");
-			System.out.println("suceess!");
 		} else {
 			loginForm.applyErrorsToUI(request);
 			request.setCharacterEncoding("utf-8");
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("text/html, charset=UTF-8");
 			getServletContext().getRequestDispatcher("/jsps/pages/login.jsp").forward(request, response);
-			System.out.println("eror!");
 		}
 	}
 }

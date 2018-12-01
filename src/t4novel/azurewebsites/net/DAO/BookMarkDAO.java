@@ -107,7 +107,7 @@ public class BookMarkDAO {
 			cnn.commit();
 			System.out.println("Delete bookmark completed!");
 		} catch (Exception e) {
-			cnn.setAutoCommit(true);
+			cnn.rollback();
 			e.printStackTrace();
 		} finally {
 			cnn.setAutoCommit(true);
