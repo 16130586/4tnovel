@@ -43,20 +43,18 @@ public class AccountDAO {
 
 	public void updateAccount(Account account) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, ISAUTO = ?, ISBAN = ? WHERE ID = ?";
+		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, EMAIL= ?,ISAUTO = ?, ISBAN = ? WHERE ID = ?";
 		try {
-			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, account.getDisplayedName());
 			stmt.setString(2, account.getPassword());
-			stmt.setString(3, account.isAutoPassPushlishment() ? "YES" : "NO");
-			stmt.setString(4, account.isBanned() ? "YES" : "NO");
-			stmt.setInt(5, account.getId());
+			stmt.setString(3, account.getGmail());
+			stmt.setString(4, account.isAutoPassPushlishment() ? "YES" : "NO");
+			stmt.setString(5, account.isBanned() ? "YES" : "NO");
+			stmt.setInt(6, account.getId());
 			stmt.executeUpdate();
-			cnn.commit();
 			System.out.println("Update account completed!");
 		} catch (Exception e) {
-			cnn.rollback();
 			e.printStackTrace();
 		} finally {
 			if (stmt != null)
