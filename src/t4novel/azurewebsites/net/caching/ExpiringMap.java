@@ -22,8 +22,11 @@ public class ExpiringMap<K, V> extends AbstractMap<K, V> implements Runnable, Ma
 		movingTasking.start();
 	}
 
-	public void kill() {
+	public void kill() throws InterruptedException {
 		this.alive = false;
+		if(movingTasking.isAlive()) {
+			movingTasking.interrupt();
+		}
 	}
 
 	@Override
