@@ -52,7 +52,11 @@ public class SeeNovelKindServlet extends HttpServlet {
 			}
 
 			else {
-				totalPage = (int) getServletContext().getAttribute("totalNovelPages");
+				int totalNovels = (int) getServletContext().getAttribute("totalNovels");
+				//
+				int maxPaging = totalNovels % limit > 0 ? (totalNovels / limit) + 1
+						: (totalNovels / limit);
+				totalPage = maxPaging ;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
