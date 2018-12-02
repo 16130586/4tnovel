@@ -20,7 +20,9 @@
                     </ul>
                 </div>
             </li>
-            <li class="menu-item u-margin-left--1rem "><a class="link " href="manage?type=admin">Admin</a></li>
+            <c:if test="${account.role.name() eq 'ADMINISTRATOR'}">
+            	<li class="menu-item u-margin-left--1rem "><a class="link " href="manage?type=admin">Admin</a></li>
+            </c:if>
         </ul>
 
     </div>
