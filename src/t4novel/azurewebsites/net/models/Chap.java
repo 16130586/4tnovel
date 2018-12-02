@@ -1,9 +1,14 @@
 package t4novel.azurewebsites.net.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Chap {
+public class Chap implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6108699031868555694L;
 	private int id;
 	private String content, title;
 	private Date dateUp;
