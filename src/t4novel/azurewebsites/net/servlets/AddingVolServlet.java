@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.NextIdGenrator;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingVolForm;
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
 
 /**
@@ -41,6 +43,7 @@ public class AddingVolServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		if (hostAccount.getOwnNovels() == null)
 		try {
 			Connection cnn = (Connection) request.getAttribute("connection");
 			NovelDAO novelDao = new NovelDAO(cnn);
@@ -71,9 +74,9 @@ public class AddingVolServlet extends HttpServlet {
 			Vol vol = (Vol) form.getMappingData();
 			try {
 				cnn.setAutoCommit(false);
+				vol.setId(NextIdGenrator.getGenrator().nextAutoIncrementFromTable("VOL", cnn));
 				VolDAO.insertVol(vol);
 				request.setAttribute("sucessed", "Thêm tập thành công!");
-				cnn.setAutoCommit(true);
 			} catch (Exception e) {
 				try {
 					cnn.rollback();
@@ -81,8 +84,23 @@ public class AddingVolServlet extends HttpServlet {
 					e1.printStackTrace();
 				}
 				e.printStackTrace();
+			} finally {
+				try {
+					cnn.setAutoCommit(true);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-
+			
+			// ram
+			Account hostAccount = (Account) request.getSession().getAttribute("account");
+			for (Novel novel : hostAccount.getOwnNovels()) {
+				if (novel.getId() == vol.getNovelOwnerId()) {
+					novel.getVols().add(vol);
+					break;
+				}
+			}
+			
 		} else {
 			form.applyErrorsToUI(request);
 		}

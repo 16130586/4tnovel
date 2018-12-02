@@ -19,9 +19,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.DAO.NextIdGenrator;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingNovelForm;
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Novel;
 
 /**
@@ -48,7 +50,16 @@ public class AddingNovelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		if (hostAccount.getOwnNovels() == null)
+			try {
+				Connection cnn = (Connection) request.getAttribute("connection");
+				NovelDAO novelDao = new NovelDAO(cnn);
+				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendError(500);
+			}
 		System.out.println("forward here");
 		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
 	}
@@ -87,7 +98,7 @@ public class AddingNovelServlet extends HttpServlet {
 		}
 
 		AbstractMappingForm form = new AddingNovelForm(request);
-
+		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		if (!form.isOnError()) {
 			// TODO write to dtb , apply to account
 			Connection cnn = (Connection) request.getAttribute("connection");
@@ -98,6 +109,7 @@ public class AddingNovelServlet extends HttpServlet {
 
 			Novel novel = (Novel) form.getMappingData();
 			try {
+				novel.setId(NextIdGenrator.getGenrator().nextAutoIncrementFromTable("LN", cnn));
 				novelDAO.insertNovel(novel);
 				novelDAO.insertGenres(NovelDAO.getMaxID(cnn), novel.getGenres(), genreDAO);
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
@@ -110,7 +122,9 @@ public class AddingNovelServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			// ram
+			hostAccount.getOwnNovels().add(novel);
+			
 			System.out.println("adding novel sucessed!	");
 			System.out.println("sucessed");
 			// TODO if success then set sucess for user
