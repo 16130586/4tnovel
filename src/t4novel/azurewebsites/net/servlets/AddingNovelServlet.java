@@ -129,6 +129,12 @@ public class AddingNovelServlet extends HttpServlet {
 			System.out.println("sucessed");
 			// TODO if success then set sucess for user
 			request.setAttribute("sucessed", "Thêm truyện thành công!");
+			
+			//logic for pagination 
+			int lastestTotalNovels =  (int) getServletContext().getAttribute("totalNovels");
+			getServletContext().setAttribute("totalNovels",lastestTotalNovels + 1);
+			
+			// ending logic for pagintion
 		} else {
 			form.applyErrorsToUI(request);
 			System.out.println("error!");
