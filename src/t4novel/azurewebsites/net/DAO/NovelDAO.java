@@ -263,10 +263,15 @@ public class NovelDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
-		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
-				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
-				+ offSet + " rows fetch next " + limit + " rows only)"
-				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
+//		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
+//				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
+//				+ offSet + " rows fetch next " + limit + " rows only)"
+//				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
+		
+		String query = "SELECT * FROM LN WHERE ID IN(" + 
+						"SELECT ID FROM LN"+ (filterCondition == null ? "" : " WHERE " + filterCondition) 
+						+ "order by DATEUP DESC OFFSET " + offSet + " rows fetch next " + limit + " rows only " + ")"  
+						+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 		stmt = cnn.prepareStatement(query);
 		rs = stmt.executeQuery();
 		while (rs.next()) {
