@@ -51,7 +51,7 @@ public class SendingMailServlet extends HttpServlet {
 		try {
 			String verifyCode = TokenGenrator.genrateVerifyCode(6);
 			mailUtil.sendingVerifyCode(oldMail,StringUtil.toAsterisk(hostAccount.getUserName()) ,Integer.parseInt(port), verifyCode);
-			mailUtil.remember(hostAccount.getId(), verifyCode);
+			MailUtils.remember(hostAccount.getId(), verifyCode);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			System.out.println("chua cau hinh init param cho sendingMail domain trong xml");
