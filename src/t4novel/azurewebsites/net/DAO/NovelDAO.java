@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -242,6 +243,50 @@ public class NovelDAO {
 
 	}
 
+	// select COUNT(ID) as TOTAL from LN where status = 0 and kind='TRANSLATE'
+	// something just likes this
+	public int getTotalNovels(String filterCondition) throws SQLException {
+		int total = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = " select COUNT(ID) as TOTAL from LN " + (filterCondition == null ? "" : " where " + filterCondition);
+		stmt = cnn.prepareStatement(query);
+		rs = stmt.executeQuery();
+		if (rs.next()) {
+			total = rs.getInt("TOTAL");
+		}
+		return total;
+	}
+
+	public List<Novel> getNovels(String sortByCondition, String filterCondition, int offSet, int limit)
+			throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Novel> result = new LinkedList<>();
+		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
+				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
+				+ offSet + " rows fetch next " + limit + " rows only)"
+				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
+		stmt = cnn.prepareStatement(query);
+		rs = stmt.executeQuery();
+		while (rs.next()) {
+			Novel n = new Novel();
+			n.setId(rs.getInt("ID"));
+			n.setName(rs.getString("NAME"));
+			n.setDescription(rs.getString("DESCRIBE"));
+			n.setDateUp(rs.getDate("DATEUP"));
+			n.setAccountOwnerId(rs.getInt("IDOWNER"));
+			n.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
+			n.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+			result.add(n);
+		}
+
+		rs.close();
+		stmt.close();
+
+		return result;
+	}
+
 	// select IDNOVEL from genre where value in (?..) group by idnovel having
 	// count(distinct value) = ?
 	public int getAmountAcceptNovelBy(List<NovelGenre> genres) throws Exception {
@@ -296,4 +341,5 @@ public class NovelDAO {
 	public void updateImageNovelById(int idNovel, InputStream in, ImageDAO imgDAO) throws Exception {
 		imgDAO.updateImage(idNovel, "NOVEL", in);
 	}
+
 }
