@@ -44,10 +44,7 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 			//
 			int totalNovels = novelDao.getTotalNovels(null);
 			//
-			int limitPagination = Integer.parseInt(ev.getServletContext().getInitParameter("limitPagination"));
-			int maxPaging = totalNovels % limitPagination > 0 ? (totalNovels / limitPagination) + 1
-					: (totalNovels / limitPagination);
-			ev.getServletContext().setAttribute("totalNovelPages", maxPaging);
+			ev.getServletContext().setAttribute("totalNovels", totalNovels);
 			// ending loading pagination
 		} catch (NamingException e) {
 			e.printStackTrace();
