@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.NextIdGenrator;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -41,35 +42,33 @@ public class AddingChapterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		response.setCharacterEncoding("utf-8");
-		request.setCharacterEncoding("utf-8");
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		Connection cnn = (Connection) request.getAttribute("connection");
 		// because of lazy loading!
-		try {
-			Connection cnn = (Connection) request.getAttribute("connection");
-			NovelDAO novelDao = new NovelDAO(cnn);
-			hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(500);
-		}
+		if (hostAccount.getOwnNovels() == null)
+			try {
+				NovelDAO novelDao = new NovelDAO(cnn);
+				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendError(500);
+			}
 		// because of making for lazy loading! then we have to loading vols in
 		// ownerNovels
-		Connection cnn = (Connection) request.getAttribute("connection");
 		VolDAO volDao = new VolDAO(cnn);
 
 		for (Novel ownNovel : hostAccount.getOwnNovels()) {
-			List<Vol> volsOfCurrentNovel = null;
-			// dtb
-			try {
-				volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (ownNovel.getVols() == null) {
+				List<Vol> volsOfCurrentNovel = null;
+				// dtb
+				try {
+					volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ownNovel.setVols(volsOfCurrentNovel);
+				System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
 			}
-			ownNovel.setVols(volsOfCurrentNovel);
-			System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
-
 		}
 
 		for (Novel own : hostAccount.getOwnNovels()) {
@@ -86,17 +85,33 @@ public class AddingChapterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
+		
 		AbstractMappingForm form = new AddingChapterForm(request);
+		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		if (!form.isOnError()) {
 			Connection cnn = (Connection) request.getAttribute("connection");
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
 			// write data to database
 			try {
+				chapter.setId(NextIdGenrator.getGenrator().nextAutoIncrementFromTable("CHAP", cnn));
 				chapDAO.insertChap(chapter);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			for (Novel ownNovel : hostAccount.getOwnNovels()) {
+				for (Vol vol : ownNovel.getVols()) {
+					if (vol.getId() == chapter.getVolOwnerId()) {
+						vol.getChaps().add(chapter);
+						break;
+					}
+				}
+			}
+			
 			// set sucessed for user
 			request.setAttribute("sucessed", "Thêm chương thành công!");
 		} else {
