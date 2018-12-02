@@ -102,8 +102,9 @@
 				</ul>
 			</div>
 			<div class="u-container-full--width u-align-center ">
-				<button id="loadMoreLastestUpdate" class="btn btn-info u-margin-bottom--2rem u-color-white">LOAD MORE
+				<button id="loadMoreLastestUpdate" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">LOAD MORE
 					FOR ME</button>
+				<a href="see?author=all" class="btn btn-info u-margin-bottom--2rem u-color-white">SEE ALL</a>
 			</div>
 		</section>
 	</div>
