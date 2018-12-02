@@ -54,21 +54,34 @@
 						<td>${novel.dateUp}</td>
 					</tr>
 				</c:forEach>
-				<tr>
-					<td><a class="link" href="#">(Um, Sorry) I’ve Been
-							Reincarnated!</a> <br> <small>adult, hentai</small></td>
-					<td>20</td>
-					<td>Hoàn thành</td>
-					<td>29/10/18</td>
-				</tr>
 			</table>
 			<div class="u-align-right u-color-white">
 				<ul class="horizontal-menu--showcase">
-					<li class="menu-item"><a class="btn btn-dark">Previous</a></li>
-					<li class="menu-item"><a class="btn btn-dark">1</a></li>
-					<li class="menu-item"><a class="btn btn-dark">2</a></li>
-					<li class="menu-item"><a class="btn btn-dark">3</a></li>
-					<li class="menu-item"><a class="btn btn-dark">Next</a></li>
+					<c:if test="${currentPage != 1}">
+						<li class="menu-item"><a href="${url}&page-number=${currentPage-1}"class="btn btn-dark">Previous</a></li>
+					</c:if>
+					<li class="menu-item"><a class="btn btn-dark" style="color: red;">${currentPage}</a></li>
+					<c:if test="${currentPage < totalPage}">
+							<c:forEach var="i" begin="1" end ="2">
+								<c:if test="${currentPage +  i  <= totalPage}">
+									<li class="menu-item"><a href="${url}&page-number=${currentPage + i}" class="btn btn-dark">${currentPage + i}</a></li>
+								</c:if>
+							</c:forEach>
+					</c:if>
+						<!-- 
+						<c:if test="${totalPage - currentPage > 2 }">
+							<c:if test="${totalPage - currentPage != 3}">
+								<li class="menu-item"><a class="btn btn-dark">...</a></li>
+							</c:if>
+							<li class="menu-item"><a href="${url}&page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
+						</c:if>
+						 -->
+						 <c:if test="${totalPage - currentPage > 2 }">
+						 	<li class="menu-item"><a href="${url}&page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
+						 </c:if>
+					<c:if test="${totalPage != currentPage && totalPage - currentPage > 4}">
+						<li class="menu-item"><a href="${url}&page-number=${totalPage}" class="btn btn-dark">Last</a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
