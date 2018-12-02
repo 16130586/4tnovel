@@ -292,4 +292,21 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/see">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>false</login>
+			<connection>false</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	
 </url-sercutiry> 
