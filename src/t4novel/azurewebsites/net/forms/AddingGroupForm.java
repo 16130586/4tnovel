@@ -1,6 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,14 +47,14 @@ public class AddingGroupForm extends AbstractMappingForm {
 
 	public void setName(String name) {
 		if (name == null || name.isEmpty()) {
-			errors.put("nameEmpty", "Hãy điền vào tên nhóm!");
+			errors.put("nameEmpty", "HÃ£y Ä‘iá»�n vÃ o tÃªn nhÃ³m!");
 		} else if (StringUtil.isAllSpace(name)) {
-			errors.put("nameAllSpace", "Tên nhóm không hợp lệ!");
+			errors.put("nameAllSpace", "TÃªn nhÃ³m khÃ´ng há»£p lá»‡!");
 		} else {
 			// TODO write query to check correctPassword
 			boolean isExistedGroupName = existedGroupNameChecker.check(name, "SELECT ID FROM GROUPACC WHERE NAME = ?");
 			if (isExistedGroupName) {
-				errors.put("nameExisted", "Tên nhóm đã tồn tại! Hãy sử dụng tên nhóm khác!");
+				errors.put("nameExisted", "TÃªn nhÃ³m Ä‘Ã£ tá»“n táº¡i! HÃ£y sá»­ dá»¥ng tÃªn nhÃ³m khÃ¡c!");
 			} else
 				this.name = name;
 		}
@@ -81,6 +82,7 @@ public class AddingGroupForm extends AbstractMappingForm {
 		rs.setName(getName());
 		rs.setOwner(getOwnerAcc());
 		rs.setDescription(getDescription());
+		rs.setAccounts( new LinkedList<Account>());
 		return rs;
 	}
 }
