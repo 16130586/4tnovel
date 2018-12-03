@@ -61,7 +61,6 @@
 								</div>
 							</div>
 							<div id="${novel.id}-${vol.id }"
-								class="u-padding--05rem"
 								style="display: none; background-color: #e8e8e8">
 								<c:forEach var="chap" items="${vol.chaps }">
 									<div class="row u-padding--05rem">
