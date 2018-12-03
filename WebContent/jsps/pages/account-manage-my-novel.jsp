@@ -35,14 +35,14 @@
 				<div class="col-md-2">Thao tác</div>
 			</div>
 			<hr>
-			<c:forEach var="novel" items="${account.ownNovels }">
+			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1">
+			<c:set var="novel" value="${account.ownNovels[sizeNovels-i]}"/>
 				<section>
 					<div class="row u-padding--05rem">
-						<button class="col-md-6 btn btn-belike-a u-align-left"
+						<button class="col-md-6 btn btn-belike-a u-align-left u-text-overflow--hidden" style="color: #36a39e"
 							onclick="showOrHide(${novel.id})">${novel.name }</button>
 						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">${account.displayedName }</a>
-						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">chưa
-							có</a>
+						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">${novel.group.name }</a>
 						<div class="col-md-2">
 							<button class="btn btn-primary u-color-white">Sửa</button>
 							<button class="btn btn-danger u-color-white">Xóa</button>
@@ -52,33 +52,31 @@
 						style="display: none; background-color: #f0f0f0">
 						<c:forEach var="vol" items="${novel.vols }">
 							<div class="row u-padding--05rem">
-								<button class="col-md-10 btn btn-belike-a u-align-left"
-									onclick="showOrHide(${novel.id}${vol.id })">${vol.title}</button>
+								<button class="col-md-10 btn btn-belike-a u-align-left u-text-overflow--hidden" style="padding-left: 3rem !important"
+									onclick="showOrHide('${novel.id}-${vol.id }')">${vol.title}</button>
 								<div class="col-md-2">
 									<button class="btn btn-primary u-color-white">Sửa</button>
 									<button class="btn btn-danger u-color-white">Xóa</button>
 								</div>
 							</div>
-							<div id="${novel.id }${vol.id}"
-								class="u-padding-bottom--05rem u-padding-right--05rem"
+							<div id="${novel.id}-${vol.id }"
+								class="u-padding--05rem"
 								style="display: none; background-color: #e8e8e8">
 								<c:forEach var="chap" items="${vol.chaps }">
 									<div class="row">
-										<button class="col-md-10 btn btn-belike-a u-align-left">${chap.title}
+										<button class="col-md-10 btn btn-belike-a u-align-left u-text-overflow--hidden" style="padding-left: 5rem !important">${chap.title}
 										</button>
 										<div class="col-md-2">
 											<button class="btn btn-primary u-color-white">Sửa</button>
 											<button class="btn btn-danger u-color-white">Xóa</button>
 										</div>
 									</div>
-
 								</c:forEach>
 							</div>
 						</c:forEach>
 					</div>
 					</section>
 				</c:forEach>
-				
 		</div>
 	</div>
 	<script>

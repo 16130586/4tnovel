@@ -611,9 +611,7 @@ body {
       .account-manage__nav .dropdown-content--bottom .menu-item {
         padding: .5rem; }
   .account-manage__content {
-    background-color: #f7f7f7;
-    height: 700px;
-    overflow-y: scroll; }
+    background-color: #f7f7f7; }
     .account-manage__content section > .row:first-child {
       background-color: #fbfbfb; }
     .account-manage__content .btn {

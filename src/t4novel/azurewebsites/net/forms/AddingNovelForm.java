@@ -157,6 +157,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 		rs.setKind(getKind());
 		rs.setGroupId(getGroupID());
 		rs.setOwner(owner);
+		rs.setVols(new LinkedList<>());
 		return rs;
 	}
 

@@ -1,6 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +85,7 @@ public class AddingVolForm extends AbstractMappingForm {
 		rs.setDescription(getDescription());
 		rs.setTitle(getTitle());
 		rs.setNovelOwnerId(getNovelOwnerId());
+		rs.setChaps(new LinkedList<>());
 		return rs;
 	}
 
