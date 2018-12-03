@@ -36,6 +36,10 @@ public class ChangeDisplayedNameServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
+		
 		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService existedDisplayedNameChecker = new ExisteddNameCheckingService(cnn);
 		AbstractMappingForm changeDisplayedNameForm = new ChangeDisplayedNameForm(request, existedDisplayedNameChecker);
