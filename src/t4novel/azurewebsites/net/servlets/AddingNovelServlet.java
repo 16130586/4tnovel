@@ -19,7 +19,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
-import t4novel.azurewebsites.net.DAO.NextIdGenrator;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingNovelForm;
@@ -109,21 +108,22 @@ public class AddingNovelServlet extends HttpServlet {
 
 			Novel novel = (Novel) form.getMappingData();
 			try {
-				novel.setId(NextIdGenrator.getGenrator().nextAutoIncrementFromTable("LN", cnn));
+				novel.setId(novelDAO.getNextID());
 				novelDAO.insertNovel(novel);
-				novelDAO.insertGenres(NovelDAO.getMaxID(cnn), novel.getGenres(), genreDAO);
+				novelDAO.insertGenres(novel.getId(), novel.getGenres(), genreDAO);
+				novel.setVols(new LinkedList<>());
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
 				if (fileImage != null)
-					novelDAO.insertImageNovel(NovelDAO.getMaxID(cnn), fileImage.getInputStream(), imgDAO);
+					novelDAO.insertImageNovel(novel.getId(), fileImage.getInputStream(), imgDAO);
 				else {
-					novelDAO.insertImageNovel(NovelDAO.getMaxID(cnn), null, imgDAO);
+					novelDAO.insertImageNovel(novel.getId(), null, imgDAO);
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			// ram
-			hostAccount.getOwnNovels().add(novel);
+			hostAccount.addNewOwnerNovel(novel);
 			
 			System.out.println("adding novel sucessed!	");
 			System.out.println("sucessed");

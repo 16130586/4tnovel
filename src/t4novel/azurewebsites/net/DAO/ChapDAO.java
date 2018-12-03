@@ -12,22 +12,26 @@ import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Vol;
 
 public class ChapDAO {
-
+	
 	private Connection cnn;
-
+	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	static {
+		NEXT_ID_GENRATOR = new NextIdGenrator("CHAP");
+	}
 	public ChapDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
 
 	public void insertChap(Chap chap) throws Exception {
 		PreparedStatement stmt = null;
-		String querry = "INSERT INTO CHAP (ID_VOL, ID_NOVEL, CONTENT) VALUES (?, ?, ?)";
+		String querry = "INSERT INTO CHAP (ID_VOL, ID_NOVEL, TITLE ,CONTENT) VALUES (?, ?, ? , ?)";
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chap.getVolOwnerId());
 			stmt.setInt(2, chap.getNovelOwnerId());
-			stmt.setString(3, chap.getContent());
+			stmt.setString(3, chap.getTitle());
+			stmt.setString(4, chap.getContent());
 			stmt.executeUpdate();
 			cnn.commit();
 			System.out.println("Insert chap completed!");
@@ -53,11 +57,12 @@ public class ChapDAO {
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				chap = new Chap();
-				chap.setId(rs.getInt(1));
-				chap.setVolOwnerId(rs.getInt(2));
-				chap.setNovelOwnerId(rs.getInt(3));
-				chap.setContent(rs.getString(4));
-				chap.setDateUp(rs.getDate(5)) ;
+				chap.setId(rs.getInt("ID"));
+				chap.setVolOwnerId(rs.getInt("ID_VOL"));
+				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
+				chap.setContent(rs.getString("TITLE"));
+				chap.setContent(rs.getString("CONTENT"));
+				chap.setDateUp(rs.getDate("DATEUP")) ;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,13 +85,14 @@ public class ChapDAO {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, volID);
 			rs = stmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				Chap chap = new Chap();
-				chap.setId(rs.getInt(1));
-				chap.setVolOwnerId(rs.getInt(2));
-				chap.setNovelOwnerId(rs.getInt(3));
-				chap.setContent(rs.getString(4));
-				chap.setDateUp(rs.getDate(5)) ;  
+				chap.setId(rs.getInt("ID"));
+				chap.setVolOwnerId(rs.getInt("ID_VOL"));
+				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
+				chap.setTitle(rs.getString("TITLE"));
+				chap.setContent(rs.getString("CONTENT"));
+				chap.setDateUp(rs.getDate("DATEUP")) ;
 				listChap.add(chap);
 			}
 		} catch (SQLException e) {
@@ -124,13 +130,16 @@ public class ChapDAO {
 
 	public void updateChap(Chap chap) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "UPDATE CHAP set CONTENT = ? WHERE ID = ?";
+		String query = "UPDATE CHAP set ID_VOL = ? , ID_NOVEL = ? , TITLE = ? , CONTENT = ? WHERE ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
-			stmt.setString(1, chap.getContent());
-			stmt.setInt(2, chap.getId());
+			stmt.setInt(1, chap.getVolOwnerId());
+			stmt.setInt(2, chap.getNovelOwnerId());
+			stmt.setString(3, chap.getTitle());
+			stmt.setString(4, chap.getContent());
+			stmt.setInt(5, chap.getId());
 			stmt.executeUpdate();
 			stmt.close();
 			cnn.commit();
@@ -143,5 +152,8 @@ public class ChapDAO {
 			if (stmt != null)
 				stmt.close();
 		}
+	}
+	public int getNextID() throws Exception {
+		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
 }

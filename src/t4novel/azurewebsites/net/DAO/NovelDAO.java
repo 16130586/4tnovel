@@ -16,7 +16,10 @@ import t4novel.azurewebsites.net.models.NovelStatus;
 
 public class NovelDAO {
 	private Connection cnn;
-
+	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	static {
+		NEXT_ID_GENRATOR = new  NextIdGenrator("LN");
+	}
 	public NovelDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -26,7 +29,7 @@ public class NovelDAO {
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS from LN where IDOWNER = ?";
+		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP,KIND, STATUS from LN where IDOWNER = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, accountId);
@@ -39,6 +42,7 @@ public class NovelDAO {
 				tmp.setDescription(rs.getString("DESCRIBE"));
 				tmp.setDateUp(rs.getDate("DATEUP"));
 				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
+				tmp.setGroupId(rs.getInt("IDGROUP"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
 				result.add(tmp);
@@ -154,7 +158,7 @@ public class NovelDAO {
 
 	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER, KIND, STATUS) VALUES (?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP ,KIND, STATUS) VALUES (? , ?, ?, ?, ?, ?, ?)";
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
@@ -162,8 +166,9 @@ public class NovelDAO {
 			stmt.setString(2, novel.getDescription());
 			stmt.setDate(3, new Date(novel.getDateUp().getTime()));
 			stmt.setInt(4, novel.getAccountOwnerId());
-			stmt.setString(5, novel.getKind().toText());
-			stmt.setInt(6, novel.getStatus().getValue());
+			stmt.setInt(5, novel.getGroupId());
+			stmt.setString(6, novel.getKind().toText());
+			stmt.setInt(7, novel.getStatus().getValue());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
@@ -175,22 +180,6 @@ public class NovelDAO {
 		}
 	}
 
-	public static synchronized int getMaxID(Connection cnn) throws Exception {
-		int result = 0;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try {
-			stmt = cnn.prepareStatement("select max(ID) from LN");
-			rs = stmt.executeQuery();
-			if (rs.next())
-				result = rs.getInt(1);
-		} finally {
-			if (rs != null)
-				rs.close();
-			stmt.close();
-		}
-		return result;
-	}
 
 	/**
 	 * select IDNOVEL from genre where value in (?, ?...) group by idnovel having
@@ -345,6 +334,9 @@ public class NovelDAO {
 
 	public void updateImageNovelById(int idNovel, InputStream in, ImageDAO imgDAO) throws Exception {
 		imgDAO.updateImage(idNovel, "NOVEL", in);
+	}
+	public int getNextID() throws Exception {
+		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
 
 }

@@ -1,9 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -124,6 +122,8 @@ public class RegisterForm extends AbstractMappingForm {
 		rs.setUserName(this.userName);
 		rs.setPassword(this.password);
 		rs.setRole(Role.USER);
+		rs.setJoinGroup(new LinkedList<>());
+		
 		return rs;
 	}
 

@@ -179,7 +179,7 @@ public class Account implements Serializable {
 
 	public void setJoinGroup(List<Group> jointGroup) {
 		this.joinGroups = jointGroup;
-		System.out.println("is joint group null ? " + (jointGroup == null ));
+		System.out.println("is joint group null ? " + (jointGroup == null));
 	}
 
 	public Group getGroup(int rootGroupId) {
@@ -195,15 +195,47 @@ public class Account implements Serializable {
 
 	public List<Group> getOwnerGroups() {
 		List<Group> rs = new ArrayList<>(joinGroups.size());
-		for(Group gr : joinGroups) {
-			if(gr.getOwner().getId() == this.id) {
+		for (Group gr : joinGroups) {
+			if (gr.getOwner().getId() == this.id) {
 				rs.add(gr);
 			}
 		}
 		return rs;
 	}
+
 	public void addJoinGroup(Group g) {
-		if(!this.joinGroups.contains(g))
+		if (!this.joinGroups.contains(g))
 			this.joinGroups.add(g);
+	}
+
+	public void addNewOwnerVol(Vol vol) {
+		for (Novel novel : getOwnNovels()) {
+			if (novel.getId() == vol.getNovelOwnerId()) {
+				novel.addNewVol(vol);
+				break;
+			}
+		}
+	}
+
+	public void addNewOwnerChap(Chap chapter) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (Vol vol : ownNovel.getVols()) {
+				if (vol.getId() == chapter.getVolOwnerId()) {
+					vol.addNewChappter(chapter);
+					break;
+				}
+			}
+		}
+	}
+	public void addNewOwnerNovel(Novel n) {
+		if(!this.ownNovels.contains(n))
+			this.ownNovels.add(n);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Account))
+			return false;
+		Account otherAcc = (Account) obj;
+		return this.id == otherAcc.id;
 	}
 }

@@ -41,8 +41,9 @@
 					<div class="row u-padding--05rem">
 						<button class="col-md-6 btn btn-belike-a u-align-left u-text-overflow--hidden" style="color: #36a39e"
 							onclick="showOrHide(${novel.id})">${novel.name }</button>
-						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">${account.displayedName }</a>
-						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">${novel.group.name }</a>
+						<a href="#" class="col-md-2 btn btn-belike-a u-align-left u-text-overflow--hidden">${account.displayedName }</a>
+						<a href="#" class="col-md-2 btn btn-belike-a u-align-left u-text-overflow--hidden">${novel.group.name }
+							</a>
 						<div class="col-md-2">
 							<button class="btn btn-primary u-color-white">Sửa</button>
 							<button class="btn btn-danger u-color-white">Xóa</button>
@@ -63,7 +64,7 @@
 								class="u-padding--05rem"
 								style="display: none; background-color: #e8e8e8">
 								<c:forEach var="chap" items="${vol.chaps }">
-									<div class="row">
+									<div class="row u-padding--05rem">
 										<button class="col-md-10 btn btn-belike-a u-align-left u-text-overflow--hidden" style="padding-left: 5rem !important">${chap.title}
 										</button>
 										<div class="col-md-2">

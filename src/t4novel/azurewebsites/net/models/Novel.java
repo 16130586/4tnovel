@@ -13,7 +13,7 @@ public class Novel implements Serializable {
 	private static final long serialVersionUID = -4535349598603561651L;
 	private int id, accountOwnerId;
 	private String name;
-	private String description;
+	private String description, coverImg;
 	private List<Vol> vols;
 	private Date dateUp;
 	private int view;
@@ -25,8 +25,17 @@ public class Novel implements Serializable {
 	private NovelStatus status;
 	private NovelKind kind;
 	private int groupId;
-	private String encodeImg;
+	private Group group;
+	public Group getGroup() {
+		return group;
+	}
 
+	public void setGroup(Group group) {
+		this.group = group;
+		this.groupId = group.getId();
+	}
+	private String encodeImg;
+	
 	public Novel() {
 	}
 
@@ -196,6 +205,23 @@ public class Novel implements Serializable {
 
 	public void setEncodeImg(String encodeImg) {
 		this.encodeImg = encodeImg;
+	}
+	
+	public void addNewVol(Vol vol) {
+		if(!this.vols.contains(vol)) this.vols.add(vol);
+	}
+	public String getCoverImg() {
+		return coverImg;
+	}
+
+	public void setCoverImg(String coverImg) {
+		this.coverImg = coverImg;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || ! (obj instanceof Novel)) return false;
+		Novel other = (Novel) obj;
+		return this.id == other.id;
 	}
 
 }

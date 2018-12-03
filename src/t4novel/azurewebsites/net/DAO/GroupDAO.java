@@ -1,7 +1,6 @@
 package t4novel.azurewebsites.net.DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,10 @@ import t4novel.azurewebsites.net.models.Group;
 
 public class GroupDAO {
 	private Connection cnn;
-
+	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	static {
+		NEXT_ID_GENRATOR = new  NextIdGenrator("GROUPACC");
+	}
 	public GroupDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -164,9 +166,25 @@ public class GroupDAO {
 				stmt.close();
 		}
 	}
-
+	public Group getGroup(int idGroup) throws SQLException {
+		Group result = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT NAME, DESCRIBE , DATECREATE, IDOWNER FROM GROUPACC WHERE ID = ?";
+		
+		stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, idGroup);
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			result = new Group();
+			result.setId(idGroup);
+			result.setName(rs.getString("NAME"));
+			result.setDateCreate(rs.getDate("DATECREATE"));
+			result.setOwnerId(rs.getInt("IDOWNER"));
+		}
+		return result;
+	}
 	public int getNextID() throws Exception {
-		NextIdGenrator genrator = NextIdGenrator.getGenrator();
-		return genrator.nextAutoIncrementFromTable("GROUPACC", cnn);
+		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
 }

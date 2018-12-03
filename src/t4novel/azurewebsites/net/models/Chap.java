@@ -113,5 +113,10 @@ public class Chap implements Serializable{
 	public void setNovelOwnerId(int novelOwnerId) {
 		this.novelOwnerId = novelOwnerId;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || ! (obj instanceof Chap)) return false;
+		Chap other = (Chap) obj;
+		return this.id == other.id;
+	}
 }

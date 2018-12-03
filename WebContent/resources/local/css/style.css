@@ -611,7 +611,8 @@ body {
       .account-manage__nav .dropdown-content--bottom .menu-item {
         padding: .5rem; }
   .account-manage__content {
-    background-color: #f7f7f7; }
+    background-color: #f7f7f7;
+    height: 80vh; }
     .account-manage__content section > .row:first-child {
       background-color: #fbfbfb; }
     .account-manage__content .btn {

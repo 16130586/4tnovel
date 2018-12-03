@@ -189,6 +189,7 @@ CREATE TABLE [dbo].[LN](
 	[DESCRIBE] ntext NULL,
 	[DATEUP] datetime default getdate() NULL,
 	[IDOWNER] bigint NULL,
+	[IDGROUP] bigint NULL,
 	[KIND] varchar(20) NULL,
 	[STATUS] int NULL,
 PRIMARY KEY CLUSTERED 
@@ -391,6 +392,7 @@ CREATE TABLE [dbo].[CHAP](
 	[ID] bigint identity(1,1) NOT NULL,
 	[ID_VOL] bigint NULL,
 	[ID_NOVEL] bigint NULL,
+	[TITLE] ntext NULL,
 	[CONTENT] ntext NULL,
 	[DATEUP] datetime default getdate() NULL,
 PRIMARY KEY CLUSTERED 

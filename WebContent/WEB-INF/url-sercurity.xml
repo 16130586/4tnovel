@@ -166,7 +166,7 @@
 	<url pattern="/manage">
 		<method name="get">
 			<login>true</login>
-			<connection>false</connection>
+			<connection>true</connection>
 			<role>1</role>
 			<role>2</role>
 		</method>
@@ -318,6 +318,22 @@
 		<method name="post">
 			<login>true</login>
 			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+		<url pattern="/chap">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>false</login>
+			<connection>false</connection>
+			<role>0</role>
 			<role>1</role>
 			<role>2</role>
 		</method>

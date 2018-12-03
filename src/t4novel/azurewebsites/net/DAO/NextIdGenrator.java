@@ -3,16 +3,13 @@ package t4novel.azurewebsites.net.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class NextIdGenrator {
-	private static NextIdGenrator instance;
-
-	private NextIdGenrator() {
-
+	private String tableName;
+	public NextIdGenrator(String tableName) {
+		this.tableName = tableName;
 	}
-
-	public int nextAutoIncrementFromTable(String tableName, Connection cnn) throws Exception {
+	public synchronized int nextAutoIncrementId(Connection cnn) throws Exception {
 		System.out.println("table name " + tableName);
 		int result = -1;
 		PreparedStatement stmt = null;
@@ -33,11 +30,4 @@ public class NextIdGenrator {
 		}
 		return result;
 	}
-
-	public static synchronized NextIdGenrator getGenrator() {
-		if (instance == null)
-			instance = new NextIdGenrator();
-		return instance;
-	}
-
 }
