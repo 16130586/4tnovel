@@ -73,6 +73,8 @@ public class MyNovelServlet extends HttpServlet {
 						}
 					}
 				}
+				// set attribute size novels
+				request.setAttribute("sizeNovels", hostAccount.getOwnNovels().size());
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 		}
 
