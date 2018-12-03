@@ -1,7 +1,6 @@
 package t4novel.azurewebsites.net.DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,10 @@ import t4novel.azurewebsites.net.models.Vol;
 public class VolDAO {
 
 	private Connection cnn;
-
+	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	static {
+		NEXT_ID_GENRATOR = new  NextIdGenrator("VOL");
+	}
 	public VolDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -168,5 +170,8 @@ public class VolDAO {
 			if (stmt != null)
 				stmt.close();
 		}
+	}
+	public int getNextID() throws Exception {
+		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
 }

@@ -25,19 +25,13 @@ import t4novel.azurewebsites.net.utils.MailUtils;
 public class ChangeEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 
 	public ChangeEmailServlet() {
 		super();
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/jsps/pages/account-manage-mail.jsp").forward(request, response);
@@ -49,12 +43,11 @@ public class ChangeEmailServlet extends HttpServlet {
 		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService existedEmailChecker = new EmailCheckingService(cnn);
 		
-		request.setAttribute("verifyCodeOnServer", MailUtils.get(account.getId()));
-		
-		AbstractMappingForm changeEmailForm = new ChangeEmailForm(request, existedEmailChecker);
+		// setting on request attribute for using in changeEmailForm validation
+		String verifyCodeOnServer = MailUtils.get(account.getId());
+		AbstractMappingForm changeEmailForm = new ChangeEmailForm(request, existedEmailChecker , verifyCodeOnServer);
 		if (!changeEmailForm.isOnError()) {
 			String newEmail = (String) changeEmailForm.getMappingData();
-			// TODO write newPassword to database
 			AccountDAO accountDAO = new AccountDAO(cnn);
 			
 			account.setGmail(newEmail);

@@ -44,7 +44,7 @@
 				</tr>
 				<c:forEach var="novel" items="${searchResultNovel}">
 					<tr>
-						<td><a class="link" href="#">${novel.name}</a> <br> <small>
+						<td><a class="link" href="detail?id=${novel.id}" target="_blank">${novel.name}</a> <br> <small>
 								<c:forEach var="genre" items="${novel.genres}">
 									-${genre}-
 								</c:forEach>

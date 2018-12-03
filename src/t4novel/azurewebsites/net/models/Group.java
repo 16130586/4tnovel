@@ -15,6 +15,7 @@ public class Group implements Serializable {
 	private String description;
 	private Date dateCreate;
 	private Account owner;
+	private int ownerId;
 
 	public Group(int id, List<Account> accounts, String name, String description, Date dateCreate, Account owner) {
 		super();
@@ -76,10 +77,12 @@ public class Group implements Serializable {
 
 	public void setOwner(Account owner) {
 		this.owner = owner;
+		this.ownerId = owner.getId();
 	}
 
 	public void addMember(Account ac) {
-		this.accounts.add(ac);
+		if(!this.accounts.contains(ac))
+			this.accounts.add(ac);
 	}
 
 	@Override
@@ -90,4 +93,10 @@ public class Group implements Serializable {
 		return this.id == otherGroup.id;
 	}
 
+	public void setOwnerId(int accID) {
+		this.ownerId  = accID;
+	}
+	public int getOwnerId() {
+		return this.ownerId;
+	}
 }

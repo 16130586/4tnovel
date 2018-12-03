@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
-import t4novel.azurewebsites.net.DAO.NextIdGenrator;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -97,20 +96,14 @@ public class AddingChapterServlet extends HttpServlet {
 			Chap chapter = (Chap) form.getMappingData();
 			// write data to database
 			try {
-				chapter.setId(NextIdGenrator.getGenrator().nextAutoIncrementFromTable("CHAP", cnn));
+				chapter.setId(chapDAO.getNextID());
 				chapDAO.insertChap(chapter);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			for (Novel ownNovel : hostAccount.getOwnNovels()) {
-				for (Vol vol : ownNovel.getVols()) {
-					if (vol.getId() == chapter.getVolOwnerId()) {
-						vol.getChaps().add(chapter);
-						break;
-					}
-				}
-			}
+			
+			hostAccount.addNewOwnerChap(chapter);
 			
 			// set sucessed for user
 			request.setAttribute("sucessed", "Thêm chương thành công!");

@@ -92,5 +92,13 @@ public class Vol implements Serializable{
 		this.owner = owner;
 		setNovelOwnerId(owner.getId());
 	}
-
+	public void addNewChappter(Chap chap) {
+		if(!this.chaps.contains(chap)) this.chaps.add(chap);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || ! (obj instanceof Vol)) return false;
+		Vol other = (Vol) obj;
+		return this.id == other.id;
+	}
 }

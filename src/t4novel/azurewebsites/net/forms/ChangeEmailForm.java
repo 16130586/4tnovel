@@ -14,10 +14,10 @@ public class ChangeEmailForm extends AbstractMappingForm {
 	private String verifyCode, reVerifyCode;
 	private Account currentAccount;
 
-	public ChangeEmailForm(HttpServletRequest request, DAOService existedEmailChecker) {
+	public ChangeEmailForm(HttpServletRequest request, DAOService existedEmailChecker , String verifyCodeOnServer) {
 		this.existedEmailChecker = existedEmailChecker;
 		setNewEmail(request.getParameter("new-mail"));
-		setVerifyCode((String) request.getAttribute("verifyCodeOnServer"));
+		setVerifyCode(verifyCodeOnServer);
 		setReVerifyCode(request.getParameter("otp"));
 		this.currentAccount = (Account) request.getSession().getAttribute("account");
 	}

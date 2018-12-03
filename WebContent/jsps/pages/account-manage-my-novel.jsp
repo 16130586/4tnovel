@@ -41,8 +41,8 @@
 						<button class="col-md-6 btn btn-belike-a u-align-left"
 							onclick="showOrHide(${novel.id})">${novel.name }</button>
 						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">${account.displayedName }</a>
-						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">chưa
-							có</a>
+						<a href="#" class="col-md-2 btn btn-belike-a u-align-left">${novel.group.name }
+							</a>
 						<div class="col-md-2">
 							<button class="btn btn-primary u-color-white">Sửa</button>
 							<button class="btn btn-danger u-color-white">Xóa</button>

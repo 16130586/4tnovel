@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import t4novel.azurewebsites.net.DAO.NovelDAO;
-import t4novel.azurewebsites.net.DAO.VolDAO;
+import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.models.Account;
-import t4novel.azurewebsites.net.models.Novel;
-import t4novel.azurewebsites.net.models.Vol;
+import t4novel.azurewebsites.net.models.Group;
 
 /**
  * Servlet implementation class ManageAccountServlet
@@ -47,6 +45,23 @@ public class ManageAccountServlet extends HttpServlet {
 			url = "/jsps/pages/account-manage-mail.jsp";
 		if ("admin".equals(type))
 			url = "/jsps/pages/account-manage-admin.jsp";
+		Connection cnn = (Connection) request.getAttribute("connection");
+		Account account = (Account) request.getSession().getAttribute("account");
+		if (account.getJoinGroup() == null) {
+			GroupDAO groupDAO = new GroupDAO(cnn);
+			List<Group> joinGroups = null;
+			// get data from database
+			try {
+				joinGroups = groupDAO.getJoinGroups(account.getId());
+				for (Group gr : joinGroups) {
+					gr.setAccounts(groupDAO.getAllMemberFromGroup(gr.getId()));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			account.setJoinGroup(joinGroups);
+		}
+
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 
 	}
