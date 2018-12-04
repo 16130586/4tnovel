@@ -30,7 +30,9 @@ public class LogoutServlet extends HttpServlet {
 //			session.setAttribute(attName, null);
 //		}
 //		session.invalidate();
-		request.getSession().invalidate();
+		HttpSession ss = request.getSession(false);
+		ss.setMaxInactiveInterval(1);
+		request.getSession(false).invalidate();
 		response.sendRedirect("index");
 	}
 
