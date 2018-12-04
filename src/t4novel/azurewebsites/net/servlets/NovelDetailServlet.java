@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
@@ -46,6 +48,7 @@ public class NovelDetailServlet extends HttpServlet {
 			return;
 		}
 		Connection cnn = (Connection) request.getAttribute("connection");
+		AccountDAO accDao = new AccountDAO(cnn);
 		NovelDAO novelDao = new NovelDAO(cnn);
 		VolDAO volDao = new VolDAO(cnn);
 		ChapDAO chapDao = new ChapDAO(cnn);
@@ -53,11 +56,13 @@ public class NovelDetailServlet extends HttpServlet {
 		try {
 			requestNovel = novelDao.getNovelById(novelId);
 			if(requestNovel == null) {response.sendError(404); return;}
+			Account owner = accDao.getAccountByID(requestNovel.getAccountOwnerId());
+			requestNovel.setOwner(owner);
 			if (requestNovel.getVols() == null) {
 				List<Vol> vols = volDao.getVolsOfNovel(novelId);
 				for (Vol vol : vols) {
 					if (vol.getChaps() == null) {
-						List<Chap> chaps = chapDao.getChapsByVolID(vol.getId());
+						List<Chap> chaps = chapDao.getPartOfChapsByVolId(vol.getId());
 						System.out.println("trying to get chaps of vol : " + vol.getTitle() + " then you got "
 								+ chaps.size() + " chaps");
 						vol.setChaps(chaps);

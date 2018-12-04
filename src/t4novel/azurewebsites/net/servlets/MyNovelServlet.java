@@ -56,32 +56,25 @@ public class MyNovelServlet extends HttpServlet {
 		VolDAO volDao = new VolDAO(cnn);
 		GroupDAO groupDao = new GroupDAO(cnn);
 		ChapDAO chapDao = new ChapDAO(cnn);
+		try {
+			for (Novel ownNovel : hostAccount.getOwnNovels()) {
+				ownNovel.setOwner(hostAccount);
 
-		for (Novel ownNovel : hostAccount.getOwnNovels()) {
-
-			try {
 				// dtb
 				if (ownNovel.getGroup() == null) {
 					ownNovel.setGroup(groupDao.getGroup(ownNovel.getGroupId()));
 				}
 				if (ownNovel.getVols() == null) {
-					List<Vol> volsOfCurrentNovel = null;
-					volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
-					ownNovel.setVols(volsOfCurrentNovel);
+					ownNovel.setVols(volDao.getVolsOfNovel(ownNovel.getId()));
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+				for (Vol vol : ownNovel.getVols()) {
+					if (vol.getChaps() == null)
+						vol.setChaps(chapDao.getPartOfChapsByVolId(vol.getId()));
+				}
 			}
-			for (Vol vol : ownNovel.getVols()) {
-				if (vol.getChaps() == null)
-					try {
-						vol.setChaps(chapDao.getChapsByVolID(vol.getId()));
-						System.out.println(ownNovel.getName() + ": " + vol.getTitle() + ": "
-								+ chapDao.getChapsByVolID(vol.getId()).size());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		request.setAttribute("sizeNovels", hostAccount.getOwnNovels().size());
 		getServletContext().getRequestDispatcher(url).forward(request, response);
