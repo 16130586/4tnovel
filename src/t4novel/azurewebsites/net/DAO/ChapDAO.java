@@ -1,7 +1,6 @@
 package t4novel.azurewebsites.net.DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.models.Vol;
 
 public class ChapDAO {
 	
@@ -60,7 +58,7 @@ public class ChapDAO {
 				chap.setId(rs.getInt("ID"));
 				chap.setVolOwnerId(rs.getInt("ID_VOL"));
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
-				chap.setContent(rs.getString("TITLE"));
+				chap.setTitle(rs.getString("TITLE"));
 				chap.setContent(rs.getString("CONTENT"));
 				chap.setDateUp(rs.getDate("DATEUP")) ;
 			}
@@ -75,7 +73,7 @@ public class ChapDAO {
 		return chap;
 	}
 
-	public List<Chap> getChapsByVolID(int volID) throws Exception {
+	public List<Chap> getEntireChapsByVolId(int volID) throws Exception {
 		LinkedList<Chap> listChap = new LinkedList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -104,6 +102,61 @@ public class ChapDAO {
 				stmt.close();
 		}
 		return listChap;
+	}
+	public List<Chap> getPartOfChapsByVolId(int volId) throws SQLException {
+		LinkedList<Chap> listChap = new LinkedList<>();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String querry = "SELECT ID , ID_NOVEL , TITLE , DATEUP FROM CHAP WHERE ID_VOL = ?";
+
+		try {
+			stmt = cnn.prepareStatement(querry);
+			stmt.setInt(1, volId);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Chap chap = new Chap();
+				chap.setId(rs.getInt("ID"));
+				chap.setVolOwnerId(volId);
+				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
+				System.out.println("loading chap title : "  + rs.getString("TITLE"));
+				chap.setTitle(rs.getString("TITLE"));
+				chap.setDateUp(rs.getDate("DATEUP")) ;
+				listChap.add(chap);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
+		return listChap;
+	}
+	public void getContentOfChap(Chap chap) throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String querry = "SELECT CONTENT FROM CHAP WHERE ID = ?";
+
+		try {
+			stmt = cnn.prepareStatement(querry);
+			stmt.setInt(1, chap.getId());
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				String content = rs.getString("CONTENT");
+				if(content == null)
+					chap.setContent("");
+				else 
+					chap.setContent(content);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
 	}
 
 	public void deleteChapByID(int chapID) throws Exception {
@@ -156,4 +209,6 @@ public class ChapDAO {
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
+
+	
 }
