@@ -100,6 +100,7 @@ public class NovelDAO {
 				result = new Novel();
 				result.setId(idNovel);
 				result.setName(rs.getString("NAME"));
+				System.out.println("trying to load " + rs.getString("NAME"));
 				result.setDescription(rs.getString("DESCRIBE"));
 				result.setDateUp(rs.getDate("DATEUP"));
 				result.setAccountOwnerId(rs.getInt("IDOWNER"));

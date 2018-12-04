@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Vol implements Serializable{
+public class Vol implements Serializable {
 	/**
 	 * 
 	 */
@@ -13,7 +13,7 @@ public class Vol implements Serializable{
 	private List<Chap> chaps;
 	private Date dateUp;
 	private String description, title;
-	private Novel owner;
+	private Novel ownerNovel;
 
 	public Vol(int id, List<Chap> chaps, Date dateUp, String description, Novel owner) {
 		super();
@@ -21,7 +21,7 @@ public class Vol implements Serializable{
 		this.chaps = chaps;
 		this.dateUp = dateUp;
 		this.description = description;
-		this.owner = owner;
+		this.ownerNovel = owner;
 	}
 
 	public int getAccountOwnerId() {
@@ -66,6 +66,10 @@ public class Vol implements Serializable{
 
 	public void setChaps(List<Chap> chaps) {
 		this.chaps = chaps;
+		for (Chap chap : chaps) {
+			chap.setVolOwner(this);
+			chap.setNovelOwner(this.getOwnerNovel());
+		}
 	}
 
 	public Date getDateUp() {
@@ -84,20 +88,52 @@ public class Vol implements Serializable{
 		this.description = description;
 	}
 
-	public Novel getOwner() {
-		return owner;
+	public Novel getOwnerNovel() {
+		return ownerNovel;
 	}
 
-	public void setOwner(Novel owner) {
-		this.owner = owner;
+	public void setOwnerNovel(Novel owner) {
+		this.ownerNovel = owner;
 		setNovelOwnerId(owner.getId());
 	}
+
 	public void addNewChappter(Chap chap) {
-		if(!this.chaps.contains(chap)) this.chaps.add(chap);
+		if (!this.chaps.contains(chap))
+			this.chaps.add(chap);
 	}
+
+	public Chap getPreviousChap(int chapId) {
+		Chap rs = null;
+		int indexOfChap = -1;
+		for (int i = 0; i < chaps.size(); i++) {
+			if (chapId == chaps.get(i).getId()) {
+				indexOfChap = i;
+				break;
+			}
+		}
+		if(indexOfChap > 0)
+			rs= chaps.get(indexOfChap - 1); 
+		return rs;
+	}
+
+	public Chap getNextChap(int chapId) {
+		Chap rs = null;
+		int indexOfChap = -1;
+		for (int i = 0; i < chaps.size(); i++) {
+			if (chapId == chaps.get(i).getId()) {
+				indexOfChap = i;
+				break;
+			}
+		}
+		if(indexOfChap < chaps.size() - 1)
+			rs= chaps.get(indexOfChap + 1); 
+		return rs;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null || ! (obj instanceof Vol)) return false;
+		if (obj == null || !(obj instanceof Vol))
+			return false;
 		Vol other = (Vol) obj;
 		return this.id == other.id;
 	}

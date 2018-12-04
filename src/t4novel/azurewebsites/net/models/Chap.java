@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Chap implements Serializable{
+public class Chap implements Serializable {
 	/**
 	 * 
 	 */
@@ -18,6 +18,7 @@ public class Chap implements Serializable{
 	private Vol volOwner;
 	private int volOwnerId;
 	private int novelOwnerId;
+	private Novel novelOwner;
 
 	public Chap(int id, String content, Date dateUp, int view, int like, List<Comment> comments, Vol owner) {
 		super();
@@ -113,9 +114,19 @@ public class Chap implements Serializable{
 	public void setNovelOwnerId(int novelOwnerId) {
 		this.novelOwnerId = novelOwnerId;
 	}
+
+	public Novel getNovelOwner() {
+		return novelOwner;
+	}
+
+	public void setNovelOwner(Novel novelOwner) {
+		this.novelOwner = novelOwner;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null || ! (obj instanceof Chap)) return false;
+		if (obj == null || !(obj instanceof Chap))
+			return false;
 		Chap other = (Chap) obj;
 		return this.id == other.id;
 	}

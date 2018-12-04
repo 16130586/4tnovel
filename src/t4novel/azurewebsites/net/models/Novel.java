@@ -140,6 +140,9 @@ public class Novel implements Serializable {
 
 	public void setVols(List<Vol> vols) {
 		this.vols = vols;
+		for(Vol v : vols ) {
+			v.setOwnerNovel(this);
+		}
 	}
 
 	public Date getDateUp() {
