@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,31 +46,37 @@
 				</tr>
 				<c:forEach var="novel" items="${searchResultNovel}">
 					<tr>
-						<td><a class="link" href="detail?id=${novel.id}" target="_blank">${novel.name}</a> <br> <small>
-								<c:forEach var="genre" items="${novel.genres}">
+						<td><a class="link" href="detail?id=${novel.id}"
+							target="_blank">${novel.name}</a> <br> <small> <c:forEach
+									var="genre" items="${novel.genres}">
 									-${genre}-
 								</c:forEach>
 						</small></td>
 						<td>${fn:length(novel.vols)}</td>
 						<td>${novel.status}</td>
-						<td>${novel.dateUp}</td>
+						<td><fmt:formatDate type="both" dateStyle="MEDIUM"
+								timeStyle="SHORT" value="${novel.dateUp}" /></td>
 					</tr>
 				</c:forEach>
 			</table>
 			<div class="u-align-right u-color-white">
 				<ul class="horizontal-menu--showcase">
 					<c:if test="${currentPage != 1}">
-						<li class="menu-item"><a href="${url}&page-number=${currentPage-1}"class="btn btn-dark">Previous</a></li>
+						<li class="menu-item"><a
+							href="${url}&page-number=${currentPage-1}" class="btn btn-dark">Previous</a></li>
 					</c:if>
-					<li class="menu-item"><a class="btn btn-dark" style="color: red;">${currentPage}</a></li>
+					<li class="menu-item"><a class="btn btn-dark"
+						style="color: red;">${currentPage}</a></li>
 					<c:if test="${currentPage < totalPage}">
-							<c:forEach var="i" begin="1" end ="2">
-								<c:if test="${currentPage +  i  <= totalPage}">
-									<li class="menu-item"><a href="${url}&page-number=${currentPage + i}" class="btn btn-dark">${currentPage + i}</a></li>
-								</c:if>
-							</c:forEach>
+						<c:forEach var="i" begin="1" end="2">
+							<c:if test="${currentPage +  i  <= totalPage}">
+								<li class="menu-item"><a
+									href="${url}&page-number=${currentPage + i}"
+									class="btn btn-dark">${currentPage + i}</a></li>
+							</c:if>
+						</c:forEach>
 					</c:if>
-						<!-- 
+					<!-- 
 						<c:if test="${totalPage - currentPage > 2 }">
 							<c:if test="${totalPage - currentPage != 3}">
 								<li class="menu-item"><a class="btn btn-dark">...</a></li>
@@ -77,11 +84,14 @@
 							<li class="menu-item"><a href="${url}&page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
 						</c:if>
 						 -->
-						 <c:if test="${totalPage - currentPage > 2 }">
-						 	<li class="menu-item"><a href="${url}&page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
-						 </c:if>
-					<c:if test="${totalPage != currentPage && totalPage - currentPage > 4}">
-						<li class="menu-item"><a href="${url}&page-number=${totalPage}" class="btn btn-dark">Last</a></li>
+					<c:if test="${totalPage - currentPage > 2 }">
+						<li class="menu-item"><a
+							href="${url}&page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
+					</c:if>
+					<c:if
+						test="${totalPage != currentPage && totalPage - currentPage > 4}">
+						<li class="menu-item"><a
+							href="${url}&page-number=${totalPage}" class="btn btn-dark">Last</a></li>
 					</c:if>
 				</ul>
 			</div>
