@@ -593,7 +593,7 @@ body {
   .detail__top-info {
     text-align: center; }
   .detail__top-cover {
-    display: none; } }
+    text-align: center; } }
 
 .add {
   width: 1140px;
