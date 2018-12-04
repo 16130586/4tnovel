@@ -24,16 +24,16 @@
     <div class="search-form u-centered">
     <form action="search" method="post">
         <div class="search-bar row u-2x">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-6">
+            <div class="col-md-2"></div>
+            <div class="col-md-6">
                 <input class="input u-width--full" type="text" name="input" placeholder="Tìm kiếm tên truyện...">
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-md-3">
                 <button type="submit" class="btn btn-primary">Tìm kiếm</button><br>
-                <a type="submit" href="search?type=advanced" class="link l-advanced-search">Tìm kiếm nâng cao</a>
+                <a href="search?type=advanced" class="link l-advanced-search">Tìm kiếm nâng cao</a>
             </div>
-            <div class="col-sm-1"></div>
+            <div class="col-md-1"></div>
         </div>
     </form>
 </div>
