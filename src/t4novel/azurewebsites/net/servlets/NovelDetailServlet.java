@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.models.Account;
@@ -52,6 +53,7 @@ public class NovelDetailServlet extends HttpServlet {
 		NovelDAO novelDao = new NovelDAO(cnn);
 		VolDAO volDao = new VolDAO(cnn);
 		ChapDAO chapDao = new ChapDAO(cnn);
+		ImageDAO imgDAO = new ImageDAO(cnn);
 		Novel requestNovel = null;
 		try {
 			requestNovel = novelDao.getNovelById(novelId);
@@ -70,6 +72,8 @@ public class NovelDetailServlet extends HttpServlet {
 				}
 				requestNovel.setVols(vols);
 			}
+			if (requestNovel.getCoverImg() == null)
+				requestNovel.setCoverImg(novelDao.getEncodeImageById(requestNovel.getId(), imgDAO));
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(500);

@@ -558,8 +558,7 @@ body {
       text-align: right; }
       .detail__top-cover .img-cover {
         width: auto;
-        height: 180px;
-        border: 1px solid black; }
+        height: 180px; }
     .detail__top-info {
       padding-top: 1rem;
       padding-bottom: 2rem; }

@@ -19,7 +19,7 @@
 <div class="detail">
         <div class="detail__top u-centered">
             <div class="row">
-                <div class="col-md-4 detail__top-cover" style="border: 1px solid black">
+                <div class="col-md-4 detail__top-cover">
                     <img class="img-cover" src="data:image/*;base64, ${novel.coverImg}" alt="đoán xem">
                 </div>
                 <div class="col-md-8 detail__top-info">
