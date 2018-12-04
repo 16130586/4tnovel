@@ -54,7 +54,7 @@
 					<div class="col-md-5"></div>
 					<div class="col-md-7">
 						<button class="btn btn-primary u-color-white">Thêm</button>
-						<a href="#" class="btn btn-danger u-color-white">Hủy</a>
+						<a href="manage" class="btn btn-danger u-color-white">Hủy</a>
 					</div>
 				</div>
 			</form>
