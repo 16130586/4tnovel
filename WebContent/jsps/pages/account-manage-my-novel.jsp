@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ABC</title>
+<title>Quản lý - Tất cả truyện của tôi</title>
 <meta name="viewport" content="width=divice-width, intitial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
@@ -64,8 +64,8 @@
 								style="display: none; background-color: #e8e8e8">
 								<c:forEach var="chap" items="${vol.chaps }">
 									<div class="row u-padding--05rem">
-										<button class="col-md-10 btn btn-belike-a u-align-left u-text-overflow--hidden" style="padding-left: 5rem !important">${chap.title}
-										</button>
+										<a href="read?id=${chap.id}" target="_blank" class="col-md-10 btn btn-belike-a u-align-left u-text-overflow--hidden" style="padding-left: 5rem !important">${chap.title}
+										</a>
 										<div class="col-md-2">
 											<button class="btn btn-primary u-color-white">Sửa</button>
 											<button class="btn btn-danger u-color-white">Xóa</button>

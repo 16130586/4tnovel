@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>${novel.name }</title>
 <meta name="viewport" content="width=divice-width, intitial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Exo:400,400i,500,500i,800&amp;subset=vietnamese" rel="stylesheet"> 
@@ -27,7 +28,7 @@
                             <a class="link">${novel.name}!</a>
                         </h1>
                         <div>
-                            <span class="u-block"> Người đăng: ${novel.owner.userName}<a class="link u-color-blue" href="#">${novel.owner.userName}</a></span> 
+                            <span class="u-block"> Người đăng: <a class="link u-color-blue" href="#">${novel.owner.userName}</a></span> 
                             <div class="u-block">  
 								<ul class="horizontal-menu--showcase">
 									<c:forEach var="genre" items="${novel.genres}">
