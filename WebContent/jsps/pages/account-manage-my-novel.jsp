@@ -23,7 +23,7 @@
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div
-			class="account-manage__content u-row--1140 u-centered u-border-full">
+			class="account-manage__content  u-row--1140 u-centered u-border-full" style="overflow-y:auto">
 			<div>
 				<p class="u-3x u-align-center">Truyện của tui</p>
 			</div>

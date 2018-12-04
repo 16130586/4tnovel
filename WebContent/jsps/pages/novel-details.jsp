@@ -35,7 +35,7 @@
 										<li class="menu-item">
 										<form action="search" method="post">
 											<input type="hidden" name="genre" value="${genre.getValue()}">
-											<button class="btn btn-belike-a">${genre.getDisplayName}</button>
+											<button class="btn btn-belike-a">${genre.getDisplayName()}</button>
 										</form>
 										</li>
 									</c:forEach>
