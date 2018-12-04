@@ -159,17 +159,16 @@ public class NovelDAO {
 
 	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP ,KIND, STATUS) VALUES (? , ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO LN (NAME, DESCRIBE, IDOWNER, IDGROUP ,KIND, STATUS) VALUES (? , ?, ?, ?, ?, ?)";
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, novel.getName());
 			stmt.setString(2, novel.getDescription());
-			stmt.setDate(3, new Date(novel.getDateUp().getTime()));
-			stmt.setInt(4, novel.getAccountOwnerId());
-			stmt.setInt(5, novel.getGroupId());
-			stmt.setString(6, novel.getKind().toText());
-			stmt.setInt(7, novel.getStatus().getValue());
+			stmt.setInt(3, novel.getAccountOwnerId());
+			stmt.setInt(4, novel.getGroupId());
+			stmt.setString(5, novel.getKind().toText());
+			stmt.setInt(6, novel.getStatus().getValue());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
