@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelKind;
+import t4novel.azurewebsites.net.models.Vol;
 
 /**
  * Servlet implementation class SeeNovelKindServlet
@@ -59,7 +61,7 @@ public class SeeNovelKindServlet extends HttpServlet {
 				totalPage = maxPaging ;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			response.sendError(500); return;
 		}
 		// default page number
 		if (null == pageNumber)
@@ -92,9 +94,20 @@ public class SeeNovelKindServlet extends HttpServlet {
 			}
 			GenreDAO genreDao = new GenreDAO(cnn);
 			VolDAO volDao = new VolDAO(cnn);
-			for (Novel n : results) {
-				n.setGenres(genreDao.getGenres(n.getId()));
-				n.setVols(volDao.getVolsOfNovel(n.getId()));
+			ChapDAO chapDao  = new ChapDAO(cnn);
+			for (Novel curNovel : results) {
+				if(curNovel.getGenres() == null)
+					curNovel.setGenres(genreDao.getGenres(curNovel.getId()));
+				if(curNovel.getVols() == null) {
+					curNovel.setVols(volDao.getVolsOfNovel(curNovel.getId()));
+					for(Vol curVol : curNovel.getVols()) {
+						if(curVol.getChaps() == null)
+							curVol.setChaps(chapDao.getPartOfChapsByVolId(curVol.getId()));
+					}
+				}
+				
+					
+					
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
