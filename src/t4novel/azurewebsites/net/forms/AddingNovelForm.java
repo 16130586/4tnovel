@@ -76,9 +76,9 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Please make sure novel's title isn't empty!");
+			errors.put("titleEmpty", "Tên truyện không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "Please remove all space and insert title!");
+			errors.put("titleAllSpace", "Hãy xóa dấu khoảng trắng và điền tên truyện!");
 		} else {
 			this.title = title.trim();
 		}
@@ -90,9 +90,9 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setDescription(String description) {
 		if (description == null || description.isEmpty()) {
-			errors.put("descriptionEmpty", "Please make sure novel's description isn't empty!");
+			errors.put("descriptionEmpty", "Mô tả không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(description)) {
-			errors.put("descriptionAllSpace", "Please remove all space and insert description!");
+			errors.put("descriptionAllSpace", "Xóa tất cả dấu khoảng trắng và điền vào mô tả!");
 		} else {
 			this.description = description.trim();
 		}
@@ -128,7 +128,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setGenres(List<NovelGenre> genres) {
 		if (genres == null || genres.isEmpty()) {
-			errors.put("genreEmpty", "Please select at least 1 genre for your novel!");
+			errors.put("genreEmpty", "Phải chọn ít nhất một thể loại!");
 		} else
 			this.genres = genres;
 	}

@@ -33,7 +33,7 @@ public class RegisterForm extends AbstractMappingForm {
 				this.isAcceptedRule = true;
 			}
 		} else {
-			errors.put("acceptedRuleEmpty", "Please read our rule and accept it!");
+			errors.put("acceptedRuleEmpty", "Vui lòng đọc và chấp nhận điều khoản!");
 		}
 	}
 
@@ -42,10 +42,10 @@ public class RegisterForm extends AbstractMappingForm {
 			if (errors.get("passwordTooShort") == null && getPassword().equals(userData)) {
 				this.rePassword = userData;
 			} else {
-				errors.put("rePasswordWrong", "Please match your password!");
+				errors.put("rePasswordWrong", "Mật khẩu nhập lại không trùng khớp!");
 			}
 		} else {
-			errors.put("rePasswordEmpty", "Please type your re-password!");
+			errors.put("rePasswordEmpty", "Vui lòng nhập lại mật khẩu!");
 		}
 	}
 
@@ -54,36 +54,36 @@ public class RegisterForm extends AbstractMappingForm {
 			if (userData.length() > 8) {
 				this.password = userData;
 			} else {
-				errors.put("passwordTooShort", "Please make your password strongger!");
+				errors.put("passwordTooShort", "Hãy sử dụng mật khẩu mạnh hơn!");
 			}
 		} else {
-			errors.put("passwordEmpty", "Please type your password!");
+			errors.put("passwordEmpty", "Mật khẩu không được bỏ trống!");
 		}
 	}
 
 	private void setEmail(String userData) {
 		if (!StringUtil.isValidEmail(userData)) {
-			errors.put("gmailInvalid", "Please make sure correct email form!");
+			errors.put("gmailInvalid", "Vui lòng điền đúng mail!");
 			return;
 		}
 		boolean isExisted = emailService.check(userData, "Select ID from ACCOUNT where EMAIL=?");
 		if (!isExisted)
 			this.gmai = userData;
 		else
-			errors.put("gmailExisted", "Please use another email!");
+			errors.put("gmailExisted", "Mail đã được sử dụng!");
 	}
 
 	private void setUserName(String userData) {
 		if (userData == null || userData.isEmpty()) {
-			errors.put("userNameEmpty", "Please chose your username!");
+			errors.put("userNameEmpty", "Tài khoản không được bỏ trống!");
 		} else if (userData.length() < 6) {
-			errors.put("userNameTooShort", "Please choose longer username!");
+			errors.put("userNameTooShort", "Vui lòng chọn tài khoản dài hơn!");
 		} else {
 			boolean isExisted = usernameService.check(userData, "Select ID from ACCOUNT where USERNAME=?");
 			if (!isExisted)
 				this.userName = userData;
 			else
-				errors.put("userNameExisted", "Please use another username!");
+				errors.put("userNameExisted", "Tài khoản đã tồn tại!");
 		}
 	}
 
