@@ -227,10 +227,31 @@ public class Account implements Serializable {
 			}
 		}
 	}
+
+	public void deleteOwnerChap(int chaptID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (Vol vol : ownNovel.getVols()) {
+				vol.deleteChapter(chaptID);
+			}
+		}
+	}
+
+	public void deleteVol(int volID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (int i = 0; i < ownNovel.getVols().size(); i++) {
+				if (ownNovel.getVols().get(i).getId() == volID) {
+					ownNovel.getVols().remove(i);
+					break;
+				}
+			}
+		}
+	}
+
 	public void addNewOwnerNovel(Novel n) {
-		if(!this.ownNovels.contains(n))
+		if (!this.ownNovels.contains(n))
 			this.ownNovels.add(n);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof Account))

@@ -18,8 +18,9 @@ public class NovelDAO {
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
 	static {
-		NEXT_ID_GENRATOR = new  NextIdGenrator("LN");
+		NEXT_ID_GENRATOR = new NextIdGenrator("LN");
 	}
+
 	public NovelDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -181,7 +182,6 @@ public class NovelDAO {
 		}
 	}
 
-
 	/**
 	 * select IDNOVEL from genre where value in (?, ?...) group by idnovel having
 	 * count(distinct value) = ? order by idnovel offset ? rows fetch next ? rows
@@ -239,7 +239,8 @@ public class NovelDAO {
 		int total = 0;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = " select COUNT(ID) as TOTAL from LN " + (filterCondition == null ? "" : " where " + filterCondition);
+		String query = " select COUNT(ID) as TOTAL from LN "
+				+ (filterCondition == null ? "" : " where " + filterCondition);
 		stmt = cnn.prepareStatement(query);
 		rs = stmt.executeQuery();
 		if (rs.next()) {
@@ -257,11 +258,11 @@ public class NovelDAO {
 //				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
 //				+ offSet + " rows fetch next " + limit + " rows only)"
 //				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
-		
-		String query = "SELECT * FROM LN WHERE ID IN(" + 
-						"SELECT ID FROM LN "+ (filterCondition == null ? "" : " WHERE " + filterCondition) 
-						+ "order by DATEUP DESC OFFSET " + offSet + " rows fetch next " + limit + " rows only " + ")"  
-						+ (sortByCondition == null ? "" : " order by " + sortByCondition);
+
+		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN "
+				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + "order by DATEUP DESC OFFSET " + offSet
+				+ " rows fetch next " + limit + " rows only " + ")"
+				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 		stmt = cnn.prepareStatement(query);
 		rs = stmt.executeQuery();
 		while (rs.next()) {
@@ -336,6 +337,7 @@ public class NovelDAO {
 	public void updateImageNovelById(int idNovel, InputStream in, ImageDAO imgDAO) throws Exception {
 		imgDAO.updateImage(idNovel, "NOVEL", in);
 	}
+
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}

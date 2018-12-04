@@ -14,8 +14,9 @@ public class VolDAO {
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
 	static {
-		NEXT_ID_GENRATOR = new  NextIdGenrator("VOL");
+		NEXT_ID_GENRATOR = new NextIdGenrator("VOL");
 	}
+
 	public VolDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -128,16 +129,16 @@ public class VolDAO {
 		}
 	}
 
-	public void deleteVolByID(int volID) throws Exception {
+	public void deleteVolByID(int volID, ChapDAO chapDAO) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM VOL WHERE ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
+			chapDAO.deleteChapByVolID(volID);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
 			stmt.executeUpdate();
-			stmt.close();
 			cnn.commit();
 			System.out.println("Delete vol completed!");
 		} catch (Exception e) {
@@ -171,6 +172,7 @@ public class VolDAO {
 				stmt.close();
 		}
 	}
+
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
