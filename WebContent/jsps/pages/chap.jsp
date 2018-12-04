@@ -28,12 +28,12 @@
 	href="resources/vendors/css/bootstrap-customize.css">
 <link rel="stylesheet" href="resources/local/css/style.css" />
 </head>
-<body>
+<body style="background-image: none;">
 	<%@ include file="/jsps/components/_header.jsp"%>
 	<div id="onTop"></div>
 	<div class="chap">
 		<div class="chap__header u-align-center u-margin-bottom--1rem">
-			<h2>${chap.novelOwner.name }</h2>
+			<h1>${chap.novelOwner.name }</h1>
 			<h3>${chap.title }</h3>
 			<p>${chap.dateUp}</p>
 		</div>
@@ -41,7 +41,7 @@
 		<div class="chap__body">
 		<c:set var="previousChap" scope="request" value="${chap.volOwner.getPreviousChap(chap.id)}"/>
 		<c:set var="nextChap" scope="request" value="${chap.volOwner.getNextChap(chap.id)}"/>
-			<div class="u-align-center">
+			<div class="u-align-center u-color-white">
 				<c:if test="${not empty previousChap}">
 					<a href="read?id=${previousChap.id}"
 						class="btn btn-success u-margin-right--1rem"> << </a>
@@ -63,14 +63,14 @@
 						class="btn btn-success u-margin-right--1rem"> >> </a>
 				</c:if>
 			</div>
-			<div class="chap__body__content">
+			<div class="chap__body__content" onclick="showHideSetup()">
 				<div>
 					<h3>${chap.title }</h3>
 				</div>
 				<div>
 					<span>${chap.content }</span>
 				</div>
-			<div class="u-align-center">
+			<div class="u-align-center u-color-white">
 				<c:if test="${not empty previousChap}">
 					<a href="read?id=${previousChap.id}"
 						class="btn btn-success u-margin-right--1rem"> << </a>
@@ -96,7 +96,7 @@
 
 		<div class="chap__comment"></div>
 
-		<div class="chap__setup u-centered u-margin-right--1rem">
+		<div id="set-up" class="chap__setup u-centered u-margin-right--1rem u-color-white">
 			<ul>
 				<li><a href="#onTop" class="btn btn-success"><i
 						class="fas fa-arrow-up"></i></a></li>
@@ -113,9 +113,18 @@
 			</ul>
 		</div>
 
-
+	</div>
 	</div>
 	<div id="onBottom"></div>
 	<%@include file="/jsps/components/_footer.jsp"%>
+	<script type="text/javascript">
+		function showHideSetup() {
+			var setUp = document.getElementById('set-up');
+			if (setUp.style.display == 'block')
+				setUp.style.display = 'none';
+			else
+				setUp.style.display = 'block';
+		}
+	</script>
 </body>
 </html>

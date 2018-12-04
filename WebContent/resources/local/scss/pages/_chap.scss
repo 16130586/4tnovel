@@ -4,13 +4,11 @@
     &__header {
         padding: .5rem .5rem;
         margin-bottom: 1rem;
-        background-color: #84c6ff;
     }
     
     &__body {
         margin: 1rem auto;
         &__content {
-            background-color: rgba(255, 206, 0, 0.26);
             padding: 1.5rem;
             margin: 1rem 0;
             font-size: 1.5rem;
@@ -26,7 +24,7 @@
         width: 50px;
         position: fixed;
         top: 40vh;
-        right: 1rem;
+        right: -1rem;
         ul {
             list-style: none;
             padding: 0;
