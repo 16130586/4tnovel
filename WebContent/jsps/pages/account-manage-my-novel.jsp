@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,7 @@
 				<div class="col-md-2">Thao tác</div>
 			</div>
 			<hr>
+			<c:set var="sizeNovels" value="${fn:length(account.ownNovels) }"/>
 			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1">
 			<c:set var="novel" value="${account.ownNovels[sizeNovels-i]}"/>
 				<section>
