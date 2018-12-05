@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 
 public class NextIdGenrator {
 	private String tableName;
+
 	public NextIdGenrator(String tableName) {
 		this.tableName = tableName;
 	}
+
 	public synchronized int nextAutoIncrementId(Connection cnn) throws Exception {
 		System.out.println("table name " + tableName);
 		int result = -1;

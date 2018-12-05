@@ -102,6 +102,15 @@ public class Vol implements Serializable {
 			this.chaps.add(chap);
 	}
 
+	public void deleteChapter(int chapID) {
+		for (int i = 0; i < chaps.size(); i++) {
+			if (chaps.get(i).getId() == chapID) {
+				chaps.remove(i);
+				break;
+			}
+		}
+	}
+
 	public Chap getPreviousChap(int chapId) {
 		Chap rs = null;
 		int indexOfChap = -1;
@@ -111,8 +120,8 @@ public class Vol implements Serializable {
 				break;
 			}
 		}
-		if(indexOfChap > 0)
-			rs= chaps.get(indexOfChap - 1); 
+		if (indexOfChap > 0)
+			rs = chaps.get(indexOfChap - 1);
 		return rs;
 	}
 
@@ -125,8 +134,8 @@ public class Vol implements Serializable {
 				break;
 			}
 		}
-		if(indexOfChap < chaps.size() - 1)
-			rs= chaps.get(indexOfChap + 1); 
+		if (indexOfChap < chaps.size() - 1)
+			rs = chaps.get(indexOfChap + 1);
 		return rs;
 	}
 

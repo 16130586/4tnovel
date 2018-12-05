@@ -17,11 +17,12 @@ public class VolDAO {
 
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
-	private static final Map<Integer , Vol> VOLS_CACHE;
+	private static final Map<Integer, Vol> VOLS_CACHE;
 	static {
-		NEXT_ID_GENRATOR = new  NextIdGenrator("VOL");
-		VOLS_CACHE = Collections.synchronizedMap(new LRUMap<Integer , Vol>(20 , 10 , true));
+		NEXT_ID_GENRATOR = new NextIdGenrator("VOL");
+		VOLS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Vol>(20, 10, true));
 	}
+
 	public VolDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -50,7 +51,9 @@ public class VolDAO {
 
 	public Vol getVolByID(int volID) throws Exception {
 		Vol vol = VOLS_CACHE.get(volID);
-		if(vol != null) { return vol;}
+		if (vol != null) {
+			return vol;
+		}
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM VOL WHERE ID = ?";
@@ -93,7 +96,10 @@ public class VolDAO {
 			while (rs.next()) {
 				int volId = rs.getInt("ID");
 				Vol vol = VOLS_CACHE.get(volId);
-				if(vol != null) {listVol.add(vol); continue;}
+				if (vol != null) {
+					listVol.add(vol);
+					continue;
+				}
 				vol = new Vol();
 				vol.setId(rs.getInt(1));
 				vol.setNovelOwnerId(rs.getInt(2));
@@ -138,16 +144,16 @@ public class VolDAO {
 		}
 	}
 
-	public void deleteVolByID(int volID) throws Exception {
+	public void deleteVolByID(int volID, ChapDAO chapDAO) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM VOL WHERE ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
+			chapDAO.deleteChapByVolID(volID);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
 			stmt.executeUpdate();
-			stmt.close();
 			cnn.commit();
 		} catch (Exception e) {
 			cnn.rollback();
@@ -179,6 +185,7 @@ public class VolDAO {
 				stmt.close();
 		}
 	}
+
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}

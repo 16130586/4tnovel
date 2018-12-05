@@ -58,8 +58,8 @@ public class RegisterServlet extends HttpServlet {
 			Account account = (Account) userSubmittedForm.getMappingData();
 
 			try {
-				account.setId(accDAO.getNextID());
 				accDAO.insertAccount(account);
+				account.setId(accDAO.getNextID() - 1);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

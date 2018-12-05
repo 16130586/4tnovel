@@ -44,13 +44,13 @@ public class AddingVolServlet extends HttpServlet {
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		if (hostAccount.getOwnNovels() == null)
-		try {
-			NovelDAO novelDao = new NovelDAO(cnn);
-			hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(500);
-		}
+			try {
+				NovelDAO novelDao = new NovelDAO(cnn);
+				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendError(500);
+			}
 		// because of making for lazy loading! then we have to loading vols in
 		// ownerNovels
 		VolDAO volDao = new VolDAO(cnn);
@@ -89,9 +89,10 @@ public class AddingVolServlet extends HttpServlet {
 			Vol vol = (Vol) form.getMappingData();
 			try {
 				cnn.setAutoCommit(false);
-				vol.setId(VolDAO.getNextID());
+
 				vol.setChaps(new LinkedList<>());
 				VolDAO.insertVol(vol);
+				vol.setId(VolDAO.getNextID() - 1);
 				request.setAttribute("sucessed", "Thêm tập thành công!");
 			} catch (Exception e) {
 				try {
@@ -107,7 +108,7 @@ public class AddingVolServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			
+
 			// ram
 			Account hostAccount = (Account) request.getSession().getAttribute("account");
 			hostAccount.addNewOwnerVol(vol);

@@ -207,6 +207,65 @@ public class Account implements Serializable {
 		return rs;
 	}
 
+	public Chap getOwnerChap(int chapID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (Vol vol : ownNovel.getVols()) {
+				for (Chap chap : vol.getChaps()) {
+					if (chap.getId() == chapID) {
+						return chap;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public void setOwnerChap(Chap fixedChap) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (Vol vol : ownNovel.getVols()) {
+				for (int i = 0; i < vol.getChaps().size(); i++) {
+					if (vol.getChaps().get(i).getId() == fixedChap.getId()) {
+						vol.getChaps().remove(i);
+						vol.getChaps().add(i, fixedChap);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	public Vol getOwnerVol(int volID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (Vol vol : ownNovel.getVols()) {
+				if (vol.getId() == volID) {
+					return vol;
+				}
+			}
+		}
+		return null;
+	}
+
+	public void setOwnerVol(Vol fixedVol) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (int i = 0; i < ownNovel.getVols().size(); i++) {
+				if (ownNovel.getVols().get(i).getId() == fixedVol.getId()) {
+					ownNovel.getVols().remove(i);
+					ownNovel.getVols().add(i, fixedVol);
+					break;
+				}
+			}
+		}
+	}
+
+	public Novel getANovel(int novelID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			if (ownNovel.getId() == novelID) {
+				return ownNovel;
+			}
+		}
+		return null;
+	}
+
 	public void addJoinGroup(Group g) {
 		if (!this.joinGroups.contains(g))
 			this.joinGroups.add(g);
@@ -231,11 +290,42 @@ public class Account implements Serializable {
 			}
 		}
 	}
+
+	public void deleteOwnerChap(int chaptID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (Vol vol : ownNovel.getVols()) {
+				vol.deleteChapter(chaptID);
+			}
+		}
+	}
+
+	public void deleteVol(int volID) {
+		for (Novel ownNovel : getOwnNovels()) {
+			for (int i = 0; i < ownNovel.getVols().size(); i++) {
+				if (ownNovel.getVols().get(i).getId() == volID) {
+					ownNovel.getVols().remove(i);
+					break;
+				}
+			}
+		}
+	}
+
+	public void deleteNovel(int novelID) {
+		if(ownNovels == null) return;
+		for (int i = 0; i < ownNovels.size(); i++) {
+			if (ownNovels.get(i).getId() == novelID) {
+				ownNovels.remove(i);
+				break;
+			}
+		}
+	}
+
 	public void addNewOwnerNovel(Novel n) {
 		if(this.ownNovels == null) this.ownNovels = new LinkedList<>();
 		if(!this.ownNovels.contains(n))
 			this.ownNovels.add(n);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof Account))

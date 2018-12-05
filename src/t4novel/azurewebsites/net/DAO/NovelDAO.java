@@ -103,7 +103,9 @@ public class NovelDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Novel result = NOVELS_CACHE.get(idNovel);
-		if(result != null) {return result;}
+		if (result != null) {
+			return result;
+		}
 		String query = "select * from LN where ID = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -130,10 +132,13 @@ public class NovelDAO {
 		return result;
 	}
 
-	public void delNovelById(int idNovel) throws Exception {
+	public void delNovelById(int idNovel, VolDAO volDAO, ChapDAO chapDAO, GenreDAO genreDAO) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "delete from LN where ID = ?";
 		try {
+			genreDAO.deleteGenres(idNovel);
+			chapDAO.deleteChapByNovelID(idNovel);
+			volDAO.deleteVolsOfNovel(idNovel);
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, idNovel);
