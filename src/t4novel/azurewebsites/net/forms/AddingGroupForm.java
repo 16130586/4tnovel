@@ -47,14 +47,14 @@ public class AddingGroupForm extends AbstractMappingForm {
 
 	public void setName(String name) {
 		if (name == null || name.isEmpty()) {
-			errors.put("nameEmpty", "HÃ£y Ä‘iá»�n vÃ o tÃªn nhÃ³m!");
+			errors.put("nameEmpty", "Tên nhóm không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(name)) {
-			errors.put("nameAllSpace", "TÃªn nhÃ³m khÃ´ng há»£p lá»‡!");
+			errors.put("nameAllSpace", "Tên nhóm không hợp lệ!");
 		} else {
 			// TODO write query to check correctPassword
 			boolean isExistedGroupName = existedGroupNameChecker.check(name, "SELECT ID FROM GROUPACC WHERE NAME = ?");
 			if (isExistedGroupName) {
-				errors.put("nameExisted", "TÃªn nhÃ³m Ä‘Ã£ tá»“n táº¡i! HÃ£y sá»­ dá»¥ng tÃªn nhÃ³m khÃ¡c!");
+				errors.put("nameExisted", "Tên nhóm đã tồn tại! Vui lòng sử dụng tên nhóm khác!");
 			} else
 				this.name = name;
 		}

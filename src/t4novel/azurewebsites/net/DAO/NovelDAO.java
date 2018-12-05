@@ -6,19 +6,24 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelGenre;
 import t4novel.azurewebsites.net.models.NovelKind;
 import t4novel.azurewebsites.net.models.NovelStatus;
+import org.apache.commons.collections4.map.*;
 
 public class NovelDAO {
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	private static final Map<Integer, Novel> NOVELS_CACHE;
 	static {
 		NEXT_ID_GENRATOR = new NextIdGenrator("LN");
+		NOVELS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Novel>(10, 5, true));
 	}
 
 	public NovelDAO(Connection databaseConnection) {
@@ -37,6 +42,11 @@ public class NovelDAO {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				int idNovel = rs.getInt("ID");
+				tmp = NOVELS_CACHE.get(idNovel);
+				if (tmp != null) {
+					result.add(tmp);
+					continue;
+				}
 				tmp = new Novel();
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
@@ -47,6 +57,7 @@ public class NovelDAO {
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
 				result.add(tmp);
+				NOVELS_CACHE.put(idNovel, tmp);
 			}
 		} finally {
 			if (rs != null)
@@ -91,7 +102,8 @@ public class NovelDAO {
 	public Novel getNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Novel result = null;
+		Novel result = NOVELS_CACHE.get(idNovel);
+		if(result != null) {return result;}
 		String query = "select * from LN where ID = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -101,12 +113,13 @@ public class NovelDAO {
 				result = new Novel();
 				result.setId(idNovel);
 				result.setName(rs.getString("NAME"));
-				System.out.println("trying to load " + rs.getString("NAME"));
 				result.setDescription(rs.getString("DESCRIBE"));
 				result.setDateUp(rs.getDate("DATEUP"));
 				result.setAccountOwnerId(rs.getInt("IDOWNER"));
+				result.setGroupId(rs.getInt("IDGROUP"));
 				result.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				result.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+				NOVELS_CACHE.put(idNovel, result);
 			}
 		} finally {
 			if (rs != null)
@@ -160,17 +173,16 @@ public class NovelDAO {
 
 	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO LN (NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP ,KIND, STATUS) VALUES (? , ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO LN (NAME, DESCRIBE, IDOWNER, IDGROUP ,KIND, STATUS) VALUES (? , ?, ?, ?, ?, ?)";
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, novel.getName());
 			stmt.setString(2, novel.getDescription());
-			stmt.setDate(3, new Date(novel.getDateUp().getTime()));
-			stmt.setInt(4, novel.getAccountOwnerId());
-			stmt.setInt(5, novel.getGroupId());
-			stmt.setString(6, novel.getKind().toText());
-			stmt.setInt(7, novel.getStatus().getValue());
+			stmt.setInt(3, novel.getAccountOwnerId());
+			stmt.setInt(4, novel.getGroupId());
+			stmt.setString(5, novel.getKind().toText());
+			stmt.setInt(6, novel.getStatus().getValue());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
@@ -259,22 +271,14 @@ public class NovelDAO {
 //				+ offSet + " rows fetch next " + limit + " rows only)"
 //				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 
-		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN "
+		String query = "SELECT ID FROM LN WHERE ID IN(" + "SELECT ID FROM LN "
 				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + "order by DATEUP DESC OFFSET " + offSet
 				+ " rows fetch next " + limit + " rows only " + ")"
 				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 		stmt = cnn.prepareStatement(query);
 		rs = stmt.executeQuery();
 		while (rs.next()) {
-			Novel n = new Novel();
-			n.setId(rs.getInt("ID"));
-			n.setName(rs.getString("NAME"));
-			n.setDescription(rs.getString("DESCRIBE"));
-			n.setDateUp(rs.getDate("DATEUP"));
-			n.setAccountOwnerId(rs.getInt("IDOWNER"));
-			n.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
-			n.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
-			result.add(n);
+			result.add(getNovelById(rs.getInt("ID")));
 		}
 
 		rs.close();

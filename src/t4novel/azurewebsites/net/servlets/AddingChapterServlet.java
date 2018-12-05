@@ -55,25 +55,21 @@ public class AddingChapterServlet extends HttpServlet {
 		// because of making for lazy loading! then we have to loading vols in
 		// ownerNovels
 		VolDAO volDao = new VolDAO(cnn);
+		ChapDAO chapDao = new ChapDAO(cnn);
+		try {
+			for (Novel ownNovel : hostAccount.getOwnNovels()) {
 
-		for (Novel ownNovel : hostAccount.getOwnNovels()) {
-			if (ownNovel.getVols() == null) {
-				List<Vol> volsOfCurrentNovel = null;
-				// dtb
-				try {
-					volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (ownNovel.getVols() == null) {
+					ownNovel.setVols(volDao.getVolsOfNovel(ownNovel.getId()));
 				}
-				ownNovel.setVols(volsOfCurrentNovel);
-				System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
+				for (Vol vol : ownNovel.getVols()) {
+					if (vol.getChaps() == null)
+						vol.setChaps(chapDao.getPartOfChapsByVolId(vol.getId()));
+				}
 			}
-		}
 
-		for (Novel own : hostAccount.getOwnNovels()) {
-			for (Vol vol : own.getVols()) {
-				System.out.println(own.getName() + " have " + vol.getTitle());
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-chapter.jsp").forward(request, response);
 	}

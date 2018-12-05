@@ -37,9 +37,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Please fill in title!");
+			errors.put("titleEmpty", "Tên chương không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "Please remove all space and insert title!");
+			errors.put("titleAllSpace", "Xóa tất cả khoảng trắng và điền tên chương!");
 		} else {
 			this.title = title.trim();
 		}
@@ -51,9 +51,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	public void setContent(String content) {
 		if (content == null || content.isEmpty()) {
-			errors.put("contentEmpty", "Please fill in content!");
+			errors.put("contentEmpty", "Nội dung chương không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(content)) {
-			errors.put("contentAllSpace", "Please remove all space and insert content!");
+			errors.put("contentAllSpace", "Xóa tất cả khoảng trắng và điền nội dung chương!");
 		} else {
 			this.content = content.trim();
 		}

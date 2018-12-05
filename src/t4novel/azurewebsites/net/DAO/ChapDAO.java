@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.map.LRUMap;
 
 import t4novel.azurewebsites.net.models.Chap;
 
@@ -13,8 +17,10 @@ public class ChapDAO {
 
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	private static final Map<Integer, Chap> CHAPS_CACHE;
 	static {
 		NEXT_ID_GENRATOR = new NextIdGenrator("CHAP");
+		CHAPS_CACHE = Collections.synchronizedMap(new LRUMap<Integer , Chap>(40 , 20 , true));
 	}
 
 	public ChapDAO(Connection databaseConnection) {
@@ -33,8 +39,6 @@ public class ChapDAO {
 			stmt.setString(4, chap.getContent());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Insert chap completed!");
-			System.out.println("insert chap content: " + chap.getContent());
 		} catch (SQLException e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -46,7 +50,8 @@ public class ChapDAO {
 	}
 
 	public Chap getChapByID(int chapID) throws Exception {
-		Chap chap = null;
+		Chap chap = CHAPS_CACHE.get(chapID);
+		if(chap != null) {return chap;}
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String querry = "SELECT * FROM CHAP WHERE ID = ?";
@@ -61,7 +66,8 @@ public class ChapDAO {
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 				chap.setTitle(rs.getString("TITLE"));
 				chap.setContent(rs.getString("CONTENT"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getDate("DATEUP")) ;
+				CHAPS_CACHE.put(chapID, chap);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,13 +91,17 @@ public class ChapDAO {
 			stmt.setInt(1, volID);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				Chap chap = new Chap();
-				chap.setId(rs.getInt("ID"));
+				int chapId = rs.getInt("ID");
+				Chap chap = CHAPS_CACHE.get(chapId);
+				if(chap != null && chap.getContent() != null) {listChap.add(chap); continue;}
+				chap = new Chap();
+				chap.setId(chapId);
 				chap.setVolOwnerId(rs.getInt("ID_VOL"));
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 				chap.setTitle(rs.getString("TITLE"));
 				chap.setContent(rs.getString("CONTENT"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getDate("DATEUP")) ;
+				CHAPS_CACHE.put(chapId, chap);
 				listChap.add(chap);
 			}
 		} catch (SQLException e) {
@@ -116,13 +126,16 @@ public class ChapDAO {
 			stmt.setInt(1, volId);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				Chap chap = new Chap();
-				chap.setId(rs.getInt("ID"));
+				int chapId = rs.getInt("ID");
+				Chap chap = CHAPS_CACHE.get(chapId);
+				if(chap != null) {listChap.add(chap); continue;}
+				chap = new Chap();
+				chap.setId(chapId);
 				chap.setVolOwnerId(volId);
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
-				System.out.println("loading chap title : " + rs.getString("TITLE"));
 				chap.setTitle(rs.getString("TITLE"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getDate("DATEUP")) ;
+				CHAPS_CACHE.put(chapId, chap);
 				listChap.add(chap);
 			}
 		} catch (SQLException e) {
@@ -135,22 +148,21 @@ public class ChapDAO {
 		}
 		return listChap;
 	}
-
-	public void getContentOfChap(Chap chap) throws Exception {
+	public String getContentOfChap(Chap chap) throws Exception {
+		if(chap.getContent() != null) { return chap.getContent();}
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String querry = "SELECT CONTENT FROM CHAP WHERE ID = ?";
+		String content = null;
 
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chap.getId());
 			rs = stmt.executeQuery();
-			while (rs.next()) {
-				String content = rs.getString("CONTENT");
-				if (content == null)
-					chap.setContent("");
-				else
-					chap.setContent(content);
+			if (rs.next()) {
+				content = rs.getString("CONTENT");
+				if(content == null)
+					content = "";
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -160,6 +172,7 @@ public class ChapDAO {
 			if (stmt != null)
 				stmt.close();
 		}
+		return content;
 	}
 
 	public void deleteChapByID(int chapID) throws Exception {
@@ -195,7 +208,6 @@ public class ChapDAO {
 			stmt.setInt(1, chapID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Delete chap completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -220,7 +232,6 @@ public class ChapDAO {
 			stmt.setInt(5, chap.getId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Update chap completed");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

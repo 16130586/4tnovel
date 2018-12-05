@@ -76,7 +76,6 @@ public class MyNovelServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("sizeNovels", hostAccount.getOwnNovels().size());
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 

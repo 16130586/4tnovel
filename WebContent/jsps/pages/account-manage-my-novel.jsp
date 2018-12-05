@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div
-			class="account-manage__content u-row--1140 u-centered u-border-full">
+			class="account-manage__content  u-row--1140 u-centered u-border-full" style="overflow-y:auto">
 			<div>
 				<p class="u-3x u-align-center">Truyện của tui</p>
 			</div>
@@ -35,6 +36,7 @@
 				<div class="col-md-2">Thao tác</div>
 			</div>
 			<hr>
+			<c:set var="sizeNovels" value="${fn:length(account.ownNovels) }"/>
 			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1">
 				<c:set var="novel" value="${account.ownNovels[sizeNovels-i]}" />
 				<section>

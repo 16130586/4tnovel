@@ -42,9 +42,9 @@ public class AddingVolForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Please fill your vol name!");
+			errors.put("titleEmpty", "Tên tập không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "Please remove all space and insert title!");
+			errors.put("titleAllSpace", "Xóa tất cả khoảng trắng và điền tên tập!");
 		} else {
 			this.title = title.trim();
 		}

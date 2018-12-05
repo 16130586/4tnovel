@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingVolForm;
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
 
 /**
@@ -40,14 +42,31 @@ public class AddingVolServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		Connection cnn = (Connection) request.getAttribute("connection");
 		if (hostAccount.getOwnNovels() == null)
 		try {
-			Connection cnn = (Connection) request.getAttribute("connection");
 			NovelDAO novelDao = new NovelDAO(cnn);
 			hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(500);
+		}
+		// because of making for lazy loading! then we have to loading vols in
+		// ownerNovels
+		VolDAO volDao = new VolDAO(cnn);
+
+		for (Novel ownNovel : hostAccount.getOwnNovels()) {
+			if (ownNovel.getVols() == null) {
+				List<Vol> volsOfCurrentNovel = null;
+				// dtb
+				try {
+					volsOfCurrentNovel = volDao.getVolsOfNovel(ownNovel.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ownNovel.setVols(volsOfCurrentNovel);
+				System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
+			}
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-vol.jsp").forward(request, response);
 	}

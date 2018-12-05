@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.models.Account;
@@ -43,35 +45,40 @@ public class NovelDetailServlet extends HttpServlet {
 		try {
 			novelId = Integer.parseInt(request.getParameter("id"));
 		} catch (NumberFormatException e) {
-			System.out.println("not illegal novel id");
 			response.sendError(404);
 			return;
 		}
 		Connection cnn = (Connection) request.getAttribute("connection");
 		AccountDAO accDao = new AccountDAO(cnn);
 		NovelDAO novelDao = new NovelDAO(cnn);
+		GenreDAO genreDao = new GenreDAO(cnn);
 		VolDAO volDao = new VolDAO(cnn);
 		ChapDAO chapDao = new ChapDAO(cnn);
+		ImageDAO imgDAO = new ImageDAO(cnn);
 		Novel requestNovel = null;
 		try {
 			requestNovel = novelDao.getNovelById(novelId);
 			if(requestNovel == null) {response.sendError(404); return;}
-			Account owner = accDao.getAccountByID(requestNovel.getAccountOwnerId());
-			requestNovel.setOwner(owner);
+			
+			if(requestNovel.getGenres() == null)
+				requestNovel.setGenres(genreDao.getGenres(novelId));
+			if(requestNovel.getOwner() == null) {
+				Account owner = accDao.getAccountByID(requestNovel.getAccountOwnerId());
+				requestNovel.setOwner(owner);
+			}
 			if (requestNovel.getVols() == null) {
 				List<Vol> vols = volDao.getVolsOfNovel(novelId);
 				for (Vol vol : vols) {
 					if (vol.getChaps() == null) {
 						List<Chap> chaps = chapDao.getPartOfChapsByVolId(vol.getId());
-						System.out.println("trying to get chaps of vol : " + vol.getTitle() + " then you got "
-								+ chaps.size() + " chaps");
 						vol.setChaps(chaps);
 					}
 				}
 				requestNovel.setVols(vols);
 			}
+			if (requestNovel.getCoverImg() == null)
+				requestNovel.setCoverImg(novelDao.getEncodeImageById(requestNovel.getId(), imgDAO));
 		} catch (Exception e) {
-			e.printStackTrace();
 			response.sendError(500);
 			return;
 		}

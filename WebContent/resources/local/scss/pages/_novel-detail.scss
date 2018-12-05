@@ -11,7 +11,6 @@
             .img-cover {
                 width: auto; 
                 height: 180px;
-                border: 1px solid black;
             }
         }
         &-info {
@@ -55,6 +54,6 @@
         text-align: center;
     }
     .detail__top-cover {
-        display: none;
+        text-align: center;
     }
 }

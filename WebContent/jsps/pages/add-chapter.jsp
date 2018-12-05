@@ -75,7 +75,7 @@
 				</table>
 				<div class="u-align-center u-color-white">
 					<button type="submit" class="btn btn-primary u-2x">Thêm</button>
-					<a href="#" type="button" class="btn btn-danger u-2x">Quay lại</a>
+					<a href="manage" type="button" class="btn btn-danger u-2x">Hủy</a>
 				</div>
 			</form>
 
