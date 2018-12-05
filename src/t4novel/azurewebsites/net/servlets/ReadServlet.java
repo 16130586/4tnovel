@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,26 +44,34 @@ public class ReadServlet extends HttpServlet {
 
 			ChapDAO chapDao = new ChapDAO(cnn);
 			Chap acquireChap = chapDao.getChapByID(chapId);
-			if(acquireChap == null) {response.sendError(404); return;}
+			if (acquireChap == null) {
+				response.sendError(404);
+				return;
+			}
 
 			NovelDAO novelDao = new NovelDAO(cnn);
 			VolDAO volDao = new VolDAO(cnn);
-			Novel ownerNovel = novelDao.getNovelById(acquireChap.getNovelOwnerId());
-			
-			Vol ownerVol = volDao.getVolByID(acquireChap.getVolOwnerId());
-			
-			
-			if (ownerVol.getChaps() == null)
-				ownerVol.setChaps(chapDao.getEntireChapsByVolId(ownerVol.getId()));
-			else {
-				for(Chap c : ownerVol.getChaps()) {
-					if(c.getContent() == null)
-						c.setContent(chapDao.getContentOfChap(c));
-				}
+
+			Novel ownerNovel = acquireChap.getNovelOwner();
+			Vol ownerVol = acquireChap.getVolOwner();
+
+			if (ownerNovel == null) {
+				ownerNovel = novelDao.getNovelById(acquireChap.getNovelOwnerId());
+				acquireChap.setNovelOwner(ownerNovel);
 			}
-			ownerVol.setOwnerNovel(ownerNovel);
-			acquireChap.setNovelOwner(ownerNovel);
-			acquireChap.setVolOwner(ownerVol);
+			if (ownerVol == null) {
+				ownerVol = volDao.getVolByID(acquireChap.getVolOwnerId());
+				ownerVol.setOwnerNovel(ownerNovel);
+				acquireChap.setVolOwner(ownerVol);
+			}
+			if (ownerVol.getChaps() == null) {
+				List<Chap> chaps = chapDao.getPartOfChapsByVolId(ownerVol.getId());
+				ownerVol.setChaps(chaps);
+				acquireChap.setContent(chapDao.getContentOfChap(acquireChap));
+			} else if (acquireChap.getContent() == null) {
+				acquireChap.setContent(chapDao.getContentOfChap(acquireChap));
+			}
+
 			request.setAttribute("chap", acquireChap);
 		} catch (NumberFormatException e) {
 			response.sendError(404);
@@ -81,6 +90,7 @@ public class ReadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.sendError(404);
+		return;
 	}
 
 }
