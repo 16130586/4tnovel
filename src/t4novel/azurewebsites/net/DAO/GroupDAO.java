@@ -14,8 +14,9 @@ public class GroupDAO {
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
 	static {
-		NEXT_ID_GENRATOR = new  NextIdGenrator("GROUPACC");
+		NEXT_ID_GENRATOR = new NextIdGenrator("GROUPACC");
 	}
+
 	public GroupDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -166,16 +167,17 @@ public class GroupDAO {
 				stmt.close();
 		}
 	}
+
 	public Group getGroup(int idGroup) throws SQLException {
 		Group result = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT NAME, DESCRIBE , DATECREATE, IDOWNER FROM GROUPACC WHERE ID = ?";
-		
+
 		stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, idGroup);
 		rs = stmt.executeQuery();
-		if(rs.next()) {
+		if (rs.next()) {
 			result = new Group();
 			result.setId(idGroup);
 			result.setName(rs.getString("NAME"));
@@ -184,6 +186,7 @@ public class GroupDAO {
 		}
 		return result;
 	}
+
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}

@@ -67,8 +67,8 @@ public class AddingGroupServlet extends HttpServlet {
 				GroupDAO groupDAO = new GroupDAO(databaseConnection);
 
 				try {
-					group.setId(groupDAO.getNextID());
 					groupDAO.insertGroup(group);
+					group.setId(groupDAO.getNextID() - 1);
 					groupDAO.insertMemberToGroup(account, group);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -108,8 +108,8 @@ public class AddingNovelServlet extends HttpServlet {
 
 			Novel novel = (Novel) form.getMappingData();
 			try {
-				novel.setId(novelDAO.getNextID());
 				novelDAO.insertNovel(novel);
+				novel.setId(novelDAO.getNextID() - 1);
 				novelDAO.insertGenres(novel.getId(), novel.getGenres(), genreDAO);
 				novel.setVols(new LinkedList<>());
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
@@ -124,16 +124,16 @@ public class AddingNovelServlet extends HttpServlet {
 			}
 			// ram
 			hostAccount.addNewOwnerNovel(novel);
-			
+
 			System.out.println("adding novel sucessed!	");
 			System.out.println("sucessed");
 			// TODO if success then set sucess for user
 			request.setAttribute("sucessed", "Thêm truyện thành công!");
-			
-			//logic for pagination 
-			int lastestTotalNovels =  (int) getServletContext().getAttribute("totalNovels");
-			getServletContext().setAttribute("totalNovels",lastestTotalNovels + 1);
-			
+
+			// logic for pagination
+			int lastestTotalNovels = (int) getServletContext().getAttribute("totalNovels");
+			getServletContext().setAttribute("totalNovels", lastestTotalNovels + 1);
+
 			// ending logic for pagintion
 		} else {
 			form.applyErrorsToUI(request);

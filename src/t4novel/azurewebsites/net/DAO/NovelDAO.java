@@ -103,7 +103,9 @@ public class NovelDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Novel result = NOVELS_CACHE.get(idNovel);
-		if(result != null) {return result;}
+		if (result != null) {
+			return result;
+		}
 		String query = "select * from LN where ID = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
