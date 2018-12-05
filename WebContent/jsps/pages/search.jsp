@@ -29,7 +29,7 @@
                 <input class="input u-width--full" type="text" name="input" placeholder="Tìm kiếm tên truyện...">
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 btn-search">
                 <button type="submit" class="btn btn-primary">Tìm kiếm</button><br>
                 <a href="search?type=advanced" class="link l-advanced-search">Tìm kiếm nâng cao</a>
             </div>
