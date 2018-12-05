@@ -320,6 +320,7 @@ public class Account implements Serializable {
 	}
 
 	public void addNewOwnerNovel(Novel n) {
+		if(this.ownNovels == null) this.ownNovels = new LinkedList<>();
 		if(!this.ownNovels.contains(n))
 			this.ownNovels.add(n);
 	}
