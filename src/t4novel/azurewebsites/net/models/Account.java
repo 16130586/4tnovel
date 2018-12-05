@@ -311,6 +311,7 @@ public class Account implements Serializable {
 	}
 
 	public void deleteNovel(int novelID) {
+		if(ownNovels == null) return;
 		for (int i = 0; i < ownNovels.size(); i++) {
 			if (ownNovels.get(i).getId() == novelID) {
 				ownNovels.remove(i);
