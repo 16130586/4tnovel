@@ -58,7 +58,6 @@ public class MyNovelServlet extends HttpServlet {
 		ChapDAO chapDao = new ChapDAO(cnn);
 		try {
 			for (Novel ownNovel : hostAccount.getOwnNovels()) {
-				ownNovel.setOwner(hostAccount);
 
 				// dtb
 				if (ownNovel.getGroup() == null) {
@@ -85,8 +84,8 @@ public class MyNovelServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		response.sendError(404);
+		return;
 	}
 
 }

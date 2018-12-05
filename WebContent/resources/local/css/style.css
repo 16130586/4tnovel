@@ -122,9 +122,6 @@ body {
 .u-width--full {
   width: 100%; }
 
-.u-align-right {
-  text-align: right; }
-
 .u-2x {
   font-size: 2rem; }
 
@@ -180,7 +177,7 @@ body {
 
 .u-text--error-display {
   color: #DF3232;
-  font-size: 1.8rem; }
+  font-size: 1.7rem; }
 
 .u-paragraph {
   font-szie: 1.8rem; }
@@ -544,11 +541,24 @@ body {
       width: 50px;
       height: 50px; }
 
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 950px) {
   .search-form {
     width: 100%; }
     .search-form .search-bar {
       text-align: center; } }
+
+@media only screen and (max-width: 600px) {
+  .genre-select-box .col-4 {
+    max-width: 50%;
+    flex: 0 0 50%;
+    padding-right: 0; } }
+
+@media only screen and (max-width: 768px) {
+  .status {
+    text-align: center;
+    border-bottom: 1px solid white; }
+  .search-bar .btn-search {
+    padding-top: 1rem; } }
 
 .detail {
   background-color: #fafafa; }

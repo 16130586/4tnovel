@@ -3,6 +3,7 @@ package t4novel.azurewebsites.net.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import t4novel.azurewebsites.net.sercurities.Role;
@@ -139,6 +140,9 @@ public class Account implements Serializable {
 
 	public void setOwnNovels(List<Novel> ownNovels) {
 		this.ownNovels = ownNovels;
+		for(Novel n : ownNovels) {
+			n.setOwner(this);
+		}
 	}
 
 	public List<Novel> getFollows() {
@@ -316,7 +320,7 @@ public class Account implements Serializable {
 	}
 
 	public void addNewOwnerNovel(Novel n) {
-		if (!this.ownNovels.contains(n))
+		if(!this.ownNovels.contains(n))
 			this.ownNovels.add(n);
 	}
 

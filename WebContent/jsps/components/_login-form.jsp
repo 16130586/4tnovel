@@ -16,17 +16,17 @@
 	<hr>
 	<div class="login-form__traditional u-margin-bottom--2rem">
 		<form action="login" method="POST">
-			<div class="u-width--full">
+			<div class="u-width--full u-margin-bottom--1rem">
 				<div class="u-width--full">
 					<input name="username" type="text" placeholder="Tài khoản"
-						class="u-block u-centered u-margin-bottom--2rem" />
+						class="u-block u-centered u-padding--05rem" />
 					<c:if test="${not empty userNameError}">
 						<p class="u-text--error-display">${userNameError}</p>
 					</c:if>
 				</div>
 				<div class="u-width--full">
 					<input name="password" type="password" placeholder="Mật khẩu"
-						class="u-block u-centered u-margin-bottom--2rem" />
+						class="u-block u-centered u-padding--05rem" />
 					<c:if test="${not empty passwordError}">
 						<p class="u-text--error-display">${passwordError}</p>
 					</c:if>

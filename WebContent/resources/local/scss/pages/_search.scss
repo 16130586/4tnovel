@@ -7,8 +7,6 @@
             width: 100%;
             padding-bottom: 2rem;
             border-bottom: 1px solid white;
-            
-            
             .l-advanced-search {
                 font-size: 1.7rem;
             }
@@ -55,7 +53,7 @@
         }
     }
 }
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 950px) {
     .search {
         &-form {
             width: 100%;
@@ -65,7 +63,24 @@
         }
     }
 }
-
-
+@media only screen and (max-width: 600px) {
+    .genre-select-box {
+        .col-4 {
+            max-width: 50%;
+            flex: 0 0 50%;
+            padding-right: 0;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .status {
+        text-align: center;
+        border-bottom: 1px solid white;
+    }
+    
+    .search-bar .btn-search {
+        padding-top: 1rem;
+    }
+} 
 
     
