@@ -48,7 +48,6 @@ public class DeletingVolServlet extends HttpServlet {
 		Account account = (Account) request.getSession().getAttribute("account");
 		try {
 			int volID = Integer.parseInt(request.getParameter("id-vol"));
-			System.out.println("vol ID: " + volID);
 			account.deleteVol(volID);
 			volDAO.deleteVolByID(volID, chapDAO);
 		} catch (Exception e) {

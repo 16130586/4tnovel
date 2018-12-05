@@ -47,13 +47,11 @@ public class DeletingChapterServlet extends HttpServlet {
 		Account account = (Account) request.getSession().getAttribute("account");
 		try {
 			int chapID = Integer.parseInt(request.getParameter("id-chap"));
-			System.out.println("chapid :" + chapID);
 			account.deleteOwnerChap(chapID);
 			chapDAO.deleteChapByID(chapID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		response.sendRedirect("myNovel");
 	}
 

@@ -1,11 +1,19 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.GenreDAO;
+import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.DAO.VolDAO;
+import t4novel.azurewebsites.net.models.Account;
 
 /**
  * Servlet implementation class DeletingNovelServlet
@@ -19,7 +27,6 @@ public class DeletingNovelServlet extends HttpServlet {
 	 */
 	public DeletingNovelServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -28,8 +35,7 @@ public class DeletingNovelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: delete-novel").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -38,8 +44,21 @@ public class DeletingNovelServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		Connection cnn = (Connection) request.getAttribute("connection");
+		Account account = (Account) request.getSession().getAttribute("account");
+		NovelDAO novelDAO = new NovelDAO(cnn);
+		VolDAO volDAO = new VolDAO(cnn);
+		ChapDAO chapDAO = new ChapDAO(cnn);
+		GenreDAO genreDAO = new GenreDAO(cnn);
+
+		try {
+			int novelID = Integer.parseInt(request.getParameter("id-novel"));
+			account.deleteNovel(novelID);
+			novelDAO.delNovelById(novelID, volDAO, chapDAO, genreDAO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("myNovel");
 	}
 
 }

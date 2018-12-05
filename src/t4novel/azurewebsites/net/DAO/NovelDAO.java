@@ -132,10 +132,13 @@ public class NovelDAO {
 		return result;
 	}
 
-	public void delNovelById(int idNovel) throws Exception {
+	public void delNovelById(int idNovel, VolDAO volDAO, ChapDAO chapDAO, GenreDAO genreDAO) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "delete from LN where ID = ?";
 		try {
+			genreDAO.deleteGenres(idNovel);
+			chapDAO.deleteChapByNovelID(idNovel);
+			volDAO.deleteVolsOfNovel(idNovel);
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, idNovel);

@@ -39,17 +39,18 @@ public class RefactingNovelServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Connection cnn = (Connection) request.getAttribute("connection");
-		System.out.println("cnn = ? " + (cnn == null));
 		String type = request.getParameter("action");
 		String url = "";
 		switch (type) {
 		case "fix-novel":
-			url = "";
+			url = "/fix-novel";
 			break;
 		case "fix-vol":
-			url = "";
+			url = "/fix-vol";
+			break;
 		case "fix-chap":
-			url = "";
+			url = "/fix-chap";
+			break;
 		case "del-novel":
 			url = "/delete-novel";
 			break;
@@ -62,7 +63,6 @@ public class RefactingNovelServlet extends HttpServlet {
 		default:
 			break;
 		}
-		System.out.println("action" + url);
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 
