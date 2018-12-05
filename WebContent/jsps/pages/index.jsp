@@ -94,9 +94,36 @@
 			<div class="section__content" id="lastestUpdateContent">
 				<!-- c:forEach var="novel" items="lastestUpdateNovels" -->
 				<ul class="vertical-menu--showcase">
-					<c:forEach begin="1" end="3">
-						<li class="menu-item u-margin-bottom--2rem"><%@ include
-								file="/jsps/components/_card-novel.jsp"%>
+					<c:forEach var="chap" items="${newChaps }">
+						<li class="menu-item u-margin-bottom--2rem">
+							<div class="row card-novel">
+								<div class="col-lg-4 novel-img--box u-align-center">
+									<a href="#" class="img-linking"> <img class="novel-hero"
+										src="data:image/*;base64, ${chap.novelOwner.coverImg}">
+									</a>
+								</div>
+								<div class="col-lg-8 novel-info--box">
+									<div class="novel-short-info">
+										<h2 class="u-align-center">
+											<a class="novel__title" href="read?id=${chap.id }">${chap.title }</a>
+										</h2> <span class="novel__description">${chap.novelOwner.description }</span>
+									</div>
+								</div>
+								<div class="row u-width--full">
+									<div class="col-lg-12 u-align-center novel__gender">
+										<ul class="horizontal-menu--showcase text-centered">
+											<c:forEach var="genre" items="${chap.novelOwner.genres }">
+												<li class="menu-item u-margin-right--2rem">
+													<form action="search" method="post">
+														<input type="hidden" name="genre" value="${genre.value }">
+														<button class="btn btn-belike-a">${genre.getDisplayName()}</button>
+													</form>
+												</li>
+											</c:forEach>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</li>
 					</c:forEach>
 				</ul>
