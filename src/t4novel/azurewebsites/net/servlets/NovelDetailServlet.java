@@ -60,21 +60,22 @@ public class NovelDetailServlet extends HttpServlet {
 			requestNovel = novelDao.getNovelById(novelId);
 			if(requestNovel == null) {response.sendError(404); return;}
 			
-			if(requestNovel.getGenres() == null)
+			if(requestNovel.getGenres() == null) {
 				requestNovel.setGenres(genreDao.getGenres(novelId));
+			}
 			if(requestNovel.getOwner() == null) {
 				Account owner = accDao.getAccountByID(requestNovel.getAccountOwnerId());
 				requestNovel.setOwner(owner);
 			}
 			if (requestNovel.getVols() == null) {
 				List<Vol> vols = volDao.getVolsOfNovel(novelId);
+				requestNovel.setVols(vols);
 				for (Vol vol : vols) {
 					if (vol.getChaps() == null) {
 						List<Chap> chaps = chapDao.getPartOfChapsByVolId(vol.getId());
 						vol.setChaps(chaps);
 					}
 				}
-				requestNovel.setVols(vols);
 			}
 			if (requestNovel.getCoverImg() == null)
 				requestNovel.setCoverImg(novelDao.getEncodeImageById(requestNovel.getId(), imgDAO));
