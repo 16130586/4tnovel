@@ -49,12 +49,21 @@
         </div>
         <div class="search-advanced row u-centered">
             <div class="col-md-3 u-align-right status">
-                <label>Tình trạng</label>
-                <select>
-                  <option value="complete">Hoàn thành</option>
-                  <option value="inprocess">Đang tiến hành</option>
-                  <option value="pause">Dừng</option>
-                </select>
+	            <div>
+	                <label style="width: 98.27px">Tình trạng</label>
+	                <select name="status">
+	                  <option value="complete">Hoàn thành</option>
+	                  <option value="inprocess">Đang tiến hành</option>
+	                  <option value="pause">Dừng</option>
+	                </select>
+	            </div>
+                <div>
+                	<label>Loại truyện</label>
+                	<select name="kind" style="width: 143px;">
+                		<option value="compose">Sáng tác</option>
+                		<option value="translate">Truyện dịch</option>
+                	</select>
+                </div>
             </div>
             <div class="col-md-9 genre-select-box">  
             	<div class="row">

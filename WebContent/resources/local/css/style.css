@@ -555,7 +555,8 @@ body {
 
 @media only screen and (max-width: 768px) {
   .status {
-    text-align: center; }
+    text-align: center;
+    border-bottom: 1px solid white; }
   .search-bar .btn-search {
     padding-top: 1rem; } }
 
