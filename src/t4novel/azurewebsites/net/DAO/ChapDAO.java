@@ -79,6 +79,32 @@ public class ChapDAO {
 		return chap;
 	}
 
+	public List<Chap> getChaps(String sortByCondition, String filterCondition, int offSet, int limit)
+			throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Chap> result = new LinkedList<>();
+//		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
+//				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
+//				+ offSet + " rows fetch next " + limit + " rows only)"
+//				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
+
+		String query = "SELECT ID FROM CHAP WHERE ID IN(" + "SELECT ID FROM CHAP "
+				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + "order by DATEUP DESC OFFSET " + offSet
+				+ " rows fetch next " + limit + " rows only " + ")"
+				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
+		stmt = cnn.prepareStatement(query);
+		rs = stmt.executeQuery();
+		while (rs.next()) {
+			result.add(getChapByID(rs.getInt("ID")));
+		}
+
+		rs.close();
+		stmt.close();
+
+		return result;
+	}
+	
 	public List<Chap> getEntireChapsByVolId(int volID) throws Exception {
 		LinkedList<Chap> listChap = new LinkedList<>();
 		PreparedStatement stmt = null;
