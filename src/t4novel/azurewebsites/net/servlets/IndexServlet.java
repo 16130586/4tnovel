@@ -36,8 +36,7 @@ public class IndexServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		Connection cnn = (Connection) request.getAttribute("connection");
-		List<Chap> newChaps = (List<Chap>) request.getSession().getAttribute("newChaps");
-		if (newChaps == null)
+		List<Chap> newChaps = null;
 		try {
 			ChapDAO chapDao = new ChapDAO(cnn);
 			NovelDAO novelDao = new NovelDAO(cnn);

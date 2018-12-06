@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="row card-novel">
 	<div class="col-lg-4 novel-img--box u-align-center">
-		<a href="#" class="img-linking"> <img class="novel-hero"
+		<a href="#" class="img-linking"> <img style="width: 80%; height: 100%; padding: 1.5rem" class="novel-hero"
 			src="data:image/*;base64, ${novel.coverImg}">
 		</a>
 	</div>
