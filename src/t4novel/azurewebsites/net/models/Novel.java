@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import com.restfb.scope.FacebookPermissions;
+
 public class Novel implements Serializable {
 	/**
 	 * 
@@ -26,6 +28,7 @@ public class Novel implements Serializable {
 	private NovelKind kind;
 	private int groupId;
 	private Group group;
+
 	public Group getGroup() {
 		return group;
 	}
@@ -34,8 +37,9 @@ public class Novel implements Serializable {
 		this.group = group;
 		this.groupId = group.getId();
 	}
+
 	private String encodeImg;
-	
+
 	public Novel() {
 	}
 
@@ -140,7 +144,7 @@ public class Novel implements Serializable {
 
 	public void setVols(List<Vol> vols) {
 		this.vols = vols;
-		for(Vol v : vols ) {
+		for (Vol v : vols) {
 			v.setOwnerNovel(this);
 		}
 	}
@@ -209,10 +213,12 @@ public class Novel implements Serializable {
 	public void setEncodeImg(String encodeImg) {
 		this.encodeImg = encodeImg;
 	}
-	
+
 	public void addNewVol(Vol vol) {
-		if(!this.vols.contains(vol)) this.vols.add(vol);
+		if (!this.vols.contains(vol))
+			this.vols.add(vol);
 	}
+
 	public String getCoverImg() {
 		return coverImg;
 	}
@@ -220,11 +226,34 @@ public class Novel implements Serializable {
 	public void setCoverImg(String coverImg) {
 		this.coverImg = coverImg;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null || ! (obj instanceof Novel)) return false;
+		if (obj == null || !(obj instanceof Novel))
+			return false;
 		Novel other = (Novel) obj;
 		return this.id == other.id;
+	}
+
+	public void update(Novel fixedNovel) {
+		this.accountOwnerId = fixedNovel.getAccountOwnerId();
+		this.comments = fixedNovel.getComments();
+		this.coverImg = fixedNovel.getCoverImg();
+		this.dateUp = fixedNovel.getDateUp();
+		this.description = fixedNovel.getDescription();
+		this.encodeImg = fixedNovel.getEncodeImg();
+		this.follows = fixedNovel.getFollows();
+		this.genres = fixedNovel.getGenres();
+		this.group = fixedNovel.getGroup();
+		this.groupId = fixedNovel.getGroupId();
+		this.id = fixedNovel.getId();
+		this.kind = fixedNovel.getKind();
+		this.like = fixedNovel.getLike();
+		this.name = fixedNovel.getName();
+		this.owner = fixedNovel.getOwner();
+		this.status = fixedNovel.getStatus();
+		this.view = fixedNovel.getView();
+		this.vols = fixedNovel.getVols();
 	}
 
 }

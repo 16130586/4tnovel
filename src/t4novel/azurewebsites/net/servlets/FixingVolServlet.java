@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingVolForm;
 import t4novel.azurewebsites.net.models.Account;
-import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
 
@@ -52,7 +50,6 @@ public class FixingVolServlet extends HttpServlet {
 		Account account = (Account) request.getSession().getAttribute("account");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		VolDAO volDAO = new VolDAO(cnn);
-		ChapDAO chapDAO = new ChapDAO(cnn);
 
 		if (action.equals("fix-vol")) {
 			int volID = Integer.parseInt(request.getParameter("id-vol"));

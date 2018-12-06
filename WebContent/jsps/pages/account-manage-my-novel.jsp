@@ -51,13 +51,23 @@
 							class="col-md-2 btn btn-belike-a u-align-left u-text-overflow--hidden">${novel.group.name }
 						</a>
 						<div class="col-md-2">
-							<form action="refact" method="post">
-								<button name="action" value="fix-novel"
-									class="btn btn-primary u-color-white">Sửa</button>
-								<button name="action" value="del-novel"
-									class="btn btn-danger u-color-white">Xóa</button>
-								<input type="hidden" name="id-novel" value="${novel.id}"></input>
-							</form>
+							<div class="row">
+								<div class="col-md-3 u-transformX-40">
+									<form action="fix-novel" method="get">
+										<button name="action" value="fix-novel"
+											class="btn btn-primary u-color-white">Sửa</button>
+										<input type="hidden" name="id-novel" value="${novel.id}"></input>
+									</form>
+								</div>
+								<div class="col-md-9">
+									<form action="refact" method="post">
+										<button name="action" value="del-novel"
+											class="btn btn-danger u-color-white">Xóa</button>
+										<input type="hidden" name="id-novel" value="${novel.id}"></input>
+									</form>
+								</div>
+							</div>
+
 						</div>
 					</div>
 					<div id="${novel.id }"

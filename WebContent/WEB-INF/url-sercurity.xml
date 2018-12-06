@@ -445,4 +445,12 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/follow">
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 </url-sercutiry> 

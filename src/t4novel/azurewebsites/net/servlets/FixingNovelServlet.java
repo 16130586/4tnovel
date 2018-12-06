@@ -26,21 +26,20 @@ import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Novel;
 
 /**
- * Servlet implementation class AddingNovelServlet
+ * Servlet implementation class FixingNovelServlet
  */
-@WebServlet("/add-novel")
+@WebServlet("/fix-novel")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 4, // 4MB
 		maxFileSize = 1024 * 1024 * 100, // 100MB
 		maxRequestSize = 1024 * 1024 * 100) // 100MB
-public class AddingNovelServlet extends HttpServlet {
+public class FixingNovelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AddingNovelServlet() {
+	public FixingNovelServlet() {
 		super();
-
 	}
 
 	/**
@@ -49,18 +48,11 @@ public class AddingNovelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Account hostAccount = (Account) request.getSession().getAttribute("account");
-		if (hostAccount.getOwnNovels() == null)
-			try {
-				Connection cnn = (Connection) request.getAttribute("connection");
-				NovelDAO novelDao = new NovelDAO(cnn);
-				hostAccount.setOwnNovels(novelDao.getNovelsByUserId(hostAccount.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-				response.sendError(500);
-			}
-		System.out.println("forward here");
-		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
+		Account account = (Account) request.getSession().getAttribute("account");
+		int novelID = Integer.parseInt(request.getParameter("id-novel"));
+		Novel fixingNovel = account.getANovel(novelID);
+		request.setAttribute("fixingNovel", fixingNovel);
+		getServletContext().getRequestDispatcher("/jsps/pages/fix-novel.jsp").forward(request, response);
 	}
 
 	/**
@@ -72,6 +64,9 @@ public class AddingNovelServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
+
+		Account account = (Account) request.getSession().getAttribute("account");
+		Connection cnn = (Connection) request.getAttribute("connection");
 
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
@@ -95,51 +90,38 @@ public class AddingNovelServlet extends HttpServlet {
 		} catch (FileUploadException e1) {
 			e1.printStackTrace();
 		}
-
 		AbstractMappingForm form = new AddingNovelForm(request);
-		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		if (!form.isOnError()) {
-			// TODO write to dtb , apply to account
-			Connection cnn = (Connection) request.getAttribute("connection");
-
 			NovelDAO novelDAO = new NovelDAO(cnn);
 			ImageDAO imgDAO = new ImageDAO(cnn);
 			GenreDAO genreDAO = new GenreDAO(cnn);
+			Novel fixedNovel = (Novel) form.getMappingData();
 
-			Novel novel = (Novel) form.getMappingData();
 			try {
-				novelDAO.insertNovel(novel);
-				novel.setId(novelDAO.getNextID() - 1);
-				novelDAO.insertGenres(novel.getId(), novel.getGenres(), genreDAO);
-				novel.setVols(new LinkedList<>());
+				String novelId = (String) request.getAttribute("fixedNovelID");
+				//
+				// cai cu con trong ram
+				//
+				Novel oldNovel = novelDAO.getNovelById(Integer.parseInt(novelId)); // neu con trong ram -> update
+				fixedNovel.setId(Integer.parseInt(novelId));
+				oldNovel.update(fixedNovel);
+				// update dtb
+				novelDAO.updateNovel(fixedNovel);
+				novelDAO.updateGenres(fixedNovel.getId(), fixedNovel.getGenres(), genreDAO);
+
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
-				if (fileImage != null)
-					novelDAO.insertImageNovel(novel.getId(), fileImage.getInputStream(), imgDAO);
-				else {
-					novelDAO.insertImageNovel(novel.getId(), null, imgDAO);
+				if (fileImage != null) {
+					novelDAO.updateImageNovelById(fixedNovel.getId(), fileImage.getInputStream(), imgDAO);
+					fixedNovel.setCoverImg(novelDAO.getEncodeImageById(fixedNovel.getId(), imgDAO));
 				}
+				account.updateNovelInMyNovel(oldNovel);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// ram
-			hostAccount.addNewOwnerNovel(novel);
-
-			System.out.println("adding novel sucessed!	");
-			System.out.println("sucessed");
-			// TODO if success then set sucess for user
-			request.setAttribute("sucessed", "Thêm truyện thành công!");
-
-			// logic for pagination
-			int lastestTotalNovels = (int) getServletContext().getAttribute("totalNovels");
-			getServletContext().setAttribute("totalNovels", lastestTotalNovels + 1);
-
-			// ending logic for pagintion
 		} else {
 			form.applyErrorsToUI(request);
-			System.out.println("error!");
-			System.out.println(form.getErrors().entrySet().iterator().next());
 		}
-		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
+		response.sendRedirect("myNovel");
 	}
 
 }

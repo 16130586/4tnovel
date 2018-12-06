@@ -102,6 +102,10 @@ body {
 	height: 35vh !important;
 }
 
+.u-transformX-40 {
+	transform: translateX(-40%) !important;
+}
+
 .u-transformX-50 {
 	transform: translateX(-50%) !important;
 }
@@ -650,7 +654,7 @@ body {
 }
 
 .footer-contain {
-	padding-top: 1.5% !important;
+	padding-top: 2% !important;
 }
 
 .chap {

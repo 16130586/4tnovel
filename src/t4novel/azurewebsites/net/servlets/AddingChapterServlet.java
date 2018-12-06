@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -19,6 +20,9 @@ import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
+import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
+import t4novel.azurewebsites.net.ws.notifycation.NewChapterHtmlMessageBuilder;
+import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
 
 /**
  * Servlet implementation class AddingChapterServlet
@@ -94,6 +98,14 @@ public class AddingChapterServlet extends HttpServlet {
 			try {
 				chapter.setId(chapDAO.getNextID());
 				chapDAO.insertChap(chapter);
+				
+				// notification to followers
+				FollowDAO followDao = new FollowDAO(cnn);
+				List<Integer> followersId = followDao.getFollowersId(chapter.getNovelOwnerId());
+				if(!followersId.isEmpty()) {
+					MessageBuilder msgBuilder = new NewChapterHtmlMessageBuilder();	
+					NotifycationSystem.notifyToListUser(followersId, msgBuilder.getData());
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
