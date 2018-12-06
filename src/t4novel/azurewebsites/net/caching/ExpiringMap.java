@@ -88,7 +88,6 @@ public class ExpiringMap<K, V> extends AbstractMap<K, V> implements Runnable, Ma
 				}
 				for (K key : removingKeys) {
 					container.remove(key);
-					System.out.println("Dead time is ticked : " + key + " left " + container.size() + " in map");
 
 				}
 			} catch (InterruptedException e) {

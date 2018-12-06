@@ -51,4 +51,9 @@ public class FollowDAO {
 		return ids;
 	}
 
+	public List<Integer> getFollowersId(int novelOwnerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
