@@ -9,9 +9,6 @@ import java.util.List;
 import t4novel.azurewebsites.net.sercurities.Role;
 
 public class Account implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private Date dateCreate;
@@ -24,8 +21,8 @@ public class Account implements Serializable {
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
 	private List<Group> joinGroups;
-
 	private boolean isBanned;
+	private List<Integer> novelFollowsId;
 
 	public Account(int id) {
 		this.id = id;
@@ -64,6 +61,14 @@ public class Account implements Serializable {
 
 	public Date getDateCreate() {
 		return dateCreate;
+	}
+
+	public List<Integer> getNovelFollowsId() {
+		return novelFollowsId;
+	}
+
+	public void setNovelFollowsId(List<Integer> novelFollowsId) {
+		this.novelFollowsId = novelFollowsId;
 	}
 
 	public void setDateCreate(Date dateCreate) {
@@ -140,7 +145,7 @@ public class Account implements Serializable {
 
 	public void setOwnNovels(List<Novel> ownNovels) {
 		this.ownNovels = ownNovels;
-		for(Novel n : ownNovels) {
+		for (Novel n : ownNovels) {
 			n.setOwner(this);
 		}
 	}
@@ -311,7 +316,8 @@ public class Account implements Serializable {
 	}
 
 	public void deleteNovel(int novelID) {
-		if(ownNovels == null) return;
+		if (ownNovels == null)
+			return;
 		for (int i = 0; i < ownNovels.size(); i++) {
 			if (ownNovels.get(i).getId() == novelID) {
 				ownNovels.remove(i);
@@ -321,8 +327,9 @@ public class Account implements Serializable {
 	}
 
 	public void addNewOwnerNovel(Novel n) {
-		if(this.ownNovels == null) this.ownNovels = new LinkedList<>();
-		if(!this.ownNovels.contains(n))
+		if (this.ownNovels == null)
+			this.ownNovels = new LinkedList<>();
+		if (!this.ownNovels.contains(n))
 			this.ownNovels.add(n);
 	}
 
@@ -332,5 +339,36 @@ public class Account implements Serializable {
 			return false;
 		Account otherAcc = (Account) obj;
 		return this.id == otherAcc.id;
+	}
+
+	public boolean isFollowNovel(int novelId) {
+		System.out.println("checking " + getId() + " is follow " + novelId);
+		if (this.novelFollowsId == null || this.novelFollowsId.isEmpty())
+			return false;
+		for (Integer f : this.novelFollowsId)
+			if (novelId == f)
+				return true;
+		return false;
+	}
+
+	public void followNovel(int targetId) {
+		if (this.novelFollowsId == null)
+			this.novelFollowsId = new LinkedList<>();
+		if (!this.novelFollowsId.contains(targetId))
+			this.novelFollowsId.add(targetId);
+	}
+
+	public void unFollowNovel(int targetId) {
+		if (this.novelFollowsId == null)
+			return;
+		novelFollowsId.remove(new Integer(targetId));
+	}
+
+	public void followThread(int targetId) {
+
+	}
+
+	public void unFollowThread(int targetId) {
+
 	}
 }
