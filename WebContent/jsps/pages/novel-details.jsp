@@ -44,8 +44,28 @@
 						</div>
                     </div>
                     <div>
-                        <button class="btn btn-info u-color-white">Đọc từ đầu</button>
-                        <button class="btn btn-danger u-color-white">+Theo dõi</button>
+                    	<c:if test="${not empty novel.vols && not empty novel.vols.get(0) && not empty novel.vols.get(0).chaps }">
+                       	 	<a href="read?id=${novel.vols.get(0).chaps.get(0).id }" class="btn btn-info u-color-white">Đọc từ đầu</a>
+                        </c:if>
+                        <c:if test="${not empty account && not account.isFollowNovel(novel.id)}">
+                        	<form action="follow" method="post" style="display:inline-block;">
+                        		<input name="action" value="subcribe" type="hidden">
+                        		<input name="targetId" value="${novel.id }" type="hidden">
+                        		<input name="stream" value="novel" type="hidden">
+                        		<button class="btn btn-danger u-color-white">+Theo dõi</button>
+                        	</form>
+                        </c:if>
+                        <c:if test="${not empty account && account.isFollowNovel(novel.id)}">
+                        	<form action="follow" method="post" style="display:inline-block;">
+                        		<input name="action" value="unSubcribe" type="hidden">
+                        		<input name="targetId" value="${novel.id }" type="hidden">
+                        		<input name="stream" value="novel" type="hidden">
+                        		<button class="btn btn-danger u-color-white">-Bỏ theo dõi</button>
+                        	</form>
+                        </c:if>
+                        <c:if test="${empty account }">
+                        	<a href="login" class="btn btn-danger u-color-white">+Theo dõi</a>
+                        </c:if>
                     </div>
                 </div>
             </div>
