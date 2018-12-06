@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
@@ -56,10 +57,14 @@ public class MyNovelServlet extends HttpServlet {
 		VolDAO volDao = new VolDAO(cnn);
 		GroupDAO groupDao = new GroupDAO(cnn);
 		ChapDAO chapDao = new ChapDAO(cnn);
+		GenreDAO genreDAO = new GenreDAO(cnn);
 		try {
 			for (Novel ownNovel : hostAccount.getOwnNovels()) {
 
 				// dtb
+				if (ownNovel.getGenres() == null) {
+					ownNovel.setGenres(genreDAO.getGenres(ownNovel.getId()));
+				}
 				if (ownNovel.getGroup() == null) {
 					ownNovel.setGroup(groupDao.getGroup(ownNovel.getGroupId()));
 				}

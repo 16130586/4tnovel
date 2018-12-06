@@ -140,7 +140,7 @@ public class Account implements Serializable {
 
 	public void setOwnNovels(List<Novel> ownNovels) {
 		this.ownNovels = ownNovels;
-		for(Novel n : ownNovels) {
+		for (Novel n : ownNovels) {
 			n.setOwner(this);
 		}
 	}
@@ -266,6 +266,16 @@ public class Account implements Serializable {
 		return null;
 	}
 
+	public void setANovel(Novel novel) {
+		for (int i = 0; i < ownNovels.size(); i++) {
+			if (ownNovels.get(i).getId() == novel.getId()) {
+				ownNovels.remove(i);
+				ownNovels.add(i, novel);
+				break;
+			}
+		}
+	}
+
 	public void addJoinGroup(Group g) {
 		if (!this.joinGroups.contains(g))
 			this.joinGroups.add(g);
@@ -311,7 +321,8 @@ public class Account implements Serializable {
 	}
 
 	public void deleteNovel(int novelID) {
-		if(ownNovels == null) return;
+		if (ownNovels == null)
+			return;
 		for (int i = 0; i < ownNovels.size(); i++) {
 			if (ownNovels.get(i).getId() == novelID) {
 				ownNovels.remove(i);
@@ -321,8 +332,9 @@ public class Account implements Serializable {
 	}
 
 	public void addNewOwnerNovel(Novel n) {
-		if(this.ownNovels == null) this.ownNovels = new LinkedList<>();
-		if(!this.ownNovels.contains(n))
+		if (this.ownNovels == null)
+			this.ownNovels = new LinkedList<>();
+		if (!this.ownNovels.contains(n))
 			this.ownNovels.add(n);
 	}
 
