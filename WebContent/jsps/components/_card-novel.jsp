@@ -1,41 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="row card-novel">
 	<div class="col-lg-4 novel-img--box u-align-center">
 		<a href="#" class="img-linking"> <img class="novel-hero"
-			src="http://via.placeholder.com/330x330">
+			src="data:image/*;base64, ${novel.coverImg}">
 		</a>
 	</div>
 	<div class="col-lg-8 novel-info--box">
 		<div class="novel-short-info">
-			<h2 class="u-align-center">
-				<a class="novel__title" href="#">Shut Hell (up tiếp từ chap 23)</a>
-			</h2> <span class="novel__description">Sudou là một cậu bé hay chìm
-				vào những giấc mơ sinh động, những giấc mơ đầy máu , lửa và xác
-				chết, một ngày nọ, Sudou gặp Yuzuki, một người bạn vừa lạ vừa quen,
-				một người cậu đã gặp trong quá khứ... (copy nguyên văn từ nhóm dịch
-				cũ )Và dịch 68 chap còn lại </span>
+			<h2 class="u-align-center u-text-overflow--hidden">
+				<a class="novel__title" href="detail?id=${novel.id }">${novel.name }</a>
+			</h2>
+			<div class="u-align-center u-text-overflow--hidden">
+				<a href="read?id=${chap.id }" class="link u-text-overflow--hidden"
+					style="color: #10b591">
+					<h3>${chap.title }</h3>
+				</a>
+			</div>
+			<c:set var="description" value="${novel.description }" />
+			<c:if test="${description.length() < 400 }">
+				<c:set var="length" value="${description.length() }" />
+			</c:if>
+			<c:if test="${description.length() > 400 }">
+				<c:set var="length" value="400" />
+			</c:if>
+			<span class="novel__description">${description.substring(0, length)}...</span>
 		</div>
 	</div>
 	<div class="row u-width--full">
-		<div class="col-lg-12 u-align-center novel__gender">
+		<div class="col-lg-12 u-align-center novel__gender"
+			style="white-space: nowrap; overflow: hidden">
 			<ul class="horizontal-menu--showcase text-centered">
-				<li class="menu-item u-margin-right--2rem">
-				<form action="search" method="post">
-					<input type="hidden" name="genre" value="advanture">
-					<button class="btn btn-belike-a">Advanture</button>
-				</form></li>
-				<li class="menu-item u-margin-right--2rem">
-				<form action="search" method="post">
-					<input type="hidden" name="genre" value="drama">
-					<button class="btn btn-belike-a">Drama</button>
-				</form></li>
-				<li class="menu-item u-margin-right--2rem">
-				<form action="search" method="post">
-					<input type="hidden" name="genre" value="school-life">
-					<button class="btn btn-belike-a">School life</button>
-				</form></li>
-
+				<c:forEach var="genre" items="${novel.genres }">
+					<li class="menu-item u-margin-right--2rem">
+						<form action="search" method="post">
+							<input type="hidden" name="genre" value="${genre.value }">
+							<button class="btn btn-belike-a">${genre.getDisplayName()}</button>
+						</form>
+					</li>
+				</c:forEach>
 			</ul>
 		</div>
 	</div>
