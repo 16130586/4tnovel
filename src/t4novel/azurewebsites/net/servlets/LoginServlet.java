@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.BookmarkFolderDAO;
+import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.DAOService.DAOService;
 import t4novel.azurewebsites.net.DAOService.LoginCheckingService;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -49,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 		Connection cnn = (Connection) request.getAttribute("connection");
 		DAOService loginCheckingService = new LoginCheckingService(cnn);
 		AccountDAO accountDAO = new AccountDAO(cnn);
+		FollowDAO followDao = new FollowDAO(cnn);
 		BookmarkFolderDAO bookmarkFolderDAO = new BookmarkFolderDAO(cnn);
 		AbstractMappingForm loginForm = new LoginForm(request, loginCheckingService);
 
@@ -58,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 			try {
 				account = accountDAO.getAccountByUsername(account.getUserName());
 				account.setBookMarkFolders(bookmarkFolderDAO.getBookmarkFolderByUser(account.getId()));
-				
+				account.setNovelFollowsId(followDao.getNovelFollow(account.getId()));
 				//TODO load vua du ra man hinh bao hom username, bla bla, bookmarks, thong bao
 				//TODO load them thong bao len nua
 			} catch (Exception e) {

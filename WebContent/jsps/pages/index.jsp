@@ -94,9 +94,10 @@
 			<div class="section__content" id="lastestUpdateContent">
 				<!-- c:forEach var="novel" items="lastestUpdateNovels" -->
 				<ul class="vertical-menu--showcase">
-					<c:forEach begin="1" end="3">
-						<li class="menu-item u-margin-bottom--2rem"><%@ include
-								file="/jsps/components/_card-novel.jsp"%>
+					<c:forEach var="chap" items="${newChaps }">
+					<c:set var="novel" value="${chap.novelOwner }"/>
+						<li class="menu-item u-margin-bottom--2rem">
+						<%@ include file="/jsps/components/_card-novel.jsp"%>
 						</li>
 					</c:forEach>
 				</ul>

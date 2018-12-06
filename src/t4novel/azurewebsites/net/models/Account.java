@@ -9,9 +9,6 @@ import java.util.List;
 import t4novel.azurewebsites.net.sercurities.Role;
 
 public class Account implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private Date dateCreate;
@@ -24,8 +21,8 @@ public class Account implements Serializable {
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
 	private List<Group> joinGroups;
-
 	private boolean isBanned;
+	private List<Integer> novelFollowsId;
 
 	public Account(int id) {
 		this.id = id;
@@ -64,6 +61,14 @@ public class Account implements Serializable {
 
 	public Date getDateCreate() {
 		return dateCreate;
+	}
+
+	public List<Integer> getNovelFollowsId() {
+		return novelFollowsId;
+	}
+
+	public void setNovelFollowsId(List<Integer> novelFollowsId) {
+		this.novelFollowsId = novelFollowsId;
 	}
 
 	public void setDateCreate(Date dateCreate) {
@@ -344,5 +349,36 @@ public class Account implements Serializable {
 			return false;
 		Account otherAcc = (Account) obj;
 		return this.id == otherAcc.id;
+	}
+
+	public boolean isFollowNovel(int novelId) {
+		System.out.println("checking " + getId() + " is follow " + novelId);
+		if (this.novelFollowsId == null || this.novelFollowsId.isEmpty())
+			return false;
+		for (Integer f : this.novelFollowsId)
+			if (novelId == f)
+				return true;
+		return false;
+	}
+
+	public void followNovel(int targetId) {
+		if (this.novelFollowsId == null)
+			this.novelFollowsId = new LinkedList<>();
+		if (!this.novelFollowsId.contains(targetId))
+			this.novelFollowsId.add(targetId);
+	}
+
+	public void unFollowNovel(int targetId) {
+		if (this.novelFollowsId == null)
+			return;
+		novelFollowsId.remove(new Integer(targetId));
+	}
+
+	public void followThread(int targetId) {
+
+	}
+
+	public void unFollowThread(int targetId) {
+
 	}
 }

@@ -49,7 +49,7 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								truyện: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="in-novel" style="padding: .5rem">
+						<td><select class="u-width--full" name="in-novel" style="padding: .5rem">
 								<!-- option value="novelOwnerID-Integer" -->
 								<c:forEach var="novel" items="${account.ownNovels}">
 									<option value="${novel.id}">${novel.name}</option>

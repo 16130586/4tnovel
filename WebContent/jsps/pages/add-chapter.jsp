@@ -47,7 +47,7 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
 								truyện: <span style="color: red">*</span>
 						</label></td>
-						<td><select id="novel" name="in-novel" style="padding: .5rem"
+						<td><select class="u-width--full" id="novel" name="in-novel" style="padding: .5rem"
 							onchange="openVol(this.selectedIndex)">
 								<c:forEach var="novel" items="${account.ownNovels}">
 									<option value="${novel.id }">${novel.name }</option>
@@ -59,7 +59,7 @@
 								tập: <span style="color: red">*</span>
 						</label></td>
 						<td><c:forEach var="novel" items="${account.ownNovels}">
-								<select name="in-vol" style="padding: .5rem">
+								<select class="u-width--full" name="in-vol" style="padding: .5rem">
 									<c:forEach var="vol" items="${novel.vols}">
 										<option value="${vol.id}">${vol.title}</option>
 									</c:forEach>
