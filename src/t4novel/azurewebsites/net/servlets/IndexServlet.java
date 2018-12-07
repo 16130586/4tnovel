@@ -53,7 +53,7 @@ public class IndexServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		request.getSession().setAttribute("newChaps", newChaps);
+		request.setAttribute("newChaps", newChaps);
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
 

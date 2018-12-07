@@ -98,7 +98,7 @@
 
 		<div id="set-up" class="chap__setup u-centered u-margin-right--1rem u-color-white">
 			<ul>
-				<li><a href="#onTop" class="btn btn-success"><i
+				<li><a href="#onTop" class="btn btn-secondary"><i
 						class="fas fa-arrow-up"></i></a></li>
 				<li><button id="btnFontChoice" href="#"
 						class="btn btn-secondary">
@@ -108,7 +108,7 @@
 						class="btn btn-secondary">
 						<i class="fas fa-palette"></i>
 					</button></li>
-				<li><a href="#onBottom" class="btn btn-success"><i
+				<li><a href="#onBottom" class="btn btn-secondary"><i
 						class="fas fa-arrow-down"></i></a></li>
 			</ul>
 		</div>

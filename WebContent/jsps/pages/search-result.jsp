@@ -49,7 +49,7 @@
 						<td><a class="link" href="detail?id=${novel.id}"
 							target="_blank">${novel.name}</a> <br> <small> <c:forEach
 									var="genre" items="${novel.genres}">
-									-${genre}-
+									${genre}, 
 								</c:forEach>
 						</small></td>
 						<td>${fn:length(novel.vols)}</td>

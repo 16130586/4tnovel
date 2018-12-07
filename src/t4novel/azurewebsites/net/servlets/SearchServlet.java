@@ -55,12 +55,8 @@ public class SearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String input = request.getParameter("input");
-		String[] genre = request.getParameterValues("genre");
-		if (genre != null) {
-			for (String g : genre) {
-				System.out.println(g);
-			}
-		}
+		String type = request.getParameter("type");
+		System.out.println(type);
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 		NovelDAO novelDAO = new NovelDAO(cnn);
@@ -70,11 +66,57 @@ public class SearchServlet extends HttpServlet {
 
 		try {
 			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByNamePattern(input);
-			for (Novel novel : novelList) {
-				LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
-				LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(), genreDAO);
-				novel.setVols(volList);
-				novel.setGenres(genreList);
+			for (int i = 0; i < novelList.size(); i++) {
+				System.out.println(novelList.get(i).getName());
+			}
+			if (type.equals("normal")) {
+				for (Novel novel : novelList) {
+					LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
+					LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(),
+							genreDAO);
+					novel.setVols(volList);
+					novel.setGenres(genreList);
+				}
+			} else {
+				String[] genre = request.getParameterValues("genre");
+				String searchKind = request.getParameter("kind");
+				String searchStatus = request.getParameter("status");
+				System.out.println("Search Kind : " + searchKind + ", Search Status : " + searchStatus);
+
+				if (genre != null) {
+					for (String g : genre) {
+						System.out.println(g);
+					}
+				}
+				novelListChecking: for (int i = 0; i < novelList.size(); i++) {
+					Novel novel = novelList.get(i);
+					LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(),
+							genreDAO);
+					System.out.println(novel.getStatus().toText() + " " + novel.getKind().toText());
+					if (!novel.getStatus().toText().equalsIgnoreCase(searchStatus)
+							|| !novel.getKind().toText().equalsIgnoreCase(searchKind)) {
+						// novelList.remove(i);
+						// i--;
+						// continue novelListChecking;
+					}
+					if (genre != null) {
+						for (NovelGenre novelGenre : genreList) {
+							for (String searchGenre : genre) {
+								if (novelGenre.getDisplayName().equalsIgnoreCase(searchGenre)) {
+									LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
+									novel.setVols(volList);
+									novel.setGenres(genreList);
+									continue novelListChecking;
+								}
+							}
+						}
+						novelList.remove(i);
+						i--;
+					}
+					LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
+					novel.setVols(volList);
+					novel.setGenres(genreList);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
