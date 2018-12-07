@@ -18,6 +18,7 @@ import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
+import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
 import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
@@ -94,8 +95,12 @@ public class AddingChapterServlet extends HttpServlet {
 			Connection cnn = (Connection) request.getAttribute("connection");
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
+			
+			NovelDAO novelDao  = new NovelDAO(cnn);
+			
 			// write data to database
 			try {
+				chapter.setNovelOwner(novelDao.getNovelById(chapter.getNovelOwnerId()));
 				chapter.setId(chapDAO.getNextID());
 				chapDAO.insertChap(chapter);
 				
@@ -103,8 +108,9 @@ public class AddingChapterServlet extends HttpServlet {
 				FollowDAO followDao = new FollowDAO(cnn);
 				List<Integer> followersId = followDao.getFollowersId(chapter.getNovelOwnerId());
 				if(!followersId.isEmpty()) {
-					MessageBuilder msgBuilder = new NewChapterHtmlMessageBuilder();	
-					NotifycationSystem.notifyToListUser(followersId, msgBuilder.getData());
+					MessageBuilder msgBuilder = new NewChapterHtmlMessageBuilder(chapter);	
+					Message msg = msgBuilder.getData();
+					NotifycationSystem.notifyToListUser(followersId, msg);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
