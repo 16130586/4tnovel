@@ -29,7 +29,6 @@ public class SearchServlet extends HttpServlet {
 	 */
 	public SearchServlet() {
 		super();
-
 	}
 
 	/**
@@ -42,7 +41,6 @@ public class SearchServlet extends HttpServlet {
 		String url = "/jsps/pages/search.jsp";
 		if ("advanced".equals(type))
 			url = "/jsps/pages/search-advanced.jsp";
-
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 
 	}
@@ -56,7 +54,6 @@ public class SearchServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String input = request.getParameter("input");
 		String type = request.getParameter("type");
-		System.out.println(type);
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 		NovelDAO novelDAO = new NovelDAO(cnn);
@@ -66,9 +63,6 @@ public class SearchServlet extends HttpServlet {
 
 		try {
 			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByNamePattern(input);
-			for (int i = 0; i < novelList.size(); i++) {
-				System.out.println(novelList.get(i).getName());
-			}
 			if (type.equals("normal")) {
 				for (Novel novel : novelList) {
 					LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
@@ -81,23 +75,20 @@ public class SearchServlet extends HttpServlet {
 				String[] genre = request.getParameterValues("genre");
 				String searchKind = request.getParameter("kind");
 				String searchStatus = request.getParameter("status");
-				System.out.println("Search Kind : " + searchKind + ", Search Status : " + searchStatus);
 
-				if (genre != null) {
-					for (String g : genre) {
-						System.out.println(g);
-					}
-				}
 				novelListChecking: for (int i = 0; i < novelList.size(); i++) {
 					Novel novel = novelList.get(i);
 					LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(),
 							genreDAO);
-					System.out.println(novel.getStatus().toText() + " " + novel.getKind().toText());
-					if (!novel.getStatus().toText().equalsIgnoreCase(searchStatus)
-							|| !novel.getKind().toText().equalsIgnoreCase(searchKind)) {
-						// novelList.remove(i);
-						// i--;
-						// continue novelListChecking;
+					if (!novel.getStatus().toText().equalsIgnoreCase(searchStatus) && !searchStatus.equals("all")) {
+						novelList.remove(i);
+						i--;
+						continue novelListChecking;
+					}
+					if (!novel.getKind().toText().equalsIgnoreCase(searchKind) && !searchKind.equals("all")) {
+						novelList.remove(i);
+						i--;
+						continue novelListChecking;
 					}
 					if (genre != null) {
 						for (NovelGenre novelGenre : genreList) {

@@ -54,6 +54,7 @@
 						<div>
 							<label style="width: 98.27px">Tình trạng</label> <select
 								name="status">
+								<option value="all">Tất cả</option>
 								<option value="complete">Hoàn thành</option>
 								<option value="in process">Đang tiến hành</option>
 								<option value="pause">Dừng</option>
@@ -62,6 +63,7 @@
 						<div>
 							<label>Loại truyện</label> <select name="kind"
 								style="width: 143px;">
+								<option value="all">Tất cả</option>
 								<option value="compose">Sáng tác</option>
 								<option value="translate">Truyện dịch</option>
 							</select>
