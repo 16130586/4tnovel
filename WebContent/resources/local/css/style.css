@@ -59,6 +59,9 @@ body {
 .u-padding--05rem {
   padding: .5rem !important; }
 
+.u-padding-top--4rem {
+  padding-top: 4rem !important; }
+
 .u-padding-bottom--05rem {
   padding-bottom: .5rem !important; }
 
@@ -79,6 +82,9 @@ body {
 
 .u-25vh {
   height: 35vh !important; }
+
+.u-transformX-40 {
+  transform: translateX(-40%) !important; }
 
 .u-transformX-50 {
   transform: translateX(-50%) !important; }
