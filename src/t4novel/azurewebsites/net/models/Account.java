@@ -104,6 +104,11 @@ public class Account implements Serializable {
 	}
 
 	public void setMessages(List<Message> messages) {
+		if (this.messages != null && !this.messages.isEmpty())
+			this.messages.clear();
+		for (Message msg : messages) {
+			msg.setOwner(this);
+		}
 		this.messages = messages;
 	}
 
@@ -380,5 +385,9 @@ public class Account implements Serializable {
 
 	public void unFollowThread(int targetId) {
 
+	}
+
+	public void addNewMessage(Message message) {
+		this.messages.add(0, message);
 	}
 }
