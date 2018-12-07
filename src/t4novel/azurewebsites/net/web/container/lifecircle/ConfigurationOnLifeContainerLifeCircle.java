@@ -31,6 +31,11 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 		// loading idGenrator
 		// loading dbConnectionBroker
 		System.out.println("server loading");
+		
+		
+		//setting ws url connection
+		System.out.println("ws : url  " + ev.getServletContext().getInitParameter("notificationUrl"));
+		//end
 		SercureURLEngine.loadURLPatterns(ev.getServletContext().getRealPath(URL_SERCURITY_PATH));
 		try {
 			Context initContext = new InitialContext();
