@@ -17,12 +17,12 @@
 		document.addEventListener("DOMContentLoaded", function (){
 			var notificationBox = document.getElementById('notification-content')
 			var olderMessages = notificationBox.childNodes
-			if(!window.WebSocket) {alert("Sorry, your browser is too old too have good using experience!");
+			if(window.WebSocket) {
 				var webSocket = new WebSocket(wsUrl);
 				webSocket.onopen = function (){
 				}
 				webSocket.onmessage = function(event){
-					alert(event.data)
+					alert("Bạn vừa có một thông báo mới!")
 					if(!olderMessages)
 						olderMessages = notificationBox.childNodes;
 					if(olderMessages.length <= 0 )
@@ -42,6 +42,9 @@
 				    template.innerHTML = html;
 				    return template.content.firstChild;
 				}
+			}
+			else {
+				alert("Sorry, your browser is too old too have good using experience!");
 			}
 		})
 	
