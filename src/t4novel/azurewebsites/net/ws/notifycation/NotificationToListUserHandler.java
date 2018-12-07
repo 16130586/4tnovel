@@ -9,14 +9,16 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import t4novel.azurewebsites.net.models.Message;
+
 public class NotificationToListUserHandler implements Runnable {
 	private List<Integer> ids;
-	private String jsonData;
+	private Message message;
 
-	public NotificationToListUserHandler(List<Integer> ids, String jsonData) {
+	public NotificationToListUserHandler(List<Integer> ids, Message message) {
 		super();
 		this.ids = ids;
-		this.jsonData = jsonData;
+		this.message = message;
 	}
 
 	@Override
@@ -27,7 +29,7 @@ public class NotificationToListUserHandler implements Runnable {
 			DataSource ds = (DataSource) envContext.lookup("jdbc/sqlserver");
 			Connection cnn = ds.getConnection();
 			for (Integer userId : ids) {
-				NotifycationSystem.notifyToUser(userId, jsonData, cnn);
+				NotifycationSystem.notifyToUser(userId, message, cnn);
 			}
 			cnn.close();
 		} catch (NamingException e) {

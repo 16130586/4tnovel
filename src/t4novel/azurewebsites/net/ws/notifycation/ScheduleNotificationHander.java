@@ -9,15 +9,18 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import t4novel.azurewebsites.net.models.Message;
+
 public class ScheduleNotificationHander implements Runnable {
 	private long period;
 	private List<Integer> userIds;
-	private String jsonData;
-	public ScheduleNotificationHander(List<Integer> userIds, String jsonData,long period) {
+	private Message msg;
+
+	public ScheduleNotificationHander(List<Integer> userIds, Message msg, long period) {
 		super();
 		this.period = period;
 		this.userIds = userIds;
-		this.jsonData = jsonData;
+		this.msg = msg;
 	}
 
 	@Override
@@ -27,10 +30,10 @@ public class ScheduleNotificationHander implements Runnable {
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
 			DataSource ds = (DataSource) envContext.lookup("jdbc/sqlserver");
 			Connection cnn = ds.getConnection();
-			
-			for(Integer userId : userIds) {
+
+			for (Integer userId : userIds) {
 				Thread.sleep(period);
-				NotifycationSystem.notifyToUser(userId, jsonData, cnn);
+				NotifycationSystem.notifyToUser(userId, msg, cnn);
 			}
 			cnn.close();
 		} catch (NamingException e) {

@@ -1,5 +1,7 @@
 package t4novel.azurewebsites.net.ws.notifycation;
 
+import t4novel.azurewebsites.net.models.Message;
+
 public interface MessageBuilder {
-	String getData();
+	Message getData();
 }

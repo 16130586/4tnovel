@@ -10,14 +10,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.sercurities.Role;
 
 public class NotifyAllHander implements Runnable {
-	private String jsonData;
+	private Message msg;
 
-	public NotifyAllHander(String jsonData) {
+	public NotifyAllHander(Message msg) {
 		super();
-		this.jsonData = jsonData;
+		this.msg = msg;
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class NotifyAllHander implements Runnable {
 			stmt.setInt(1, Role.ADMINISTRATOR.getIntValue());
 			ResultSet resultSet = stmt.executeQuery();
 			while(resultSet.next()) {
-				NotifycationSystem.notifyToUser(resultSet.getInt("ID"), this.jsonData, cnn);
+				NotifycationSystem.notifyToUser(resultSet.getInt("ID"), msg, cnn);
 			}
 			resultSet.close();
 			stmt.close();
