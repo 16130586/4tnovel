@@ -51,9 +51,16 @@ public class FollowDAO {
 		return ids;
 	}
 
-	public List<Integer> getFollowersId(int novelOwnerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Integer> getFollowersId(int novelOwnerId) throws SQLException {
+		List<Integer> ids = new LinkedList<>();
+		String query = "SELECT HOST_ID FROM FOLLOW WHERE STREAM=? AND TARGET_ID=?";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setString(1, "novel");
+		stmt.setInt(2, novelOwnerId);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next())
+			ids.add(rs.getInt("HOST_ID"));
+		return ids;
 	}
 
 }

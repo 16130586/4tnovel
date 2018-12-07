@@ -265,16 +265,16 @@ public class NovelDAO {
 		}
 		return total;
 	}
+//	String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
+//	+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
+//	+ offSet + " rows fetch next " + limit + " rows only)"
+//	+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 
 	public List<Novel> getNovels(String sortByCondition, String filterCondition, int offSet, int limit)
 			throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
-//		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
-//				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
-//				+ offSet + " rows fetch next " + limit + " rows only)"
-//				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 
 		String query = "SELECT ID FROM LN WHERE ID IN(" + "SELECT ID FROM LN "
 				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + "order by DATEUP DESC OFFSET " + offSet
