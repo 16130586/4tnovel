@@ -4,8 +4,8 @@
 <html>
 <head>
 <title>Đặt lại mật khẩu</title>
-<meta name="viewport" content="width=divice-width, intitial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <!-- the following to include all needed things 
 	font
 	font awesome icon

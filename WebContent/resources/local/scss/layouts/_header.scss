@@ -71,8 +71,25 @@
     border-radius: 50%;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width:439px) and (max-width: 768px) {
     #navigation-desktop {
+        display: none;
+    }
+    #navigation-mobile {
+        display: inline-block;
+    }
+    .u-25vw{
+    	width: 50vw !important;
+    }
+    .u-25vw{
+    	width: 50vw !important;
+    }
+    .u-25vh {
+    	height : 40vh !important;
+    }
+}
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px){
+	 #navigation-desktop {
         display: none;
     }
     #navigation-mobile {

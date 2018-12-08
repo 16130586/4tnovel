@@ -81,6 +81,17 @@
     .search-bar .btn-search {
         padding-top: 1rem;
     }
+    
+    .search-result {
+    	table {
+    		tr {
+                td:last-child, th:last-child {
+                    display: none;
+                }
+            }
+    	}
+    }
+    
 } 
 
     

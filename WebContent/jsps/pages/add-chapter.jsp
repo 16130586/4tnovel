@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>Thêm chương mới</title>
-<meta name="viewport" content="width=divice-width, intitial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
 	font
