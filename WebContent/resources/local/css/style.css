@@ -499,6 +499,33 @@ body {
         .chap__setup ul li .btn {
           width: 38px; }
 
+.setting-box {
+  height: auto;
+  width: 450px;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f6f6f6; }
+  .setting-box .main {
+    padding: 1rem; }
+  .setting-box_label {
+    text-align: right; }
+
+@media screen and (max-width: 768px) {
+  #chap {
+    width: 95%; } }
+
+@media screen and (max-width: 450px) {
+  .setting-box {
+    width: 100%; }
+    .setting-box .main {
+      padding: 0; }
+      .setting-box .main .col-4, .setting-box .main .col-8 {
+        padding: 0; }
+    .setting-box_label {
+      text-align: center; } }
+
 .thread {
   width: 85vw; }
   .thread .table-host-align--right tr th:last-child, .thread .table-host-align--right tr td:last-child {

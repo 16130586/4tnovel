@@ -37,3 +37,40 @@
         }
     }
 }
+
+.setting-box {
+    height: auto;
+    width: 450px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f6f6f6;
+    .main {
+        padding: 1rem;
+    }
+    &_label {
+        text-align: right;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #chap {
+        width: 95%;
+    }
+    
+}
+@media screen and (max-width: 450px) {
+    .setting-box {
+        width: 100%;
+        .main {
+            padding: 0;
+            .col-4, .col-8 {
+                padding: 0;
+            }
+        }
+        &_label {
+            text-align: center;
+        }
+    }
+}
