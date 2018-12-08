@@ -47,7 +47,7 @@
 	</div>
 </nav>
 <script>
-	var show = fasle;
+	var show = false;
 	function showDropDownContent() {
 		var  	dropDownContent = document.getElementById('dropdown-content')
 		if (!show) {
