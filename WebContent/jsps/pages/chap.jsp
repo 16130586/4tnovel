@@ -243,6 +243,7 @@
 			setCookie('lineHeight', lineHeight, 30);
 			setCookie('backGroundColor', backGroundColor, 30);
 			setCookie('font-family', font, 30);
+			setCookie('currentRead', '${chap.id}', 30);
 		}
 
 		function getCookie(cname) {
