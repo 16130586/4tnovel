@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="dropdown-menu">
 	<div class="dropdown-btn">
-		<i class="fa fa-bell u-3x"></i>
+		<i class="fa fa-bell u-3x" onclick="showDropDownContent('notification-content')"></i>
 	</div>
 	<div id="notification-content" class="dropdown-content--bottom u-25vw u-25vh u-transformX-85 u-auto-scroll-y custom-scroll-y u-border-full card--white">
 		<c:forEach  var="message" items="${account.messages }">

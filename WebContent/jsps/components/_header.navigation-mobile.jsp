@@ -5,9 +5,9 @@
 	id="navigation-mobile"'>
 	<div class="dropdown-menu u-inline-block">
 		<a class="dropdown-btn"> <i class="fas fa-bars u-3x btn"
-			onclick='showDropDownContent()'></i>
+			onclick="showDropDownContent('navigation-content')"></i>
 		</a>
-		<div id="dropdown-content" class="dropdown-content--bottom">
+		<div id="navigation-content" class="dropdown-content--bottom">
 			<ul class="vertical-menu--showcase">
 				<li class="menu-item"><a href="index">Trang Chủ</a></li>
 				<li class="menu-item"><a href="search">tìm kiếm</a></li>
@@ -46,18 +46,4 @@
 		</div>
 	</div>
 </nav>
-<script>
-	var show = false;
-	function showDropDownContent() {
-		var  	dropDownContent = document.getElementById('dropdown-content')
-		if (!show) {
-			dropDownContent.style.display = 'block';
-			show = true;
-		}
-		else
-		{
-			dropDownContent.style.display = 'none';
-			show = false;
-		}
-	}
-</script>
+
