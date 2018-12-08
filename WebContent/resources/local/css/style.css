@@ -195,6 +195,10 @@ body {
 .u-row--1140 {
   max-width: 1140px; }
 
+.u-disabled {
+  cursor: default !important;
+  color: #afafad !important; }
+
 .card--white {
   background-color: #FFF0F5; }
 
@@ -503,17 +507,17 @@ body {
     height: 50vh;
     border: inset; }
   .chap__setup {
-    width: 50px;
+    width: auto;
     position: fixed;
     top: 40vh;
-    right: -1rem; }
+    right: 0; }
     .chap__setup ul {
       list-style: none;
       padding: 0; }
       .chap__setup ul li {
         padding-top: .2rem; }
         .chap__setup ul li .btn {
-          width: 38px; }
+          width: 50px; }
 
 .setting-box {
   height: auto;
@@ -528,19 +532,33 @@ body {
   .setting-box_label {
     text-align: right; }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-device-width: 578px) {
   #chap {
-    width: 95%; } }
-
-@media screen and (max-width: 450px) {
+    width: 95%; }
   .setting-box {
-    width: 100%; }
-    .setting-box .main {
-      padding: 0; }
-      .setting-box .main .col-4, .setting-box .main .col-8 {
-        padding: 0; }
+    width: 350px;
+    top: 50%;
+    text-align: center; }
     .setting-box_label {
-      text-align: center; } }
+      text-align: center; }
+    .setting-box .label-color {
+      margin-bottom: 2rem; }
+    .setting-box #font {
+      width: 80%; } }
+
+@media screen and (max-width: 578px) {
+  #chap {
+    width: 95%; }
+  .setting-box {
+    width: 340px;
+    top: 50%;
+    text-align: center; }
+    .setting-box_label {
+      text-align: center; }
+    .setting-box .label-color {
+      margin-bottom: 2rem; }
+    .setting-box #font {
+      width: 80%; } }
 
 .thread {
   width: 85vw; }

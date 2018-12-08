@@ -46,23 +46,22 @@
 			<div class="u-align-center u-color-white">
 				<c:if test="${not empty previousChap}">
 					<a href="read?id=${previousChap.id}"
-						class="btn btn-success u-margin-right--1rem"> << </a>
+						class="btn btn-success u-margin-right--1rem"><i class="fa fa-backward"></i></a>
 				</c:if>
 				<c:if test="${empty previousChap }">
 					<a href="/" onclick="return false;"
-						class="btn btn-success u-margin-right--1rem"> << </a>
+						class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-backward"></i></a>
 				</c:if>
 				<a href="detail?id=${chap.novelOwner.id}"
-					class="btn btn-secondary u-margin-right--1rem"><i
-					class="fas fa-list-ol"></i></a>
+					class="btn btn-secondary u-margin-right--1rem"><i class="fa fa-home"></i></a>
 
 				<c:if test="${not empty nextChap}">
 					<a href="read?id=${nextChap.id}"
-						class="btn btn-success u-margin-right--1rem"> >> </a>
+						class="btn btn-success u-margin-right--1rem"><i class="fa fa-forward"></i></a>
 				</c:if>
 				<c:if test="${empty nextChap }">
 					<a href="/" onclick="return false;"
-						class="btn btn-success u-margin-right--1rem"> >> </a>
+						class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-forward"></i></a>
 				</c:if>
 			</div>
 			<div class="chap__body__content" onclick="showHideSetup()">
@@ -72,26 +71,25 @@
 				<div id="content">
 					<span>${chap.content }</span>
 				</div>
-				<div class="u-align-center u-color-white">
+				<div class="u-align-center u-color-white u-margin-top--2rem">
 					<c:if test="${not empty previousChap}">
 						<a href="read?id=${previousChap.id}"
-							class="btn btn-success u-margin-right--1rem"> << </a>
+							class="btn btn-success u-margin-right--1rem"><i class="fa fa-backward"></i></a>
 					</c:if>
 					<c:if test="${empty previousChap }">
 						<a href="/" onclick="return false;"
-							class="btn btn-success u-margin-right--1rem"> << </a>
+							class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-backward"></i></a>
 					</c:if>
 					<a href="detail?id=${chap.novelOwner.id}"
-						class="btn btn-secondary u-margin-right--1rem"><i
-						class="fas fa-list-ol"></i></a>
+						class="btn btn-secondary u-margin-right--1rem"><i class="fa fa-home"></i></a>
 
 					<c:if test="${not empty nextChap}">
 						<a href="read?id=${nextChap.id}"
-							class="btn btn-success u-margin-right--1rem"> >> </a>
+							class="btn btn-success u-margin-right--1rem"><i class="fa fa-forward"></i></a>
 					</c:if>
 					<c:if test="${empty nextChap }">
 						<a href="/" onclick="return false;"
-							class="btn btn-success u-margin-right--1rem"> >> </a>
+							class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-forward"></i></a>
 					</c:if>
 				</div>
 			</div>
@@ -99,18 +97,38 @@
 			<div class="chap__comment"></div>
 
 			<div id="set-up" style="display: block"
-				class="chap__setup u-centered u-margin-right--1rem u-color-white">
+				class="chap__setup u-centered u-color-white">
 				<ul>
 					<li><a href="#onTop" class="btn btn-secondary"><i
 							class="fas fa-arrow-up"></i></a></li>
+					<li>
+						<c:if test="${not empty previousChap}">
+							<a href="read?id=${previousChap.id}"
+								class="btn btn-secondary"><i class="fa fa-backward"></i></a>
+						</c:if>
+						<c:if test="${empty previousChap }">
+							<a href="/" onclick="return false;"
+								class="btn btn-secondary u-disabled" ><i class="fa fa-backward"></i></a>
+						</c:if>
+					</li>
+					<li>
+						<a href="detail?id=${chap.novelOwner.id}"
+						class="btn btn-secondary"><i class="fa fa-home"></i></a>
+					</li>
 					<li><button id="btnFontChoice" onclick="showSetting()"
 							class="btn btn-secondary">
 							<i class="fas fa-font"></i>
 						</button></li>
-					<li><button id="btnColorChoice" href="#"
-							class="btn btn-secondary">
-							<i class="fas fa-palette"></i>
-						</button></li>
+					<li>
+						<c:if test="${not empty nextChap}">
+							<a href="read?id=${nextChap.id}"
+								class="btn btn-secondary"><i class="fa fa-forward"></i></a>
+						</c:if>
+						<c:if test="${empty nextChap }">
+							<a href="/" onclick="return false;"
+								class="btn btn-secondary u-disabled"><i class="fa fa-forward"></i></a>
+						</c:if>
+					</li>
 					<li><a href="#onBottom" class="btn btn-secondary"><i
 							class="fas fa-arrow-down"></i></a></li>
 				</ul>
@@ -130,9 +148,9 @@
 					class="fas fa-times"></i></span>
 			</div>
 			<div class="row" style="margin-top: 1.5rem">
-				<label class="col-4 u-2x setting-box_label">Màu
+				<label class="col-sm-4 u-2x setting-box_label label-color">Màu
 					nền</label>
-				<div class="col-8">
+				<div class="col-sm-8">
 					<span class="color" onclick="selectColor(this)"
 						style="background-color: rgb(255, 255, 255); padding: 12px 20px; cursor: pointer"></span>
 					<span class="color" onclick="selectColor(this)"
@@ -149,9 +167,9 @@
 			</div>
 
 			<div class="row" style="margin-top: 2rem">
-				<label class="col-4 u-2x setting-box_label">Font
+				<label class="col-sm-4 u-2x setting-box_label">Font
 					chữ</label>
-				<div class="col-8">
+				<div class="col-sm-8">
 					<select id="font" onchange="changeFont(this)" class="u-width--95">
 						<option value="Times New Roman">Times New Roman</option>
 						<option value="Palatino Linotype">Palatino Linotype</option>
@@ -164,9 +182,9 @@
 			</div>
 
 			<div class="row" style="margin-top: 1.5rem">
-				<label class="col-4 u-2x setting-box_label">Cỡ
+				<label class="col-sm-4 u-2x setting-box_label">Cỡ
 					chữ</label>
-				<div class="col-8">
+				<div class="col-sm-8">
 					<span class="u-2x" style="cursor: pointer; color: #10b591"
 						onclick="decreaseFSize()"><i class="fa fa-chevron-left"></i></span>
 					<input id="size" type="text"
@@ -179,9 +197,9 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 1.5rem">
-				<label class="col-4 u-2x setting-box_label">Dãn
+				<label class="col-sm-4 u-2x setting-box_label">Dãn
 					dòng</label>
-				<div class="col-8">
+				<div class="col-sm-8">
 					<span class="u-2x" style="cursor: pointer; color: #10b591"
 						onclick="decreaseLineHeight()"><i
 						class="fa fa-chevron-left"></i></span> <input id="line-height"
