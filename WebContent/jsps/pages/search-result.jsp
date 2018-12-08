@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>Kết quả tìm kiếm | 4TNOVEL</title>
-<meta name="viewport" content="width=divice-width, intitial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
 	font
@@ -96,8 +96,6 @@
 				</ul>
 			</div>
 		</div>
-		<a style="position: fixed; top: 60vh; right: 2rem;" href="#onTop"
-			class="btn btn-success u-color-white"><i class="fas fa-arrow-up"></i></a>
 	</div>
 	<%@ include file="/jsps/components/_footer.jsp"%>
 </body>

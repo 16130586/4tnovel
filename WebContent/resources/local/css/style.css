@@ -338,10 +338,14 @@ body {
     .card-novel .novel-short-info .novel__title {
       margin: auto; }
     .card-novel .novel-short-info .novel__description {
-      text-align: justify; }
+      text-align: justify;
+      font-size: 1.8rem; }
   .card-novel .novel__gender {
     background-color: lightsteelblue;
-    margin: 0px; }
+    margin: 0px;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #c68c05; }
 
 .link:hover, .link:active, .link:link, .link:visited {
   text-decoration: none;
@@ -453,7 +457,19 @@ body {
 .radius-logo {
   border-radius: 50%; }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 439px) and (max-width: 768px) {
+  #navigation-desktop {
+    display: none; }
+  #navigation-mobile {
+    display: inline-block; }
+  .u-25vw {
+    width: 50vw !important; }
+  .u-25vw {
+    width: 50vw !important; }
+  .u-25vh {
+    height: 40vh !important; } }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   #navigation-desktop {
     display: none; }
   #navigation-mobile {
@@ -593,7 +609,9 @@ body {
     text-align: center;
     border-bottom: 1px solid white; }
   .search-bar .btn-search {
-    padding-top: 1rem; } }
+    padding-top: 1rem; }
+  .search-result table tr td:last-child, .search-result table tr th:last-child {
+    display: none; } }
 
 .detail {
   background-color: #fafafa; }
@@ -606,8 +624,8 @@ body {
       padding-bottom: 2rem;
       text-align: right; }
       .detail__top-cover .img-cover {
-        width: auto;
-        height: 180px; }
+        width: 100%;
+        height: 100%; }
     .detail__top-info {
       padding-top: 1rem;
       padding-bottom: 2rem; }
@@ -635,6 +653,12 @@ body {
         background-color: #f7f7f7; }
 
 @media screen and (max-width: 768px) {
+  .detail__top-info {
+    text-align: center; }
+  .detail__top-cover {
+    text-align: center; } }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 768px) {
   .detail__top-info {
     text-align: center; }
   .detail__top-cover {
