@@ -35,6 +35,7 @@
 	
 		var wsUrl = '${initParam.notificationUrl}${account.id}'
 		document.addEventListener("DOMContentLoaded", function (){
+			
 			var notificationBox = document.getElementById('notification-content')
 			var olderMessages = notificationBox.childNodes
 			if(window.WebSocket) {
@@ -68,7 +69,8 @@
 		var notificationBox = document.getElementById('notification-content')
 		var childsMessages = notificationBox.childNodes;
 		var nextNotificationPage = 1;
-		var url = location.origin.concat('/4TNOVEL/ajax-notification');
+		
+		var url = location.origin.concat('${pageContext.request.contextPath}').concat('/ajax-notification');
 		var loadMoreBtn = document.getElementById('loadMoreBtn')
 		function loadingMoreNotifycationPage(){
 			var urlWithParam  =  url.concat('?page-number=').concat(nextNotificationPage)
