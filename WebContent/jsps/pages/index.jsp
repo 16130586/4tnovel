@@ -41,10 +41,13 @@
 		<section class="section section-current-read">
 			<h2 class="section__title">Current read</h2>
 			<hr>
-			<div class="section__content">
-				<!-- lastestReadNovel -->
-				<%@include file="/jsps/components/_card-novel.jsp"%>
-			</div>
+			<c:if test="${not empty currentRead }">
+				<c:set var="chap" value="${currentRead }"/>
+				<c:set var="novel" value="${chap.novelOwner }"/>
+				<div class="section__content">
+					<%@include file="/jsps/components/_card-novel.jsp"%>
+				</div>
+			</c:if>
 		</section>
 
 		<section class="section section-threads">
@@ -55,7 +58,8 @@
 				<%@include file="/jsps/components/_index.section.content.thread.jsp"%>
 			</div>
 		</section>
-
+		
+		<c:if test="${ not empty newTrends }">
 		<section class="section section-new-trending">
 			<h2 class="section__title">New trending</h2>
 			<hr>
@@ -70,8 +74,9 @@
 				</ul>
 			</div>
 		</section>
+		</c:if>
 		
-		
+		<c:if test="${not empty weeklyTop }">
 		<section class="section section-weekly-top">
 			<h2 class="section__title">Weekly top</h2>
 			<hr>
@@ -86,7 +91,7 @@
 				</ul>
 			</div>
 		</section>
-		
+		</c:if>
 		
 		<section class="section section-lastest-update">
 			<h2 class="section__title">Lastest update</h2>
