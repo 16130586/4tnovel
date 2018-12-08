@@ -8,3 +8,18 @@
 		<%@ include file="/jsps/components/_header.user-functions.jsp"%>
 	</c:if>
 </header>
+<script>
+	var show = false;
+	function showDropDownContent(name) {
+		var  	dropDownContent = document.getElementById(name)
+		if (!show) {
+			dropDownContent.style.display = 'block';
+			show = true;
+		}
+		else
+		{
+			dropDownContent.style.display = 'none';
+			show = false;
+		}
+	}
+</script>

@@ -4,7 +4,7 @@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="dropdown-menu">
 	<div class="dropdown-btn">
-		<i class="fa fa-heart u-3x"></i>
+		<i class="fa fa-heart u-3x" onclick="showDropDownContent('boorkmark-content')"></i>
 	</div>
 	<div id="boorkmark-content"class="dropdown-content--bottom u-25vw u-25vh u-transformX-75 u-auto-scroll-y custom-scroll-y u-border-full card--white">
 		<c:forEach begin="1" end="10">
