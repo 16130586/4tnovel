@@ -22,7 +22,4 @@
     <param-name>limitPagination</param-name>
     <param-value>5</param-value>
   </context-param>
-  
-  
- 
 </web-app>
