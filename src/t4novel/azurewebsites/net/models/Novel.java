@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.restfb.scope.FacebookPermissions;
 
 public class Novel implements Serializable {
 	/**
@@ -18,7 +17,7 @@ public class Novel implements Serializable {
 	private String description, coverImg;
 	private List<Vol> vols;
 	private Date dateUp;
-	private int view;
+	private int view, coverId;
 	private Account owner;
 	private int like;
 	private List<Comment> comments;
@@ -28,6 +27,14 @@ public class Novel implements Serializable {
 	private NovelKind kind;
 	private int groupId;
 	private Group group;
+	private String encodeImg;
+	public int getCoverId() {
+		return coverId;
+	}
+
+	public void setCoverId(int coverId) {
+		this.coverId = coverId;
+	}
 
 	public Group getGroup() {
 		return group;
@@ -38,7 +45,7 @@ public class Novel implements Serializable {
 		this.groupId = group.getId();
 	}
 
-	private String encodeImg;
+	
 
 	public Novel() {
 	}
