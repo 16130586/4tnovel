@@ -461,4 +461,13 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/resources/imgs">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 </url-sercutiry> 
