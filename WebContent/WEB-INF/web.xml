@@ -22,8 +22,7 @@
     <param-name>limitPagination</param-name>
     <param-value>5</param-value>
   </context-param>
-  <context-param>
-    <param-name>notificationUrl</param-name>
-    <param-value>ws://localhost:8080/4TNOVEL/notify-system/</param-value>
-  </context-param>
+  
+  
+ 
 </web-app>
