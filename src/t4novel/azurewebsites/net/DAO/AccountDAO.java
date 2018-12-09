@@ -14,10 +14,10 @@ import t4novel.azurewebsites.net.sercurities.Role;
 public class AccountDAO {
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
-	private static final Map<Integer, Account> ACCOUNTS_CACHE;
+//	private static final Map<Integer, Account> ACCOUNTS_CACHE;
 	static {
 		NEXT_ID_GENRATOR = new NextIdGenrator("ACCOUNT");
-		ACCOUNTS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Account>(10, 5, true));
+//		ACCOUNTS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Account>(10, 5, true));
 	}
 
 	public AccountDAO(Connection databaseConnection) {
@@ -80,10 +80,10 @@ public class AccountDAO {
 			if (!rs.next())
 				return account;
 			if (rs.getString(3) != null) {
-				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
-				if (account != null) {
-					return account;
-				}
+//				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
+//				if (account != null) {
+//					return account;
+//				}
 				account = new Account();
 				account.setId(rs.getInt(1));
 				account.setDisplayedName(rs.getString(2));
@@ -94,7 +94,7 @@ public class AccountDAO {
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
-				ACCOUNTS_CACHE.put(account.getId(), account);
+//				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,10 +120,10 @@ public class AccountDAO {
 			if (!rs.next())
 				return account;
 			if (rs.getString(3) != null) {
-				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
-				if (account != null) {
-					return account;
-				}
+//				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
+//				if (account != null) {
+//					return account;
+//				}
 				account = new Account();
 				account.setId(rs.getInt(1));
 				account.setDisplayedName(rs.getString(2));
@@ -134,7 +134,7 @@ public class AccountDAO {
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
-				ACCOUNTS_CACHE.put(account.getId(), account);
+//				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,10 +160,10 @@ public class AccountDAO {
 			if (!rs.next())
 				return account;
 			if (rs.getString(3) != null) {
-				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
-				if (account != null) {
-					return account;
-				}
+//				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
+//				if (account != null) {
+//					return account;
+//				}
 				account = new Account();
 				account.setId(rs.getInt(1));
 				account.setDisplayedName(rs.getString(2));
@@ -174,7 +174,7 @@ public class AccountDAO {
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
-				ACCOUNTS_CACHE.put(account.getId(), account);
+//				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,10 +188,11 @@ public class AccountDAO {
 	}
 
 	public Account getAccountByID(int accountID) throws Exception {
-		Account account = ACCOUNTS_CACHE.get(accountID);
-		if (account != null) {
-			return account;
-		}
+//		Account account = ACCOUNTS_CACHE.get(accountID);
+//		if (account != null) {
+//			return account;
+//		}
+		Account account = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM ACCOUNT WHERE ID = ?";
@@ -213,7 +214,7 @@ public class AccountDAO {
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setBanned(rs.getString(9).equals("YES") ? true : false);
-				ACCOUNTS_CACHE.put(account.getId(), account);
+//				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
