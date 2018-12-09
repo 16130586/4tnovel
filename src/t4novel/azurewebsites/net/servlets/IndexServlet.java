@@ -43,11 +43,11 @@ public class IndexServlet extends HttpServlet {
 		NovelDAO novelDao = new NovelDAO(cnn);
 		GenreDAO genreDao = new GenreDAO(cnn);
 		ImageDAO imgDao = new ImageDAO(cnn);
-		Novel novel;
+		 
 		try {
 			newChaps = chapDao.getChaps(null, null, 0, 5);
 			for (Chap chap : newChaps) {
-				novel = novelDao.getNovelById(chap.getNovelOwnerId());
+				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());
 				novel.setCoverImg(novelDao.getEncodeImageById(chap.getNovelOwnerId(), imgDao));
 				novel.setGenres(novelDao.getGenres(chap.getNovelOwnerId(), genreDao));
 				chap.setNovelOwner(novel);
@@ -71,7 +71,7 @@ public class IndexServlet extends HttpServlet {
 		if (currentReadChapId != 0) {
 			try {
 				currentRead = chapDao.getPartOfChapsByChapId(currentReadChapId);
-				novel = novelDao.getNovelById(currentRead.getNovelOwnerId());
+				Novel novel = novelDao.getNovelById(currentRead.getNovelOwnerId());
 				novel.setCoverImg(novelDao.getEncodeImageById(currentRead.getNovelOwnerId(), imgDao));
 				novel.setGenres(novelDao.getGenres(currentRead.getNovelOwnerId(), genreDao));
 			} catch (Exception e) {
