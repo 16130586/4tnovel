@@ -5,10 +5,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Map;
+
+import org.apache.commons.collections4.map.LRUMap;
 
 public class ImageDAO {
 	private Connection cnn;
-	
+	private static final Map<Integer, String> IMGS_CACHE;
+	static {
+		IMGS_CACHE  = Collections.synchronizedMap(new LRUMap<Integer, String>(10, 5, true));
+	}
 	public ImageDAO(Connection cnn) {
 		this.cnn = cnn;
 	}
@@ -40,12 +47,14 @@ public class ImageDAO {
 			stmt.setBlob(1, in);
 			stmt.setInt(2, idOwner);
 			stmt.executeUpdate();
+			IMGS_CACHE.remove(idOwner);
 		} finally {
 			stmt.close();
 		}
 	}
 	
 	public void deleteImageById(int idOwner, String type) throws Exception {
+		
 		PreparedStatement stmt = null;
 		String query = "delete from IMAGE where IDOWNER = ? and TYPE = ?";
 		try {
@@ -53,15 +62,20 @@ public class ImageDAO {
 			stmt.setInt(1, idOwner);
 			stmt.setString(2, type);
 			stmt.executeUpdate();
+			IMGS_CACHE.remove(idOwner);
 		} finally {
 			stmt.close();
 		}
 	}
 	public String getEncodeImage(int idOwner, String type) throws Exception {
+		String result = IMGS_CACHE.get(idOwner);
+		if(result != null) {
+			return result;
+		}
 		String query = "select IMG from IMAGE where IDOWNER = ? and TYPE = ?";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String result = "";
+		
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, idOwner);
@@ -69,6 +83,7 @@ public class ImageDAO {
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				result = getEncode(rs.getBytes(1));
+				IMGS_CACHE.put(idOwner, result);
 			}
 		} finally {
 			rs.close();
