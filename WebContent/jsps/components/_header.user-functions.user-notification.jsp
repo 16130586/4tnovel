@@ -6,7 +6,7 @@
 		<i class="fa fa-bell u-3x" onclick="showDropDownContent('notification-content')"></i>
 	</div>
 	<div id="notification-content" class="dropdown-content--bottom u-25vw u-25vh u-transformX-85 u-auto-scroll-y custom-scroll-y u-border-full card--white">
-		<c:forEach  var="message" items="${account.messages }">
+		<c:forEach  var="message" items="${account.messages}"  begin="0" end="4">
 			<%@ include file="/jsps/components/_header.user_functions.user-notification.message.jsp" %>
 		</c:forEach>
 		<c:if test="${not empty account.messages}">
@@ -15,8 +15,8 @@
 			</div>
 		</c:if>
 		<c:if test="${empty account.messages }">
-			<div class="u-align-center">
-			<h2>Thông báo rỗng!</h2>
+			<div id="emptyMessage" class="u-align-center">
+			<h2 >Thông báo rỗng!</h2>
 			</div>
 		</c:if>
 		
@@ -31,11 +31,11 @@
 		    template.innerHTML = html;
 		    return template.content.firstChild;
 		}
-	
-	
-		var wsUrl = '${initParam.notificationUrl}${account.id}'
+		
+		var baseWsUrl = "ws://".concat(location.hostname).concat(':').concat(location.port).concat('${pageContext.request.contextPath}');
+		var wsUrl = baseWsUrl.concat('/notify-system').concat('/${account.id}')
 		document.addEventListener("DOMContentLoaded", function (){
-			
+			var emptyMessage = document.getElementById('emptyMessage')
 			var notificationBox = document.getElementById('notification-content')
 			var olderMessages = notificationBox.childNodes
 			if(window.WebSocket) {
@@ -44,10 +44,12 @@
 				}
 				webSocket.onmessage = function(event){
 					alert("Bạn vừa có một thông báo mới!")
-					if(!olderMessages)
-						olderMessages = notificationBox.childNodes;
-					if(olderMessages.length <= 0 )
+					if(emptyMessage){
+						notificationBox.removeChild(emptyMessage)
 						notificationBox.appendChild(htmlToElement(event.data))
+						emptyMessage = null
+						
+					}
 					else {
 						notificationBox.insertBefore(htmlToElement(event.data), olderMessages[0])
 					}
