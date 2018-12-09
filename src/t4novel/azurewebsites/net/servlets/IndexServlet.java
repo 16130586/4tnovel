@@ -2,10 +2,12 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,12 +39,12 @@ public class IndexServlet extends HttpServlet {
 		
 		Connection cnn = (Connection) request.getAttribute("connection");
 		List<Chap> newChaps = null;
+		ChapDAO chapDao = new ChapDAO(cnn);
+		NovelDAO novelDao = new NovelDAO(cnn);
+		GenreDAO genreDao = new GenreDAO(cnn);
+		ImageDAO imgDao = new ImageDAO(cnn);
+		Novel novel;
 		try {
-			ChapDAO chapDao = new ChapDAO(cnn);
-			NovelDAO novelDao = new NovelDAO(cnn);
-			GenreDAO genreDao = new GenreDAO(cnn);
-			ImageDAO imgDao = new ImageDAO(cnn);
-			Novel novel;
 			newChaps = chapDao.getChaps(null, null, 0, 5);
 			for (Chap chap : newChaps) {
 				novel = novelDao.getNovelById(chap.getNovelOwnerId());
@@ -54,6 +56,27 @@ public class IndexServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("newChaps", newChaps);
+		
+		Cookie[] cookies = request.getCookies();
+		int currentReadChapId = 0;
+		for (Cookie c : cookies) {
+			if (c.getName().equals("currentRead")) {
+				currentReadChapId = Integer.parseInt(c.getValue());
+			}
+		}
+		Chap currentRead = null;
+		if (currentReadChapId != 0) {
+			try {
+				currentRead = chapDao.getPartOfChapsByChapId(currentReadChapId);
+				novel = novelDao.getNovelById(currentRead.getNovelOwnerId());
+				novel.setCoverImg(novelDao.getEncodeImageById(currentRead.getNovelOwnerId(), imgDao));
+				novel.setGenres(novelDao.getGenres(currentRead.getNovelOwnerId(), genreDao));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			request.setAttribute("currentRead", currentRead);
+		}
+		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
 

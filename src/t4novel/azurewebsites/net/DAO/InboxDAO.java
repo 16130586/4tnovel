@@ -48,7 +48,7 @@ public class InboxDAO {
 		List<Message> msges = new LinkedList<>();
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, accId);
-		stmt.setInt(2, from);
+		stmt.setInt(2, from * limit);
 		stmt.setInt(3, limit);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {

@@ -3,6 +3,8 @@ package t4novel.azurewebsites.net.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.google.gson.annotations.Expose;
+
 public class Message implements Serializable{
 	/**
 	 * 
@@ -11,6 +13,7 @@ public class Message implements Serializable{
 	private int id;
 	private String content;
 	private Date time;
+	@Expose
 	private Account owner;
 	public Message() {
 		

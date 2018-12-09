@@ -453,4 +453,12 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/ajax-notification">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 </url-sercutiry> 

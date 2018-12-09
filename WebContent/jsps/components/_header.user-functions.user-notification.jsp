@@ -9,12 +9,33 @@
 		<c:forEach  var="message" items="${account.messages }">
 			<%@ include file="/jsps/components/_header.user_functions.user-notification.message.jsp" %>
 		</c:forEach>
+		<c:if test="${not empty account.messages}">
+			<div class="u-align-center">
+				<a id="loadMoreBtn" class="u-padding--05rem"onclick="loadingMoreNotifycationPage()" style="color: blue;cursor:pointer;">Xem thêm</a>
+			</div>
+		</c:if>
+		<c:if test="${empty account.messages }">
+			<div class="u-align-center">
+			<h2>Thông báo rỗng!</h2>
+			</div>
+		</c:if>
+		
 	</div>
 </div>
 <c:if test="${not empty account }">
 	<script>
+	
+		function htmlToElement(html) {
+		    var template = document.createElement('template');
+		    html = html.trim(); // Never return a text node of whitespace as the result
+		    template.innerHTML = html;
+		    return template.content.firstChild;
+		}
+	
+	
 		var wsUrl = '${initParam.notificationUrl}${account.id}'
 		document.addEventListener("DOMContentLoaded", function (){
+			
 			var notificationBox = document.getElementById('notification-content')
 			var olderMessages = notificationBox.childNodes
 			if(window.WebSocket) {
@@ -36,17 +57,47 @@
 				}
 				webSocket.onerror = function(event){
 				}
-				function htmlToElement(html) {
-				    var template = document.createElement('template');
-				    html = html.trim(); // Never return a text node of whitespace as the result
-				    template.innerHTML = html;
-				    return template.content.firstChild;
-				}
+				
 			}
 			else {
 				alert("Sorry, your browser is too old too have good using experience!");
 			}
 		})
-	
+		
+	</script>
+	<script>
+		var notificationBox = document.getElementById('notification-content')
+		var childsMessages = notificationBox.childNodes;
+		var nextNotificationPage = 1;
+		
+		var url = location.origin.concat('${pageContext.request.contextPath}').concat('/ajax-notification');
+		var loadMoreBtn = document.getElementById('loadMoreBtn')
+		function loadingMoreNotifycationPage(){
+			var urlWithParam  =  url.concat('?page-number=').concat(nextNotificationPage)
+			var xhttp;
+			  xhttp=new XMLHttpRequest();
+			  xhttp.onreadystatechange = function() {
+			    if (this.readyState == 4 && this.status == 200) {
+			    	nextNotificationPage++;
+			        var datas = JSON.parse(this.responseText);
+			        // out of messagge
+			        if(datas.length == 0 ){
+			        	loadMoreBtn.onclick = null;
+			        	loadMoreBtn.style.color = 'gray';
+			        	alert('Bạn đã xem hết tất cả thông báo!')
+			        }
+			        if(childsMessages.length > 0){
+			        	var lastMessage = childsMessages[childsMessages.length - 2];
+			        	for(var i = 0 ; i < datas.length ; i++ , lastMessage = childsMessages[childsMessages.length -2]){
+			        		notificationBox.insertBefore(htmlToElement(datas[i].content), lastMessage)
+			        	}
+			        }
+			    }
+			  };
+			  xhttp.open("GET", urlWithParam, true);
+			  xhttp.setRequestHeader("Content-Type", "text/html;charset=utf-8");
+			  xhttp.send("status=true");
+		}
+		
 	</script>
 </c:if>
