@@ -57,13 +57,16 @@ public class IndexServlet extends HttpServlet {
 		}
 		request.setAttribute("newChaps", newChaps);
 		
+		// loading current read
 		Cookie[] cookies = request.getCookies();
 		int currentReadChapId = 0;
+		if(cookies != null)
 		for (Cookie c : cookies) {
 			if (c.getName().equals("currentRead")) {
 				currentReadChapId = Integer.parseInt(c.getValue());
 			}
 		}
+		
 		Chap currentRead = null;
 		if (currentReadChapId != 0) {
 			try {
@@ -76,6 +79,8 @@ public class IndexServlet extends HttpServlet {
 			}
 			request.setAttribute("currentRead", currentRead);
 		}
+		
+		// end
 		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
