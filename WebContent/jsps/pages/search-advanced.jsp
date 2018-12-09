@@ -55,9 +55,9 @@
 							<label style="width: 98.27px">Tình trạng</label> <select
 								name="status">
 								<option value="all">Tất cả</option>
-								<option value="complete">Hoàn thành</option>
-								<option value="in process">Đang tiến hành</option>
-								<option value="pause">Dừng</option>
+								<option value="0">Hoàn thành</option>
+								<option value="1">Đang tiến hành</option>
+								<option value="2">Dừng</option>
 							</select>
 						</div>
 						<div>
@@ -72,121 +72,116 @@
 					<div class="col-md-9 genre-select-box">
 						<div class="row">
 							<div class="col-4">
-								<input id="action" type="checkbox" name="genre" value="action"><label
+								<input id="action" type="checkbox" name="genre" value="0"><label
 									for="action">Action</label>
 							</div>
 							<div class="col-4">
-								<input id="adult" type="checkbox" name="genre" value="adult"><label
+								<input id="adult" type="checkbox" name="genre" value="8"><label
 									for="adult">Adult</label>
 							</div>
 							<div class="col-4">
-								<input id="adventure" type="checkbox" name="genre"
-									value="adventure"><label for="adventure">Adventure</label>
+								<input id="adventure" type="checkbox" name="genre" value="15"><label
+									for="adventure">Adventure</label>
 							</div>
 							<div class="col-4">
-								<input id="comedy" type="checkbox" name="genre" value="comedy"><label
+								<input id="comedy" type="checkbox" name="genre" value="22"><label
 									for="comedy">Comedy</label>
 							</div>
 							<div class="col-4">
-								<input id="drama" type="checkbox" name="genre" value="drama"><label
+								<input id="drama" type="checkbox" name="genre" value="1"><label
 									for="drama">Drama</label>
 							</div>
 							<div class="col-4">
-								<input id="ecchi" type="checkbox" name="genre" value="ecchi"><label
+								<input id="ecchi" type="checkbox" name="genre" value="9"><label
 									for="ecchi">Ecchi</label>
 							</div>
 							<div class="col-4">
-								<input id="fantasy" type="checkbox" name="genre" value="fantasy"><label
+								<input id="fantasy" type="checkbox" name="genre" value="16"><label
 									for="fantasy">Fantasy</label>
 							</div>
 							<div class="col-4">
 								<input id="gender-bender" type="checkbox" name="genre"
-									value="gender-bender"><label for="gender-bender">Gender
+									value="23"><label for="gender-bender">Gender
 									Bender</label>
 							</div>
 							<div class="col-4">
-								<input id="isekai" type="checkbox" name="genre" value="isekai"><label
+								<input id="isekai" type="checkbox" name="genre" value="2"><label
 									for="isekai">Isekai</label>
 							</div>
 							<div class="col-4">
-								<input id="incest" type="checkbox" name="genre" value="incest"><label
+								<input id="incest" type="checkbox" name="genre" value="10"><label
 									for="incest">Incest</label>
 							</div>
 							<div class="col-4">
-								<input id="horror" type="checkbox" name="genre" value="horror"><label
+								<input id="horror" type="checkbox" name="genre" value="17"><label
 									for="horror">Horror</label>
 							</div>
 							<div class="col-4">
-								<input id="josei" type="checkbox" name="genre" value="josei"><label
+								<input id="josei" type="checkbox" name="genre" value="24"><label
 									for="josei">Josei</label>
 							</div>
 							<div class="col-4">
-								<input id="mature" type="checkbox" name="genre" value="mature"><label
+								<input id="mature" type="checkbox" name="genre" value="3"><label
 									for="mature">Mature</label>
 							</div>
 							<div class="col-4">
-								<input id="mechanic" type="checkbox" name="genre"
-									value="mechanic"><label for="mechanic">Mecha</label>
+								<input id="mechanic" type="checkbox" name="genre" value="11"><label
+									for="mechanic">Mecha</label>
 							</div>
 							<div class="col-4">
-								<input id="mystery" type="checkbox" name="genre" value="mystery"><label
+								<input id="mystery" type="checkbox" name="genre" value="18"><label
 									for="mystery">Mystery</label>
 							</div>
 							<div class="col-4">
-								<input id="romance" type="checkbox" name="genre" value="romance"><label
+								<input id="romance" type="checkbox" name="genre" value="25"><label
 									for="romance">Romance</label>
 							</div>
 							<div class="col-4">
-								<input id="school-life" type="checkbox" name="genre"
-									value="school-life"><label for="school-life">School
-									Life</label>
+								<input id="school-life" type="checkbox" name="genre" value="4"><label
+									for="school-life">School Life</label>
 							</div>
 							<div class="col-4">
-								<input id="shoujo-ai" type="checkbox" name="genre"
-									value="shoujo-ai"><label for="shoujo-ai">Shoujo
-									ai</label>
+								<input id="shoujo-ai" type="checkbox" name="genre" value="12"><label
+									for="shoujo-ai">Shoujo ai</label>
 							</div>
 							<div class="col-4">
-								<input id="shoujo" type="checkbox" name="genre" value="shoujo"><label
+								<input id="shoujo" type="checkbox" name="genre" value="19"><label
 									for="shoujo">Shoujo</label>
 							</div>
 							<div class="col-4">
-								<input id="seinen" type="checkbox" name="genre" value="seinen"><label
+								<input id="seinen" type="checkbox" name="genre" value="26"><label
 									for="seinen">Seinen</label>
 							</div>
 							<div class="col-4">
-								<input id="slice-of-life" type="checkbox" name="genre"
-									value="slice-of-life"><label for="slice-of-life">Slice
-									of Life</label>
+								<input id="slice-of-life" type="checkbox" name="genre" value="5"><label
+									for="slice-of-life">Slice of Life</label>
 							</div>
 							<div class="col-4">
-								<input id="sports" type="checkbox" name="genre" value="sports"><label
+								<input id="sports" type="checkbox" name="genre" value="13"><label
 									for="sports">Sports</label>
 							</div>
 							<div class="col-4">
-								<input id="shounen" type="checkbox" name="genre" value="shounen"><label
+								<input id="shounen" type="checkbox" name="genre" value="20"><label
 									for="shounen">Shounen</label>
 							</div>
 							<div class="col-4">
 								<input id="shounen-ai" type="checkbox" name="genre"
-									value="shounen-ai"><label for="shounen-ai">Shounen
-									ai</label>
+									value="shounen-ai"><label for="27">Shounen ai</label>
 							</div>
 							<div class="col-4">
-								<input id="super-power" type="checkbox" name="genre"
-									value="super-power"><label for="super-power">Super
-									Power</label>
+								<input id="super-power" type="checkbox" name="genre" value="6"><label
+									for="super-power">Super Power</label>
 							</div>
 							<div class="col-4">
-								<input id="supernatural" type="checkbox" name="genre"
-									value="supernatural"><label for="supernatural">Supernatural</label>
+								<input id="supernatural" type="checkbox" name="genre" value="14"><label
+									for="supernatural">Supernatural</label>
 							</div>
 							<div class="col-4">
-								<input id="suspense" type="checkbox" name="genre"
-									value="suspense"><label for="suspense">Suspense</label>
+								<input id="suspense" type="checkbox" name="genre" value="21"><label
+									for="suspense">Suspense</label>
 							</div>
 							<div class="col-4">
-								<input id="tragedy" type="checkbox" name="genre" value="tragedy"><label
+								<input id="tragedy" type="checkbox" name="genre" value="28"><label
 									for="tragedy">Tragedy</label>
 							</div>
 						</div>

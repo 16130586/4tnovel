@@ -99,6 +99,55 @@ public class NovelDAO {
 		return result;
 	}
 
+	public List<Novel> searchNovelsByQuery(String query, int pageNumber) throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Novel> result = new LinkedList<>();
+		Novel tmp;
+		query += " order by DATEUP desc offset " + (pageNumber * 5) + " rows fetch next 5 rows only";
+		try {
+			stmt = cnn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				int idNovel = rs.getInt("ID");
+				tmp = new Novel();
+				tmp.setId(idNovel);
+				tmp.setName(rs.getString("NAME"));
+				tmp.setDescription(rs.getString("DESCRIBE"));
+				tmp.setDateUp(rs.getDate("DATEUP"));
+				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
+				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
+				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+				result.add(tmp);
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
+		return result;
+	}
+
+	public int countNovelsByQuery(String query) throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			stmt = cnn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				result++;
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
+		return result;
+	}
+
 	public Novel getNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

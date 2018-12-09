@@ -39,10 +39,15 @@ public class SearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String type = request.getParameter("type");
 		String url = "/jsps/pages/search.jsp";
+		String pageNumber = request.getParameter("page-number");
+
 		if ("advanced".equals(type))
 			url = "/jsps/pages/search-advanced.jsp";
-		getServletContext().getRequestDispatcher(url).forward(request, response);
-
+		if (pageNumber != null) {
+			doPost(request, response);
+		} else {
+			getServletContext().getRequestDispatcher(url).forward(request, response);
+		}
 	}
 
 	/**
@@ -52,72 +57,84 @@ public class SearchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		Connection cnn = (Connection) request.getAttribute("connection");
+
 		String input = request.getParameter("input");
 		String type = request.getParameter("type");
+		String pageNumber = request.getParameter("page-number");
+		String pushBackUrl = "search";
+		String query = (String) request.getSession().getAttribute("search-query");
 
-		Connection cnn = (Connection) request.getAttribute("connection");
 		NovelDAO novelDAO = new NovelDAO(cnn);
 		VolDAO volDAO = new VolDAO(cnn);
 		GenreDAO genreDAO = new GenreDAO(cnn);
-		LinkedList<Novel> novelList = null;
+		LinkedList<Novel> novelList = new LinkedList<>();
+		int maxPage = 0;
 
-		try {
-			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByNamePattern(input);
-			if (type.equals("normal")) {
-				for (Novel novel : novelList) {
-					LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
-					LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(),
-							genreDAO);
-					novel.setVols(volList);
-					novel.setGenres(genreList);
-				}
+		if (type.equals("normal") && pageNumber == null) {
+			query = "SELECT * FROM LN INNER JOIN (SELECT DISTINCT ID FROM (select * from LN where NAME like N'%" + input
+					+ "%') S  INNER JOIN GENRE ON GENRE.IDNOVEL = S.ID) A ON A.ID = LN.ID";
+			request.getSession().setAttribute("search-query", query);
+		}
+		if (!type.equals("normal") && pageNumber == null) {
+			String searchKind = request.getParameter("kind");
+			String searchStatus = request.getParameter("status");
+			String searchGenre = "";
+			String[] genre = request.getParameterValues("genre");
+
+			if (searchKind.equals("all")) {
+				searchKind = "(S.KIND = 'COMPOSE' OR S.KIND = 'TRANSLATE')";
 			} else {
-				String[] genre = request.getParameterValues("genre");
-				String searchKind = request.getParameter("kind");
-				String searchStatus = request.getParameter("status");
+				searchKind = "(S.KIND = '" + searchKind + "')";
+			}
 
-				novelListChecking: for (int i = 0; i < novelList.size(); i++) {
-					Novel novel = novelList.get(i);
-					LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(),
-							genreDAO);
-					if (!novel.getStatus().toText().equalsIgnoreCase(searchStatus) && !searchStatus.equals("all")) {
-						novelList.remove(i);
-						i--;
-						continue novelListChecking;
-					}
-					if (!novel.getKind().toText().equalsIgnoreCase(searchKind) && !searchKind.equals("all")) {
-						novelList.remove(i);
-						i--;
-						continue novelListChecking;
-					}
-					if (genre != null) {
-						for (NovelGenre novelGenre : genreList) {
-							for (String searchGenre : genre) {
-								if (novelGenre.getDisplayName().equalsIgnoreCase(searchGenre)) {
-									LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
-									novel.setVols(volList);
-									novel.setGenres(genreList);
-									continue novelListChecking;
-								}
-							}
-						}
-						novelList.remove(i);
-						i--;
-					}
-					LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
-					novel.setVols(volList);
-					novel.setGenres(genreList);
+			if (searchStatus.equals("all")) {
+				searchStatus = "(S.STATUS = 0 OR S.STATUS = 1 OR S.STATUS = 2)";
+			} else {
+				searchStatus = "(S.STATUS = " + searchStatus + ")";
+			}
+
+			if (genre != null) {
+				searchGenre = "AND (GENRE.VALUE=" + genre[0];
+				for (int i = 1; i < genre.length; i++) {
+					searchGenre += "OR GENRE.VALUE =" + genre[i];
 				}
+				searchGenre += ")";
+			}
+			query = "SELECT * FROM LN INNER JOIN (SELECT DISTINCT ID FROM (select * from LN where NAME like N'%" + input
+					+ "%') S  INNER JOIN GENRE ON GENRE.IDNOVEL = S.ID WHERE " + searchKind + " AND " + searchStatus
+					+ searchGenre + " ) A ON A.ID = LN.ID";
+			request.getSession().setAttribute("search-query", query);
+		}
+		if (pageNumber == null) {
+			pageNumber = "1";
+		}
+		if (type.equals("normal")) {
+			pushBackUrl = "?type=normal";
+		} else {
+			pushBackUrl = "?type=advanced";
+		}
+		try {
+			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByQuery(query, Integer.parseInt(pageNumber) - 1);
+			maxPage = novelDAO.countNovelsByQuery(query);
+			for (Novel novel : novelList) {
+				LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
+				LinkedList<NovelGenre> genreList = (LinkedList<NovelGenre>) novelDAO.getGenres(novel.getId(), genreDAO);
+				novel.setVols(volList);
+				novel.setGenres(genreList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		int limit = Integer.parseInt(getServletContext().getInitParameter("limitPagination"));
+		int maxPaging = maxPage % limit > 0 ? (maxPage / limit) + 1 : (maxPage / limit);
 
 		request.setAttribute("searchResultNovel", novelList);
+		request.setAttribute("totalPage", maxPaging);
+		request.setAttribute("currentPage", pageNumber);
+		request.setAttribute("url", pushBackUrl);
+
 		getServletContext().getRequestDispatcher("/jsps/pages/search-result.jsp").forward(request, response);
-		// lấy ra danh sách 20 phần tử đâu tiên từ query theo params trên
-		// >> đẩy vào request danh sách đó và chuyển hướng sang trang hiện kết quả tìm
-		// kiếm : search-result.jsp
 	}
 
 }
