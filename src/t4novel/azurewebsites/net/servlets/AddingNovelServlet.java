@@ -99,7 +99,6 @@ public class AddingNovelServlet extends HttpServlet {
 		AbstractMappingForm form = new AddingNovelForm(request);
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		if (!form.isOnError()) {
-			// TODO write to dtb , apply to account
 			Connection cnn = (Connection) request.getAttribute("connection");
 
 			NovelDAO novelDAO = new NovelDAO(cnn);
@@ -108,16 +107,33 @@ public class AddingNovelServlet extends HttpServlet {
 
 			Novel novel = (Novel) form.getMappingData();
 			try {
+				// new logic 
+				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
+				if(fileImage != null) {
+					imgDAO.insertNewImage(fileImage.getInputStream());
+					novel.setCoverId(imgDAO.getNextId(cnn) - 1);
+				}
+				// end new logic
+				
 				novelDAO.insertNovel(novel);
 				novel.setId(novelDAO.getNextID() - 1);
 				novelDAO.insertGenres(novel.getId(), novel.getGenres(), genreDAO);
 				novel.setVols(new LinkedList<>());
-				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
-				if (fileImage != null)
-					novelDAO.insertImageNovel(novel.getId(), fileImage.getInputStream(), imgDAO);
-				else {
-					novelDAO.insertImageNovel(novel.getId(), null, imgDAO);
-				}
+				
+				// old logic with old db
+	//				if (fileImage != null)
+	//					novelDAO.insertImageNovel(novel.getId(), fileImage.getInputStream(), imgDAO);
+	//				else {
+	//					novelDAO.insertImageNovel(novel.getId(), null, imgDAO);
+	//				}
+				
+				// end old logic with old db
+				
+				
+				
+				
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

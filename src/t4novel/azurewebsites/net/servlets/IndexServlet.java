@@ -71,13 +71,18 @@ public class IndexServlet extends HttpServlet {
 		if (currentReadChapId != 0) {
 			try {
 				currentRead = chapDao.getPartOfChapsByChapId(currentReadChapId);
-				Novel novel = novelDao.getNovelById(currentRead.getNovelOwnerId());
-				novel.setCoverImg(novelDao.getEncodeImageById(currentRead.getNovelOwnerId(), imgDao));
-				novel.setGenres(novelDao.getGenres(currentRead.getNovelOwnerId(), genreDao));
+				//make sure never got in case last read is deadth chap(removing by owner)
+				if(currentRead != null) {
+					Novel novel = novelDao.getNovelById(currentRead.getNovelOwnerId());
+					novel.setGenres(novelDao.getGenres(currentRead.getNovelOwnerId(), genreDao));
+					currentRead.setNovelOwner(novel);
+					request.setAttribute("currentRead", currentRead);
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			request.setAttribute("currentRead", currentRead);
+		
 		}
 		
 		// end
