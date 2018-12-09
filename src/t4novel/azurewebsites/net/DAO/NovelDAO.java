@@ -2,20 +2,16 @@ package t4novel.azurewebsites.net.DAO;
 
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelGenre;
 import t4novel.azurewebsites.net.models.NovelKind;
 import t4novel.azurewebsites.net.models.NovelStatus;
-import org.apache.commons.collections4.map.*;
 
 public class NovelDAO {
 	private Connection cnn;
@@ -35,7 +31,7 @@ public class NovelDAO {
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP,KIND, STATUS from LN where IDOWNER = ?";
+		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP,KIND, STATUS, COVERID from LN where IDOWNER = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, accountId);
@@ -56,6 +52,7 @@ public class NovelDAO {
 				tmp.setGroupId(rs.getInt("IDGROUP"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+				tmp.setCoverId(rs.getInt("COVERID"));
 				result.add(tmp);
 //				NOVELS_CACHE.put(idNovel, tmp);
 			}
@@ -88,6 +85,7 @@ public class NovelDAO {
 				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+				tmp.setCoverId(rs.getInt("COVERID"));
 				result.add(tmp);
 			}
 		} finally {
@@ -118,6 +116,7 @@ public class NovelDAO {
 				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+				tmp.setCoverId(rs.getInt("COVERID"));
 				result.add(tmp);
 			}
 		} finally {
@@ -171,6 +170,7 @@ public class NovelDAO {
 				result.setGroupId(rs.getInt("IDGROUP"));
 				result.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				result.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
+				result.setCoverId(rs.getInt("COVERID"));
 //				NOVELS_CACHE.put(idNovel, result);
 			}
 		} finally {
@@ -205,7 +205,7 @@ public class NovelDAO {
 
 	public void updateNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? where ID = ?";
+		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? , COVERID = ? where ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
@@ -214,7 +214,8 @@ public class NovelDAO {
 			stmt.setString(2, novel.getDescription());
 			stmt.setString(3, novel.getKind().toText());
 			stmt.setInt(4, novel.getStatus().getValue());
-			stmt.setInt(5, novel.getId());
+			stmt.setInt(5, novel.getCoverId());
+			stmt.setInt(6, novel.getId());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
@@ -228,7 +229,7 @@ public class NovelDAO {
 
 	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO LN (NAME, DESCRIBE, IDOWNER, IDGROUP ,KIND, STATUS) VALUES (? , ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO LN (NAME, DESCRIBE, IDOWNER, IDGROUP ,KIND, STATUS , COVERID) VALUES (? , ?, ?, ?, ?, ?, ?)";
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
@@ -238,6 +239,7 @@ public class NovelDAO {
 			stmt.setInt(4, novel.getGroupId());
 			stmt.setString(5, novel.getKind().toText());
 			stmt.setInt(6, novel.getStatus().getValue());
+			stmt.setInt(7, novel.getCoverId());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
