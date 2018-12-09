@@ -62,7 +62,7 @@
 								</c:forEach>
 						</select> <c:if test="${empty account.getOwnerGroups()}">
 								<a class="u-paragraph--sucessed u-margin-left--2rem"
-									href="add?type=add-group" target="_blank">Create new group
+									href="add-group" target="_blank">Create new group
 									here!</a>
 							</c:if></td>
 
