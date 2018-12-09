@@ -41,16 +41,13 @@ public class NotificationAjaxServlet extends HttpServlet {
 
 			int requestingPage = Integer.parseInt(request.getParameter("page-number"));
 			Account hostAcc = (Account) request.getSession().getAttribute("account");
-			System.out.println("ajax from : " + hostAcc.getUserName());
 			Connection cnn = (Connection) request.getAttribute("connection");
 			InboxDAO inboxDao = new InboxDAO(cnn);
 			List<Message> msges = inboxDao.getMessagesInInBox(requestingPage, 5, hostAcc.getId());
-			System.out.println("data's size : " + msges.size());
 			Gson gson = new Gson();
 			Type type = new TypeToken<List<Message>>() {
 			}.getType();
 			String json = gson.toJson(msges, type);
-			System.out.println(json);
 			response.setStatus(200);
 			PrintWriter netOut = new PrintWriter(new OutputStreamWriter(response.getOutputStream(), "utf-8"), true);
 			netOut.println(json);
