@@ -17,10 +17,10 @@ public class VolDAO {
 
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
-	private static final Map<Integer, Vol> VOLS_CACHE;
+//	private static final Map<Integer, Vol> VOLS_CACHE;
 	static {
 		NEXT_ID_GENRATOR = new NextIdGenrator("VOL");
-		VOLS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Vol>(20, 10, true));
+//		VOLS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Vol>(20, 10, true));
 	}
 
 	public VolDAO(Connection databaseConnection) {
@@ -50,26 +50,26 @@ public class VolDAO {
 	}
 
 	public Vol getVolByID(int volID) throws Exception {
-		Vol vol = VOLS_CACHE.get(volID);
-		if (vol != null) {
-			return vol;
-		}
+//		Vol vol = VOLS_CACHE.get(volID);
+//		if (vol != null) {
+//			return vol;
+//		}
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String query = "SELECT * FROM VOL WHERE ID = ?";
-
+		Vol vol = null;
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, volID);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				vol = new Vol();
+				 vol = new Vol();
 				vol.setId(rs.getInt(1));
 				vol.setNovelOwnerId(rs.getInt(2));
 				vol.setTitle(rs.getString(3));
 				vol.setDescription(rs.getString(4));
 				vol.setDateUp(rs.getDate(5));
-				VOLS_CACHE.put(volID, vol);
+//				VOLS_CACHE.put(volID, vol);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,18 +95,18 @@ public class VolDAO {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				int volId = rs.getInt("ID");
-				Vol vol = VOLS_CACHE.get(volId);
-				if (vol != null) {
-					listVol.add(vol);
-					continue;
-				}
-				vol = new Vol();
+//				Vol vol = VOLS_CACHE.get(volId);
+//				if (vol != null) {
+//					listVol.add(vol);
+//					continue;
+//				}
+				Vol vol = new Vol();
 				vol.setId(rs.getInt(1));
 				vol.setNovelOwnerId(rs.getInt(2));
 				vol.setTitle(rs.getString(3));
 				vol.setDescription(rs.getString(4));
 				vol.setDateUp(rs.getDate(5));
-				VOLS_CACHE.put(volId, vol);
+//				VOLS_CACHE.put(volId, vol);
 				listVol.add(vol);
 			}
 		} catch (Exception e) {

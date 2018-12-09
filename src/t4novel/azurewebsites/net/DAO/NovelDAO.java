@@ -20,10 +20,10 @@ import org.apache.commons.collections4.map.*;
 public class NovelDAO {
 	private Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
-	private static final Map<Integer, Novel> NOVELS_CACHE;
+//	private static final Map<Integer, Novel> NOVELS_CACHE;
 	static {
 		NEXT_ID_GENRATOR = new NextIdGenrator("LN");
-		NOVELS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Novel>(10, 5, true));
+//		NOVELS_CACHE = Collections.synchronizedMap(new LRUMap<Integer, Novel>(10, 5, true));
 	}
 
 	public NovelDAO(Connection databaseConnection) {
@@ -42,11 +42,11 @@ public class NovelDAO {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				int idNovel = rs.getInt("ID");
-				tmp = NOVELS_CACHE.get(idNovel);
-				if (tmp != null) {
-					result.add(tmp);
-					continue;
-				}
+//				tmp = NOVELS_CACHE.get(idNovel);
+//				if (tmp != null) {
+//					result.add(tmp);
+//					continue;
+//				}
 				tmp = new Novel();
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
@@ -57,7 +57,7 @@ public class NovelDAO {
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
 				result.add(tmp);
-				NOVELS_CACHE.put(idNovel, tmp);
+//				NOVELS_CACHE.put(idNovel, tmp);
 			}
 		} finally {
 			if (rs != null)
@@ -151,10 +151,11 @@ public class NovelDAO {
 	public Novel getNovelById(int idNovel) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Novel result = NOVELS_CACHE.get(idNovel);
-		if (result != null) {
-			return result;
-		}
+//		Novel result = NOVELS_CACHE.get(idNovel);
+//		if (result != null) {
+//			return result;
+//		}
+		Novel result = null;
 		String query = "select * from LN where ID = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -170,7 +171,7 @@ public class NovelDAO {
 				result.setGroupId(rs.getInt("IDGROUP"));
 				result.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				result.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
-				NOVELS_CACHE.put(idNovel, result);
+//				NOVELS_CACHE.put(idNovel, result);
 			}
 		} finally {
 			if (rs != null)
