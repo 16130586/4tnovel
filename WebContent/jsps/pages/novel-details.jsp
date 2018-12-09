@@ -15,12 +15,14 @@
 <link rel="stylesheet" href="resources/local/css/style.css"/>
 </head>
 <body>
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
 	<%@ include file="/jsps/components/_header.jsp" %>
 <div class="detail">
         <div class="detail__top u-centered">
             <div class="row">
                 <div class="col-md-4 detail__top-cover">
-                    <img class="img-cover" src="data:image/*;base64, ${novel.coverImg}" alt="đoán xem">
+                    <img class="img-cover" src="${baseURL}/resources/imgs?id=${novel.coverId }" alt="đoán xem">
                 </div>
                 <div class="col-md-8 detail__top-info">
                     <div>

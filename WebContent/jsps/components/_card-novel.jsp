@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
 <div class="row card-novel">
 	<div class="col-lg-4 novel-img--box u-align-center">
 		<a href="#" class="img-linking"> <img style="width: 80%; height: 100%; padding: 1.5rem" class="novel-hero"
-			src="data:image/*;base64, ${novel.coverImg}">
+			src="${baseURL}/resources/imgs?id=${novel.coverId}">
 		</a>
 	</div>
 	<div class="col-lg-8 novel-info--box">
