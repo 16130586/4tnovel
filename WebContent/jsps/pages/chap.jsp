@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +71,12 @@
 					<h3>${chap.title }</h3>
 				</div>
 				<div id="content">
-					<span>${chap.content }</span>
+				<c:set var="newLine" value="\n"/>
+				<c:set var="paragraphs" value="${chap.content.split(newLine) }" />
+<!-- 				<span>${chap.content }</span> -->
+					<c:forEach var="paragraph" items="${paragraphs }">
+						<p>${paragraph }</p>
+					</c:forEach>
 				</div>
 				<div class="u-align-center u-color-white u-margin-top--2rem">
 					<c:if test="${not empty previousChap}">

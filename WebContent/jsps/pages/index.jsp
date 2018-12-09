@@ -38,17 +38,17 @@
 	<%@ include file="/jsps/components/_header.jsp"%>
 	<div class="row u-margin-top--2rem">
 		<div class="left-container col-lg-8">
+		<c:if test="${not empty currentRead }">
+		<c:set var="chap" value="${currentRead }"/>
+		<c:set var="novel" value="${chap.novelOwner }"/>
 		<section class="section section-current-read">
 			<h2 class="section__title">Current read</h2>
 			<hr>
-			<c:if test="${not empty currentRead }">
-				<c:set var="chap" value="${currentRead }"/>
-				<c:set var="novel" value="${chap.novelOwner }"/>
 				<div class="section__content">
 					<%@include file="/jsps/components/_card-novel.jsp"%>
 				</div>
-			</c:if>
 		</section>
+		</c:if>
 
 		<section class="section section-threads">
 			<h2 class="section__title">Threads</h2>
