@@ -6,27 +6,43 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import com.google.gson.annotations.Expose;
+
 
 public class Novel implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4535349598603561651L;
-	private int id, accountOwnerId;
+	private int id;
+	@Expose
+	private int accountOwnerId;
 	private String name;
-	private String description, coverImg;
+	private String description;
+	@Expose
+	private String coverImg;
+	@Expose
 	private List<Vol> vols;
+	@Expose
 	private Date dateUp;
 	private int view, coverId;
+	@Expose
 	private Account owner;
 	private int like;
+	@Expose
 	private List<Comment> comments;
+	@Expose
 	private List<Account> follows;
 	private List<NovelGenre> genres;
+	@Expose
 	private NovelStatus status;
+	@Expose
 	private NovelKind kind;
+	@Expose
 	private int groupId;
+	@Expose
 	private Group group;
+	@Expose
 	private String encodeImg;
 	public int getCoverId() {
 		return coverId;

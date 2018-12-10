@@ -1,5 +1,6 @@
 package t4novel.azurewebsites.net.models;
 
+import com.google.gson.annotations.Expose;
 
 public enum NovelGenre {
 	ACTION(0, "Action"), DRAMA(1, "Drama"), ISEKAI(2, "Isekai"), 
@@ -12,6 +13,7 @@ public enum NovelGenre {
 	SUSPENSE(21, "Suspense"),COMEDY(22, "Comedy"), GENDER_BENDER(23, "Gender Bender"), 
 	JOSEI(24, "Josei"), ROMANCE(25, "Romance"),SEINEN(26, "Seinen"), 
 	SHOUNEN_AI(27, "Shounen ai"), TRAGEDY(28, "Tragedy");
+	@Expose
 	private int value;
 	private String name;
 
