@@ -51,6 +51,7 @@ public class NotificationAjaxServlet extends HttpServlet {
 			response.setStatus(200);
 			PrintWriter netOut = new PrintWriter(new OutputStreamWriter(response.getOutputStream(), "utf-8"), true);
 			netOut.println(json);
+			netOut.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(404);

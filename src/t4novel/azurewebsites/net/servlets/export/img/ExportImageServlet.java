@@ -47,6 +47,7 @@ public class ExportImageServlet extends HttpServlet {
 				OutputStream netOut = new BufferedOutputStream(response.getOutputStream());
 				netOut.write(bytesImage, 0, bytesImage.length);
 				netOut.flush();
+				netOut.close();
 			} else {
 				response.setStatus(304);
 				return;
