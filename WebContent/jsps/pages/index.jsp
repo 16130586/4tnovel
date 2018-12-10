@@ -96,9 +96,9 @@
 		<section class="section section-lastest-update">
 			<h2 class="section__title">Lastest update</h2>
 			<hr>
-			<div class="section__content" id="lastestUpdateContent">
+			<div class="section__content" >
 				<!-- c:forEach var="novel" items="lastestUpdateNovels" -->
-				<ul class="vertical-menu--showcase">
+				<ul id="lastestUpdateContent" class="vertical-menu--showcase">
 					<c:forEach var="chap" items="${newChaps }">
 					<c:set var="novel" value="${chap.novelOwner }"/>
 						<li class="menu-item u-margin-bottom--2rem">
@@ -108,7 +108,7 @@
 				</ul>
 			</div>
 			<div class="u-container-full--width u-align-center ">
-				<button id="loadMoreLastestUpdate" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">LOAD MORE
+				<button id="loadMoreLastestUpdateBtn" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">LOAD MORE
 					FOR ME</button>
 				<a href="see?author=all" class="btn btn-info u-margin-bottom--2rem u-color-white">SEE ALL</a>
 			</div>
@@ -135,4 +135,40 @@
 	
 	<%@include file="/jsps/components/_footer.jsp"%>
 </body>
+<script>
+	
+	document.addEventListener("DOMContentLoaded" , function(){
+		var loadMoreLastestUpdateBtn = document.getElementById('loadMoreLastestUpdateBtn')
+		var pageNumber = 1;
+		
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function (){
+			if (this.readyState == 4 && this.status == 200) {
+			    var datas = JSON.parse(this.responseText);
+				if(datas.length == 0 ){
+					loadMoreLastestUpdateBtn.onclick = null;
+					loadMoreLastestUpdateBtn.style.background = 'gray';
+		        }
+				else {
+					pageNumber++
+					// process data to card novel
+					for(var i = 0 ; i < datas.length ; i ++){
+					
+					}
+				}
+			}
+		}
+		
+		
+		var url = location.origin.concat('${pageContext.request.contextPath}').concat('/ajax-lastest-update');
+		loadMoreLastestUpdateBtn.onclick  = function(){
+			var urlWithParam = url.concat('?page-number=').concat(pageNumber)
+			alert('sending get method to : ' + urlWithParam)
+			xhttp.open('GET', urlWithParam);
+			xhttp.setRequestHeader("Content-Type", "text/html;charset=utf-8");
+			xhttp.send("status=true");
+		}
+		
+	})
+</script>
 </html>
