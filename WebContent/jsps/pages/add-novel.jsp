@@ -223,8 +223,8 @@
 								trạng: <span style="color: red">*</span>
 						</label></td>
 						<td><select name="status" style="padding: .5rem">
-								<option value="0">Hoàn thành</option>
 								<option value="1">Đang tiến hành</option>
+								<option value="0">Hoàn thành</option>
 								<option value="2">Tạm ngưng</option>
 						</select></td>
 					</tr>
