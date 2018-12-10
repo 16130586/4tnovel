@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
 <div class="row card-novel">
@@ -34,11 +36,18 @@
 		<div class="col-lg-12 u-align-center novel__gender"
 			style="white-space: nowrap; overflow: hidden">
 			<ul class="horizontal-menu--showcase text-centered">
-				<c:forEach var="genre" items="${novel.genres }">
+			<c:set var="description" value="${novel.description }" />
+			<c:if test="${fn:length(novel.genres) <= 4 }">
+				<c:set var="length" value="${fn:length(novel.genres) }" />
+			</c:if>
+			<c:if test="${fn:length(novel.genres) > 4 }">
+				<c:set var="length" value="4" />
+			</c:if>
+				<c:forEach var="i" begin="0" end="${length-1 }">
 					<li class="menu-item u-margin-right--2rem">
 						<form action="search" method="post">
-							<input type="hidden" name="genre" value="${genre.value }">
-							<button class="btn btn-belike-a">${genre.getDisplayName()}</button>
+							<input type="hidden" name="genre" value="${novel.genres[i].value }">
+							<button class="btn btn-belike-a">${novel.genres[i].getDisplayName()}</button>
 						</form>
 					</li>
 				</c:forEach>

@@ -47,13 +47,13 @@
 				<c:forEach var="novel" items="${searchResultNovel}">
 					<tr>
 						<td><a class="link" href="detail?id=${novel.id}"
-							target="_blank">${novel.name}</a> <br> <small> <c:forEach
+							target="_blank">${novel.name}</a> <br> <small style="color: #1389c6"> <c:forEach
 									var="genre" items="${novel.genres}">
-									${genre}, 
+									${genre.getDisplayName()}, 
 								</c:forEach>
 						</small></td>
 						<td>${fn:length(novel.vols)}</td>
-						<td>${novel.status}</td>
+						<td>${novel.status.toText()}</td>
 						<td><fmt:formatDate type="both" dateStyle="MEDIUM"
 								timeStyle="SHORT" value="${novel.dateUp}" /></td>
 					</tr>

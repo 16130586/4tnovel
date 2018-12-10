@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.models;
 
 public enum NovelStatus {
-	COMPLETE(0, "Complete"), INPROCESS(1, "In process"), PAUSE(2, "Pause");
+	COMPLETE(0, "Hoàn thành"), INPROCESS(1, "Đang tiến hành"), PAUSE(2, "Dừng");
 	private int value;
 	private String text;
 
