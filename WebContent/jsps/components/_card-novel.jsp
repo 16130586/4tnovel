@@ -13,10 +13,10 @@
 	</div>
 	<div class="col-lg-8 novel-info--box">
 		<div class="novel-short-info">
-			<h2 class="u-align-center u-text-overflow--hidden">
+			<h2 class="u-text-overflow--hidden">
 				<a class="novel__title" href="detail?id=${novel.id }">${novel.name }</a>
 			</h2>
-			<div class="u-align-center u-text-overflow--hidden">
+			<div class="u-text-overflow--hidden">
 				<a href="read?id=${chap.id }" class="link u-text-overflow--hidden"
 					style="color: #10b591">
 					<h3>${chap.title }</h3>
@@ -31,9 +31,8 @@
 			</c:if>
 			<span class="novel__description">${description.substring(0, length)}...</span>
 		</div>
-	</div>
-	<div class="row u-width--full">
-		<div class="col-lg-12 u-align-center novel__gender"
+		<div class="row u-width--full">
+		<div class="novel__gender u-margin-top--2rem"
 			style="white-space: nowrap; overflow: hidden">
 			<ul class="horizontal-menu--showcase text-centered">
 			<c:set var="description" value="${novel.description }" />
@@ -44,7 +43,7 @@
 				<c:set var="length" value="4" />
 			</c:if>
 				<c:forEach var="i" begin="0" end="${length-1 }">
-					<li class="menu-item u-margin-right--2rem">
+					<li class="menu-item u-margin-right--2rem u-rounded--tag">
 						<form action="search" method="post">
 							<input type="hidden" name="genre" value="${novel.genres[i].value }">
 							<button class="btn btn-belike-a">${novel.genres[i].getDisplayName()}</button>
@@ -54,4 +53,6 @@
 			</ul>
 		</div>
 	</div>
+	</div>
+	
 </div>

@@ -1,8 +1,6 @@
 .card-novel {
-    border: 1px solid gray;
+	background-color: $color-white-light-v2;
     margin-left: 1rem;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.6);
-    
     .img-linking{
     	.novel-hero{
 	    	width: 20rem;
@@ -14,6 +12,9 @@
 	    height: auto;
 		    .novel__title {
 	   		 	margin: auto;
+	   		 	color:$color-black;
+	   		 	font-weight: 400;
+	   		 	margin-bottom:1.5rem;
 			}
 			.novel__description {
 			    text-align: justify;
@@ -21,16 +22,7 @@
 			}
 	}
     .novel__gender {
-	  background-color: lightsteelblue;
-	  margin: 0px;
 	  font-size: 1.6rem;
 	  font-weight: 300;
-	  color : #c68c05;
 	}
-}
- 
-
-
-  
-  
-  
+}  

@@ -24,7 +24,7 @@ html {
 body {
   font-size: 1.6rem;
   font-family: "Exo", sans-serif;
-  color: #7DA3A1; }
+  color: #444; }
 
 .u-margin-right--1rem {
   margin-right: 1rem !important; }
@@ -199,6 +199,13 @@ body {
   cursor: default !important;
   color: #afafad !important; }
 
+.u-rounded--tag {
+  padding: 0 1rem;
+  border-radius: 12rem !important;
+  border: 1px solid black !important;
+  font-size: 1rem;
+  font-weight: 400; }
+
 .card--white {
   background-color: #FFF0F5; }
 
@@ -324,15 +331,14 @@ body {
   background-color: #F1F1F1; }
   .section__title {
     font-size: 2.4rem;
-    color: #66A5AD; }
+    color: #10b591; }
   .section__content {
     margin-top: 1rem;
     padding: .3rem; }
 
 .card-novel {
-  border: 1px solid gray;
-  margin-left: 1rem;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.6); }
+  background-color: #f9f9f9;
+  margin-left: 1rem; }
   .card-novel .img-linking .novel-hero {
     width: 20rem;
     height: auto; }
@@ -340,16 +346,16 @@ body {
     width: 100%;
     height: auto; }
     .card-novel .novel-short-info .novel__title {
-      margin: auto; }
+      margin: auto;
+      color: #444;
+      font-weight: 400;
+      margin-bottom: 1.5rem; }
     .card-novel .novel-short-info .novel__description {
       text-align: justify;
       font-size: 1.8rem; }
   .card-novel .novel__gender {
-    background-color: lightsteelblue;
-    margin: 0px;
     font-size: 1.6rem;
-    font-weight: 300;
-    color: #c68c05; }
+    font-weight: 300; }
 
 .link:hover, .link:active, .link:link, .link:visited {
   text-decoration: none;
@@ -443,7 +449,8 @@ body {
 #user-functions {
   position: relative;
   z-index: 1000;
-  margin-right: 2rem; }
+  margin-right: 2rem;
+  color: #7DA3A1; }
   #user-functions #user-controls {
     background-color: #6AB187;
     width: 12rem; }

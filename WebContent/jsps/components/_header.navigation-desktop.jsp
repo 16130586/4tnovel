@@ -38,7 +38,7 @@
 			</div>
 		</li>
 		<li class="menu-item u-margin-right--1rem"><a href="forum">Thảo
-				Luận</a></li>
+				luận</a></li>
 		<c:if test="${empty account}">
 			<li class="menu-item u-margin-right--1rem"><a href="login">Đăng
 					nhập</a></li>
