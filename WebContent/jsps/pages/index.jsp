@@ -43,7 +43,6 @@
 		<c:set var="novel" value="${chap.novelOwner }"/>
 		<section class="section section-current-read">
 			<h2 class="section__title">Current read</h2>
-			<hr>
 				<div class="section__content">
 					<%@include file="/jsps/components/_card-novel.jsp"%>
 				</div>
@@ -52,7 +51,6 @@
 
 		<section class="section section-threads">
 			<h2 class="section__title">Threads</h2>
-			<hr>
 			<div class="section__content">
 				<!-- //c:forEach var="thread" items="topFiveNewestThreads" -->
 				<%@include file="/jsps/components/_index.section.content.thread.jsp"%>
@@ -62,7 +60,6 @@
 		<c:if test="${ not empty newTrends }">
 		<section class="section section-new-trending">
 			<h2 class="section__title">New trending</h2>
-			<hr>
 			<div class="section__content">
 				<!-- //c:forEach var="novel" items="newTrendingNovels" -->
 				<ul class="vertical-menu--showcase">
@@ -79,7 +76,6 @@
 		<c:if test="${not empty weeklyTop }">
 		<section class="section section-weekly-top">
 			<h2 class="section__title">Weekly top</h2>
-			<hr>
 			<div class="section__content">
 				<!-- //c:forEach var="novel" items="weeklyTopNovels" -->
 				<ul class="vertical-menu--showcase">
@@ -95,7 +91,6 @@
 		
 		<section class="section section-lastest-update">
 			<h2 class="section__title">Lastest update</h2>
-			<hr>
 			<div class="section__content" >
 				<!-- c:forEach var="novel" items="lastestUpdateNovels" -->
 				<ul id="lastestUpdateContent" class="vertical-menu--showcase">
@@ -108,16 +103,15 @@
 				</ul>
 			</div>
 			<div class="u-container-full--width u-align-center ">
-				<button id="loadMoreLastestUpdateBtn" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">LOAD MORE
-					FOR ME</button>
-				<a href="see?author=all" class="btn btn-info u-margin-bottom--2rem u-color-white">SEE ALL</a>
+				<button id="loadMoreLastestUpdateBtn" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">Load more..
+					</button>
+				<a href="see?author=all" class="btn btn-info u-margin-bottom--2rem u-color-white">See all</a>
 			</div>
 		</section>
 	</div>
 	<div class="right-container col-lg-4">
 		<section class="section section-hot-comments">
 			<h2 class="section__title">Hot comments</h2>
-			<hr>
 			<div class="section__content" id="hotCommentContent">
 				<!-- //c:forEch var="comment" items="comments" -->
 				<c:forEach var="comment" begin="1" end="5">
@@ -126,8 +120,8 @@
 				</c:forEach>
 			</div>
 			<div class="u-container-full--width u-align-center ">
-				<button id="loadMoreHotComments" class="btn btn-info u-margin-bottom--2rem u-color-white">5 INTERESTING
-					COMMENT</button>
+				<button id="loadMoreHotComments" class="btn btn-info u-margin-bottom--2rem u-color-white">5 interesting
+					comment</button>
 			</div>
 		</section>
 	</div>
@@ -207,7 +201,7 @@
 		novelInfoBox.className="novel-short-info"
 		
 		var novelTitle = document.createElement("h2")
-		novelTitle.className="u-align-center u-text-overflow--hidden"
+		novelTitle.className="u-text-overflow--hidden"
 		
 		var clickableNovelTitle = document.createElement("a")
 		clickableNovelTitle.className="novel__title"
@@ -217,7 +211,7 @@
 		novelTitle.appendChild(clickableNovelTitle)
 		
 		var chapTitleBox = document.createElement("div")
-		chapTitleBox.className="u-align-center u-text-overflow--hidden"
+		chapTitleBox.className="u-text-overflow--hidden"
 		
 		var clickableChapTitle = document.createElement("a")
 		clickableChapTitle.className="link u-text-overflow--hidden"
@@ -231,17 +225,18 @@
 		chapTitleBox.appendChild(clickableChapTitle)
 		
 		var novelDescription = document.createElement("span")
-		novelDescription.innerHTML= data.novelOwner.description
+		novelDescription.innerHTML= data.novelOwner.description.substring(0,400).concat('..')
 		
 		novelInfoBox.appendChild(novelTitle)
 		novelInfoBox.appendChild(chapTitleBox)
 		novelInfoBox.appendChild(novelDescription)
 		right.appendChild(novelInfoBox)
+		right.appendChild(btm)
 		//end
 		
 		// start setup genre btm
 		var genreBox = document.createElement("div")
-		genreBox.className="col-lg-12 u-align-center novel__gender"
+		genreBox.className="novel__gender u-margin-top--2rem"
 		genreBox.style.whiteSpace = "nowrap"
 		genreBox.style.overflow = "hidden"
 		
@@ -249,9 +244,10 @@
 		listGenre.className="horizontal-menu--showcase text-centered"
 		
 		var genreDatas = data.novelOwner.genres;
-		for(var i = 0 ; i < genreDatas.length ; i ++){
+		var maxDisplay  = (genreDatas.length > 4 ? 4 : genreDatas.length);
+		for(var i = 0 ; i < maxDisplay ; i ++){
 			var li = document.createElement('li')
-			li.className = "menu-item u-margin-right--2rem"
+			li.className = "menu-item u-margin-right--2rem u-rounded--tag"
 			
 			var form = document.createElement('form')
 			form.action="search"
@@ -276,7 +272,6 @@
 		// end setup btm genre
 		cardNovel.appendChild(left)
 		cardNovel.appendChild(right)
-		cardNovel.appendChild(btm)
 		return cardNovel
 		
 	}
