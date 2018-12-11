@@ -49,6 +49,7 @@ public class NotificationAjaxServlet extends HttpServlet {
 			}.getType();
 			String json = gson.toJson(msges, type);
 			response.setStatus(200);
+			response.setContentType("text/plain;charset=utf-8");
 			PrintWriter netOut = new PrintWriter(new OutputStreamWriter(response.getOutputStream(), "utf-8"), true);
 			netOut.println(json);
 			netOut.close();

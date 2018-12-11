@@ -79,6 +79,7 @@
 			var xhttp;
 			  xhttp=new XMLHttpRequest();
 			  xhttp.onreadystatechange = function() {
+				if(this.readyState == 4) {document.body.style.cursor='default'}
 			    if (this.readyState == 4 && this.status == 200) {
 			    	nextNotificationPage++;
 			        var datas = JSON.parse(this.responseText);
@@ -99,6 +100,7 @@
 			  xhttp.open("GET", urlWithParam, true);
 			  xhttp.setRequestHeader("Content-Type", "text/html;charset=utf-8");
 			  xhttp.send("status=true");
+			  document.body.style.cursor='wait'
 		}
 		
 	</script>

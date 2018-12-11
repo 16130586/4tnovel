@@ -74,6 +74,7 @@
 				accquireVerifyCode.disabled = true;
 				var xhttp = new XMLHttpRequest();
   				xhttp.onreadystatechange = function() {
+  				if(this.readyState == 4) {document.body.style.cursor='default'}
     			if (this.readyState == 4 && this.status == 200) {
     				textDisplayer.innerHTML = "Vui lòng kiểm tra thư!";
     				accquireVerifyCode.disabled = false;
@@ -83,9 +84,11 @@
   					textDisplayer.innerHTML = "Đã xảy ra lỗi, vui lòng thử lại!";
   					accquireVerifyCode.disabled = false;
   					}
+    			
 				};
   				xhttp.open("POST", "send-mail-code", true);
   				xhttp.send();
+  				document.body.style.cursor='wait'
 				
 			}
 		})
