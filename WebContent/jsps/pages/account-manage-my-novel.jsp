@@ -24,7 +24,7 @@
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div
-			class="account-manage__content  u-row--1140 u-centered u-border-full"
+			class="account-manage__content  u-row--1140 u-centered"
 			style="overflow-y: auto">
 			<div>
 				<p class="u-3x u-align-center">Truyện của tui</p>
@@ -38,13 +38,13 @@
 			</div>
 			<hr>
 			<c:set var="sizeNovels" value="${fn:length(account.ownNovels) }" />
-			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1">
+			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1" varStatus="loop">
 				<c:set var="novel" value="${account.ownNovels[sizeNovels-i]}" />
 				<section>
 					<div class="row u-padding--05rem">
 						<button type="button"
 							class="col-md-6 btn btn-belike-a u-align-left u-text-overflow--hidden"
-							style="color: #36a39e" onclick="showOrHide(${novel.id})">${novel.name }</button>
+							style="color: #36a39e" onclick="showOrHide(${novel.id})">${loop.count}. ${novel.name }</button>
 						<a href="#"
 							class="col-md-2 btn btn-belike-a u-align-left u-text-overflow--hidden">${account.displayedName }</a>
 						<a href="#"

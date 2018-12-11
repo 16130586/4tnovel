@@ -23,39 +23,49 @@
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 
-		<div class="account-manage__content u-centered u-row--1140 u-2x">
+		<div class="account-manage__content u-centered u-row--1140 ">
 			<div>
 				<p class="u-3x u-align-center">Thông tin</p>
 			</div>
 			<div class="row u-padding-bottom--1-5rem">
-				<div class="col-md-5 u-align-right">Bí danh:</div>
+				<div class="col-md-5 u-align-right">
+					<p>Bí danh:</p>
+				</div>
 				<div class="col-md-7">
 					<input class="u-width--50" type="text"
-						value="${account.displayedName}" disabled> <small><a
-						class="link" href="manage?type=display-name">Thay đổi</a></small>
+						value="${account.displayedName}" disabled><a
+						class="link" href="manage?type=display-name">
+							Thay đổi
+						</a>
 				</div>
 			</div>
 			<div class="row u-padding-bottom--1-5rem">
-				<div class="col-md-5 u-align-right">Tài khoản:</div>
+				<div class="col-md-5 u-align-right">
+				<p>Tài khoản:</p>
+				</div>
 				<div class="col-md-7">
 					<input class="u-width--50" type="text" value="${account.userName }"
 						disabled>
 				</div>
 			</div>
 			<div class="row u-padding-bottom--1-5rem">
-				<div class="col-md-5 u-align-right">Mật khẩu:</div>
+				<div class="col-md-5 u-align-right">
+				<p>Mật khẩu:</p>
+				</div>
 				<div class="col-md-7">
 					<input class="u-width--50" type="password" value="***************"
-						disabled> <small><a class="link"
-						href="manage?type=password">Thay đổi</a></small>
+						disabled><a class="link"
+						href="manage?type=password">Thay đổi</a>
 				</div>
 			</div>
 			<div class="row u-padding-bottom--1-5rem">
-				<div class="col-md-5 u-align-right">Email:</div>
+				<div class="col-md-5 u-align-right">
+				<p>Email:</p>
+				</div>
 				<div class="col-md-7">
 					<input class="u-width--50" type="text" value="${account.gmail }"
-						disabled> <small><a class="link"
-						href="manage?type=mail">Thay đổi</a></small>
+						disabled><a class="link"
+						href="manage?type=mail">Thay đổi</a>
 				</div>
 			</div>
 			<br>

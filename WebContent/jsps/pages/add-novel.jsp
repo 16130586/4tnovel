@@ -45,7 +45,7 @@
 						<td class="u-align-right u-vertical-align--middle"><label>Loại
 								truyện: <span style="color: red">*</span>
 						</label></td>
-						<td><select name="type-novel" style="padding: .5rem">
+						<td><select name="type-novel" style="padding: .5rem; width: 50%">
 								<option value="compose">Sáng tác</option>
 								<option value="translate">Truyện dịch</option>
 						</select></td>
@@ -55,7 +55,7 @@
 								dịch: <span style="color: red">*</span>
 						</label></td>
 
-						<td><select name="group" style="padding: .5rem">
+						<td><select name="group" style="padding: .5rem; witdh: 50%">
 								<!-- option value="nhom dich id" -->
 								<c:forEach var="group" items="${account.getOwnerGroups()}">
 									<option value="${group.id}">${group.name}</option>
