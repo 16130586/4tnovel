@@ -9,7 +9,9 @@ import t4novel.azurewebsites.net.models.Message;
 public class NewChapterHtmlMessageBuilder implements MessageBuilder{
 	private String message;
 	private Date date;
+	private Chap chap;
 	public NewChapterHtmlMessageBuilder(Chap chap) {
+		this.chap = chap;
 		extractData(chap);
 	}
 	private void extractData(Chap chap) {
@@ -23,7 +25,7 @@ public class NewChapterHtmlMessageBuilder implements MessageBuilder{
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY HH:mm");
 
 		StringBuilder bd = new StringBuilder();
-		bd.append("<a href=\"read?id=4\" style=\"text-decoration:none;\">");
+		bd.append("<a href=\"read?id="+ chap.getId()+"\" style=\"text-decoration:none;\">");
 			bd.append("<div class=\"u-container-full--width message-card\">");
 				bd.append("<div class=\"u-container-full--width\">");
 					bd.append(" <span class=\"message-content\">" + this.message + "</span>");
