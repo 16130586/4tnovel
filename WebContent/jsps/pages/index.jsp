@@ -139,10 +139,12 @@
 	
 	document.addEventListener("DOMContentLoaded" , function(){
 		var loadMoreLastestUpdateBtn = document.getElementById('loadMoreLastestUpdateBtn')
+		var lastestUpdateContent = document.getElementById('lastestUpdateContent')
 		var pageNumber = 1;
 		
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function (){
+			if(this.readyState == 4) {document.body.style.cursor='default'}
 			if (this.readyState == 4 && this.status == 200) {
 			    var datas = JSON.parse(this.responseText);
 				if(datas.length == 0 ){
@@ -153,7 +155,10 @@
 					pageNumber++
 					// process data to card novel
 					for(var i = 0 ; i < datas.length ; i ++){
-					
+						var cardItem = document.createElement("li")
+						cardItem.className="menu-item u-margin-bottom--2rem"
+						cardItem.appendChild(buildNewCardNovel(datas[i]))
+						lastestUpdateContent.appendChild(cardItem)
 					}
 				}
 			}
@@ -163,12 +168,117 @@
 		var url = location.origin.concat('${pageContext.request.contextPath}').concat('/ajax-lastest-update');
 		loadMoreLastestUpdateBtn.onclick  = function(){
 			var urlWithParam = url.concat('?page-number=').concat(pageNumber)
-			alert('sending get method to : ' + urlWithParam)
 			xhttp.open('GET', urlWithParam);
 			xhttp.setRequestHeader("Content-Type", "text/html;charset=utf-8");
 			xhttp.send("status=true");
+			document.body.style.cursor='wait'
 		}
 		
 	})
+	function buildNewCardNovel(data){
+		var cardNovel = document.createElement("div")
+		var left = document.createElement("div")
+		var right = document.createElement("div")
+		var btm = document.createElement("div")
+		
+		cardNovel.className="row card-novel"
+		
+		left.className="col-lg-4 novel-img--box u-align-center"
+		right.className="col-lg-8 novel-info--box"
+		btm.className="row u-width--full"
+		
+		
+		// left with clickable hero img
+		var clickableImg = document.createElement("a")
+		clickableImg.className="img-linking"
+		var img = document.createElement("img")
+		img.className="novel-hero"
+		img.style.width="80%"
+		img.style.height="100%"
+		img.style.padding="1.5rem"
+		img.src = location.origin.concat('${pageContext.request.contextPath}').concat('/resources/imgs?id=').concat(data.novelOwner.coverId)
+		clickableImg.appendChild(img)
+		left.appendChild(clickableImg)
+		//end
+		
+		
+		//start setup right infomation 
+		var novelInfoBox = document.createElement("div")
+		novelInfoBox.className="novel-short-info"
+		
+		var novelTitle = document.createElement("h2")
+		novelTitle.className="u-align-center u-text-overflow--hidden"
+		
+		var clickableNovelTitle = document.createElement("a")
+		clickableNovelTitle.className="novel__title"
+		clickableNovelTitle.innerHTML = data.novelOwner.name
+		clickableNovelTitle.href = "detail?id=".concat(data.novelOwner.id)
+		
+		novelTitle.appendChild(clickableNovelTitle)
+		
+		var chapTitleBox = document.createElement("div")
+		chapTitleBox.className="u-align-center u-text-overflow--hidden"
+		
+		var clickableChapTitle = document.createElement("a")
+		clickableChapTitle.className="link u-text-overflow--hidden"
+		clickableChapTitle.style.color="#10b591"
+		clickableChapTitle.href = "read?id=".concat(data.id)
+		
+		var chapTitle = document.createElement("h3")
+		chapTitle.innerHTML=data.title
+		
+		clickableChapTitle.appendChild(chapTitle)
+		chapTitleBox.appendChild(clickableChapTitle)
+		
+		var novelDescription = document.createElement("span")
+		novelDescription.innerHTML= data.novelOwner.description
+		
+		novelInfoBox.appendChild(novelTitle)
+		novelInfoBox.appendChild(chapTitleBox)
+		novelInfoBox.appendChild(novelDescription)
+		right.appendChild(novelInfoBox)
+		//end
+		
+		// start setup genre btm
+		var genreBox = document.createElement("div")
+		genreBox.className="col-lg-12 u-align-center novel__gender"
+		genreBox.style.whiteSpace = "nowrap"
+		genreBox.style.overflow = "hidden"
+		
+		var listGenre = document.createElement("ul")
+		listGenre.className="horizontal-menu--showcase text-centered"
+		
+		var genreDatas = data.novelOwner.genres;
+		for(var i = 0 ; i < genreDatas.length ; i ++){
+			var li = document.createElement('li')
+			li.className = "menu-item u-margin-right--2rem"
+			
+			var form = document.createElement('form')
+			form.action="search"
+			form.method="post"
+			var input = document.createElement('input')
+			input.type="hidden"
+			input.name="genre"
+			input.value = genreDatas[i].value
+			
+			var btn = document.createElement("button")
+			btn.className="btn btn-belike-a"
+			btn.innerHTML= genreDatas[i].displayName
+			
+			form.appendChild(input)
+			form.appendChild(btn)
+			li.appendChild(form)
+			listGenre.appendChild(li)
+		}
+		genreBox.appendChild(listGenre)
+		btm.appendChild(genreBox)
+		
+		// end setup btm genre
+		cardNovel.appendChild(left)
+		cardNovel.appendChild(right)
+		cardNovel.appendChild(btm)
+		return cardNovel
+		
+	}
 </script>
 </html>

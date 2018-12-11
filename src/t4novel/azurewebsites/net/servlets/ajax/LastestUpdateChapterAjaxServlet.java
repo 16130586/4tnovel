@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
@@ -23,6 +24,7 @@ import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.models.Novel;
+import t4novel.azurewebsites.net.utils.EnumAdapterFactory;
 
 @WebServlet("/ajax-lastest-update")
 public class LastestUpdateChapterAjaxServlet extends HttpServlet {
@@ -52,11 +54,14 @@ public class LastestUpdateChapterAjaxServlet extends HttpServlet {
 				novel.setGenres(novelDao.getGenres(chap.getNovelOwnerId(), genreDao));
 				chap.setNovelOwner(novel);
 			}
-			Gson gson = new Gson();
+			GsonBuilder builder = new GsonBuilder();
+			builder.registerTypeAdapterFactory(new EnumAdapterFactory());
+			Gson gson = builder.create();
 			Type type = new TypeToken<List<Chap>>() {
 			}.getType();
 			String json = gson.toJson(newChaps, type);
 			response.setStatus(200);
+			response.setContentType("text/plain;charset=utf-8");
 			PrintWriter netOut = new PrintWriter(new OutputStreamWriter(response.getOutputStream(), "utf-8"), true);
 			netOut.println(json);
 			netOut.close();
