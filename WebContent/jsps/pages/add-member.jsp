@@ -5,7 +5,8 @@
 <html>
 <head>
 <title>Thêm thành viên</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
 	font
@@ -40,6 +41,28 @@
 			</div>
 			<div class="search">
 				<%@ include file="/jsps/components/_search-bar.account.jsp"%>
+			</div>
+			<div class="u-width--80 u-centered u-2x">
+				<table class="table table-hover table-light">
+					<!-- c:for de do du lieu ra -->
+					<c:if test="${not empty searchResultAccount}">
+						<tr class="row">
+							<td class="col-md-3">Username</td>
+							<td class="col-md-3">Nickname</td>
+							<td class="col-md-3">Email</td>
+							<td class="col-md-3">Action</td>
+						</tr>
+						<tr class="row">
+							<td class="col-md-3">${searchResultAccount.userName}</td>
+							<td class="col-md-3">${searchResultAccount.displayedName}</td>
+							<td class="col-md-3">${searchResultAccount.gmail}</td>
+							<td class="col-md-3"><input name="idAccount"
+								id="accountResultId" onclick="mappingId()" type="radio"
+								value="${searchResultAccount.id}"> <label for="account1">Chọn</label>
+							</td>
+						</tr>
+					</c:if>
+				</table>
 			</div>
 			<form action="add-member" method="post">
 				<div class="row u-padding-bottom--1-5rem ">
