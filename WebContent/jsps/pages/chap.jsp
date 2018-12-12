@@ -81,7 +81,9 @@
 							class="btn btn-secondary">
 							<i class="fas fa-font"></i>
 						</button></li>
-					<li><button class="btn btn-secondary"><i class="fa fa-bookmark"></i></button></li>
+					<c:if test="${not empty account }">
+						<li><button class="btn btn-secondary"><i class="fa fa-bookmark"></i></button></li>
+					</c:if>
 					<li>
 						<c:if test="${not empty nextChap}">
 							<a href="read?id=${nextChap.id}"
