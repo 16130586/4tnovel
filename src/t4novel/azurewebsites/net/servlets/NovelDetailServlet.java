@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.DAO.LikeDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
@@ -58,14 +59,19 @@ public class NovelDetailServlet extends HttpServlet {
 		ChapDAO chapDao = new ChapDAO(cnn);
 		ImageDAO imgDAO = new ImageDAO(cnn);
 		Novel requestNovel = null;
+		boolean isLikeThisNovel = false;
+
 		try {
 			requestNovel = novelDao.getNovelById(novelId);
-			if(requestNovel == null) {response.sendError(404); return;}
-			
-			if(requestNovel.getGenres() == null) {
+			if (requestNovel == null) {
+				response.sendError(404);
+				return;
+			}
+
+			if (requestNovel.getGenres() == null) {
 				requestNovel.setGenres(genreDao.getGenres(novelId));
 			}
-			if(requestNovel.getOwner() == null) {
+			if (requestNovel.getOwner() == null) {
 				Account owner = accDao.getAccountByID(requestNovel.getAccountOwnerId());
 				requestNovel.setOwner(owner);
 			}
@@ -81,14 +87,24 @@ public class NovelDetailServlet extends HttpServlet {
 			}
 			if (requestNovel.getCoverImg() == null)
 				requestNovel.setCoverImg(novelDao.getEncodeImageById(requestNovel.getId(), imgDAO));
+
+			Account ac = (Account) request.getSession().getAttribute("account");
+			if (ac != null) {
+				LikeDAO likeDao = new LikeDAO(cnn);
+				isLikeThisNovel = likeDao.isLike(ac, novelId, "novel");
+				requestNovel.setLike(likeDao.getLike(requestNovel.getId() , "novel"));
+			}
 			response.setStatus(200);
 			request.setAttribute("novel", requestNovel);
+			request.setAttribute("isLikeThisNovel", isLikeThisNovel);
 		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 			response.setStatus(500);
 			response.sendError(500);
 			return;
 		}
-		
+
 		getServletContext().getRequestDispatcher("/jsps/pages/novel-details.jsp").forward(request, response);
 	}
 
