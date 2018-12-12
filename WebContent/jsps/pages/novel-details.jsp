@@ -41,7 +41,6 @@
 											<button class="btn btn-belike-a u-color-blue">${genre.getDisplayName()}</button>
 										</form>
 										</li>
-										
 									</c:forEach>
 								</ul> 
 							</div>                   
@@ -70,6 +69,7 @@
                        <c:if test="${empty account }">
                         	<a href="login" class="btn btn-danger u-color-white u-padding--05rem">+Theo dõi</a>
                         </c:if>
+                        <span style="color: #0d0dff"><i class="fas fa-thumbs-up"> 123</i></span>
                     </div>
                     <div class="u-margin-top--1rem u-padding-left--1rem" id="description" style="max-height: 150px; overflow: hidden; border-left: 4px solid rgb(16, 181, 145)">
 						<c:set var="newLine" value="\n"/>
@@ -78,7 +78,7 @@
 							<p>${paragraph }</p>
 						</c:forEach>
                 	</div>
-                	<div class="u-align-right u-width--full" style="margin: 1rem">
+                	<div id="btn-seemore-hide" class="u-align-right u-width--full" style="margin: 1rem">
 	                	<button onclick="seeMoreOrHide(this)" class="btn u-color-white u-padding--05rem" style="background-color: #3f8296; font-size: 1.3rem; width: 86px">
  							<i class="fa fa-angle-double-down"></i> Xem thêm
     	            	</button>
@@ -88,14 +88,14 @@
         </div>
         <div class="detail__body u-centered">
             <section class="tab u-block">
-                <button class="btn tab-btn u-2x" onclick="showOrHide('note')">Chú thích</button>
+                <div class="tab-btn u-2x" onclick="showOrHide('note')"><span style="border-bottom: 3px solid #10b591">Chú thích</span></div>
                 <div id="note" class="tab-content" style="display: block">
                 	<span>Adding later!</span>
                 </div>
             </section>
             <c:forEach var="vol" items="${novel.vols}">
             	 <section class="tab u-block">
-               	 	<button class="btn tab-btn u-2x" onclick="showOrHide('${vol.id}')">${vol.title}</button>
+   	                <div class="tab-btn u-2x" onclick="showOrHide('${vol.id}')"><span style="border-bottom: 3px solid #10b591">${vol.title}</span></div>
 	                <div id="${vol.id }" class="tab-content" style="display: block">
 	                	<c:forEach var="chap" items="${vol.chaps}">
 	                    	<a class="link u-block" href="read?id=${chap.id}">${chap.title}</a>
@@ -106,6 +106,18 @@
         </div>
     </div>
     <script>
+    	window.onload = function() {
+    		var des = document.getElementById('description');
+			if (des.scrollHeight <= des.clientHeight)
+				removeElement('btn-seemore-hide');
+    	}
+    	
+    	function removeElement(elementId) {
+    	    // Removes an element from the document
+    	    var element = document.getElementById(elementId);
+    	    element.parentNode.removeChild(element);
+    	}
+    	
     	function seeMoreOrHide(x) {
     		var des = document.getElementById('description');
     		if (des.style.maxHeight == "150px"){

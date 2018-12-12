@@ -26,24 +26,15 @@
         padding-bottom: 2rem;
         padding-top: 2rem;
         .tab {
-            background-color: #efefef;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid #ccc;
             .tab-btn {
                 color: #61a4ad;
-                background-color: #f1f1f1;
                 text-transform: uppercase;
-                text-align: left;
-                border: none;
-                outline: none;
                 padding: .5rem;
-                width: 100%;
                 font-weight: bold;
+                cursor: pointer;
             }
             .tab-content {
-                padding: 1.5rem;
-                background-color: #f7f7f7;
+                padding: .5rem;
 
             }
         }
