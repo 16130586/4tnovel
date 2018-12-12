@@ -355,7 +355,9 @@ input:-moz-placeholder {
   background-color: #F1F1F1; }
   .section__title {
     font-size: 2.4rem;
-    color: #10b591; }
+    color: #10b591;
+    padding-top: 1rem;
+    padding-left: 2rem; }
   .section__content {
     margin-top: 1rem;
     padding: .3rem; }
