@@ -31,27 +31,38 @@
 			</c:if>
 			<span class="novel__description">${description.substring(0, length)}...</span>
 		</div>
-		<div class="row u-width--full">
-		<div class="novel__gender u-margin-top--2rem"
-			style="white-space: nowrap; overflow: hidden">
+		<div class="row u-width--full u-margin-top--1rem">
 			<ul class="horizontal-menu--showcase text-centered">
-			<c:set var="description" value="${novel.description }" />
-			<c:if test="${fn:length(novel.genres) <= 4 }">
-				<c:set var="length" value="${fn:length(novel.genres) }" />
-			</c:if>
-			<c:if test="${fn:length(novel.genres) > 4 }">
-				<c:set var="length" value="4" />
-			</c:if>
-				<c:forEach var="i" begin="0" end="${length-1 }">
-					<li class="menu-item u-margin-right--2rem u-rounded--tag">
-						<form action="search" method="post">
-							<input type="hidden" name="genre" value="${novel.genres[i].value }">
-							<button class="btn btn-belike-a">${novel.genres[i].getDisplayName()}</button>
-						</form>
-					</li>
-				</c:forEach>
+				<li class="menu-item u-margin-right--2rem">
+					<i class="fas fa-eye"></i>
+					<p class="u-inline-block">${novel.view}</p>
+				</li>
+				<li class="menu-item u-margin-right--2rem">
+					<i class="fas fa-thumbs-up"></i>
+					<p class="u-inline-block">${novel.like}</p>
+				</li>
 			</ul>
 		</div>
+		<div class="row u-width--full">
+			<div class="novel__gender">
+				<ul class="horizontal-menu--showcase text-centered">
+				<c:set var="description" value="${novel.description }" />
+				<c:if test="${fn:length(novel.genres) <= 4 }">
+					<c:set var="length" value="${fn:length(novel.genres) }" />
+				</c:if>
+				<c:if test="${fn:length(novel.genres) > 4 }">
+					<c:set var="length" value="4" />
+				</c:if>
+					<c:forEach var="i" begin="0" end="${length-1 }">
+						<li class="menu-item u-margin-right--2rem u-rounded--tag">
+							<form action="search" method="post">
+								<input type="hidden" name="genre" value="${novel.genres[i].value }">
+								<button class="btn btn-belike-a">${novel.genres[i].getDisplayName()}</button>
+							</form>
+						</li>
+					</c:forEach>
+				</ul>
+			</div>
 	</div>
 	</div>
 	
