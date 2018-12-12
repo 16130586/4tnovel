@@ -31,19 +31,19 @@ public class ExportImageServlet extends HttpServlet {
 			String cacheStatus = request.getHeader("Cache-Control");
 			if ("no-cache".equalsIgnoreCase(cacheStatus) || cacheStatus == null) {
 				byte[] bytesImage = imgDao.getBytesOfImage(imgId);
-				
-				if(bytesImage == null || bytesImage.length == 0) {
+
+				if (bytesImage == null || bytesImage.length == 0) {
 					response.setStatus(404);
 					response.sendError(404);
 					return;
 				}
 				long cacheAge = 1 * 24 * 3600;
 				long expiry = new Date().getTime() + cacheAge * 1000;
-				
+
 				response.setStatus(200);
 				response.setDateHeader("Expires", expiry);
 				response.setHeader("Cache-Control", "max-age=" + cacheAge + ", public, must-revalidate");
-			
+
 				OutputStream netOut = new BufferedOutputStream(response.getOutputStream());
 				netOut.write(bytesImage, 0, bytesImage.length);
 				netOut.flush();
@@ -52,9 +52,11 @@ public class ExportImageServlet extends HttpServlet {
 				response.setStatus(304);
 				return;
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			System.out.println("bad requesting img");
 			response.sendError(400);
+		} catch (Exception e) {
+			System.out.println("client abort " + e.getMessage());
 		}
 	}
 
