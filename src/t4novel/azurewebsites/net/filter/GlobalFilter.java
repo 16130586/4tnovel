@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class GlobalFilter
  */
-@WebFilter(urlPatterns = "/*", dispatcherTypes = { DispatcherType.REQUEST, DispatcherType.FORWARD })
 public class GlobalFilter implements Filter {
 	static int requested = 0;
 
@@ -96,7 +95,7 @@ public class GlobalFilter implements Filter {
 
 			// pass the request along the filter chain
 			chain.doFilter(request, response);
-			if (cnn != null) {
+			if (cnn != null && isNeedDbConnection) {
 				try {
 					cnn.close();
 					cnn = null;

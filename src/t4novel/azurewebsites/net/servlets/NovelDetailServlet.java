@@ -41,10 +41,12 @@ public class NovelDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("detail doGet");
 		int novelId = -1;
 		try {
 			novelId = Integer.parseInt(request.getParameter("id"));
 		} catch (NumberFormatException e) {
+			response.setStatus(404);
 			response.sendError(404);
 			return;
 		}
@@ -79,11 +81,14 @@ public class NovelDetailServlet extends HttpServlet {
 			}
 			if (requestNovel.getCoverImg() == null)
 				requestNovel.setCoverImg(novelDao.getEncodeImageById(requestNovel.getId(), imgDAO));
+			response.setStatus(200);
+			request.setAttribute("novel", requestNovel);
 		} catch (Exception e) {
+			response.setStatus(500);
 			response.sendError(500);
 			return;
 		}
-		request.setAttribute("novel", requestNovel);
+		
 		getServletContext().getRequestDispatcher("/jsps/pages/novel-details.jsp").forward(request, response);
 	}
 

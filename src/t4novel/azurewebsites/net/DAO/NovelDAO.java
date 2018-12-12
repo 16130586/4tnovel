@@ -31,7 +31,7 @@ public class NovelDAO {
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
-		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP,KIND, STATUS, COVERID from LN where IDOWNER = ?";
+		String query = "select ID, NAME, DESCRIBE, DATEUP, IDOWNER, IDGROUP,KIND, STATUS, COVERID , TOTAL_VIEW from LN where IDOWNER = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, accountId);
@@ -53,6 +53,7 @@ public class NovelDAO {
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
 				tmp.setCoverId(rs.getInt("COVERID"));
+				tmp.setView(rs.getInt("TOTAL_VIEW"));
 				result.add(tmp);
 //				NOVELS_CACHE.put(idNovel, tmp);
 			}
@@ -171,6 +172,7 @@ public class NovelDAO {
 				result.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				result.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
 				result.setCoverId(rs.getInt("COVERID"));
+				result.setView(rs.getInt("TOTAL_VIEW"));
 //				NOVELS_CACHE.put(idNovel, result);
 			}
 		} finally {
@@ -205,7 +207,7 @@ public class NovelDAO {
 
 	public void updateNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? , COVERID = ? where ID = ?";
+		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? , COVERID = ? , TOTAL_VIEW = ? where ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
@@ -216,6 +218,7 @@ public class NovelDAO {
 			stmt.setInt(4, novel.getStatus().getValue());
 			stmt.setInt(5, novel.getCoverId());
 			stmt.setInt(6, novel.getId());
+			stmt.setInt(7, novel.getView());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
@@ -229,7 +232,7 @@ public class NovelDAO {
 
 	public void insertNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO LN (NAME, DESCRIBE, IDOWNER, IDGROUP ,KIND, STATUS , COVERID) VALUES (? , ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO LN (NAME, DESCRIBE, IDOWNER, IDGROUP ,KIND, STATUS , COVERID , TOTAL_VIEW) VALUES (? , ?, ?, ?, ?, ?, ? , ?)";
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
@@ -240,6 +243,7 @@ public class NovelDAO {
 			stmt.setString(5, novel.getKind().toText());
 			stmt.setInt(6, novel.getStatus().getValue());
 			stmt.setInt(7, novel.getCoverId());
+			stmt.setInt(8, novel.getView());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
@@ -401,6 +405,15 @@ public class NovelDAO {
 
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
+	}
+
+	public void increaseView(Novel novel) throws SQLException {
+		String query = "UPDATE LN SET TOTAL_VIEW=? WHERE ID=?";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, novel.getView()  + 1);
+		stmt.setInt(2, novel.getId());
+		stmt.executeUpdate();
+		
 	}
 
 }
