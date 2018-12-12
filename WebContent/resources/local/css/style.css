@@ -26,6 +26,26 @@ body {
   font-family: "Exo", sans-serif;
   color: #444; }
 
+input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  font-size: 1.6rem;
+  font-family: "Exo", sans-serif; }
+
+input::-moz-placeholder {
+  /* Firefox 19+ */
+  font-size: 1.6rem;
+  font-family: "Exo", sans-serif; }
+
+input:-ms-input-placeholder {
+  /* IE 10+ */
+  font-size: 1.6rem;
+  font-family: "Exo", sans-serif; }
+
+input:-moz-placeholder {
+  /* Firefox 18- */
+  font-size: 1.6rem;
+  font-family: "Exo", sans-serif; }
+
 .u-margin-right--1rem {
   margin-right: 1rem !important; }
 
