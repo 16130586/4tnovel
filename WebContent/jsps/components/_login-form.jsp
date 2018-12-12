@@ -32,6 +32,9 @@
 					</c:if>
 				</div>
 			</div>
+			<c:if test="${not empty banError}">
+				<p class="u-text--error-display">${banError}</p>
+			</c:if>
 			<div class="u-width--full">
 				<a href="register" class="btn">Tạo mới tài khoản</a> <input
 					type="submit" class="btn btn-green" value="Đăng nhập">

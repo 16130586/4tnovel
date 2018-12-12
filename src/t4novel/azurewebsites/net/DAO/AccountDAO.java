@@ -3,12 +3,15 @@ package t4novel.azurewebsites.net.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.collections4.map.LRUMap;
 
 import t4novel.azurewebsites.net.models.Account;
+import t4novel.azurewebsites.net.models.Group;
+import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.sercurities.Role;
 
 public class AccountDAO {
@@ -55,7 +58,7 @@ public class AccountDAO {
 			stmt.setString(2, account.getPassword());
 			stmt.setString(3, account.getGmail());
 			stmt.setString(4, account.isAutoPassPushlishment() ? "YES" : "NO");
-			stmt.setString(5, account.isBanned() ? "YES" : "NO");
+			stmt.setString(5, account.isBan() ? "YES" : "NO");
 			stmt.setInt(6, account.getId());
 			stmt.executeUpdate();
 		} catch (Exception e) {
@@ -93,7 +96,7 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBanned(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(9).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -133,7 +136,7 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBanned(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(9).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -173,7 +176,7 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBanned(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(9).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -213,7 +216,7 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBanned(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(9).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -227,14 +230,64 @@ public class AccountDAO {
 		return account;
 	}
 
-	public void deleteAccountByID(int AccountID) throws Exception {
+	public void deleteAccount(Account account, NovelDAO novelDAO, GroupDAO groupDAO) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "DELETE FROM ACCOUTN WHERE ID = ?";
+		String query = "DELETE FROM ACCOUNT WHERE ID = ?";
+
+		account.setOwnNovels(novelDAO.getNovelsByUserId(account.getId()));
+		for (Novel novel : account.getOwnNovels()) {
+			novelDAO.delNovelById(novel.getId(), new VolDAO(cnn), new ChapDAO(cnn), new GenreDAO(cnn));
+		}
+		account.setJoinGroup(groupDAO.getJoinGroups(account.getId()));
+		for (Group group : account.getJoinGroup()) {
+			groupDAO.removeMemberFromGroup(account, group);
+		}
+		groupDAO.deleteGroupsByGroupOwnerID(account.getId());
 
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, AccountID);
+			stmt.setInt(1, account.getId());
+			stmt.executeUpdate();
+			cnn.commit();
+		} catch (Exception e) {
+			cnn.rollback();
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
+		}
+	}
+
+	public void banAccountByID(int accountID) throws SQLException {
+		PreparedStatement stmt = null;
+		String query = "UPDATE ACCOUNT SET ISBAN = 'YES' WHERE ID = ?";
+
+		try {
+			cnn.setAutoCommit(false);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, accountID);
+			stmt.executeUpdate();
+			cnn.commit();
+		} catch (Exception e) {
+			cnn.rollback();
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
+		}
+	}
+
+	public void unBanAccountByID(int accountID) throws SQLException {
+		PreparedStatement stmt = null;
+		String query = "UPDATE ACCOUNT SET ISBAN = 'NO' WHERE ID = ?";
+
+		try {
+			cnn.setAutoCommit(false);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, accountID);
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {

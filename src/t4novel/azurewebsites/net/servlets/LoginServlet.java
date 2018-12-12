@@ -63,11 +63,15 @@ public class LoginServlet extends HttpServlet {
 			// get data from database
 			try {
 				account = accountDAO.getAccountByUsername(account.getUserName());
+				if (account.getBan()) {
+					request.setAttribute("banError", "Account had been banned!");
+					getServletContext().getRequestDispatcher("/jsps/pages/login.jsp").forward(request, response);
+				}
 				account.setBookMarkFolders(bookmarkFolderDAO.getBookmarkFolderByUser(account.getId()));
 				account.setNovelFollowsId(followDao.getNovelFollow(account.getId()));
-				account.setMessages(inboxDao.getMessagesInInBox(0 , 5 , account.getId()));
-				//TODO load vua du ra man hinh bao hom username, bla bla, bookmarks, thong bao
-				//TODO load them thong bao len nua
+				account.setMessages(inboxDao.getMessagesInInBox(0, 5, account.getId()));
+				// TODO load vua du ra man hinh bao hom username, bla bla, bookmarks, thong bao
+				// TODO load them thong bao len nua
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
