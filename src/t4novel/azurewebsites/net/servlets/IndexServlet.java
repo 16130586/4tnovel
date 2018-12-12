@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.DAO.LikeDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
@@ -84,7 +85,15 @@ public class IndexServlet extends HttpServlet {
 			}
 		
 		}
-		
+		try {
+			LikeDAO likeDao = new LikeDAO(cnn);
+			for(Chap c : newChaps) {
+				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
+			}
+		} catch (Exception e) {
+			response.sendError(500);
+			return;
+		}
 		// end
 		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
