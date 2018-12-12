@@ -6,7 +6,8 @@
 <head>
 <title>Quản lý - Tất cả truyện của tôi</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <!-- the following to include all needed things 
 	font
 	font awesome icon
@@ -23,8 +24,7 @@
 <body>
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
-		<div
-			class="account-manage__content  u-row--1140 u-centered"
+		<div class="account-manage__content  u-row--1140 u-centered"
 			style="overflow-y: auto">
 			<div>
 				<p class="u-3x u-align-center">Truyện của tui</p>
@@ -38,13 +38,15 @@
 			</div>
 			<hr>
 			<c:set var="sizeNovels" value="${fn:length(account.ownNovels) }" />
-			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1" varStatus="loop">
+			<c:forEach var="i" begin="1" end="${sizeNovels }" step="1"
+				varStatus="loop">
 				<c:set var="novel" value="${account.ownNovels[sizeNovels-i]}" />
 				<section>
 					<div class="row u-padding--05rem">
 						<button type="button"
 							class="col-md-6 btn btn-belike-a u-align-left u-text-overflow--hidden"
-							style="color: #36a39e" onclick="showOrHide(${novel.id})">${loop.count}. ${novel.name }</button>
+							style="color: #36a39e" onclick="showOrHide(${novel.id})">${loop.count}.
+							${novel.name }</button>
 						<a href="#"
 							class="col-md-2 btn btn-belike-a u-align-left u-text-overflow--hidden">${account.displayedName }</a>
 						<a href="#"
@@ -54,15 +56,19 @@
 							<div class="row">
 								<div class="col-md-3 u-transformX-40">
 									<form action="fix-novel" method="get">
-										<button name="action" value="fix-novel"
-											class="btn btn-primary u-color-white">Sửa</button>
+										<button name="action" value="fix-novel">
+											<img class="u-icon--32rem"
+												src="resources/vendors/svg/edit.svg" alt="edit">
+										</button>
 										<input type="hidden" name="id-novel" value="${novel.id}"></input>
 									</form>
 								</div>
 								<div class="col-md-9">
 									<form action="refact" method="post">
-										<button name="action" value="del-novel"
-											class="btn btn-danger u-color-white">Xóa</button>
+										<button name="action" value="del-novel">
+											<img class="u-icon--32rem"
+												src="resources/vendors/svg/delete.svg" alt="delete">
+										</button>
 										<input type="hidden" name="id-novel" value="${novel.id}"></input>
 									</form>
 								</div>
@@ -80,10 +86,14 @@
 									onclick="showOrHide('${novel.id}-${vol.id }')">${vol.title}</button>
 								<div class="col-md-2">
 									<form action="refact" method="post">
-										<button name="action" value="fix-vol"
-											class="btn btn-primary u-color-white">Sửa</button>
-										<button name="action" value="del-vol"
-											class="btn btn-danger u-color-white">Xóa</button>
+										<button name="action" value="fix-vol">
+											<img class="u-icon--32rem"
+												src="resources/vendors/svg/edit.svg" alt="edit">
+										</button>
+										<button name="action" value="del-vol" style="margin-left:1.5rem">
+											<img class="u-icon--32rem"
+												src="resources/vendors/svg/delete.svg" alt="delete">
+										</button>
 										<input type="hidden" name="id-vol" value="${vol.id}"></input>
 									</form>
 								</div>
@@ -97,10 +107,14 @@
 											style="padding-left: 5rem !important">${chap.title} </a>
 										<div class="col-md-2">
 											<form action="refact" method="post">
-												<button name="action" value="fix-chap"
-													class="btn btn-primary u-color-white">Sửa</button>
-												<button name="action" value="del-chap"
-													class="btn btn-danger u-color-white">Xóa</button>
+												<button name="action" value="fix-chap">
+													<img class="u-icon--32rem"
+														src="resources/vendors/svg/edit.svg" alt="edit">
+												</button>
+												<button name="action" value="del-chap" style="margin-left:1.5rem">
+													<img class="u-icon--32rem"
+														src="resources/vendors/svg/delete.svg" alt="delete">
+												</button>
 												<input type="hidden" name="id-chap" value="${chap.id}"></input>
 											</form>
 										</div>
