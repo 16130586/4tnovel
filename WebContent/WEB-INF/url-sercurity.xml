@@ -470,6 +470,14 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/ajax-like-novel">
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 	<url pattern="/resources/imgs">
 		<method name="get">
 			<login>false</login>
