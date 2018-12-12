@@ -17,9 +17,6 @@ import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
 
-/**
- * Servlet implementation class ReadServlet
- */
 @WebServlet("/read")
 public class ReadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -73,10 +70,13 @@ public class ReadServlet extends HttpServlet {
 			}
 
 			request.setAttribute("chap", acquireChap);
+			response.setStatus(200);
 		} catch (NumberFormatException e) {
+			response.setStatus(404);
 			response.sendError(404);
 			return;
 		} catch (Exception e) {
+			response.setStatus(500);
 			response.sendError(500);
 			return;
 		}

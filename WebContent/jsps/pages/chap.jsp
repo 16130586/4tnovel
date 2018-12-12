@@ -36,7 +36,7 @@
 	<div id="chap" class="chap">
 		<div class="chap__header u-align-center u-margin-bottom--1rem">
 			<h1>${chap.novelOwner.name }</h1>
-			<h3>${chap.title }</h3>
+			<h2>${chap.title }</h2>
 			<p>${chap.dateUp}</p>
 		</div>
 
@@ -45,31 +45,7 @@
 				value="${chap.volOwner.getPreviousChap(chap.id)}" />
 			<c:set var="nextChap" scope="request"
 				value="${chap.volOwner.getNextChap(chap.id)}" />
-			<div class="u-align-center u-color-white">
-				<c:if test="${not empty previousChap}">
-					<a href="read?id=${previousChap.id}"
-						class="btn btn-success u-margin-right--1rem"><i class="fa fa-backward"></i></a>
-				</c:if>
-				<c:if test="${empty previousChap }">
-					<a href="/" onclick="return false;"
-						class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-backward"></i></a>
-				</c:if>
-				<a href="detail?id=${chap.novelOwner.id}"
-					class="btn btn-secondary u-margin-right--1rem"><i class="fa fa-home"></i></a>
-
-				<c:if test="${not empty nextChap}">
-					<a href="read?id=${nextChap.id}"
-						class="btn btn-success u-margin-right--1rem"><i class="fa fa-forward"></i></a>
-				</c:if>
-				<c:if test="${empty nextChap }">
-					<a href="/" onclick="return false;"
-						class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-forward"></i></a>
-				</c:if>
-			</div>
 			<div class="chap__body__content" onclick="showHideSetup()">
-				<div>
-					<h3>${chap.title }</h3>
-				</div>
 				<div id="content">
 				<c:set var="newLine" value="\n"/>
 				<c:set var="paragraphs" value="${chap.content.split(newLine) }" />
@@ -77,27 +53,6 @@
 					<c:forEach var="paragraph" items="${paragraphs }">
 						<p>${paragraph }</p>
 					</c:forEach>
-				</div>
-				<div class="u-align-center u-color-white u-margin-top--2rem">
-					<c:if test="${not empty previousChap}">
-						<a href="read?id=${previousChap.id}"
-							class="btn btn-success u-margin-right--1rem"><i class="fa fa-backward"></i></a>
-					</c:if>
-					<c:if test="${empty previousChap }">
-						<a href="/" onclick="return false;"
-							class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-backward"></i></a>
-					</c:if>
-					<a href="detail?id=${chap.novelOwner.id}"
-						class="btn btn-secondary u-margin-right--1rem"><i class="fa fa-home"></i></a>
-
-					<c:if test="${not empty nextChap}">
-						<a href="read?id=${nextChap.id}"
-							class="btn btn-success u-margin-right--1rem"><i class="fa fa-forward"></i></a>
-					</c:if>
-					<c:if test="${empty nextChap }">
-						<a href="/" onclick="return false;"
-							class="btn btn-success u-margin-right--1rem u-disabled"><i class="fa fa-forward"></i></a>
-					</c:if>
 				</div>
 			</div>
 
@@ -126,6 +81,9 @@
 							class="btn btn-secondary">
 							<i class="fas fa-font"></i>
 						</button></li>
+					<c:if test="${not empty account }">
+						<li><button class="btn btn-secondary"><i class="fa fa-bookmark"></i></button></li>
+					</c:if>
 					<li>
 						<c:if test="${not empty nextChap}">
 							<a href="read?id=${nextChap.id}"
