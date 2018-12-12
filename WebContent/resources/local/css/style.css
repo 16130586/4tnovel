@@ -684,6 +684,8 @@ input:-moz-placeholder {
       padding-bottom: 2rem; }
       .detail__top-info .btn {
         margin-right: 1rem; }
+      .detail__top-info .genre {
+        text-transform: lowercase; }
   .detail__body {
     width: 75vw;
     padding-bottom: 2rem;
@@ -693,7 +695,8 @@ input:-moz-placeholder {
       text-transform: uppercase;
       padding: .5rem;
       font-weight: bold;
-      cursor: pointer; }
+      cursor: pointer;
+      font-size: 1.7rem; }
     .detail__body .tab .tab-content {
       padding: .5rem; }
 
