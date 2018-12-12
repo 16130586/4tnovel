@@ -56,6 +56,18 @@ public class IndexServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		LikeDAO likeDao = new LikeDAO(cnn);
+		// loading like and view for newschap
+		try {
+			
+			for(Chap c : newChaps) {
+				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
+			}
+		} catch (Exception e) {
+			response.sendError(500);
+			return;
+		}
+		// end loading like and view for newschaps
 		request.setAttribute("newChaps", newChaps);
 		
 		// loading current read
@@ -79,22 +91,20 @@ public class IndexServlet extends HttpServlet {
 					currentRead.setNovelOwner(novel);
 					request.setAttribute("currentRead", currentRead);
 				}
+				if(currentRead != null && currentRead.getNovelOwner() != null) {
+					currentRead.getNovelOwner().setLike(likeDao.getLike(currentRead.getNovelOwner().getId(), "novel"));
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		
 		}
-		try {
-			LikeDAO likeDao = new LikeDAO(cnn);
-			for(Chap c : newChaps) {
-				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
-			}
-		} catch (Exception e) {
-			response.sendError(500);
-			return;
-		}
-		// end
+	
+		// end loading current chap
+	
+		
 		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
