@@ -230,13 +230,59 @@
 		novelInfoBox.appendChild(novelTitle)
 		novelInfoBox.appendChild(chapTitleBox)
 		novelInfoBox.appendChild(novelDescription)
-		right.appendChild(novelInfoBox)
-		right.appendChild(btm)
+		
 		//end
+		
+		//start setup view- like
+		var likeViewRow = document.createElement("div")
+		var ulViewLike = document.createElement("ul")
+		
+		likeViewRow.className="row u-width--full u-margin-top--1rem"
+		ulViewLike.className="horizontal-menu--showcase text-centered"
+		
+		var liView = document.createElement("li")
+		var liLike = document.createElement("li")
+		
+		liView.className="menu-item u-margin-right--2rem"
+		liLike.className="menu-item"
+		
+		var iconView = document.createElement('i')
+		var iconLike = document.createElement('i')
+		
+		iconView.className="fas fa-eye"
+		iconLike.className="fas fa-thumbs-up"
+		
+		var numViews = document.createElement('p')
+		var numLikes = document.createElement('p')
+		
+		numViews.className="u-inline-block"
+		numLikes.className="u-inline-block"
+		
+		numViews.innerHTML = '&nbsp;'.concat(data.novelOwner.view)
+		numLikes.innerHTML = '&nbsp;'.concat(data.novelOwner.like)
+		
+		liView.appendChild(iconView)
+		liView.appendChild(numViews)
+		
+		liLike.appendChild(iconLike)
+		liLike.appendChild(numLikes)
+		
+		ulViewLike.appendChild(liView)
+		ulViewLike.appendChild(liLike)
+		
+		likeViewRow.append(ulViewLike)
+		
+		
+		//end setup view-like
+		
+		right.appendChild(novelInfoBox)
+		right.appendChild(likeViewRow)
+		right.appendChild(btm)
+		
 		
 		// start setup genre btm
 		var genreBox = document.createElement("div")
-		genreBox.className="novel__gender u-margin-top--2rem"
+		genreBox.className="novel__gender"
 		genreBox.style.whiteSpace = "nowrap"
 		genreBox.style.overflow = "hidden"
 		
