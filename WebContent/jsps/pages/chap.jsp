@@ -126,6 +126,7 @@
 							class="btn btn-secondary">
 							<i class="fas fa-font"></i>
 						</button></li>
+					<li><button class="btn btn-secondary"><i class="fa fa-bookmark"></i></button></li>
 					<li>
 						<c:if test="${not empty nextChap}">
 							<a href="read?id=${nextChap.id}"
