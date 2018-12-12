@@ -30,16 +30,18 @@
                             <a class="link">${novel.name}!</a>
                         </h2>
                         <div>
-                            <span class="u-block"> Người đăng: <a class="link u-color-blue" href="#">${novel.owner.userName}</a></span> 
+                            <span class="u-block"> Người đăng : <a class="link u-color-blue" href="#">${novel.owner.userName}</a></span> 
                             <div class="u-block u-margin-top--1rem">  
 								<ul class="horizontal-menu--showcase">
+								<span>Thể loại : </span>
 									<c:forEach var="genre" items="${novel.genres}">
 										<li class="menu-item">
 										<form action="search" method="post">
 											<input type="hidden" name="genre" value="${genre.getValue()}">
-											<button class="btn btn-belike-a">${genre.getDisplayName()}</button>
+											<button class="btn btn-belike-a u-color-blue">${genre.getDisplayName()}</button>
 										</form>
 										</li>
+										
 									</c:forEach>
 								</ul> 
 							</div>                   
@@ -47,14 +49,14 @@
                     </div>
                     <div class="u-margin-top--1rem">
                     	<c:if test="${not empty novel.vols && not empty novel.vols.get(0) && not empty novel.vols.get(0).chaps }">
-                       	 	<a href="read?id=${novel.vols.get(0).chaps.get(0).id }" class="btn btn-info u-color-white">Đọc từ đầu</a>
+                       	 	<a href="read?id=${novel.vols.get(0).chaps.get(0).id }" class="btn btn-info u-color-white u-padding--05rem">Đọc từ đầu</a>
                         </c:if>
                         <c:if test="${not empty account && not account.isFollowNovel(novel.id)}">
                         	<form action="follow" method="post" style="display:inline-block;">
                         		<input name="action" value="subcribe" type="hidden">
                         		<input name="targetId" value="${novel.id }" type="hidden">
                         		<input name="stream" value="novel" type="hidden">
-                        		<button class="btn btn-danger u-color-white">+Theo dõi</button>
+                        		<button class="btn btn-danger u-color-white u-padding--05rem">+Theo dõi</button>
                         	</form>
                         </c:if>
                         <c:if test="${not empty account && account.isFollowNovel(novel.id)}">
@@ -62,39 +64,39 @@
                         		<input name="action" value="unSubcribe" type="hidden">
                         		<input name="targetId" value="${novel.id }" type="hidden">
                         		<input name="stream" value="novel" type="hidden">
-                        		<button class="btn btn-danger u-color-white">-Bỏ theo dõi</button>
+                        		<button class="btn btn-danger u-color-white u-padding--05rem">-Bỏ theo dõi</button>
                         	</form>
                         </c:if>
-                        <c:if test="${empty account }">
-                        	<a href="login" class="btn btn-danger u-color-white">+Theo dõi</a>
+                       <c:if test="${empty account }">
+                        	<a href="login" class="btn btn-danger u-color-white u-padding--05rem">+Theo dõi</a>
                         </c:if>
                     </div>
+                    <div class="u-margin-top--1rem u-padding-left--1rem" id="description" style="max-height: 150px; overflow: hidden; border-left: 4px solid rgb(16, 181, 145)">
+						<c:set var="newLine" value="\n"/>
+						<c:set var="paragraphs" value="${novel.description.split(newLine) }" />
+						<c:forEach var="paragraph" items="${paragraphs }">
+							<p>${paragraph }</p>
+						</c:forEach>
+                	</div>
+                	<div class="u-align-right u-width--full" style="margin: 1rem">
+	                	<button onclick="seeMoreOrHide(this)" class="btn u-color-white u-padding--05rem" style="background-color: #3f8296; font-size: 1.3rem; width: 86px">
+ 							<i class="fa fa-angle-double-down"></i> Xem thêm
+    	            	</button>
+                	</div>
                 </div>
             </div>
         </div>
         <div class="detail__body u-centered">
             <section class="tab u-block">
-                <div>
-                    <button class="btn tab-btn u-2x" onclick="showOrHide('introduce')">Giới thiệu</button>
-                </div>
-                <div id="introduce" class="tab-content" style="display: block">
-					<c:set var="newLine" value="\n"/>
-					<c:set var="paragraphs" value="${novel.description.split(newLine) }" />
-					<c:forEach var="paragraph" items="${paragraphs }">
-						<p>${paragraph }</p>
-					</c:forEach>
-                </div>
-            </section>
-            <section class="tab u-block">
                 <button class="btn tab-btn u-2x" onclick="showOrHide('note')">Chú thích</button>
-                <div id="note" class="tab-content" style="display: none">
+                <div id="note" class="tab-content" style="display: block">
                 	<span>Adding later!</span>
                 </div>
             </section>
             <c:forEach var="vol" items="${novel.vols}">
             	 <section class="tab u-block">
                	 	<button class="btn tab-btn u-2x" onclick="showOrHide('${vol.id}')">${vol.title}</button>
-	                <div id="${vol.id }" class="tab-content" style="display: none">
+	                <div id="${vol.id }" class="tab-content" style="display: block">
 	                	<c:forEach var="chap" items="${vol.chaps}">
 	                    	<a class="link u-block" href="read?id=${chap.id}">${chap.title}</a>
 	                    </c:forEach>
@@ -104,6 +106,26 @@
         </div>
     </div>
     <script>
+    	function seeMoreOrHide(x) {
+    		var des = document.getElementById('description');
+    		if (des.style.maxHeight == "150px"){
+    			setBtnSeeMoreOrHide(true, x);
+				des.style.maxHeight = null;    			
+    		}
+    		else {
+    			setBtnSeeMoreOrHide(false, x);
+    			des.style.maxHeight = "150px";    			
+    		}
+    	}
+    	
+    	function setBtnSeeMoreOrHide(isMore, x) {
+    		if (isMore) {
+    			x.innerHTML = "<i class='fa fa-angle-double-up'></i> Ẩn đi";
+    		} else {
+    			x.innerHTML = "<i class='fa fa-angle-double-down'></i> Xem thêm";
+    		}
+    	}
+    
         function showOrHide(id) {
             var x = document.getElementById(id);
             if (x.style.display =='none') {
