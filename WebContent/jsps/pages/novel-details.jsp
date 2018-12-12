@@ -21,17 +21,17 @@
 <div class="detail">
         <div class="detail__top u-centered">
             <div class="row">
-                <div class="col-md-4 detail__top-cover">
+                <div class="col-md-3 detail__top-cover">
                     <img class="img-cover" src="${baseURL}/resources/imgs?id=${novel.coverId }" alt="đoán xem">
                 </div>
-                <div class="col-md-8 detail__top-info">
+                <div class="col-md-9 detail__top-info">
                     <div>
-                        <h1 class="u-color-blue">
+                        <h2 class="u-color-blue">
                             <a class="link">${novel.name}!</a>
-                        </h1>
+                        </h2>
                         <div>
                             <span class="u-block"> Người đăng: <a class="link u-color-blue" href="#">${novel.owner.userName}</a></span> 
-                            <div class="u-block">  
+                            <div class="u-block u-margin-top--1rem">  
 								<ul class="horizontal-menu--showcase">
 									<c:forEach var="genre" items="${novel.genres}">
 										<li class="menu-item">
@@ -45,7 +45,7 @@
 							</div>                   
 						</div>
                     </div>
-                    <div>
+                    <div class="u-margin-top--1rem">
                     	<c:if test="${not empty novel.vols && not empty novel.vols.get(0) && not empty novel.vols.get(0).chaps }">
                        	 	<a href="read?id=${novel.vols.get(0).chaps.get(0).id }" class="btn btn-info u-color-white">Đọc từ đầu</a>
                         </c:if>
@@ -78,7 +78,11 @@
                     <button class="btn tab-btn u-2x" onclick="showOrHide('introduce')">Giới thiệu</button>
                 </div>
                 <div id="introduce" class="tab-content" style="display: block">
-                	<span>${novel.description}</span>   
+					<c:set var="newLine" value="\n"/>
+					<c:set var="paragraphs" value="${novel.description.split(newLine) }" />
+					<c:forEach var="paragraph" items="${paragraphs }">
+						<p>${paragraph }</p>
+					</c:forEach>
                 </div>
             </section>
             <section class="tab u-block">
