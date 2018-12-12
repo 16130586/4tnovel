@@ -121,6 +121,74 @@ public class GroupDAO {
 		}
 	}
 
+	public void removeMemberFromGroup(Account account, Group group) throws SQLException {
+		PreparedStatement stmt = null;
+		String query = "DELETE FROM JOININ WHERE ID_ACC = ? AND ID_GROUP = ?";
+
+		try {
+			cnn.setAutoCommit(false);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, account.getId());
+			stmt.setInt(2, group.getId());
+			stmt.executeUpdate();
+			cnn.commit();
+			System.out.println("Remove member completed!");
+		} catch (Exception e) {
+			cnn.rollback();
+			e.printStackTrace();
+		} finally {
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
+		}
+	}
+
+	public void deleteGroupsByGroupOwnerID(int groupOwnerID) throws SQLException {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT ID FROM GROUPACC WHERE IDOWNER = ?";
+
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, groupOwnerID);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				int groupID = rs.getInt(1);
+				removeAllMemberFromGroup(groupID);
+				deleteGroupByID(groupID);
+			}
+			System.out.println("Delete groups by owner completed!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
+	}
+
+	public void removeAllMemberFromGroup(int groupID) throws SQLException {
+		PreparedStatement stmt = null;
+		String query = "DELETE FROM JOININ WHERE ID_GROUP = ?";
+
+		try {
+			cnn.setAutoCommit(false);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, groupID);
+			stmt.executeUpdate();
+			cnn.commit();
+			System.out.println("Remove all member completed!");
+		} catch (Exception e) {
+			cnn.rollback();
+			e.printStackTrace();
+		} finally {
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
+		}
+	}
+
 	public boolean checkMemberExistInGroup(int accountID, int groupID) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -147,14 +215,14 @@ public class GroupDAO {
 		return false;
 	}
 
-	public void deleteGroup(Group group) throws Exception {
+	public void deleteGroupByID(int groupID) throws Exception {
 		PreparedStatement stmt = null;
 		String query = "DELETE FROM GROUPACC WHERE ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, group.getId());
+			stmt.setInt(1, groupID);
 			stmt.executeUpdate();
 			cnn.commit();
 			System.out.println("Delete group completed");
