@@ -21,7 +21,7 @@ public class Account implements Serializable {
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
 	private List<Group> joinGroups;
-	private boolean isBanned;
+	private boolean ban;
 	private List<Integer> novelFollowsId;
 
 	public Account(int id) {
@@ -48,7 +48,7 @@ public class Account implements Serializable {
 		this.ownNovels = ownNovels;
 		this.follows = follows;
 		this.comments = comments;
-		this.isBanned = isBanned;
+		this.ban = isBanned;
 	}
 
 	public int getId() {
@@ -171,12 +171,16 @@ public class Account implements Serializable {
 		this.comments = comments;
 	}
 
-	public boolean isBanned() {
-		return isBanned;
+	public boolean isBan() {
+		return ban;
 	}
 
-	public void setBanned(boolean isBanned) {
-		this.isBanned = isBanned;
+	public boolean getBan() {
+		return ban;
+	}
+
+	public void setBan(boolean isBanned) {
+		this.ban = isBanned;
 	}
 
 	public String getPassword() {

@@ -4,7 +4,8 @@
 <html>
 <head>
 <title>ABC</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
 	font
@@ -24,31 +25,26 @@
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div class="account-manage__content">
 			<div class="row u-height--100">
-				<%@ include file="/jsps/components/_account-manage.admin-nav.jsp" %>	
+				<%@ include file="/jsps/components/_account-manage.admin-nav.jsp"%>
 				<div class="col-md-10">
 					<div>
-		                <p class="u-3x u-align-center">Cấp quyền ghim</p>
-		            </div>
+						<p class="u-3x u-align-center">Cấp quyền ghim</p>
+					</div>
 					<div class="search">
-						<%@ include file="/jsps/components/_search-bar.account.jsp" %>
-						
+						<%@ include file="/jsps/components/_search-bar.account.jsp"%>
+
 						<form action="" method="post">
 							<div class="u-centered u-width--75">
-		                        <div class="account-info row">
-		                            <input type="hidden" name="id-account" value="">
-		                            <div class="col-sm-2 u-align-right"><img class="img" src="http://via.placeholder.com/330x330"></div>
-		                            <div class="col-sm-7"><p class="u-2x">Name</p></div>
-		                            <div class="col-sm-3 u-align-center"><button class="btn btn-primary u-2x">Cấp quyền ghim</button></div>
-		                        </div>
-		                        <hr>
-	                        </div>
+								<div class="account-info row">
+									<input type="hidden" name="id-account" value="">
+								</div>
+								<hr>
+							</div>
 						</form>
-						
 					</div>
-				</div>		
+				</div>
 			</div>
 		</div>
 	</div>
-</body>
 </body>
 </html>

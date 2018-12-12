@@ -4,7 +4,8 @@
 <html>
 <head>
 <title>ABC</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
 	font
@@ -24,31 +25,51 @@
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div class="account-manage__content">
 			<div class="row u-height--100">
-				<%@ include file="/jsps/components/_account-manage.admin-nav.jsp" %>	
+				<%@ include file="/jsps/components/_account-manage.admin-nav.jsp"%>
 				<div class="col-md-10">
 					<div>
-		                <p class="u-3x u-align-center">Khóa tài khoản</p>
-		            </div>
-					<div class="search">
-						<%@ include file="/jsps/components/_search-bar.account.jsp" %>
-						
-						<form action="" method="post">
-							<div class="u-centered u-width--75">
-		                        <div class="account-info row">
-		                            <input type="hidden" name="id-account" value="">
-		                            <div class="col-sm-2 u-align-right"><img class="img" src="http://via.placeholder.com/330x330"></div>
-		                            <div class="col-sm-7"><p class="u-2x">Name</p></div>
-		                            <div class="col-sm-3 u-align-center"><button class="btn btn-primary u-2x">Khóa tài khoản</button></div>
-		                        </div>
-		                        <hr>
-	                        </div>
-						</form>
-						
+						<p class="u-3x u-align-center">Khóa tài khoản</p>
 					</div>
-				</div>		
+					<div class="search">
+						<%@ include file="/jsps/components/_search-bar.account.jsp"%>
+
+						<div class="u-width--80 u-centered u-2x">
+							<table class="table table-hover table-light">
+								<!-- c:for de do du lieu ra -->
+								<c:if test="${not empty searchResultAccount}">
+									<tr class="row">
+										<td class="col-md-3">Username</td>
+										<td class="col-md-3">Nickname</td>
+										<td class="col-md-3">Email</td>
+										<td class="col-md-3">Action</td>
+									</tr>
+									<tr class="row">
+										<td class="col-md-3">${searchResultAccount.userName}</td>
+										<td class="col-md-3">${searchResultAccount.displayedName}</td>
+										<td class="col-md-3">${searchResultAccount.gmail}</td>
+										<td><c:if test="${searchResultAccount.ban}">
+												<form action="ban-account" method="post">
+													<input type="hidden" name="accountID"
+														value="${searchResultAccount.id}">
+													<button class="btn btn-primary" name="action" type="submit"
+														value="unlock">Gỡ khóa</button>
+												</form>
+											</c:if> <c:if test="${!searchResultAccount.ban}">
+												<form action="ban-account" method="post">
+													<input type="hidden" name="accountID"
+														value="${searchResultAccount.id}">
+													<button class="btn btn-danger" name="action" type="submit"
+														value="lock">Khóa</button>
+												</form>
+											</c:if></td>
+									</tr>
+								</c:if>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</body>
 </body>
 </html>
