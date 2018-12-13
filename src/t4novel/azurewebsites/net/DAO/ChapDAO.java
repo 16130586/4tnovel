@@ -246,6 +246,29 @@ public class ChapDAO {
 		return content;
 	}
 
+	public List<Chap> getLatestChap(int offSet, int limit) throws SQLException {
+		List<Chap> result = new LinkedList<>();
+		String query = "select max(ID) as ID from CHAP group by ID_NOVEL order by max(DATEUP) desc offset ? rows fetch next ? rows only";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, offSet);
+			stmt.setInt(2, limit);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				result.add(getPartOfChapsByChapId(rs.getInt("ID")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cnn.setAutoCommit(true);
+			if (stmt != null)
+				stmt.close();
+		}
+	return result;
+	}
+	
 	public void deleteChapByID(int chapID) throws Exception {
 		PreparedStatement stmt = null;
 		String querry = "DELETE FROM CHAP WHERE ID = ?";
