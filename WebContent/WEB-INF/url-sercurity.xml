@@ -454,6 +454,48 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/ban-account">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/delete-account">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/grant-pin">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 	<url pattern="/follow">
 		<method name="post">
 			<login>true</login>
@@ -475,6 +517,14 @@
 			<login>false</login>
 			<connection>true</connection>
 			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/ajax-like-novel">
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
 			<role>1</role>
 			<role>2</role>
 		</method>

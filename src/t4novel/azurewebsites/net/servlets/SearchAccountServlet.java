@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
+
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.models.Account;
 
@@ -39,10 +41,11 @@ public class SearchAccountServlet extends HttpServlet {
 		Account account = null;
 		String type = request.getParameter("type");
 		String searchParam = request.getParameter("input");
+		String uri = request.getParameter("uri");
+		String url = "";
 
 		switch (type) {
 		case "user-name":
-			// get data from database
 			try {
 				account = accountDAO.getAccountByUsername(searchParam);
 			} catch (Exception e) {
@@ -50,7 +53,6 @@ public class SearchAccountServlet extends HttpServlet {
 			}
 			break;
 		case "display-name":
-			// get data from database
 			try {
 				account = accountDAO.getAccountByNickname(searchParam);
 			} catch (Exception e) {
@@ -58,7 +60,6 @@ public class SearchAccountServlet extends HttpServlet {
 			}
 			break;
 		case "email":
-			// get data from database
 			try {
 				account = accountDAO.getAccountByEmail(searchParam);
 			} catch (Exception e) {
@@ -73,6 +74,22 @@ public class SearchAccountServlet extends HttpServlet {
 		}
 		request.setAttribute("searchResultAccount", account);
 		request.setAttribute("forwardToDoGet", true);
-		getServletContext().getRequestDispatcher("/add-member").forward(request, response);
+
+		switch (uri) {
+		case "/4TNOVEL/jsps/pages/admin-grant-the-right-to-pin.jsp":
+			url = "/jsps/pages/admin-grant-the-right-to-pin.jsp";
+			break;
+		case "/4TNOVEL/jsps/pages/admin-ban-account.jsp":
+			url = "/jsps/pages/admin-ban-account.jsp";
+			break;
+		case "/4TNOVEL/jsps/pages/admin-delete-account.jsp":
+			url = "/jsps/pages/admin-delete-account.jsp";
+			break;
+		case "/4TNOVEL/jsps/pages/add-member.jsp":
+			url = "/add-member";
+			break;
+		}
+
+		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 }

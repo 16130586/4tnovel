@@ -18,33 +18,13 @@
 					name="input" required>
 			</div>
 			<div class="col-sm-2">
+				<input name="uri" type="hidden"
+					value="${pageContext.request.requestURI}">
 				<button type="submit" class="btn btn-primary u-2x">Tìm kiếm</button>
 				<br>
 			</div>
 		</div>
 	</form>
 	<hr>
-	<div class="u-width--80 u-centered u-2x">
-		<table class="table table-hover table-dark">
-			<!-- c:for de do du lieu ra -->
-			<c:if test="${not empty searchResultAccount}">
-				<tr class="row">
-					<td class="col-md-3">Username</td>
-					<td class="col-md-3">Nickname</td>
-					<td class="col-md-3">Email</td>
-					<td class="col-md-3">Action</td>
-				</tr>
-				<tr class="row">
-					<td class="col-md-3">${searchResultAccount.userName}</td>
-					<td class="col-md-3">${searchResultAccount.displayedName}</td>
-					<td class="col-md-3">${searchResultAccount.gmail}</td>
-					<td class="col-md-3"><input name="idAccount"
-						id="accountResultId" onclick="mappingId()" type="radio"
-						value="${searchResultAccount.id}"> <label for="account1">Chọn</label>
-					</td>
-				</tr>
-			</c:if>
-		</table>
-	</div>
 </div>
 <!-- 1 div de hien ket qua + 1 doan js-->

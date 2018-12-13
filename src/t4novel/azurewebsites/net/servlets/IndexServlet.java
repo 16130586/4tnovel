@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.DAO.LikeDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
@@ -55,6 +56,18 @@ public class IndexServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		LikeDAO likeDao = new LikeDAO(cnn);
+		// loading like and view for newschap
+		try {
+			
+			for(Chap c : newChaps) {
+				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
+			}
+		} catch (Exception e) {
+			response.sendError(500);
+			return;
+		}
+		// end loading like and view for newschaps
 		request.setAttribute("newChaps", newChaps);
 		
 		// loading current read
@@ -78,14 +91,20 @@ public class IndexServlet extends HttpServlet {
 					currentRead.setNovelOwner(novel);
 					request.setAttribute("currentRead", currentRead);
 				}
+				if(currentRead != null && currentRead.getNovelOwner() != null) {
+					currentRead.getNovelOwner().setLike(likeDao.getLike(currentRead.getNovelOwner().getId(), "novel"));
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		
 		}
+	
+		// end loading current chap
+	
 		
-		// end
 		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
