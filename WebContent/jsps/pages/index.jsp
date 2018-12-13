@@ -105,7 +105,7 @@
 			<div class="u-container-full--width u-align-center ">
 				<button id="loadMoreLastestUpdateBtn" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">Load more..
 					</button>
-				<a href="see?author=all" class="btn btn-info u-margin-bottom--2rem u-color-white">See all</a>
+				<a href="see2" class="btn btn-info u-margin-bottom--2rem u-color-white">See all</a>
 			</div>
 		</section>
 	</div>
