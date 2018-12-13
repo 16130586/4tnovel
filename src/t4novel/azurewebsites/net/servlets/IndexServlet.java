@@ -45,7 +45,7 @@ public class IndexServlet extends HttpServlet {
 		ImageDAO imgDao = new ImageDAO(cnn);
 		 
 		try {
-			newChaps = chapDao.getChaps(null, null, 0, 5);
+			newChaps = chapDao.getLatestChap(0, 5);
 			for (Chap chap : newChaps) {
 				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());
 				novel.setCoverImg(novelDao.getEncodeImageById(chap.getNovelOwnerId(), imgDao));

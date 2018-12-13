@@ -23,11 +23,11 @@
 				</a>
 			</div>
 			<c:set var="description" value="${novel.description }" />
-			<c:if test="${description.length() < 400 }">
+			<c:if test="${description.length() < 335 }">
 				<c:set var="length" value="${description.length() }" />
 			</c:if>
-			<c:if test="${description.length() > 400 }">
-				<c:set var="length" value="400" />
+			<c:if test="${description.length() > 335 }">
+				<c:set var="length" value="335" />
 			</c:if>
 			<span class="novel__description">${description.substring(0, length)}...</span>
 		</div>
