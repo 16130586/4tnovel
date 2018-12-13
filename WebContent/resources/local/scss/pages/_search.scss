@@ -1,5 +1,5 @@
 .search { 
-    background-color: #e2e2e2;
+    background-color: #f7f7f7;
     &-form {
         width: 80%;
         padding-top: 2rem;
@@ -34,10 +34,7 @@
         padding: .2rem 1rem;
     }
     &-result {
-        background-color: #f7f7f7;
-        table {
-            margin-bottom: .5rem;
-        }
+        background-color: white;
     }
     &-account {
         width: 1140px;

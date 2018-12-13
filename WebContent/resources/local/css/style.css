@@ -209,7 +209,7 @@ input:-moz-placeholder {
   font-size: 1.7rem; }
 
 .u-paragraph {
-  font-szie: 1.8rem; }
+  font-size: 1.8rem; }
   .u-paragraph--failed {
     color: #DF3232 !important; }
   .u-paragraph--sucessed {
@@ -406,6 +406,28 @@ input:-moz-placeholder {
   margin: auto;
   margin-top: 15vh;
   padding: 2rem; }
+
+.card {
+  position: relative;
+  margin-bottom: 20px;
+  width: 150px;
+  height: 215px;
+  margin: .5rem;
+  display: inline-block;
+  text-align: left;
+  color: white; }
+  .card-img {
+    border: 1px solid #f0f0f0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-size: cover !important; }
+  .card-detail {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: .5rem; }
 
 .bookmark-line {
   padding: 1rem;
@@ -606,7 +628,7 @@ input:-moz-placeholder {
     display: none; } }
 
 .search {
-  background-color: #e2e2e2; }
+  background-color: #f7f7f7; }
   .search-form {
     width: 80%;
     padding-top: 2rem; }
@@ -633,9 +655,7 @@ input:-moz-placeholder {
   .search .input {
     padding: .2rem 1rem; }
   .search-result {
-    background-color: #f7f7f7; }
-    .search-result table {
-      margin-bottom: .5rem; }
+    background-color: white; }
   .search-account {
     width: 1140px; }
     .search-account .search-bar {
