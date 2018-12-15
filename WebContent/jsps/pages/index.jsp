@@ -283,7 +283,6 @@
 		// start setup genre btm
 		var genreBox = document.createElement("div")
 		genreBox.className="novel__gender"
-		genreBox.style.whiteSpace = "nowrap"
 		genreBox.style.overflow = "hidden"
 		
 		var listGenre = document.createElement("ul")
