@@ -217,8 +217,8 @@ public class NovelDAO {
 			stmt.setString(3, novel.getKind().toText());
 			stmt.setInt(4, novel.getStatus().getValue());
 			stmt.setInt(5, novel.getCoverId());
-			stmt.setInt(6, novel.getId());
-			stmt.setInt(7, novel.getView());
+			stmt.setInt(6, novel.getView());
+			stmt.setInt(7, novel.getId());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {

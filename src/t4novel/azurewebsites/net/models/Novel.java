@@ -277,6 +277,8 @@ public class Novel implements Serializable {
 		this.status = fixedNovel.getStatus();
 		this.view = fixedNovel.getView();
 		this.vols = fixedNovel.getVols();
+		this.coverId = fixedNovel.getCoverId();
+		
 	}
 
 }

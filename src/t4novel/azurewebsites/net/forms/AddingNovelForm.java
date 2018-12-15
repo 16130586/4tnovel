@@ -17,7 +17,7 @@ import t4novel.azurewebsites.net.utils.StringUtil;
 
 public class AddingNovelForm extends AbstractMappingForm {
 	private String title, description;
-	private int groupID;
+	private int groupID, novelId;
 	private NovelStatus status;
 	private NovelKind kind;
 	private List<NovelGenre> genres;
@@ -31,18 +31,33 @@ public class AddingNovelForm extends AbstractMappingForm {
 		setKind((String) request.getAttribute("type-novel"));
 		setGenres(getGenresFormRequest(request));
 		setStatus((String) request.getAttribute("status"));
+		setNovelId((String) request.getAttribute("fixedNovelID"));
+	}
+
+	private void setNovelId(String parameter) {
+		try {
+			setNovelId(Integer.parseInt(parameter));
+		} catch (NumberFormatException e) {
+		}
+	}
+
+	private void setNovelId(int id) {
+		this.novelId = id;
+	}
+
+	private int getNovelId() {
+		return this.novelId;
 	}
 
 	private void setStatus(String parameter) {
 		try {
 			setStatus(NovelStatus.getNovelStatus(Integer.parseInt(parameter)));
 		} catch (NumberFormatException e) {
-			// TODO: handle exception
 		}
 	}
 
 	private void setKind(String parameter) {
-		this.kind  = NovelKind.getNovelKind(parameter);
+		this.kind = NovelKind.getNovelKind(parameter);
 	}
 
 	private void setGroupID(String parameter) {
@@ -76,9 +91,9 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Tên truyện không được bỏ trống!");
+			errors.put("titleEmpty", "TÃªn truyá»‡n khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "Hãy xóa dấu khoảng trắng và điền tên truyện!");
+			errors.put("titleAllSpace", "HÃ£y xÃ³a dáº¥u khoáº£ng tráº¯ng vÃ  Ä‘iá»�n tÃªn truyá»‡n!");
 		} else {
 			this.title = title.trim();
 		}
@@ -90,9 +105,9 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setDescription(String description) {
 		if (description == null || description.isEmpty()) {
-			errors.put("descriptionEmpty", "Mô tả không được bỏ trống!");
+			errors.put("descriptionEmpty", "MÃ´ táº£ khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
 		} else if (StringUtil.isAllSpace(description)) {
-			errors.put("descriptionAllSpace", "Xóa tất cả dấu khoảng trắng và điền vào mô tả!");
+			errors.put("descriptionAllSpace", "XÃ³a táº¥t cáº£ dáº¥u khoáº£ng tráº¯ng vÃ  Ä‘iá»�n vÃ o mÃ´ táº£!");
 		} else {
 			this.description = description.trim();
 		}
@@ -128,14 +143,14 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setGenres(List<NovelGenre> genres) {
 		if (genres == null || genres.isEmpty()) {
-			errors.put("genreEmpty", "Phải chọn ít nhất một thể loại!");
+			errors.put("genreEmpty", "Pháº£i chá»�n Ã­t nháº¥t má»™t thá»ƒ loáº¡i!");
 		} else
 			this.genres = genres;
 	}
 
 	@Override
 	protected void assignDefaultErrorType() {
-		errorTypes = Arrays.asList("title", "genre", "description", "kind" , "groupID");
+		errorTypes = Arrays.asList("title", "genre", "description", "kind", "groupID");
 
 	}
 
@@ -149,6 +164,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingNovelForm, getMappingData()");
 		}
 		Novel rs = new Novel();
+		rs.setId(this.getNovelId());
 		rs.setName(getTitle());
 		rs.setDescription(getDescription());
 		rs.setDateUp(new Date());

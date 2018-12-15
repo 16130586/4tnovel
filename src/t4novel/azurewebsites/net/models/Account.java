@@ -282,7 +282,7 @@ public class Account implements Serializable {
 
 	public void updateNovelInMyNovel(Novel novel) {
 		for (int i = 0; i < ownNovels.size(); i++) {
-			if (ownNovels.equals(novel)) {
+			if (ownNovels.get(i).equals(novel)) {
 				ownNovels.remove(i);
 				ownNovels.add(i, novel);
 				break;

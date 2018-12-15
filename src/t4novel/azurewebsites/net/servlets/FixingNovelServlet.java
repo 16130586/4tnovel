@@ -102,10 +102,9 @@ public class FixingNovelServlet extends HttpServlet {
 				//
 				// cai cu con trong ram
 				//
-				
+
 				Novel oldNovel = novelDAO.getNovelById(Integer.parseInt(novelId)); // neu con trong ram -> update
-				
-				
+
 				// new logic
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
 				if (fileImage != null) {
@@ -113,11 +112,11 @@ public class FixingNovelServlet extends HttpServlet {
 					fixedNovel.setCoverId(imgDAO.getNextId(cnn) - 1);
 				}
 				// end new logic
-				fixedNovel.setId(Integer.parseInt(novelId));
 				oldNovel.update(fixedNovel);
+				System.out.println("oldnovel : " + oldNovel.getId() + " submit novel : " + fixedNovel.getId());
 				// update dtb
-				novelDAO.updateNovel(fixedNovel);
-				novelDAO.updateGenres(fixedNovel.getId(), fixedNovel.getGenres(), genreDAO);
+				novelDAO.updateNovel(oldNovel);
+				novelDAO.updateGenres(oldNovel.getId(), oldNovel.getGenres(), genreDAO);
 
 				// old logic
 //				if (fileImage != null) {
