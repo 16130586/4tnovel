@@ -5,13 +5,13 @@
 <c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
 <div class="card">
 	<a class="card-img" href="read?id=${chap.id }"
-		style="background: linear-gradient(to bottom, rgba(133, 133, 133, 0), rgba(0, 0, 0, 0.7)), url(${baseURL}/resources/imgs?id=${novel.coverId})"></a>
+		style="background: url(${baseURL}/resources/imgs?id=${novel.coverId})"></a>
 	<div class="card-detail">
-		<h3 class="u-text-overflow--hidden" style="margin-bottom: .5rem">
+		<h4 class="u-text-overflow--hidden" style="margin-bottom: .5rem">
 			<a href="detail?id=${novel.id }" title="${novel.name }" class="link">${novel.name }</a>
-		</h3>
-		<h4 class="u-text-overflow--hidden" style="color: #43f2cc">
-			<a href="read?id=${chap.id }" title="${chap.title }" class="link">${chap.title }</a>
 		</h4>
+		<h5 class="u-text-overflow--hidden" style="color: #43f2cc">
+			<a href="read?id=${chap.id }" title="${chap.title }" class="link">${chap.title }</a>
+		</h5>
 	</div>
 </div>

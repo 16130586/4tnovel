@@ -75,7 +75,7 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		// setting put back url
 		request.setAttribute("url", url);
 
-		request.getServletContext().getRequestDispatcher("/jsps/pages/new-novel.jsp").forward(request, response);
+		request.getServletContext().getRequestDispatcher("/jsps/pages/new-chaps.jsp").forward(request, response);
 	}
 
 	/**
