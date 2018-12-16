@@ -125,6 +125,7 @@ public class ImageDAO {
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setBlob(1, inputStream);
 		stmt.executeUpdate();
+		stmt.close();
 	}   
 	public int getNextId(Connection cnn) throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
