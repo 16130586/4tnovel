@@ -63,10 +63,10 @@ public class MailUtils {
 		message.setHeader("Content-Type", "text/html; charset=UTF-8");
 		message.setFrom(new InternetAddress("4tnovel@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toMail));
-		message.setSubject("[4TNOVEL] Đặt lại Gmail cho tài khoản");
+		message.setSubject("[4TNOVEL] Mã xác nhận");
 
-		message.setContent("<h1 style=\"color: #3F69AA; margin:auto;\">Mã đặt lại tài khoản Gmail</h1>" + "<br>"
-				+ "Xin dùng mã này để đặt lại tài khoản Gmail cho tài khoản: <span style=\"color:#E94B3C; font-weight:800; font-size: 1.2rem;\">"+userName+"</span>"
+		message.setContent("<h1 style=\"color: #3F69AA; margin:auto;\">Mã  xác nhận</h1>" + "<br>"
+				+ "Tài khoản: <span style=\"color:#E94B3C; font-weight:800; font-size: 1.2rem;\">"+userName+"</span>"
 				+ "<br>" + "Đây là mã của bạn : <span style=\"font-weight: 800;\" >"+ code + "</span>" + "<br>"
 				+ "Xin cám ơn," + "<br>" + "4TNovel", "text/html; charset=UTF-8");
 		Transport.send(message);
