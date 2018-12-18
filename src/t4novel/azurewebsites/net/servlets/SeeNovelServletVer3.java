@@ -15,6 +15,7 @@ import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.NovelGenre;
+import t4novel.azurewebsites.net.models.NovelKind;
 import t4novel.azurewebsites.net.models.NovelStatus;
 import t4novel.azurewebsites.net.models.Vol;
 
@@ -39,12 +40,15 @@ public class SeeNovelServletVer3 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		String query = "";
 		String searchKind = request.getParameter("kind");
 		String searchStatus = request.getParameter("status");
 		String searchGenre = request.getParameter("genre");
 		String pageNumber = request.getParameter("page-number");
 		String pushBackUrl = "";
+		String searchString = "Tất cả";
 
 		int limit = Integer.parseInt(getServletContext().getInitParameter("viewLimitPagination"));
 		int maxPage = -1;
@@ -65,24 +69,23 @@ public class SeeNovelServletVer3 extends HttpServlet {
 		request.setAttribute("kind", searchKind);
 		request.setAttribute("status", searchStatus);
 		request.setAttribute("genre", searchGenre);
-		System.out.println("kind " + searchKind + " status " + searchStatus);
 		// create query
-		if (searchKind.equals("all") || searchKind.equals("'all'")) {
+		if (searchKind.equals("all")) {
 			searchKind = "(S.KIND = 'COMPOSE' OR S.KIND = 'TRANSLATE')";
 		} else {
-			searchKind = "(S.KIND = " + searchKind + ")";
+			searchString = NovelKind.getNovelKind(searchKind).getDisplayedName();
+			searchKind = "(S.KIND = '" + searchKind + "')";
 		}
 
-		if (searchStatus.equals("all") || searchStatus.equals("'all'")) {
-			request.setAttribute("statusString", "All");
+		if (searchStatus.equals("all")) {
 			searchStatus = "(S.STATUS = 0 OR S.STATUS = 1 OR S.STATUS = 2)";
 		} else {
-			request.setAttribute("statusString",
-					NovelStatus.getNovelStatus(Integer.parseInt(searchStatus.charAt(1) + "")));
-			searchStatus = "(S.STATUS = " + searchStatus + ")";
+			searchString = NovelStatus.getNovelStatus(Integer.parseInt(searchStatus)).toText();
+			searchStatus = "(S.STATUS = '" + searchStatus + "')";
 		}
 
 		if (!searchGenre.equals("all")) {
+			searchString = NovelGenre.getGenre(Integer.parseInt(searchGenre)).getDisplayName();
 			searchGenre = "AND (GENRE.VALUE=" + searchGenre + ")";
 		} else {
 			searchGenre = "";
@@ -113,6 +116,7 @@ public class SeeNovelServletVer3 extends HttpServlet {
 		int maxPaging = maxPage % limit > 0 ? (maxPage / limit) + 1 : (maxPage / limit);
 
 		// set atribute to create link doGet
+		request.setAttribute("searchString", searchString);
 		request.setAttribute("novelList", novelList);
 		request.setAttribute("totalPage", maxPaging);
 		request.setAttribute("currentPage", pageNumber);

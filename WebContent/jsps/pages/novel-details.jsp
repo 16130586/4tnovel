@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,17 +48,16 @@
 						</h2>
 						<div>
 							<span class="u-block"> Người đăng : <a
-								class="link u-color-blue" href="#">${novel.owner.userName}</a></span>
+								class="link u-color-blue" href="#">${novel.owner.userName}</a></span><span
+								class="u-block"> Tình trạng : ${novel.status.text}</span> <span
+								class="u-block"> Ngày đăng : <fmt:formatDate type="both"
+									dateStyle="short" timeStyle="short" value="${novel.dateUp}" /></span>
 							<div class="u-block u-margin-top--1rem">
 								<ul class="horizontal-menu--showcase">
 									<span>Thể loại : </span>
 									<c:forEach var="genre" items="${novel.genres}">
 										<li class="menu-item">
-											<form action="search" method="post">
-												<input type="hidden" name="genre"
-													value="${genre.getValue()}">
-												<button class="btn btn-belike-a u-color-blue genre">${genre.getDisplayName()}</button>
-											</form>
+											<a class="novel__title" title="${novel.name }" href="detail?id=${novel.id }">${novel.name }</a>
 										</li>
 									</c:forEach>
 								</ul>
@@ -101,17 +101,20 @@
 								dõi</a>
 						</c:if>
 						<c:if test="${not empty account and !isLikeThisNovel}">
-							<button id="btnLike" data-event="like" onClick='sendLikeEventToServer("${novel.id}")'
+							<button id="btnLike" data-event="like"
+								onClick='sendLikeEventToServer("${novel.id}")'
 								class="btn btn-info u-color-white u-padding--05rem u-margin-top--1rem">
-								<i id="iconLike"class="fas fa-thumbs-up"></i>
-								<p id="textLike"class="u-inline-block u-no--margin">${novel.like}</p>
+								<i id="iconLike" class="fas fa-thumbs-up"></i>
+								<p id="textLike" class="u-inline-block u-no--margin">${novel.like}</p>
 							</button>
 						</c:if>
 						<c:if test="${not empty account and isLikeThisNovel }">
-							<button id="btnLike" data-event="unlike" onClick='sendLikeEventToServer("${novel.id}")'
+							<button id="btnLike" data-event="unlike"
+								onClick='sendLikeEventToServer("${novel.id}")'
 								class="btn btn-info u-color-white u-padding--05rem u-margin-top--1rem">
-								<i id="iconLike"class="fas fa-thumbs-up" style="color: #0e39dc;"></i>
-								<p id="textLike"class="u-inline-block u-no--margin">${novel.like}</p>
+								<i id="iconLike" class="fas fa-thumbs-up"
+									style="color: #0e39dc;"></i>
+								<p id="textLike" class="u-inline-block u-no--margin">${novel.like}</p>
 							</button>
 						</c:if>
 					</div>
@@ -162,93 +165,96 @@
 	</div>
 	<script>
 		var btnLike = null
-    	window.onload = function() {
+		window.onload = function() {
 			btnLike = document.getElementById('btnLike')
-    		var des = document.getElementById('description');
+			var des = document.getElementById('description');
 			if (des.scrollHeight <= des.clientHeight)
 				removeElement('btn-seemore-hide');
-    	}
-    	
-    	function removeElement(elementId) {
-    	    // Removes an element from the document
-    	    var element = document.getElementById(elementId);
-    	    element.parentNode.removeChild(element);
-    	}
-    	
-    	function seeMoreOrHide(x) {
-    		var des = document.getElementById('description');
-    		if (des.style.maxHeight == "150px"){
-    			setBtnSeeMoreOrHide(true, x);
-				des.style.maxHeight = null;    			
-    		}
-    		else {
-    			setBtnSeeMoreOrHide(false, x);
-    			des.style.maxHeight = "150px";    			
-    		}
-    	}
-    	
-    	function setBtnSeeMoreOrHide(isMore, x) {
-    		if (isMore) {
-    			x.innerHTML = "<i class='fa fa-angle-double-up'></i> Ẩn đi";
-    		} else {
-    			x.innerHTML = "<i class='fa fa-angle-double-down'></i> Xem thêm";
-    		}
-    	}
-    
-        function showOrHide(id) {
-            var x = document.getElementById(id);
-            if (x.style.display =='none') {
-                x.style.display = 'block';
-            } else {
-                x.style.display = 'none';
-            }
-        }
-    	var likeAjaxUrl = location.origin.concat('${pageContext.request.contextPath}').concat('/ajax-like-novel');
-        
-    	function sendLikeEventToServer(novelId){
-    	
-    		if(!btnLike) btnLike = document.getElementById('btnLike')
-    		var eventType = btnLike.getAttribute("data-event")
-    		var textLike = document.getElementById('textLike')
-    		var iconLike = document.getElementById('iconLike')
-        	var xhttp = new XMLHttpRequest();
-        	var urlWithParam = likeAjaxUrl.concat('?id=').concat(novelId)
-        	if(eventType === 'like'){
-        		urlWithParam = urlWithParam.concat('&action=like')
-        		xhttp.onreadystatechange = function (){
-        			if(this.readyState == 4) {document.body.style.cursor='default'}
-        			if(this.readyState == 4 && this.status == 200){
-        				var newestLike = this.responseText;
-        				btnLike.setAttribute('data-event' , 'unlike')
-        				textLike.innerHTML = newestLike
-        				iconLike.style.color = '#0e39dc'
-        				return false;
-        			}
-        		}
-        	}
-        		
-        	if(eventType === 'unlike'){
-        		urlWithParam = urlWithParam.concat('&action=unlike')
-        		xhttp.onreadystatechange = function(){
-        			if(this.readyState == 4) {document.body.style.cursor='default'}
-					if(this.readyState == 4 && this.status == 200){
+		}
+
+		function removeElement(elementId) {
+			// Removes an element from the document
+			var element = document.getElementById(elementId);
+			element.parentNode.removeChild(element);
+		}
+
+		function seeMoreOrHide(x) {
+			var des = document.getElementById('description');
+			if (des.style.maxHeight == "150px") {
+				setBtnSeeMoreOrHide(true, x);
+				des.style.maxHeight = null;
+			} else {
+				setBtnSeeMoreOrHide(false, x);
+				des.style.maxHeight = "150px";
+			}
+		}
+
+		function setBtnSeeMoreOrHide(isMore, x) {
+			if (isMore) {
+				x.innerHTML = "<i class='fa fa-angle-double-up'></i> Ẩn đi";
+			} else {
+				x.innerHTML = "<i class='fa fa-angle-double-down'></i> Xem thêm";
+			}
+		}
+
+		function showOrHide(id) {
+			var x = document.getElementById(id);
+			if (x.style.display == 'none') {
+				x.style.display = 'block';
+			} else {
+				x.style.display = 'none';
+			}
+		}
+		var likeAjaxUrl = location.origin.concat(
+				'${pageContext.request.contextPath}')
+				.concat('/ajax-like-novel');
+
+		function sendLikeEventToServer(novelId) {
+
+			if (!btnLike)
+				btnLike = document.getElementById('btnLike')
+			var eventType = btnLike.getAttribute("data-event")
+			var textLike = document.getElementById('textLike')
+			var iconLike = document.getElementById('iconLike')
+			var xhttp = new XMLHttpRequest();
+			var urlWithParam = likeAjaxUrl.concat('?id=').concat(novelId)
+			if (eventType === 'like') {
+				urlWithParam = urlWithParam.concat('&action=like')
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						document.body.style.cursor = 'default'
+					}
+					if (this.readyState == 4 && this.status == 200) {
 						var newestLike = this.responseText;
-						btnLike.setAttribute('data-event' , 'like')
+						btnLike.setAttribute('data-event', 'unlike')
+						textLike.innerHTML = newestLike
+						iconLike.style.color = '#0e39dc'
+						return false;
+					}
+				}
+			}
+
+			if (eventType === 'unlike') {
+				urlWithParam = urlWithParam.concat('&action=unlike')
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						document.body.style.cursor = 'default'
+					}
+					if (this.readyState == 4 && this.status == 200) {
+						var newestLike = this.responseText;
+						btnLike.setAttribute('data-event', 'like')
 						textLike.innerHTML = newestLike
 						iconLike.style.color = '#F1F1F1'
 						return false;
-        			}
-        		}
-        	}
-        	
-        	xhttp.open('POST', urlWithParam , true)
-        	xhttp.send("status=true")
-        	document.body.style.cursor='wait'
-        }
-        
-        
-        
-    </script>
+					}
+				}
+			}
+
+			xhttp.open('POST', urlWithParam, true)
+			xhttp.send("status=true")
+			document.body.style.cursor = 'wait'
+		}
+	</script>
 
 	<%@include file="/jsps/components/_footer.jsp"%>
 </body>

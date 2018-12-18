@@ -34,7 +34,7 @@
 	<div style="background: white;">
 		<div class="u-width--80 u-centered">
 			<h2 class="u-margin-bottom--2rem" style="padding-top: 2rem">DANH
-				SÁCH TRUYỆN #${kind} #${statusString}</h2>
+				SÁCH TRUYỆN #${searchString}</h2>
 		</div>
 		<div class="row u-width--80 u-centered">
 			<div class="col-3">
@@ -44,11 +44,11 @@
 						<span style="border-bottom: 3px solid #10b591">Phân loại</span>
 					</div>
 					<div class="u-margin-left--2rem">
-						<a href="see3?status=${status}&kind='TRANSLATE'&genre=${genre}"
+						<a href="see3?kind=TRANSLATE"
 							class="link u-block u-padding--05rem">Truyện dịch</a> <a
-							href="see3?status=${status}&kind='COMPOSE'&genre=${genre}"
+							href="see3?kind=COMPOSE"
 							class="link u-block u-padding--05rem">Truyện sáng tác</a> <a
-							href="see3?status=${status}&kind='all'&genre=${genre}"
+							href="see3?"
 							class="link u-block u-padding--05rem">Tất cả</a>
 					</div>
 				</section>
@@ -58,13 +58,13 @@
 						<span style="border-bottom: 3px solid #10b591">Tình trạng</span>
 					</div>
 					<div class="u-margin-left--2rem">
-						<a href="see3?status='1'&kind=${kind}&genre=${genre}"
+						<a href="see3?status=1"
 							class="link u-block u-padding--05rem">Đang tiến hành</a> <a
-							href="see3?status='2'&kind=${kind}&genre=${genre}"
+							href="see3?status=2"
 							class="link u-block u-padding--05rem">Tạm ngưng</a> <a
-							href="see3?status='0'&kind=${kind}&genre=${genre}"
+							href="see3?status=0"
 							class="link u-block u-padding--05rem">Đã hoàn thành</a> <a
-							href="see3?status='all'&kind=${kind}&genre=${genre}"
+							href="see3?"
 							class="link u-block u-padding--05rem">Tất cả</a>
 					</div>
 				</section>
@@ -75,61 +75,61 @@
 					</div>
 					<div class="u-margin-left--2rem">
 						<a href="see3" class="link u-block u-padding--05rem">All</a> <a
-							href="see3?status='all'&kind='all'&genre='0'"
+							href="see3?genre=0"
 							class="link u-block u-padding--05rem">Action</a> <a
-							href="see3?status='all'&kind='all'&genre='8'"
+							href="see3?genre=8"
 							class="link u-block u-padding--05rem">Adult</a> <a
-							href="see3?status='all'&kind='all'&genre='15'"
+							href="see3?genre=15"
 							class="link u-block u-padding--05rem">Adventure</a> <a
-							href="see3?status='all'&kind='all'&genre='22'"
+							href="see3?genre=22"
 							class="link u-block u-padding--05rem">Comedy</a> <a
-							href="see3?status='all'&kind='all'&genre='1'"
+							href="see3?genre=1"
 							class="link u-block u-padding--05rem">Drama</a> <a
-							href="see3?status='all'&kind='all'&genre='9'"
+							href="see3?genre=9"
 							class="link u-block u-padding--05rem">Ecchi</a> <a
-							href="see3?status='all'&kind='all'&genre='16'"
+							href="see3?genre=16"
 							class="link u-block u-padding--05rem">Fantasy</a> <a
-							href="see3?status='all'&kind='all'&genre='23'"
+							href="see3?genre=23"
 							class="link u-block u-padding--05rem">Gender Bender</a> <a
-							href="see3?status='all'&kind='all'&genre='17'"
+							href="see3?genre=17"
 							class="link u-block u-padding--05rem">Horror</a> <a
-							href="see3?status='all'&kind='all'&genre='10'"
+							href="see3?genre=10"
 							class="link u-block u-padding--05rem">Incest</a> <a
-							href="see3?status='all'&kind='all'&genre='2'"
+							href="see3?genre=2"
 							class="link u-block u-padding--05rem">Isekai</a> <a
-							href="see3?status='all'&kind='all'&genre='24'"
+							href="see3?genre=24"
 							class="link u-block u-padding--05rem">Josei</a> <a
-							href="see3?status='all'&kind='all'&genre='3'"
+							href="see3?genre=3"
 							class="link u-block u-padding--05rem">Mature</a> <a
-							href="see3?status='all'&kind='all'&genre='11'"
+							href="see3?genre=11"
 							class="link u-block u-padding--05rem">Mecha</a> <a
-							href="see3?status='all'&kind='all'&genre='18'"
+							href="see3?genre=18"
 							class="link u-block u-padding--05rem">Mystery</a> <a
-							href="see3?status='all'&kind='all'&genre='4'"
+							href="see3?genre=4"
 							class="link u-block u-padding--05rem">School Life</a> <a
-							href="see3?status='all'&kind='all'&genre='5'"
+							href="see3?genre=5"
 							class="link u-block u-padding--05rem">Slice of Life</a> <a
-							href="see3?status='all'&kind='all'&genre='14'"
+							href="see3?genre=14"
 							class="link u-block u-padding--05rem">Supernatural</a> <a
-							href="see3?status='all'&kind='all'&genre='20'"
+							href="see3?genre=20"
 							class="link u-block u-padding--05rem">Shounen</a> <a
-							href="see3?status='all'&kind='all'&genre='6'"
+							href="see3?genre=6"
 							class="link u-block u-padding--05rem">Super Power</a> <a
-							href="see3?status='all'&kind='all'&genre='26'"
+							href="see3?genre=26"
 							class="link u-block u-padding--05rem">Seinen</a> <a
-							href="see3?status='all'&kind='all'&genre='13'"
+							href="see3?genre=13"
 							class="link u-block u-padding--05rem">Sports</a> <a
-							href="see3?status='all'&kind='all'&genre='12'"
+							href="see3?genre=12"
 							class="link u-block u-padding--05rem">Shoujo ai</a> <a
-							href="see3?status='all'&kind='all'&genre='19'"
+							href="see3?genre=19"
 							class="link u-block u-padding--05rem">Shoujo</a> <a
-							href="see3?status='all'&kind='all'&genre='21'"
+							href="see3?genre=21"
 							class="link u-block u-padding--05rem">Suspense</a> <a
-							href="see3?status='all'&kind='all'&genre='25'"
+							href="see3?genre=25"
 							class="link u-block u-padding--05rem">Romance</a> <a
-							href="see3?status='all'&kind='all'&genre='28'"
+							href="see3?genre=28"
 							class="link u-block u-padding--05rem">Tragedy</a> <a
-							href="see3?status='all'&kind='all'&genre='27'"
+							href="see3?genre=27"
 							class="link u-block u-padding--05rem">Shounen ai</a>
 					</div>
 				</section>

@@ -14,11 +14,13 @@
 				<div class="dropdown-content--bottom">
 					<ul class="vertical-menu--showcase">
 						<li class="menu-item u-width--full "><a
-							href="see?author=user" class="link-btn" target="_blank">Sáng
+							href="see3?kind=COMPOSE" class="link-btn" >Sáng
 								tác</a></li>
 						<li class="menu-item u-width--full "><a
-							href="see?author=writer" class="link-btn" target="_blank">truyện
+							href="see3?kind=TRANSLATE" class="link-btn" >Truyện
 								dịch</a></li>
+								<li class="menu-item u-width--full "><a
+							href="see3" class="link-btn" >Tất cả truyện</a></li>
 					</ul>
 				</div>
 			</div>
@@ -29,9 +31,9 @@
 				<div class="dropdown-content--bottom">
 					<ul class="vertical-menu--showcase">
 						<li class="menu-item u-width--full "><a
-							href="talk?target=group" class="link-btn" target="_blank">Nhóm</a></li>
+							href="talk?target=group" class="link-btn" >Nhóm</a></li>
 						<li class="menu-item u-width--full "><a
-							href="talk?target=one" class="link-btn" target="_blank">Người
+							href="talk?target=one" class="link-btn" >Người
 								lạ</a></li>
 					</ul>
 				</div>

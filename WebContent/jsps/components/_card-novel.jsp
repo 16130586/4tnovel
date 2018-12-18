@@ -55,10 +55,7 @@
 				</c:if>
 					<c:forEach var="i" begin="0" end="${length-1 }">
 						<li class="menu-item u-margin-right--2rem u-rounded--tag">
-							<form action="search" method="post">
-								<input type="hidden" name="genre" value="${novel.genres[i].value }">
-								<button class="btn btn-belike-a">${novel.genres[i].getDisplayName()}</button>
-							</form>
+							<a class="btn btn-belike-a" href="see3?genre=${novel.genres[i].value }">${novel.genres[i].getDisplayName()}</a>
 						</li>
 					</c:forEach>
 				</ul>
