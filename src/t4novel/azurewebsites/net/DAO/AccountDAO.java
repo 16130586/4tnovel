@@ -29,7 +29,7 @@ public class AccountDAO {
 
 	public void insertAccount(Account account) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, ROLE, ISAUTO, ISBAN) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO ACCOUNT (DISPLAYEDNAME, USERNAME, PASSWORD, EMAIL, ROLE, ISAUTO, ISPIN, ISBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -40,6 +40,7 @@ public class AccountDAO {
 			stmt.setInt(5, account.getRole().getIntValue());
 			stmt.setString(6, "NO");
 			stmt.setString(7, "NO");
+			stmt.setString(8, "NO");
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,15 +52,16 @@ public class AccountDAO {
 
 	public void updateAccount(Account account) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, EMAIL= ?,ISAUTO = ?, ISBAN = ? WHERE ID = ?";
+		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, EMAIL= ?, ISAUTO = ?, ISPIN = ?, ISBAN = ? WHERE ID = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, account.getDisplayedName());
 			stmt.setString(2, account.getPassword());
 			stmt.setString(3, account.getGmail());
 			stmt.setString(4, account.isAutoPassPushlishment() ? "YES" : "NO");
-			stmt.setString(5, account.isBan() ? "YES" : "NO");
-			stmt.setInt(6, account.getId());
+			stmt.setString(5, account.isPin() ? "YES" : "NO");
+			stmt.setString(6, account.isBan() ? "YES" : "NO");
+			stmt.setInt(7, account.getId());
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,7 +98,8 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBan(rs.getString(9).equals("YES") ? true : false);
+				account.setPin(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(10).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -136,7 +139,8 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBan(rs.getString(9).equals("YES") ? true : false);
+				account.setPin(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(10).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -176,7 +180,8 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBan(rs.getString(9).equals("YES") ? true : false);
+				account.setPin(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(10).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -216,7 +221,8 @@ public class AccountDAO {
 				account.setDateCreate(rs.getDate(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
-				account.setBan(rs.getString(9).equals("YES") ? true : false);
+				account.setPin(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(10).equals("YES") ? true : false);
 //				ACCOUNTS_CACHE.put(account.getId(), account);
 			}
 		} catch (Exception e) {
@@ -283,6 +289,46 @@ public class AccountDAO {
 	public void unBanAccountByID(int accountID) throws SQLException {
 		PreparedStatement stmt = null;
 		String query = "UPDATE ACCOUNT SET ISBAN = 'NO' WHERE ID = ?";
+
+		try {
+			cnn.setAutoCommit(false);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, accountID);
+			stmt.executeUpdate();
+			cnn.commit();
+		} catch (Exception e) {
+			cnn.rollback();
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
+		}
+	}
+
+	public void grantPinByID(int accountID) throws SQLException {
+		PreparedStatement stmt = null;
+		String query = "UPDATE ACCOUNT SET ISPIN = 'YES' WHERE ID = ?";
+
+		try {
+			cnn.setAutoCommit(false);
+			stmt = cnn.prepareStatement(query);
+			stmt.setInt(1, accountID);
+			stmt.executeUpdate();
+			cnn.commit();
+		} catch (Exception e) {
+			cnn.rollback();
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
+		}
+	}
+
+	public void unPinByID(int accountID) throws SQLException {
+		PreparedStatement stmt = null;
+		String query = "UPDATE ACCOUNT SET ISPIN = 'NO' WHERE ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);

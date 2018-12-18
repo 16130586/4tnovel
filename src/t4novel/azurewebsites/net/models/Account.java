@@ -17,11 +17,12 @@ public class Account implements Serializable {
 	private List<BookMarkFolder> bookMarkFolders;
 	private Role role;
 	private boolean isAutoPassPushlishment;
+	private boolean ban;
+	private boolean pin;
 	private List<Thread> threads;
 	private List<Novel> ownNovels, follows;
 	private List<Comment> comments;
 	private List<Group> joinGroups;
-	private boolean ban;
 	private List<Integer> novelFollowsId;
 
 	public Account(int id) {
@@ -177,6 +178,14 @@ public class Account implements Serializable {
 
 	public boolean getBan() {
 		return ban;
+	}
+
+	public boolean isPin() {
+		return pin;
+	}
+
+	public void setPin(boolean pin) {
+		this.pin = pin;
 	}
 
 	public void setBan(boolean isBanned) {
