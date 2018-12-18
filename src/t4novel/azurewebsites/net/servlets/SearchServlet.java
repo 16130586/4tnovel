@@ -70,6 +70,7 @@ public class SearchServlet extends HttpServlet {
 		GenreDAO genreDAO = new GenreDAO(cnn);
 		LinkedList<Novel> novelList = new LinkedList<>();
 		int maxPage = 0;
+		int limit = Integer.parseInt(getServletContext().getInitParameter("searchLimitPagination"));
 
 		if (type.equals("normal") && pageNumber == null) {
 			query = "SELECT * FROM LN INNER JOIN (SELECT DISTINCT ID FROM (select * from LN where NAME like N'%" + input
@@ -115,7 +116,8 @@ public class SearchServlet extends HttpServlet {
 			pushBackUrl = "?type=advanced";
 		}
 		try {
-			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByQuery(query, Integer.parseInt(pageNumber) - 1);
+			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByQuery(query, Integer.parseInt(pageNumber) - 1,
+					limit);
 			maxPage = novelDAO.countNovelsByQuery(query);
 			for (Novel novel : novelList) {
 				LinkedList<Vol> volList = (LinkedList<Vol>) volDAO.getVolsOfNovel(novel.getId());
@@ -126,7 +128,6 @@ public class SearchServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		int limit = Integer.parseInt(getServletContext().getInitParameter("limitPagination"));
 		int maxPaging = maxPage % limit > 0 ? (maxPage / limit) + 1 : (maxPage / limit);
 
 		request.setAttribute("searchResultNovel", novelList);

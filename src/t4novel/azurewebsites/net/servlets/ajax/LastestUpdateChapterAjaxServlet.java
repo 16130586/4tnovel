@@ -46,9 +46,11 @@ public class LastestUpdateChapterAjaxServlet extends HttpServlet {
 			NovelDAO novelDao = new NovelDAO(cnn);
 			GenreDAO genreDao = new GenreDAO(cnn);
 			ImageDAO imgDao = new ImageDAO(cnn);
+			int limit = Integer.parseInt(getServletContext().getInitParameter("indexLimitChapterPagination"));
+
 
 //			newChaps = chapDao.getChaps(null, null, pageNumber * 5, 5);
-			newChaps = chapDao.getLatestChap(pageNumber*5, 5);
+			newChaps = chapDao.getLatestChap(pageNumber*limit, limit);
 			for (Chap chap : newChaps) {
 				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());
 				novel.setCoverImg(novelDao.getEncodeImageById(chap.getNovelOwnerId(), imgDao));
