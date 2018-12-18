@@ -55,7 +55,7 @@ public class CommentDAO {
 				comment.setId(rs.getInt(1));
 				comment.setAccountOwnerId(rs.getInt(2));
 				comment.setContent(rs.getString(3));
-				comment.setTime(rs.getDate(4));
+				comment.setTime(rs.getTimestamp(4));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class CommentDAO {
 				comment.setId(rs.getInt(1));
 				comment.setAccountOwnerId(rs.getInt(2));
 				comment.setContent(rs.getString(3));
-				comment.setTime(rs.getDate(4));
+				comment.setTime(rs.getTimestamp(4));
 				listComment.add(comment);
 			}
 		} catch (Exception e) {

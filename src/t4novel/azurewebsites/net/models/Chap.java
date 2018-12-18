@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -15,7 +15,7 @@ public class Chap implements Serializable {
 	@Expose
 	private String content;
 	private String title;
-	private Date dateUp;
+	private Timestamp dateUp;
 	@Expose
 	private int view;
 	@Expose
@@ -30,7 +30,7 @@ public class Chap implements Serializable {
 	private int novelOwnerId;
 	private Novel novelOwner;
 
-	public Chap(int id, String content, Date dateUp, int view, int like, List<Comment> comments, Vol owner) {
+	public Chap(int id, String content, Timestamp dateUp, int view, int like, List<Comment> comments, Vol owner) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -69,11 +69,11 @@ public class Chap implements Serializable {
 		this.title = title;
 	}
 
-	public Date getDateUp() {
+	public Timestamp getDateUp() {
 		return dateUp;
 	}
 
-	public void setDateUp(Date dateUp) {
+	public void setDateUp(Timestamp dateUp) {
 		this.dateUp = dateUp;
 	}
 

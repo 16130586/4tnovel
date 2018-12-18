@@ -68,7 +68,7 @@ public class VolDAO {
 				vol.setNovelOwnerId(rs.getInt(2));
 				vol.setTitle(rs.getString(3));
 				vol.setDescription(rs.getString(4));
-				vol.setDateUp(rs.getDate(5));
+				vol.setDateUp(rs.getTimestamp(5));
 //				VOLS_CACHE.put(volID, vol);
 			}
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public class VolDAO {
 				vol.setNovelOwnerId(rs.getInt(2));
 				vol.setTitle(rs.getString(3));
 				vol.setDescription(rs.getString(4));
-				vol.setDateUp(rs.getDate(5));
+				vol.setDateUp(rs.getTimestamp(5));
 //				VOLS_CACHE.put(volId, vol);
 				listVol.add(vol);
 			}

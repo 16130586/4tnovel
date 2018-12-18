@@ -35,7 +35,7 @@ public class InboxDAO {
 			Message msg = new Message();
 			msg.setId(rs.getInt("ID"));
 			msg.setContent(rs.getString("MESSAGE"));
-			msg.setTime(rs.getDate("DATE"));
+			msg.setTime(rs.getTimestamp("DATE"));
 			msges.add(msg);
 		}
 		rs.close();
@@ -55,7 +55,7 @@ public class InboxDAO {
 			Message msg = new Message();
 			msg.setId(rs.getInt("ID"));
 			msg.setContent(rs.getString("MESSAGE"));
-			msg.setTime(rs.getDate("DATE"));
+			msg.setTime(rs.getTimestamp("DATE"));
 			msges.add(msg);
 		}
 		rs.close();

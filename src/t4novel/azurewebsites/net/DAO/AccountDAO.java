@@ -95,7 +95,7 @@ public class AccountDAO {
 				account.setUserName(rs.getString(3));
 				account.setPassword(rs.getString(4));
 				account.setGmail(rs.getString(5));
-				account.setDateCreate(rs.getDate(6));
+				account.setDateCreate(rs.getTimestamp(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setPin(rs.getString(9).equals("YES") ? true : false);
@@ -136,7 +136,7 @@ public class AccountDAO {
 				account.setUserName(rs.getString(3));
 				account.setPassword(rs.getString(4));
 				account.setGmail(rs.getString(5));
-				account.setDateCreate(rs.getDate(6));
+				account.setDateCreate(rs.getTimestamp(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setPin(rs.getString(9).equals("YES") ? true : false);
@@ -177,7 +177,7 @@ public class AccountDAO {
 				account.setUserName(rs.getString(3));
 				account.setPassword(rs.getString(4));
 				account.setGmail(rs.getString(5));
-				account.setDateCreate(rs.getDate(6));
+				account.setDateCreate(rs.getTimestamp(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setPin(rs.getString(9).equals("YES") ? true : false);
@@ -218,7 +218,7 @@ public class AccountDAO {
 				account.setUserName(rs.getString(3));
 				account.setPassword(rs.getString(4));
 				account.setGmail(rs.getString(5));
-				account.setDateCreate(rs.getDate(6));
+				account.setDateCreate(rs.getTimestamp(6));
 				account.setRole(Role.getRole(rs.getInt(7)));
 				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
 				account.setPin(rs.getString(9).equals("YES") ? true : false);

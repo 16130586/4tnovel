@@ -1,5 +1,6 @@
 package t4novel.azurewebsites.net.models;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -7,14 +8,14 @@ public class Comment {
 	private int id, accountOwnerId;
 	private Account owner;
 	private String content;
-	private Date time;
+	private Timestamp time;
 	private List<Comment> replyComments;
 	
 	public Comment() {
 		
 	}
 	
-	public Comment(int id, Account owner, String content, Date time, List<Comment> replyComments) {
+	public Comment(int id, Account owner, String content, Timestamp time, List<Comment> replyComments) {
 		super();
 		this.id = id;
 		this.owner = owner;
@@ -59,7 +60,7 @@ public class Comment {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 

@@ -2,7 +2,7 @@ package t4novel.azurewebsites.net.models;
 
 import java.util.List;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Group implements Serializable {
 	/**
@@ -13,11 +13,11 @@ public class Group implements Serializable {
 	private List<Account> accounts;
 	private String name;
 	private String description;
-	private Date dateCreate;
+	private Timestamp dateCreate;
 	private Account owner;
 	private int ownerId;
 
-	public Group(int id, List<Account> accounts, String name, String description, Date dateCreate, Account owner) {
+	public Group(int id, List<Account> accounts, String name, String description, Timestamp dateCreate, Account owner) {
 		super();
 		this.id = id;
 		this.accounts = accounts;
@@ -63,11 +63,11 @@ public class Group implements Serializable {
 		this.description = description;
 	}
 
-	public Date getDateCreate() {
+	public Timestamp getDateCreate() {
 		return dateCreate;
 	}
 
-	public void setDateCreate(Date dateCreate) {
+	public void setDateCreate(Timestamp dateCreate) {
 		this.dateCreate = dateCreate;
 	}
 

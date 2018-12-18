@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -24,7 +24,7 @@ public class Novel implements Serializable {
 	@Expose
 	private List<Vol> vols;
 	@Expose
-	private Date dateUp;
+	private Timestamp dateUp;
 	private int view, coverId;
 	@Expose
 	private Account owner;
@@ -66,7 +66,7 @@ public class Novel implements Serializable {
 	public Novel() {
 	}
 
-	public Novel(int id, String name, String description, List<Vol> vols, Date dateUp, int view, Account owner,
+	public Novel(int id, String name, String description, List<Vol> vols, Timestamp dateUp, int view, Account owner,
 			int like, List<Comment> comments, List<Account> follows) {
 		super();
 		this.id = id;
@@ -172,11 +172,11 @@ public class Novel implements Serializable {
 		}
 	}
 
-	public Date getDateUp() {
+	public Timestamp getDateUp() {
 		return dateUp;
 	}
 
-	public void setDateUp(Date dateUp) {
+	public void setDateUp(Timestamp dateUp) {
 		this.dateUp = dateUp;
 	}
 

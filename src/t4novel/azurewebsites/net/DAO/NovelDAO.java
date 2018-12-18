@@ -47,7 +47,7 @@ public class NovelDAO {
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
 				tmp.setDescription(rs.getString("DESCRIBE"));
-				tmp.setDateUp(rs.getDate("DATEUP"));
+				tmp.setDateUp(rs.getTimestamp("DATEUP"));
 				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
 				tmp.setGroupId(rs.getInt("IDGROUP"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
@@ -82,7 +82,7 @@ public class NovelDAO {
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
 				tmp.setDescription(rs.getString("DESCRIBE"));
-				tmp.setDateUp(rs.getDate("DATEUP"));
+				tmp.setDateUp(rs.getTimestamp("DATEUP"));
 				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
@@ -114,7 +114,7 @@ public class NovelDAO {
 				tmp.setId(idNovel);
 				tmp.setName(rs.getString("NAME"));
 				tmp.setDescription(rs.getString("DESCRIBE"));
-				tmp.setDateUp(rs.getDate("DATEUP"));
+				tmp.setDateUp(rs.getTimestamp("DATEUP"));
 				tmp.setAccountOwnerId(rs.getInt("IDOWNER"));
 				tmp.setKind(NovelKind.getNovelKind(rs.getString("KIND")));
 				tmp.setStatus(NovelStatus.getNovelStatus(rs.getInt("STATUS")));
@@ -167,7 +167,7 @@ public class NovelDAO {
 				result.setId(idNovel);
 				result.setName(rs.getString("NAME"));
 				result.setDescription(rs.getString("DESCRIBE"));
-				result.setDateUp(rs.getDate("DATEUP"));
+				result.setDateUp(rs.getTimestamp("DATEUP"));
 				result.setAccountOwnerId(rs.getInt("IDOWNER"));
 				result.setGroupId(rs.getInt("IDGROUP"));
 				result.setKind(NovelKind.getNovelKind(rs.getString("KIND")));

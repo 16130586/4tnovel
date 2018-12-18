@@ -1,12 +1,12 @@
 package t4novel.azurewebsites.net.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class BookMark {
 	private int id, bookmarkFolderId;
 	private String description;
 	private String url;
-	private Date time;
+	private Timestamp time;
 	private String title;
 
 	public BookMark() {
@@ -50,11 +50,11 @@ public class BookMark {
 		this.url = url;
 	}
 
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 

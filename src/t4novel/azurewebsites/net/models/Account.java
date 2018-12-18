@@ -1,8 +1,8 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import t4novel.azurewebsites.net.sercurities.Role;
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private Date dateCreate;
+	private Timestamp dateCreate;
 	private String displayedName, userName, gmail, password;
 	private List<Message> messages;
 	private List<BookMarkFolder> bookMarkFolders;
@@ -32,7 +32,7 @@ public class Account implements Serializable {
 	public Account() {
 	};
 
-	public Account(int id, Date dateCreate, String displayedName, String userName, String gmail, List<Message> messages,
+	public Account(int id, Timestamp dateCreate, String displayedName, String userName, String gmail, List<Message> messages,
 			List<BookMarkFolder> bookMarkFolders, Role role, boolean isAutoPassPushlishment, List<Thread> threads,
 			List<Novel> ownNovels, List<Novel> follows, List<Comment> comments, boolean isBanned) {
 		super();
@@ -60,7 +60,7 @@ public class Account implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDateCreate() {
+	public Timestamp getDateCreate() {
 		return dateCreate;
 	}
 
@@ -72,7 +72,7 @@ public class Account implements Serializable {
 		this.novelFollowsId = novelFollowsId;
 	}
 
-	public void setDateCreate(Date dateCreate) {
+	public void setDateCreate(Timestamp dateCreate) {
 		this.dateCreate = dateCreate;
 	}
 

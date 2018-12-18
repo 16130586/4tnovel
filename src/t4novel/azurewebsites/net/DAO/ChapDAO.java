@@ -69,7 +69,7 @@ public class ChapDAO {
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 				chap.setTitle(rs.getString("TITLE"));
 				chap.setContent(rs.getString("CONTENT"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getTimestamp("DATEUP"));
 //				CHAPS_CACHE.put(chapID, chap);
 			}
 		} catch (SQLException e) {
@@ -83,8 +83,7 @@ public class ChapDAO {
 		return chap;
 	}
 
-	public List<Chap> getChaps(String sortByCondition, String filterCondition, int offSet, int limit)
-			throws Exception {
+	public List<Chap> getChaps(String sortByCondition, String filterCondition, int offSet, int limit) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Chap> result = new LinkedList<>();
@@ -108,7 +107,7 @@ public class ChapDAO {
 
 		return result;
 	}
-	
+
 	public List<Chap> getEntireChapsByVolId(int volID) throws Exception {
 		LinkedList<Chap> listChap = new LinkedList<>();
 		PreparedStatement stmt = null;
@@ -132,7 +131,7 @@ public class ChapDAO {
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 				chap.setTitle(rs.getString("TITLE"));
 				chap.setContent(rs.getString("CONTENT"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getTimestamp("DATEUP"));
 //				CHAPS_CACHE.put(chapId, chap);
 				listChap.add(chap);
 			}
@@ -169,20 +168,20 @@ public class ChapDAO {
 				chap.setVolOwnerId(volId);
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 				chap.setTitle(rs.getString("TITLE"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getTimestamp("DATEUP"));
 //				CHAPS_CACHE.put(chapId, chap);    
 				listChap.add(chap);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 		} finally {
 			if (rs != null)
 				rs.close();
-			if (stmt != null) 
+			if (stmt != null)
 				stmt.close();
 		}
 		return listChap;
-	}   
+	}
 
 	public Chap getPartOfChapsByChapId(int chapId) throws SQLException {
 		PreparedStatement stmt = null;
@@ -203,20 +202,20 @@ public class ChapDAO {
 				chap.setVolOwnerId(rs.getInt("ID_VOL"));
 				chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 				chap.setTitle(rs.getString("TITLE"));
-				chap.setDateUp(rs.getDate("DATEUP"));
+				chap.setDateUp(rs.getTimestamp("DATEUP"));
 //				CHAPS_CACHE.put(chapId, chap);    
 			}
 		} catch (SQLException e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 		} finally {
 			if (rs != null)
 				rs.close();
-			if (stmt != null) 
+			if (stmt != null)
 				stmt.close();
 		}
 		return chap;
-	} 
-	
+	}
+
 	public String getContentOfChap(Chap chap) throws Exception {
 		if (chap.getContent() != null) {
 			return chap.getContent();
@@ -234,7 +233,7 @@ public class ChapDAO {
 				content = rs.getString("CONTENT");
 				if (content == null)
 					content = "";
-			} 
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -256,7 +255,7 @@ public class ChapDAO {
 			stmt.setInt(1, offSet);
 			stmt.setInt(2, limit);
 			rs = stmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				result.add(getPartOfChapsByChapId(rs.getInt("ID")));
 			}
 		} catch (Exception e) {
@@ -266,9 +265,9 @@ public class ChapDAO {
 			if (stmt != null)
 				stmt.close();
 		}
-	return result;
+		return result;
 	}
-	
+
 	public void deleteChapByID(int chapID) throws Exception {
 		PreparedStatement stmt = null;
 		String querry = "DELETE FROM CHAP WHERE ID = ?";

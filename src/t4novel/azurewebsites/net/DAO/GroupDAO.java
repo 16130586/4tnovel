@@ -249,7 +249,7 @@ public class GroupDAO {
 			result = new Group();
 			result.setId(idGroup);
 			result.setName(rs.getString("NAME"));
-			result.setDateCreate(rs.getDate("DATECREATE"));
+			result.setDateCreate(rs.getTimestamp("DATECREATE"));
 			result.setOwnerId(rs.getInt("IDOWNER"));
 		}
 		return result;

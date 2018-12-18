@@ -1,6 +1,7 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +12,11 @@ public class Vol implements Serializable {
 	private static final long serialVersionUID = -1862228958870004742L;
 	private int id, accountOwnerId, novelOwnerId;
 	private List<Chap> chaps;
-	private Date dateUp;
+	private Timestamp dateUp;
 	private String description, title;
 	private Novel ownerNovel;
 
-	public Vol(int id, List<Chap> chaps, Date dateUp, String description, Novel owner) {
+	public Vol(int id, List<Chap> chaps, Timestamp dateUp, String description, Novel owner) {
 		super();
 		this.id = id;
 		this.chaps = chaps;
@@ -76,7 +77,7 @@ public class Vol implements Serializable {
 		return dateUp;
 	}
 
-	public void setDateUp(Date dateUp) {
+	public void setDateUp(Timestamp dateUp) {
 		this.dateUp = dateUp;
 	}
 

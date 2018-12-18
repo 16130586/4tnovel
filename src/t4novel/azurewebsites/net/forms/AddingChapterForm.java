@@ -1,5 +1,6 @@
 package t4novel.azurewebsites.net.forms;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import t4novel.azurewebsites.net.models.Chap;
@@ -37,9 +38,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Tên chương không được bỏ trống!");
+			errors.put("titleEmpty", "TÃªn chÆ°Æ¡ng khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "Xóa tất cả khoảng trắng và điền tên chương!");
+			errors.put("titleAllSpace", "XÃ³a táº¥t cáº£ khoáº£ng tráº¯ng vÃ  Ä‘iá»�n tÃªn chÆ°Æ¡ng!");
 		} else {
 			this.title = title.trim();
 		}
@@ -51,9 +52,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	public void setContent(String content) {
 		if (content == null || content.isEmpty()) {
-			errors.put("contentEmpty", "Nội dung chương không được bỏ trống!");
+			errors.put("contentEmpty", "Ná»™i dung chÆ°Æ¡ng khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
 		} else if (StringUtil.isAllSpace(content)) {
-			errors.put("contentAllSpace", "Xóa tất cả khoảng trắng và điền nội dung chương!");
+			errors.put("contentAllSpace", "XÃ³a táº¥t cáº£ khoáº£ng tráº¯ng vÃ  Ä‘iá»�n ná»™i dung chÆ°Æ¡ng!");
 		} else {
 			this.content = content.trim();
 		}
@@ -86,7 +87,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Chap rs = new Chap();
-		rs.setDateUp(new java.util.Date());
+		rs.setDateUp(new Timestamp(100));
 		rs.setTitle(getTitle());
 		rs.setContent(getContent());
 		rs.setVolOwnerId(getInVol());

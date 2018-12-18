@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -167,7 +167,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 		rs.setId(this.getNovelId());
 		rs.setName(getTitle());
 		rs.setDescription(getDescription());
-		rs.setDateUp(new Date());
+		rs.setDateUp(new Timestamp(100));
 		rs.setStatus(getStatus());
 		rs.setGenres(getGenres());
 		rs.setKind(getKind());

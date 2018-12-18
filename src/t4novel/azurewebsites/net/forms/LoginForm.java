@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.forms;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +26,7 @@ public class LoginForm extends AbstractMappingForm {
 
 	public void setUserName(String username) {
 		if (username == null || username.isEmpty()) {
-			errors.put("userNameEmpty", "Hãy điền vào tài khoản!");
+			errors.put("userNameEmpty", "HÃ£y Ä‘iá»�n vÃ o tÃ i khoáº£n!");
 			System.out.println("emptyUsername");
 		} else {
 			this.userName = username;
@@ -39,7 +39,7 @@ public class LoginForm extends AbstractMappingForm {
 
 	public void setPassword(String password) {
 		if (password == null || password.isEmpty()) {
-			errors.put("passwordEmpty", "Hãy điền vào mật khẩu!");
+			errors.put("passwordEmpty", "HÃ£y Ä‘iá»�n vÃ o máº­t kháº©u!");
 		} else {
 			boolean existed = loginCheckingService.check(userName, password,
 					"SELECT ID FROM ACCOUNT WHERE USERNAME = ? AND PASSWORD = ?");
@@ -47,7 +47,7 @@ public class LoginForm extends AbstractMappingForm {
 			if (existed == true) {
 				this.password = password;
 			} else {
-				errors.put("passwordWrong", "Sai tài khoản hoặc mật khẩu!");
+				errors.put("passwordWrong", "Sai tÃ i khoáº£n hoáº·c máº­t kháº©u!");
 			}
 		}
 	}
@@ -64,7 +64,7 @@ public class LoginForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT RegisterForm, getMappingData()");
 		Account rs = new Account();
-		rs.setDateCreate(new Date());
+		rs.setDateCreate(new Timestamp(100));
 		rs.setUserName(this.userName);
 		rs.setPassword(this.password);
 		return rs;

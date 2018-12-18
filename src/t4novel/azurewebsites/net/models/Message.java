@@ -1,7 +1,7 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.google.gson.annotations.Expose;
 
@@ -12,13 +12,13 @@ public class Message implements Serializable{
 	private static final long serialVersionUID = -7773057377763278100L;
 	private int id;
 	private String content;
-	private Date time;
+	private Timestamp time;
 	@Expose
 	private Account owner;
 	public Message() {
 		
 	}
-	public Message(int id, String content, Date time, Account owner) {
+	public Message(int id, String content, Timestamp time, Account owner) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -37,10 +37,10 @@ public class Message implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 	public Account getOwner() {

@@ -32,7 +32,7 @@ public class BookMarkDAO {
 				BookMark bm = new BookMark();
 				bm.setId(rs.getInt(1));
 				bm.setUrl(rs.getString(3));
-				bm.setTime(rs.getDate(4));
+				bm.setTime(rs.getTimestamp(4));
 				bm.setTitle(rs.getString(5));
 				listBookmark.add(bm);
 			}

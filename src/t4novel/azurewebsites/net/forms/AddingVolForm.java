@@ -3,6 +3,7 @@ package t4novel.azurewebsites.net.forms;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,9 +19,9 @@ public class AddingVolForm extends AbstractMappingForm {
 		setNovelOwnerId(request.getParameter("in-novel"));
 		setDescription(request.getParameter("description"));
 	}
-	
+
 	public AddingVolForm() {
-		
+
 	}
 
 	private void setNovelOwnerId(String parameter) {
@@ -42,9 +43,9 @@ public class AddingVolForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "Tên tập không được bỏ trống!");
+			errors.put("titleEmpty", "TÃªn táº­p khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "Xóa tất cả khoảng trắng và điền tên tập!");
+			errors.put("titleAllSpace", "XÃ³a táº¥t cáº£ khoáº£ng tráº¯ng vÃ  Ä‘iá»�n tÃªn táº­p!");
 		} else {
 			this.title = title.trim();
 		}
@@ -81,7 +82,7 @@ public class AddingVolForm extends AbstractMappingForm {
 			throw new IllegalArgumentException(
 					"User form's data is invalid, so cannot extract to JAVA DATA CLASS! AT AddingVolForm, getMappingData()");
 		Vol rs = new Vol();
-		rs.setDateUp(new java.util.Date());
+		rs.setDateUp(new Timestamp(100));
 		rs.setDescription(getDescription());
 		rs.setTitle(getTitle());
 		rs.setNovelOwnerId(getNovelOwnerId());
