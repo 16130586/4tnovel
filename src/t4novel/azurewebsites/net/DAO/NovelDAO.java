@@ -98,12 +98,13 @@ public class NovelDAO {
 		return result;
 	}
 
-	public List<Novel> searchNovelsByQuery(String query, int pageNumber) throws Exception {
+	public List<Novel> searchNovelsByQuery(String query, int pageNumber, int limit) throws Exception {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
-		query += " order by DATEUP desc offset " + (pageNumber * 5) + " rows fetch next 5 rows only";
+		query += " order by DATEUP desc offset " + (pageNumber * limit) + " rows fetch next " + limit + " rows only";
+		System.out.println(query);
 		try {
 			stmt = cnn.prepareStatement(query);
 			rs = stmt.executeQuery();
@@ -410,10 +411,10 @@ public class NovelDAO {
 	public void increaseView(Novel novel) throws SQLException {
 		String query = "UPDATE LN SET TOTAL_VIEW=? WHERE ID=?";
 		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setInt(1, novel.getView()  + 1);
+		stmt.setInt(1, novel.getView() + 1);
 		stmt.setInt(2, novel.getId());
 		stmt.executeUpdate();
-		
+
 	}
 
 }

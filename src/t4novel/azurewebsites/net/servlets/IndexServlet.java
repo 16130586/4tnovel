@@ -23,30 +23,32 @@ import t4novel.azurewebsites.net.models.Novel;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet({"" , "/index"})
+@WebServlet({ "", "/index" })
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public IndexServlet() {
-        super();
-        
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public IndexServlet() {
+		super();
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
-		
+
 		Connection cnn = (Connection) request.getAttribute("connection");
 		List<Chap> newChaps = null;
 		ChapDAO chapDao = new ChapDAO(cnn);
 		NovelDAO novelDao = new NovelDAO(cnn);
 		GenreDAO genreDao = new GenreDAO(cnn);
 		ImageDAO imgDao = new ImageDAO(cnn);
-		 
+		int limit = Integer.parseInt(getServletContext().getInitParameter("indexLimitChapterPagination"));
+
 		try {
-			newChaps = chapDao.getLatestChap(0, 5);
+			newChaps = chapDao.getLatestChap(0, limit);
 			for (Chap chap : newChaps) {
 				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());
 				novel.setCoverImg(novelDao.getEncodeImageById(chap.getNovelOwnerId(), imgDao));
@@ -59,8 +61,8 @@ public class IndexServlet extends HttpServlet {
 		LikeDAO likeDao = new LikeDAO(cnn);
 		// loading like and view for newschap
 		try {
-			
-			for(Chap c : newChaps) {
+
+			for (Chap c : newChaps) {
 				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
 			}
 		} catch (Exception e) {
@@ -69,48 +71,46 @@ public class IndexServlet extends HttpServlet {
 		}
 		// end loading like and view for newschaps
 		request.setAttribute("newChaps", newChaps);
-		
+
 		// loading current read
 		Cookie[] cookies = request.getCookies();
 		int currentReadChapId = 0;
-		if(cookies != null)
-		for (Cookie c : cookies) {
-			if (c.getName().equals("currentRead")) {
-				currentReadChapId = Integer.parseInt(c.getValue());
+		if (cookies != null)
+			for (Cookie c : cookies) {
+				if (c.getName().equals("currentRead")) {
+					currentReadChapId = Integer.parseInt(c.getValue());
+				}
 			}
-		}
-		
+
 		Chap currentRead = null;
 		if (currentReadChapId != 0) {
 			try {
 				currentRead = chapDao.getPartOfChapsByChapId(currentReadChapId);
-				//make sure never got in case last read is deadth chap(removing by owner)
-				if(currentRead != null) {
+				// make sure never got in case last read is deadth chap(removing by owner)
+				if (currentRead != null) {
 					Novel novel = novelDao.getNovelById(currentRead.getNovelOwnerId());
 					novel.setGenres(novelDao.getGenres(currentRead.getNovelOwnerId(), genreDao));
 					currentRead.setNovelOwner(novel);
 					request.setAttribute("currentRead", currentRead);
 				}
-				if(currentRead != null && currentRead.getNovelOwner() != null) {
+				if (currentRead != null && currentRead.getNovelOwner() != null) {
 					currentRead.getNovelOwner().setLike(likeDao.getLike(currentRead.getNovelOwner().getId(), "novel"));
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-		
+
 		}
-	
+
 		// end loading current chap
-	
-		
-		
+
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 
