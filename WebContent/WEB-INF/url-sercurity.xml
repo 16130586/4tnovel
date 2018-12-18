@@ -46,7 +46,7 @@
 	<url pattern="/forgot">
 		<method name="get">
 			<login>false</login>
-			<connection>false</connection>
+			<connection>true</connection>
 			<role>0</role>
 			<role>1</role>
 			<role>2</role>

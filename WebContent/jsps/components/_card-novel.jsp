@@ -14,10 +14,10 @@
 	<div class="col-lg-8 novel-info--box">
 		<div class="novel-short-info">
 			<h2 class="u-text-overflow--hidden">
-				<a class="novel__title" href="detail?id=${novel.id }">${novel.name }</a>
+				<a class="novel__title" title="${novel.name }" href="detail?id=${novel.id }">${novel.name }</a>
 			</h2>
 			<div class="u-text-overflow--hidden">
-				<a href="read?id=${chap.id }" class="link u-text-overflow--hidden"
+				<a href="read?id=${chap.id }" title="${chap.title }" class="link u-text-overflow--hidden"
 					style="color: #10b591">
 					<h3>${chap.title }</h3>
 				</a>

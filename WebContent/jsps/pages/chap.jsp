@@ -65,7 +65,7 @@
 							class="fas fa-arrow-up"></i></a></li>
 					<li>
 						<c:if test="${not empty previousChap}">
-							<a href="read?id=${previousChap.id}"
+							<a id="preChap" href="read?id=${previousChap.id}"
 								class="btn btn-secondary"><i class="fa fa-backward"></i></a>
 						</c:if>
 						<c:if test="${empty previousChap }">
@@ -86,7 +86,7 @@
 					</c:if>
 					<li>
 						<c:if test="${not empty nextChap}">
-							<a href="read?id=${nextChap.id}"
+							<a id="nextChap" href="read?id=${nextChap.id}"
 								class="btn btn-secondary"><i class="fa fa-forward"></i></a>
 						</c:if>
 						<c:if test="${empty nextChap }">
@@ -233,8 +233,20 @@
 			document.cookie = cname + "=" + cvalue + ";" + expires;
 		}
 	</script>
-
+	
 	<script type="text/javascript">
+		window.onkeyup = function(event) {
+			var x = event.which;
+			if (x == 37 || x == 65)
+				document.getElementById('preChap').click();
+			if (x == 39 || x == 68)
+				document.getElementById('nextChap').click();
+			if (x == 87)
+				window.scrollBy(0, -37);
+			if (x == 83)
+				window.scrollBy(0, 37);
+			}
+	
 		function setFont() {
 			document.getElementById('chap').style.fontFamily = font;	
 		}
