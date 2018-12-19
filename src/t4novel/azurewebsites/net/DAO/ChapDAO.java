@@ -353,6 +353,25 @@ public class ChapDAO {
 		}
 	}
 
+	public LinkedList<Chap> getCencoringChap(int offset, int limit) throws Exception {
+		LinkedList<Chap> listChap = new LinkedList<>();
+		PreparedStatement stmt = null;
+		String query = "SELECT CHAP.ID,CHAP.TITLE,CHAP.CONTENT,CHAP.DATEUP FROM CHAP INNER JOIN CENSORING ON CHAP.ID = CENSORING.TARGET_ID WHERE CENSORING.IS_PUBLISHED = 'False'"
+				+ "  order by CHAP.DATEUP DESC OFFSET " + offset * limit + " rows fetch next " + limit + " rows only";
+
+		stmt = cnn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			Chap chap = new Chap();
+			chap.setId(rs.getInt(1));
+			chap.setTitle(rs.getString(2));
+			chap.setContent(rs.getString(3));
+			chap.setDateUp(rs.getTimestamp(4));
+			listChap.add(chap);
+		}
+		return listChap;
+	}
+
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}

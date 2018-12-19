@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
 import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.censoring.CensoringSystem;
+import t4novel.azurewebsites.net.censoring.SimpleCensoringBot;
 import t4novel.azurewebsites.net.sercurities.SercureURLEngine;
 import t4novel.azurewebsites.net.utils.MailUtils;
 
@@ -28,14 +30,8 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 
 	@Override
 	public void contextInitialized(ServletContextEvent ev) {
-		// loading idGenrator
-		// loading dbConnectionBroker
 		System.out.println("server loading");
-		
-		
-		//setting ws url connection
-		System.out.println("ws : url  " + ev.getServletContext().getInitParameter("notificationUrl"));
-		//end
+
 		SercureURLEngine.loadURLPatterns(ev.getServletContext().getRealPath(URL_SERCURITY_PATH));
 		try {
 			Context initContext = new InitialContext();
@@ -57,6 +53,13 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		CensoringSystem.init();
+		boolean isUsingCensorintBot = new Boolean(ev.getServletContext().getInitParameter("isUsingCensoringBot"));
+		long censoringPeriodOfBot = Long.parseLong(ev.getServletContext().getInitParameter("censoringPeriodOfBot"));
+		if (isUsingCensorintBot) {
+			CensoringSystem.getSystem()
+					.setAutoCensoringBot(new SimpleCensoringBot(CensoringSystem.getSystem(), censoringPeriodOfBot));
 		}
 
 	}

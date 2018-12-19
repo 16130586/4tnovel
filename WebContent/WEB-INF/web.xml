@@ -50,12 +50,20 @@
     <param-name>indexLimitChapterPagination</param-name>
     <param-value>6</param-value>
   </context-param>
-    <context-param>
+  <context-param>
     <param-name>searchLimitPagination</param-name>
     <param-value>10</param-value>
   </context-param>
   <context-param>
     <param-name>viewLimitPagination</param-name>
     <param-value>30</param-value>
+  </context-param>
+  <context-param>
+    <param-name>isUsingCensoringBot</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>censoringPeriodOfBot</param-name>
+    <param-value>4000</param-value>
   </context-param>
 </web-app>

@@ -1,24 +1,31 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.LinkedList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.models.Chap;
+
 /**
- * Servlet implementation class AdminServlet
+ * Servlet implementation class CencoringServlet
  */
-@WebServlet("/admin")
-public class AdminServlet extends HttpServlet {
+@WebServlet("/censoring")
+public class CensoringServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AdminServlet() {
+	public CensoringServlet() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -27,22 +34,17 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String type = request.getParameter("type");
-		String url = "";
-		if ("delete".equals(type))
-			url = "/jsps/pages/admin-delete-account.jsp";
-		if ("ban".equals(type))
-			url = "/jsps/pages/admin-ban-account.jsp";
-		if ("grant-right".equals(type))
-			url = "/jsps/pages/admin-grant-the-right-to-pin.jsp";
-		if ("censor".equals(type))
-			url = "/censoring";
-		if ("report".equals(type))
-			url = "/jsps/pages/admin-report-mail.jsp";
-		if ("notify".equals(type))
-			url = "/jsps/pages/admin-notify.jsp";
+		Connection cnn = (Connection) request.getAttribute("connection");
+		ChapDAO chapDAO = new ChapDAO(cnn);
+		LinkedList<Chap> chapList = null;
+		try {
+			chapList = chapDAO.getCencoringChap(0, 100);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("chapList", chapList);
 
-		getServletContext().getRequestDispatcher(url).forward(request, response);
+		getServletContext().getRequestDispatcher("/jsps/pages/admin-censor.jsp").forward(request, response);
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+
 	}
 
 }

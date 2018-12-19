@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
-public class Chap implements Serializable {
+import t4novel.azurewebsites.net.censoring.CensorEntity;
+
+public class Chap implements CensorEntity, Serializable {
 	/**
 	 * 
 	 */
@@ -139,5 +141,30 @@ public class Chap implements Serializable {
 			return false;
 		Chap other = (Chap) obj;
 		return this.id == other.id;
+	}
+
+	@Override
+	public int getCensorId() {
+		return this.getId();
+	}
+
+	@Override
+	public int getOwnerId() {
+		return this.novelOwner.getAccountOwnerId();
+	}
+
+	@Override
+	public String getStream() {
+		return "chapter";
+	}
+
+	@Override
+	public Timestamp getCreatedDate() {
+		return this.getDateUp();
+	}
+
+	@Override
+	public boolean isOwnerAutoPassCensoringSystem() {
+		return this.novelOwner.getOwner().isAutoPassPushlishment();
 	}
 }

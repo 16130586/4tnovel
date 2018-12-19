@@ -4,7 +4,8 @@
 <html>
 <head>
 <title>ABC</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- the following to include all needed things 
 	font
@@ -24,46 +25,58 @@
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div class="account-manage__content">
 			<div class="row u-height--100">
-				<%@ include file="/jsps/components/_account-manage.admin-nav.jsp" %>	
-				<div class="col-md-10">
+				<%@ include file="/jsps/components/_account-manage.admin-nav.jsp"%>
+				<div class="col-md-10" style="max-height:80vh; overflow-y:scroll;">
 					<div>
-		                <p class="u-3x u-align-center">Kiểm duyệt</p>
-		            </div>
-                    <div class="row u-margin-bottom--2rem">
-                        <div class="col-md-5"></div>
-                        <div class="col-md-2">
-                            <form action="" method="post">
-                                <input type="hidden" name="id-novel" value="">
-                                <button class="btn btn-primary u-color-white u-width--full">Duyệt tất cả</button>
-                            </form>
-                            <form action="" method="post">
-                                <input type="hidden" name="id-novel" value="">
-                                <button class="btn btn-danger u-color-white u-width--full">Xóa tất cả</button>
-                            </form>
-                        </div>
-                        <div class="col-md-5"></div>
-					</div>	
-					<div class="row u-margin-bottom--1rem">
-						<div class="col-md-2"></div>
-						<div class="col-md-8">
-							<%@ include file="/jsps/components/_card-novel.jsp" %>
-						</div>
-						<div class="col-md-1">
-							<form action="" method="post">
-                                <input type="hidden" name="id-novel" value="">
-                                <button class="btn btn-primary u-color-white u-width--full">Duyệt</button>
-                            </form>
-                            <form action="" method="post">
-                                <input type="hidden" name="id-novel" value="">
-                                <button class="btn btn-danger u-color-white u-width--full">Xóa</button>
-                            </form>
-						</div>
-						<div class="col-md-1"></div>
+						<p class="u-3x u-align-center">Kiểm duyệt</p>
 					</div>
+					<div class="row u-padding--05rem">
+						<div class="col-md-8">Tên chương</div>
+						<div class="col-md-2">Ngày đăng</div>
+						<div class="col-md-2">Thao tác</div>
+					</div>
+					<c:forEach var="chap" items="${chapList}">
+						<div class="row u-padding--05rem u-margin-top--1rem">
+							<button type="button"
+								class="col-md-8 btn btn-belike-a u-align-left u-text-overflow--hidden"
+								style="color: #36a39e" onclick="showOrHide(${chap.id})">
+								${chap.title}</button>
+							<a href="#"
+								class="col-md-2 btn btn-belike-a u-align-left u-text-overflow--hidden">${chap.dateUp}
+							</a>
+							<div class="col-md-2">
+								<button class="btn btn-success u-margin-right--2rem" name="targetID"
+									value="${chap.id}">V</button>
+								<button class="btn btn-danger" name="targetID"
+									value="${chap.id}">X</button>
+							</div>
+							<div id="${chap.id}" class="chap-content row u-padding--05rem" style="display:none">
+								<p style="max-height: 50vh; overflow-y: scroll;">${chap.content}</p>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
+			<p id="demo"></p>
 		</div>
 	</div>
+	<script>
+		function showOrHide(id) {
+			var x = document.getElementById(id)
+			var chapContents = document.getElementsByClassName('chap-content')
+			if (x.style.display == 'none') {
+				x.style.display = 'block'
+			} else {
+				x.style.display = 'none'
+			}
+			for(var i = 0; i<chapContents.length;i++){
+				if(x.id==chapContents[i].id){
+					continue;
+				}
+				chapContents[i].style.display = 'none'
+			}
+		}
+	</script>
 </body>
 </body>
 </html>
