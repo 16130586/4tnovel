@@ -57,7 +57,7 @@
 									<span>Thể loại : </span>
 									<c:forEach var="genre" items="${novel.genres}">
 										<li class="menu-item">
-											<a class="novel__title" title="${novel.name }" href="detail?id=${novel.id }">${novel.name }</a>
+											<a class="btn btn-belike-a u-color-blue genre" href="see3?genre=${genre.getValue()}">${genre.getDisplayName()}</a>
 										</li>
 									</c:forEach>
 								</ul>

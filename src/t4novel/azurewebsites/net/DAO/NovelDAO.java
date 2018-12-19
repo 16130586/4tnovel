@@ -104,7 +104,6 @@ public class NovelDAO {
 		List<Novel> result = new LinkedList<>();
 		Novel tmp;
 		query += " order by DATEUP desc offset " + (pageNumber * limit) + " rows fetch next " + limit + " rows only";
-		System.out.println(query);
 		try {
 			stmt = cnn.prepareStatement(query);
 			rs = stmt.executeQuery();

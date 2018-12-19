@@ -294,21 +294,12 @@
 			var li = document.createElement('li')
 			li.className = "menu-item u-margin-right--2rem u-rounded--tag"
 			
-			var form = document.createElement('form')
-			form.action="search"
-			form.method="post"
-			var input = document.createElement('input')
-			input.type="hidden"
-			input.name="genre"
-			input.value = genreDatas[i].value
+			var a = document.createElement('a')
+			a.href = "see3?genre=".concat(genreDatas[i].value)
+			a.className="btn btn-belike-a"
+			a.innerHTML= genreDatas[i].displayName
 			
-			var btn = document.createElement("button")
-			btn.className="btn btn-belike-a"
-			btn.innerHTML= genreDatas[i].displayName
-			
-			form.appendChild(input)
-			form.appendChild(btn)
-			li.appendChild(form)
+			li.appendChild(a)
 			listGenre.appendChild(li)
 		}
 		genreBox.appendChild(listGenre)
