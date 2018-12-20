@@ -13,10 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.DAO.InboxDAO;
 import t4novel.azurewebsites.net.DAO.LikeDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
 
@@ -104,6 +107,17 @@ public class IndexServlet extends HttpServlet {
 		}
 
 		// end loading current chap
+
+		Account hostAccount = (Account) request.getSession().getAttribute("account");
+		// loading inbox
+		if (hostAccount != null) {
+			InboxDAO inboxDao = new InboxDAO(cnn);
+			try {
+				hostAccount.setMessages(inboxDao.getMessagesInInBox(0, 5, hostAccount.getId()));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}

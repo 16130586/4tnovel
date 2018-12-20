@@ -14,6 +14,7 @@ import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
+import t4novel.azurewebsites.net.censoring.CensoringSystem;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
 import t4novel.azurewebsites.net.models.Account;
@@ -88,37 +89,39 @@ public class AddingChapterServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
-		
+
 		AbstractMappingForm form = new AddingChapterForm(request);
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		if (!form.isOnError()) {
 			Connection cnn = (Connection) request.getAttribute("connection");
 			ChapDAO chapDAO = new ChapDAO(cnn);
 			Chap chapter = (Chap) form.getMappingData();
-			
-			NovelDAO novelDao  = new NovelDAO(cnn);
-			
+
+			NovelDAO novelDao = new NovelDAO(cnn);
+
 			// write data to database
 			try {
 				chapter.setNovelOwner(novelDao.getNovelById(chapter.getNovelOwnerId()));
+				chapter.getNovelOwner().setOwner(hostAccount);
 				chapter.setId(chapDAO.getNextID());
 				chapDAO.insertChap(chapter);
 				
+
 				// notification to followers
-				FollowDAO followDao = new FollowDAO(cnn);
-				List<Integer> followersId = followDao.getFollowersId(chapter.getNovelOwnerId());
-				if(!followersId.isEmpty()) {
-					MessageBuilder msgBuilder = new NewChapterHtmlMessageBuilder(chapter);	
-					Message msg = msgBuilder.getData();
-					NotifycationSystem.notifyToListUser(followersId, msg);
-				}
+//				FollowDAO followDao = new FollowDAO(cnn);
+//				List<Integer> followersId = followDao.getFollowersId(chapter.getNovelOwnerId());
+//				if(!followersId.isEmpty()) {
+//					MessageBuilder msgBuilder = new NewChapterHtmlMessageBuilder(chapter);	
+//					Message msg = msgBuilder.getData();
+//					NotifycationSystem.notifyToListUser(followersId, msg);
+//				}
+				CensoringSystem.getSystem().addNewEntity(chapter, cnn);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
+
 			hostAccount.addNewOwnerChap(chapter);
-			
+
 			// set sucessed for user
 			request.setAttribute("sucessed", "Thêm chương thành công!");
 		} else {

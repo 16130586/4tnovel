@@ -40,6 +40,7 @@ public class NotificationAjaxServlet extends HttpServlet {
 		try {
 
 			int requestingPage = Integer.parseInt(request.getParameter("page-number"));
+			System.out.println("request page : " + requestingPage + " on notifycation inbox");
 			Account hostAcc = (Account) request.getSession().getAttribute("account");
 			Connection cnn = (Connection) request.getAttribute("connection");
 			InboxDAO inboxDao = new InboxDAO(cnn);
