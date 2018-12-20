@@ -26,6 +26,7 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 		// saving idGenrator
 		// closing dbConnectionBroker
 		MailUtils.killVerifyCodesPool();
+		CensoringSystem.getSystem().turnOffCurrentBot();
 	}
 
 	@Override
@@ -56,10 +57,13 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 		}
 		CensoringSystem.init();
 		boolean isUsingCensorintBot = new Boolean(ev.getServletContext().getInitParameter("isUsingCensoringBot"));
+		System.out.println("isUsingBot : " + isUsingCensorintBot);
 		long censoringPeriodOfBot = Long.parseLong(ev.getServletContext().getInitParameter("censoringPeriodOfBot"));
+		System.out.println("period bot: " + censoringPeriodOfBot);
 		if (isUsingCensorintBot) {
 			CensoringSystem.getSystem()
 					.setAutoCensoringBot(new SimpleCensoringBot(CensoringSystem.getSystem(), censoringPeriodOfBot));
+		
 		}
 
 	}
