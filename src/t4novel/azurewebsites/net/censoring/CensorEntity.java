@@ -1,12 +1,15 @@
 package t4novel.azurewebsites.net.censoring;
 
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public interface CensorEntity {
+public interface CensorEntity extends Serializable {
 
 	int getCensorId();
 
-	int getOwnerId();
+	int getOwnerAccountId();
 
 	String getTitle();
 
@@ -14,7 +17,18 @@ public interface CensorEntity {
 
 	String getStream();
 
+	void setOwnerAccountId(int id);
+
+	int getOwnerTargetId();
+
 	Timestamp getCreatedDate();
 
 	boolean isOwnerAutoPassCensoringSystem();
+
+	boolean isAccepted();
+
+	void setAcceptedByCensorSystem(boolean vl);
+
+	void loadData(ResultSet rs) throws SQLException;
+
 }

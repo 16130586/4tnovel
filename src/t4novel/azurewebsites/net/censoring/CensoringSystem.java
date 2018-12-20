@@ -2,9 +2,11 @@ package t4novel.azurewebsites.net.censoring;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import t4novel.azurewebsites.net.DAO.CensoringDAO;
+import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.ws.notifycation.EntityAcceptByCensoringMessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
@@ -28,30 +30,48 @@ public class CensoringSystem {
 
 	public void addNewEntity(CensorEntity entity, Connection cnn) {
 		CensoringDAO censorDao = new CensoringDAO(cnn);
+		try {
+			censorDao.insertCensor(entity);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		if (entity.isOwnerAutoPassCensoringSystem()) {
-			// write success to db
+			entity.setAcceptedByCensorSystem(true);
 			try {
-				censorDao.published(entity.getCensorId(), entity.getOwnerId());
+				censorDao.onCensoringEventUpdate(entity);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			// notifycation to user inbox
 			MessageBuilder msgBuilder = new EntityAcceptByCensoringMessageBuilder(entity);
 			Message msg = msgBuilder.getData();
-			NotifycationSystem.notifyToUser(entity.getOwnerId(), msg, cnn);
+			NotifycationSystem.notifyToUser(entity.getOwnerAccountId(), msg, cnn);
+
+			FollowDAO followDao = new FollowDAO(cnn);
+			List<Integer> followersId = null;
+			try {
+				followersId = followDao.getFollowersId(entity.getOwnerTargetId());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			if (!followersId.isEmpty()) {
+				msgBuilder = MessageBuilderFactory.create(entity);
+				msg = msgBuilder.getData();
+				NotifycationSystem.notifyToListUser(followersId, msg);
+			}
+
+			System.out.println("adding new censor and notifycation message by autoPass choice");
+
 		}
 		// using bot
 		else if (isTurnOnCensoringBot()) {
 			try {
 				CensoringSystem.entities.put(entity);
+				System.out.println("adding new censor data by bot choice");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		// manual
-		else {
-			// write to db
-		}
 	}
 
 	private boolean isTurnOnCensoringBot() {
@@ -70,6 +90,12 @@ public class CensoringSystem {
 	public void unresigterBot(CensoringBot bot) {
 		if (isTurnOnCensoringBot() && this.bot == bot) {
 			this.bot = null;
+		}
+	}
+
+	public void turnOffCurrentBot() {
+		if (this.bot != null && this.isTurnOnCensoringBot()) {
+			this.bot.end();
 		}
 	}
 
