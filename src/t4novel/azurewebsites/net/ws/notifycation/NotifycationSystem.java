@@ -69,6 +69,7 @@ public class NotifycationSystem {
 		try {
 			inboxDao.addNewMessage(userId, message.getContent());
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("cannot add new message to user inbox - userid :" + userId);
 		}
 	}
