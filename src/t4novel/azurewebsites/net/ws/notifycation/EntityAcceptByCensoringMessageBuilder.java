@@ -14,7 +14,10 @@ public class EntityAcceptByCensoringMessageBuilder implements MessageBuilder {
 
 	public EntityAcceptByCensoringMessageBuilder(CensorEntity entity) {
 		this.entity = entity;
-		message = entity.getTitle() + " vừa được ban kiểm duyệt chấp thuận!";
+		if (entity.isAccepted())
+			message = entity.getTitle() + " vừa được ban kiểm duyệt chấp thuận!";
+		else
+			message = entity.getTitle() + " vừa bị ban kiểm duyệt từ chôi vì vi phạm quy tắc đăng!";
 		time = new Timestamp(System.currentTimeMillis());
 	}
 
