@@ -2,7 +2,16 @@ package t4novel.azurewebsites.net.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TimeZone;
+
+import t4novel.azurewebsites.net.censoring.CensorEntity;
+import t4novel.azurewebsites.net.censoring.CensorEntityFactory;
 
 public class CensoringDAO {
 	private Connection cnn;
@@ -12,42 +21,49 @@ public class CensoringDAO {
 		this.cnn = cnn;
 	}
 
-	public void insertCensor(String stream, int targetID, int ownerID) throws SQLException {
-		String query = "INSERT INTO CENSORING(TARGET_ID,OWNER_ID,STREAM,IS_PUBLISHED) VALUES(? , ? , ?, ?)";
+	public List<CensorEntity> getAllUnCensoringEntities() throws SQLException {
+		CensorEntityFactory censorFactory = CensorEntityFactory.getInstance();
+		List<CensorEntity> ret = new LinkedList<>();
+		String query = "SELECT * FROM CENSORING WHERE OUT_DATE IS NULL";
 		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setInt(1, targetID);
-		stmt.setInt(2, ownerID);
-		stmt.setString(3, stream);
-		stmt.setBoolean(4, false);
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			ret.add(censorFactory.create(rs, cnn));
+		}
+		rs.close();
+		stmt.close();
+		return ret;
+	}
+
+	public void insertCensor(CensorEntity entity) throws SQLException {
+		String query = "INSERT INTO CENSORING(TARGET_ID,OWNER_ID,STREAM) VALUES(? , ? , ?)";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, entity.getCensorId());
+		stmt.setInt(2, entity.getOwnerAccountId());
+		stmt.setString(3, entity.getStream());
 		stmt.executeUpdate();
 		stmt.close();
 	}
 
-	public void deleteCensor(int targetID, int ownerID) throws SQLException {
-		String query = "DELETE FROM CENSORING WHERE TARGET_ID=? AND HOST_ID=?";
+	public void deleteCensor(CensorEntity entity) throws SQLException {
+		String query = "DELETE FROM CENSORING WHERE TARGET_ID=? AND HOST_ID=? AND STREAM=?";
 		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setInt(1, targetID);
-		stmt.setInt(2, ownerID);
+		stmt.setInt(1, entity.getCensorId());
+		stmt.setInt(2, entity.getOwnerAccountId());
+		stmt.setString(3, entity.getStream());
 		stmt.executeUpdate();
 		stmt.close();
 	}
 
-	public void published(int targetID, int ownerID) throws SQLException {
-		String query = "UPDATE CENSORING SET IS_PUBLISHED=? WHERE TARGET_ID=? AND HOST_ID=?";
+	public void onCensoringEventUpdate(CensorEntity entity) throws SQLException {
+		String query = "UPDATE CENSORING SET IS_PUBLISHED=? , OUT_DATE=? WHERE TARGET_ID=? AND OWNER_ID=? AND STREAM=?";
 		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setBoolean(1, true);
-		stmt.setInt(2, targetID);
-		stmt.setInt(3, ownerID);
-		stmt.executeUpdate();
-		stmt.close();
-	}
-	
-	public void unPublished(int targetID, int ownerID) throws SQLException {
-		String query = "UPDATE CENSORING SET IS_PUBLISHED=? WHERE TARGET_ID=? AND HOST_ID=?";
-		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setBoolean(1, false);
-		stmt.setInt(2, targetID);
-		stmt.setInt(3, ownerID);
+		stmt.setBoolean(1, entity.isAccepted());
+		stmt.setTimestamp(2,
+				new Timestamp(Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh")).getTimeInMillis()));
+		stmt.setInt(3, entity.getCensorId());
+		stmt.setInt(4, entity.getOwnerAccountId());
+		stmt.setString(5, entity.getStream());
 		stmt.executeUpdate();
 		stmt.close();
 	}
