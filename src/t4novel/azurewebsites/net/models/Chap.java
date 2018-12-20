@@ -1,6 +1,8 @@
 package t4novel.azurewebsites.net.models;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class Chap implements CensorEntity, Serializable {
 	@Expose
 	private int novelOwnerId;
 	private Novel novelOwner;
+	private boolean isAcceptedByCensorSystem;
+	private int accountOwnerId;
 
 	public Chap(int id, String content, Timestamp dateUp, int view, int like, List<Comment> comments, Vol owner) {
 		super();
@@ -149,7 +153,7 @@ public class Chap implements CensorEntity, Serializable {
 	}
 
 	@Override
-	public int getOwnerId() {
+	public int getOwnerAccountId() {
 		return this.novelOwner.getAccountOwnerId();
 	}
 
@@ -167,4 +171,32 @@ public class Chap implements CensorEntity, Serializable {
 	public boolean isOwnerAutoPassCensoringSystem() {
 		return this.novelOwner.getOwner().isAutoPassPushlishment();
 	}
+
+	@Override
+	public boolean isAccepted() {
+		return this.isAcceptedByCensorSystem;
+	}
+
+	@Override
+	public void setAcceptedByCensorSystem(boolean vl) {
+		this.isAcceptedByCensorSystem = vl;
+	}
+
+	@Override
+	public void loadData(ResultSet rs) throws SQLException {
+		this.isAcceptedByCensorSystem = rs.getBoolean("IS_PUBLISHED");
+		this.dateUp = rs.getTimestamp("CAME_DATE");
+		this.accountOwnerId = rs.getInt("OWNER_ID");
+	}
+
+	@Override
+	public void setOwnerAccountId(int id) {
+		this.accountOwnerId = id;
+	}
+
+	@Override
+	public int getOwnerTargetId() {
+		return this.novelOwnerId;
+	}
+
 }
