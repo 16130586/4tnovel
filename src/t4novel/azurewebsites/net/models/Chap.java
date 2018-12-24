@@ -154,7 +154,9 @@ public class Chap implements CensorEntity, Serializable {
 
 	@Override
 	public int getOwnerAccountId() {
-		return this.novelOwner.getAccountOwnerId();
+		if (novelOwner != null)
+			return novelOwner.getAccountOwnerId();
+		return accountOwnerId;
 	}
 
 	@Override
