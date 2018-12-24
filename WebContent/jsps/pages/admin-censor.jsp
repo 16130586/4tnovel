@@ -47,9 +47,9 @@
 							</a>
 							<div class="col-md-2">
 								<button class="btn btn-success u-margin-right--2rem"
-									name="targetID" value="${entity.getCensorId()}">V</button>
-								<button class="btn btn-danger" name="targetID"
-									value="${entity.getCensorId()}">X</button>
+									name="${entity.getClass().getSimpleName() }" value="${entity.getCensorId()}" onclick="censor(this, 1)">V</button>
+								<button class="btn btn-danger" name="${entity.getClass().getSimpleName() }"
+									value="${entity.getCensorId()}" onclick="censor(this, 0)">X</button>
 							</div>
 							<div id="${entity.getCensorId()}" class="chap-content row u-padding--05rem"
 								style="display: none">
@@ -78,6 +78,24 @@
 				chapContents[i].style.display = 'none'
 			}
 		}
+		function removeOneRow(x) {
+			x.parentNode.removeChild(x);
+		}
+		var url = location.origin.concat('${pageContext.request.contextPath}').concat('/ajax-censor');
+		var xhttp = new XMLHttpRequest();
+
+		function censor(x, isAccept) {
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200)
+					removeOneRow(x.parentNode.parentNode);
+				else
+					x.parentNode.parentNode.className += " disabled";
+			}
+			xhttp.open('POST', url);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send('id='+x.value+'&isAccept='+isAccept+'&stream='+x.attributes.getNamedItem("name").value);
+		}
+		
 	</script>
 </body>
 </body>
