@@ -1,7 +1,6 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +37,6 @@ public class RefactingNovelServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Connection cnn = (Connection) request.getAttribute("connection");
 		String type = request.getParameter("action");
 		String url = "";
 		switch (type) {

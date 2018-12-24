@@ -10,7 +10,6 @@ import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.ws.notifycation.EntityAcceptByCensoringMessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
-import t4novel.azurewebsites.net.ws.notifycation.NewChapterHtmlMessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
 
 public class CensoringSystem {

@@ -2,7 +2,6 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ChapDAO;
-import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
 import t4novel.azurewebsites.net.censoring.CensoringSystem;
@@ -19,12 +17,8 @@ import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingChapterForm;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.models.Vol;
-import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
-import t4novel.azurewebsites.net.ws.notifycation.NewChapterHtmlMessageBuilder;
-import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
 
 /**
  * Servlet implementation class AddingChapterServlet
