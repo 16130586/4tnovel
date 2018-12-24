@@ -35,6 +35,20 @@ public class CensoringDAO {
 		return ret;
 	}
 
+	public CensorEntity getCensorEntityByIdAndStream(int id, String stream) throws SQLException {
+		CensorEntityFactory censorFactory = CensorEntityFactory.getInstance();
+		CensorEntity result = null;
+		String query = "select * from CENSORING where TARGET_ID = ? and STREAM = ?";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, id);
+		stmt.setString(2, stream);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) result = censorFactory.create(rs, cnn);
+		rs.close();
+		stmt.close();
+		return result;
+	}
+	
 	public void insertCensor(CensorEntity entity) throws SQLException {
 		String query = "INSERT INTO CENSORING(TARGET_ID,OWNER_ID,STREAM) VALUES(? , ? , ?)";
 		PreparedStatement stmt = cnn.prepareStatement(query);
