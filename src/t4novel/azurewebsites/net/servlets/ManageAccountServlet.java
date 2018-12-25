@@ -43,8 +43,6 @@ public class ManageAccountServlet extends HttpServlet {
 			url = "/jsps/pages/account-manage-display-name.jsp";
 		if ("mail".equals(type))
 			url = "/jsps/pages/account-manage-mail.jsp";
-		if ("admin".equals(type))
-			url = "/jsps/pages/account-manage-admin.jsp";
 		Connection cnn = (Connection) request.getAttribute("connection");
 		Account account = (Account) request.getSession().getAttribute("account");
 		if (account.getJoinGroup() == null) {
