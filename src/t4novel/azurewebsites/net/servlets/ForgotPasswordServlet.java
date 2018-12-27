@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
-import t4novel.azurewebsites.net.forms.AbstractMappingForm;
-import t4novel.azurewebsites.net.forms.ChangeEmailForm;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.utils.MailUtils;
 import t4novel.azurewebsites.net.utils.StringUtil;

@@ -2,7 +2,6 @@ package t4novel.azurewebsites.net.forms;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;

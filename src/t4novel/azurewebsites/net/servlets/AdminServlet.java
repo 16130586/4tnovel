@@ -28,7 +28,7 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String type = request.getParameter("type");
-		String url = "";
+		String url = "/jsps/pages/account-manage-admin.jsp";
 		if ("delete".equals(type))
 			url = "/jsps/pages/admin-delete-account.jsp";
 		if ("ban".equals(type))

@@ -1,16 +1,12 @@
 package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map.Entry;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.http.HTTPBinding;
 
 import t4novel.azurewebsites.net.acessviagoogle.common.GooglePojo;
 import t4novel.azurewebsites.net.acessviagoogle.common.GoogleUtils;

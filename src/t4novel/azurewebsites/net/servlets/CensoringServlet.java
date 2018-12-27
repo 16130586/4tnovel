@@ -3,7 +3,6 @@ package t4novel.azurewebsites.net.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.CensoringDAO;
-import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.censoring.CensorEntity;
-import t4novel.azurewebsites.net.models.Chap;
 
 /**
  * Servlet implementation class CencoringServlet

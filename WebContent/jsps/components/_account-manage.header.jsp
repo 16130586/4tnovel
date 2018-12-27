@@ -21,10 +21,9 @@
                 </div>
             </li>
             <c:if test="${account.role.name() eq 'ADMINISTRATOR'}">
-            	<li class="menu-item u-margin-left--1rem "><a class="link " href="manage?type=admin">Admin</a></li>
+            	<li class="menu-item u-margin-left--1rem "><a class="link " href="admin">Admin</a></li>
             </c:if>
         </ul>
-
     </div>
     <div class="col-md-2 dropdown-menu ">
         <a class="link " href="# ">Tài khoản</a>

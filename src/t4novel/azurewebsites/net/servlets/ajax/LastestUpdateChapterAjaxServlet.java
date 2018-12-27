@@ -22,7 +22,6 @@ import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.models.Chap;
-import t4novel.azurewebsites.net.models.Message;
 import t4novel.azurewebsites.net.models.Novel;
 import t4novel.azurewebsites.net.utils.EnumAdapterFactory;
 
