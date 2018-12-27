@@ -108,8 +108,8 @@ public class FixingNovelServlet extends HttpServlet {
 				// new logic
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
 				if (fileImage != null) {
-					imgDAO.insertNewImage(fileImage.getInputStream());
-					fixedNovel.setCoverId(imgDAO.getNextId(cnn) - 1);
+					imgDAO.updateImage(fileImage.getInputStream() , oldNovel.getCoverId());
+					fixedNovel.setCoverId(oldNovel.getCoverId());
 				}
 				// end new logic
 				oldNovel.update(fixedNovel);

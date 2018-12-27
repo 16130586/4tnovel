@@ -11,6 +11,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
+import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.censoring.CensoringSystem;
 import t4novel.azurewebsites.net.censoring.SimpleCensoringBot;
@@ -43,10 +44,14 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 			// loading pagination
 			Connection cnn = ds.getConnection();
 			NovelDAO novelDao = new NovelDAO(cnn);
+			ChapDAO chapDao = new ChapDAO(cnn);
 			//
 			int totalNovels = novelDao.getTotalNovels(null);
+			int totalChaps = chapDao.getTotalChaps(null);
+			System.out.println(totalChaps + " on life cicle");
 			//
 			ev.getServletContext().setAttribute("totalNovels", totalNovels);
+			ev.getServletContext().setAttribute("totalChaps", totalChaps);
 			// ending loading pagination
 		} catch (NamingException e) {
 			e.printStackTrace();

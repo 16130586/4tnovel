@@ -24,6 +24,7 @@ import t4novel.azurewebsites.net.forms.AbstractMappingForm;
 import t4novel.azurewebsites.net.forms.AddingNovelForm;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Novel;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 /**
  * Servlet implementation class AddingNovelServlet
@@ -107,33 +108,29 @@ public class AddingNovelServlet extends HttpServlet {
 
 			Novel novel = (Novel) form.getMappingData();
 			try {
-				// new logic 
+				// new logic
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
-				if(fileImage != null) {
+				if (fileImage != null) {
 					imgDAO.insertNewImage(fileImage.getInputStream());
 					novel.setCoverId(imgDAO.getNextId(cnn) - 1);
+					imgDAO.updateEtag(StringUtil.hashWith256(imgDAO.getBytesOfImage(novel.getCoverId())), novel.getCoverId());
 				}
 				// end new logic
-				
+
 				novelDAO.insertNovel(novel);
 				novel.setId(novelDAO.getNextID() - 1);
 				novelDAO.insertGenres(novel.getId(), novel.getGenres(), genreDAO);
 				novel.setVols(new LinkedList<>());
-				
+
 				// old logic with old db
-	//				if (fileImage != null)
-	//					novelDAO.insertImageNovel(novel.getId(), fileImage.getInputStream(), imgDAO);
-	//				else {
-	//					novelDAO.insertImageNovel(novel.getId(), null, imgDAO);
-	//				}
-				
+				// if (fileImage != null)
+				// novelDAO.insertImageNovel(novel.getId(), fileImage.getInputStream(), imgDAO);
+				// else {
+				// novelDAO.insertImageNovel(novel.getId(), null, imgDAO);
+				// }
+
 				// end old logic with old db
-				
-				
-				
-				
-				
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -105,7 +105,6 @@ public class AddingChapterServlet extends HttpServlet {
 				chapter.getNovelOwner().setOwner(hostAccount);
 				chapter.setId(chapDAO.getNextID());
 				chapDAO.insertChap(chapter);
-				
 
 				// notification to followers
 //				FollowDAO followDao = new FollowDAO(cnn);

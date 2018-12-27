@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ImageDAO;
+import t4novel.azurewebsites.net.utils.StringUtil;
 
 @WebServlet("/resources/imgs")
 public class ExportImageServlet extends HttpServlet {
@@ -24,12 +24,16 @@ public class ExportImageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setHeader("Content-Type", "image/jpeg");
 		try {
 			int imgId = Integer.parseInt(request.getParameter("id"));
 			Connection cnn = (Connection) request.getAttribute("connection");
 			ImageDAO imgDao = new ImageDAO(cnn);
 			String cacheStatus = request.getHeader("Cache-Control");
-			if ("no-cache".equalsIgnoreCase(cacheStatus) || cacheStatus == null) {
+			if (cacheStatus == null)
+				cacheStatus = "no-cache";
+			cacheStatus.trim();
+			if ("no-cache".equalsIgnoreCase(cacheStatus)) {
 				byte[] bytesImage = imgDao.getBytesOfImage(imgId);
 
 				if (bytesImage == null || bytesImage.length == 0) {
@@ -37,20 +41,49 @@ public class ExportImageServlet extends HttpServlet {
 					response.sendError(404);
 					return;
 				}
-				long cacheAge = 1 * 24 * 3600;
-				long expiry = new Date().getTime() + cacheAge * 1000;
-
 				response.setStatus(200);
-				response.setDateHeader("Expires", expiry);
-				response.setHeader("Cache-Control", "max-age=" + cacheAge + ", public, must-revalidate");
-
+				response.setHeader("Cache-Control", "private, must-revalidate");
+				response.setDateHeader("Last-Modified", imgDao.getDateUp(imgId).getTime());
+				response.setHeader("etag", "\"" + imgDao.getEtag(imgId) + "\"");
+				response.setHeader("content-length", bytesImage.length + "");
 				OutputStream netOut = new BufferedOutputStream(response.getOutputStream());
-				netOut.write(bytesImage, 0, bytesImage.length);
+				netOut.write(bytesImage);
 				netOut.flush();
 				netOut.close();
+			} else if ("max-age=0".equalsIgnoreCase(cacheStatus)) {
+				String dbEtag = "\"" + imgDao.getEtag(imgId) + "\"";
+
+				long dbDateUp = imgDao.getDateUp(imgId).getTime();
+
+				// case 1 , still good then set 304
+				if (validateOldDataInClientCache(request, dbEtag, dbDateUp)) {
+					System.out.println(imgId + " is still good!");
+					response.setHeader("etag", dbEtag);
+					response.setStatus(304);
+					return;
+				}
+				// case 2 , not fresh then return a new copy from server to client
+				else {
+					byte[] bytesImage = imgDao.getBytesOfImage(imgId);
+					if (bytesImage == null || bytesImage.length == 0) {
+						response.setStatus(404);
+						response.sendError(404);
+						return;
+					}
+
+					response.setStatus(200);
+					response.setHeader("Cache-Control", " public, must-revalidate");
+					response.setDateHeader("Last-Modified", imgDao.getDateUp(imgId).getTime());
+					response.setHeader("etag", dbEtag);
+					response.setHeader("content-length", bytesImage.length + "");
+					OutputStream netOut = new BufferedOutputStream(response.getOutputStream());
+					netOut.write(bytesImage);
+					netOut.flush();
+					netOut.close();
+					return;
+				}
 			} else {
-				response.setStatus(304);
-				return;
+				System.out.println(cacheStatus);
 			}
 		} catch (NumberFormatException e) {
 			System.out.println("bad requesting img");
@@ -60,9 +93,25 @@ public class ExportImageServlet extends HttpServlet {
 		}
 	}
 
+	private synchronized boolean validateOldDataInClientCache(HttpServletRequest request, String dbEtag,
+			long dbLastModified) {
+		String imgId = request.getParameter("id");
+		String clientModifiedSince = request.getHeader("if-modified-since");
+		String clientNoneMatch = request.getHeader("if-none-match");
+		long clientModified = request.getDateHeader("if-modified-since");
+		if (clientModifiedSince == null || clientNoneMatch == null)
+			return false;
+		// checking di chu
+		System.out.println(dbEtag + " : of img " + imgId);
+		System.out.println("dbTag equal clientNoneMatch ? " + clientNoneMatch.equals(dbEtag) + " imgId: " + imgId);
+		System.out.println("clientModified <= dbLastModified ? " + (Long.compare(clientModified, dbLastModified) <= 0)
+				+ " imgId: " + imgId);
+		return clientNoneMatch.equals(dbEtag) && Long.compare(clientModified, dbLastModified) <= 0;
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
+	
 }
