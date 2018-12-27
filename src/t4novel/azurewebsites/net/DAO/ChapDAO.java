@@ -247,7 +247,7 @@ public class ChapDAO {
 
 	public List<Chap> getLatestChap(int offSet, int limit) throws SQLException {
 		List<Chap> result = new LinkedList<>();
-		String query = "select max(ID) as ID from CHAP group by ID_NOVEL order by max(DATEUP) desc offset ? rows fetch next ? rows only";
+		String query = "select ID  from CHAP  order by DATEUP  desc offset ? rows fetch next ? rows only";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -374,6 +374,20 @@ public class ChapDAO {
 
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
+	}
+
+	public int getTotalChaps(String filterCondition) throws SQLException {
+		int total = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = " select COUNT(ID) as TOTAL from CHAP "
+				+ (filterCondition == null ? "" : " where " + filterCondition);
+		stmt = cnn.prepareStatement(query);
+		rs = stmt.executeQuery();
+		if (rs.next()) {
+			total = rs.getInt("TOTAL");
+		}
+		return total;
 	}
 
 }
