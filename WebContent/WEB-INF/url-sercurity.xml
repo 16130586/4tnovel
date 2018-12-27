@@ -458,13 +458,11 @@
 		<method name="get">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 		<method name="post">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 	</url>
@@ -472,13 +470,11 @@
 		<method name="get">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 		<method name="post">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 	</url>
@@ -486,13 +482,11 @@
 		<method name="get">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 		<method name="post">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 	</url>
@@ -544,7 +538,6 @@
 		<method name="post">
 			<login>true</login>
 			<connection>true</connection>
-			<role>1</role>
 			<role>2</role>
 		</method>
 	</url>
