@@ -42,9 +42,10 @@ public class SeeNovelServletVer2 extends HttpServlet {
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 
-		int limit = 30;
-		int totalNovels = (int) getServletContext().getAttribute("totalNovels");
-		int totalPage = totalNovels % limit > 0 ? (totalNovels / limit) + 1 : (totalNovels / limit);
+		int limit = Integer.parseInt(getServletContext().getInitParameter("viewAllLastestLimitPagination"));
+		int totalChaps = (int) getServletContext().getAttribute("totalChaps");
+		System.out.println(totalChaps + " on see servlet");
+		int totalPage = totalChaps % limit > 0 ? (totalChaps / limit) + 1 : (totalChaps / limit);
 		// default page number
 		if (null == pageNumber)
 			pageNumber = "1";
@@ -59,8 +60,9 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		NovelDAO novelDao = new NovelDAO(cnn);
 		ChapDAO chapDao = new ChapDAO(cnn);
 		List<Chap> newChaps = null;
-		
+
 		try {
+			System.out.println("want to get on offset: " + offSet + " , limit " + limit);
 			newChaps = chapDao.getLatestChap(offSet, limit);
 			for (Chap chap : newChaps) {
 				chap.setNovelOwner(novelDao.getNovelById(chap.getNovelOwnerId()));
@@ -68,7 +70,7 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		request.setAttribute("newChaps", newChaps);
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("currentPage", pageNumber);
