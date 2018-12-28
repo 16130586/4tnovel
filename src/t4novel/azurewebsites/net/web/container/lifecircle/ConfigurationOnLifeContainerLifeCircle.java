@@ -34,6 +34,7 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 	@Override
 	public void contextInitialized(ServletContextEvent ev) {
 		System.out.println("server loading");
+		ContextHelper.setContext(ev.getServletContext());
 
 		SercureURLEngine.loadURLPatterns(ev.getServletContext().getRealPath(URL_SERCURITY_PATH));
 		try {

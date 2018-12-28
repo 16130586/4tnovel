@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import t4novel.azurewebsites.net.DAO.CensoringDAO;
 import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.models.Message;
+import t4novel.azurewebsites.net.web.container.lifecircle.ContextHelper;
 import t4novel.azurewebsites.net.ws.notifycation.EntityAcceptByCensoringMessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
@@ -35,6 +36,7 @@ public class CensoringSystem {
 			e1.printStackTrace();
 		}
 		if (entity.isOwnerAutoPassCensoringSystem()) {
+			ContextHelper.increasePaginationNumber(entity);
 			entity.setAcceptedByCensorSystem(true);
 			try {
 				censorDao.onCensoringEventUpdate(entity);

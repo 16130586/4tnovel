@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import t4novel.azurewebsites.net.DAO.CensoringDAO;
 import t4novel.azurewebsites.net.DAO.FollowDAO;
 import t4novel.azurewebsites.net.models.Message;
+import t4novel.azurewebsites.net.web.container.lifecircle.ContextHelper;
 import t4novel.azurewebsites.net.ws.notifycation.EntityAcceptByCensoringMessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
@@ -76,6 +77,7 @@ public abstract class AbstractBot implements CensoringBot, Runnable {
 						+ msg.getContent());
 
 				if (en.isAccepted()) {
+					ContextHelper.increasePaginationNumber(en);
 					FollowDAO followDao = new FollowDAO(cnn);
 					List<Integer> followersId = null;
 					try {
@@ -90,7 +92,7 @@ public abstract class AbstractBot implements CensoringBot, Runnable {
 						System.out.println("bot notify to follower: with ownertarget : " + en.getOwnerTargetId()
 								+ " with msg \n " + msg.getContent());
 					}
-
+					
 				}
 				System.out.println("bot sleep on period");
 				cnn.close();
