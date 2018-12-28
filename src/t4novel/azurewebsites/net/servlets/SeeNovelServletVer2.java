@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.models.Chap;
@@ -56,7 +57,7 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		int offSet = (Integer.parseInt(pageNumber) - 1) * limit;
 
 		NovelDAO novelDao = new NovelDAO(cnn);
-		ChapDAO chapDao = new ChapDAO(cnn);
+		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		List<Chap> newChaps = null;
 
 		try {

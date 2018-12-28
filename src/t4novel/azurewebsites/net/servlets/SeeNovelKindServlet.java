@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
@@ -94,7 +95,7 @@ public class SeeNovelKindServlet extends HttpServlet {
 			}
 			GenreDAO genreDao = new GenreDAO(cnn);
 			VolDAO volDao = new VolDAO(cnn);
-			ChapDAO chapDao  = new ChapDAO(cnn);
+			ChapDAO chapDao  = new CensoredChapDAO(cnn);
 			for (Novel curNovel : results) {
 				if(curNovel.getGenres() == null)
 					curNovel.setGenres(genreDao.getGenres(curNovel.getId()));

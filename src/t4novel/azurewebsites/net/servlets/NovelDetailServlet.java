@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.LikeDAO;
@@ -56,7 +57,7 @@ public class NovelDetailServlet extends HttpServlet {
 		NovelDAO novelDao = new NovelDAO(cnn);
 		GenreDAO genreDao = new GenreDAO(cnn);
 		VolDAO volDao = new VolDAO(cnn);
-		ChapDAO chapDao = new ChapDAO(cnn);
+		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		ImageDAO imgDAO = new ImageDAO(cnn);
 		Novel requestNovel = null;
 		boolean isLikeThisNovel = false;

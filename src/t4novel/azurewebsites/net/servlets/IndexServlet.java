@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
@@ -43,7 +44,7 @@ public class IndexServlet extends HttpServlet {
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 		List<Chap> newChaps = null;
-		ChapDAO chapDao = new ChapDAO(cnn);
+		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		NovelDAO novelDao = new NovelDAO(cnn);
 		GenreDAO genreDao = new GenreDAO(cnn);
 		ImageDAO imgDao = new ImageDAO(cnn);

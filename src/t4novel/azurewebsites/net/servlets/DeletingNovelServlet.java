@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
@@ -48,7 +49,7 @@ public class DeletingNovelServlet extends HttpServlet {
 		Account account = (Account) request.getSession().getAttribute("account");
 		NovelDAO novelDAO = new NovelDAO(cnn);
 		VolDAO volDAO = new VolDAO(cnn);
-		ChapDAO chapDAO = new ChapDAO(cnn);
+		ChapDAO chapDAO = new CensoredChapDAO(cnn);
 		GenreDAO genreDAO = new GenreDAO(cnn);
 
 		try {

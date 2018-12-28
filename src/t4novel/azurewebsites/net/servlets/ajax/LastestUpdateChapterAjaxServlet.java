@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
@@ -41,14 +42,13 @@ public class LastestUpdateChapterAjaxServlet extends HttpServlet {
 
 			Connection cnn = (Connection) request.getAttribute("connection");
 			List<Chap> newChaps = null;
-			ChapDAO chapDao = new ChapDAO(cnn);
+			ChapDAO chapDao = new CensoredChapDAO(cnn);
 			NovelDAO novelDao = new NovelDAO(cnn);
 			GenreDAO genreDao = new GenreDAO(cnn);
 			ImageDAO imgDao = new ImageDAO(cnn);
 			int limit = Integer.parseInt(getServletContext().getInitParameter("indexLimitChapterPagination"));
 
 
-//			newChaps = chapDao.getChaps(null, null, pageNumber * 5, 5);
 			newChaps = chapDao.getLatestChap(pageNumber*limit, limit);
 			for (Chap chap : newChaps) {
 				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());

@@ -197,6 +197,7 @@ public class NovelDAO {
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			cnn.rollback();
 			throw e;
 		} finally {

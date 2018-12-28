@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.models.Account;
 
@@ -43,7 +44,7 @@ public class DeletingChapterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Connection cnn = (Connection) request.getAttribute("connection");
-		ChapDAO chapDAO = new ChapDAO(cnn);
+		ChapDAO chapDAO = new CensoredChapDAO(cnn);
 		Account account = (Account) request.getSession().getAttribute("account");
 		try {
 			int chapID = Integer.parseInt(request.getParameter("id-chap"));

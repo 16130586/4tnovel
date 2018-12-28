@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
@@ -55,7 +56,7 @@ public class AddingChapterServlet extends HttpServlet {
 		// because of making for lazy loading! then we have to loading vols in
 		// ownerNovels
 		VolDAO volDao = new VolDAO(cnn);
-		ChapDAO chapDao = new ChapDAO(cnn);
+		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		try {
 			for (Novel ownNovel : hostAccount.getOwnNovels()) {
 

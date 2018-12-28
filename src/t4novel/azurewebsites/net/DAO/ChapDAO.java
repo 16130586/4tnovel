@@ -11,7 +11,7 @@ import t4novel.azurewebsites.net.models.Chap;
 
 public class ChapDAO {
 
-	private Connection cnn;
+	protected Connection cnn;
 	private static final NextIdGenrator NEXT_ID_GENRATOR;
 //	private static final Map<Integer, Chap> CHAPS_CACHE;
 	static {
@@ -45,7 +45,7 @@ public class ChapDAO {
 		}
 	}
 
-	public Chap getChapByID(int chapID) throws Exception {
+	public Chap getChapByID(int chapID) throws SQLException {
 //		Chap chap = CHAPS_CACHE.get(chapID);
 //		if (chap != null) {
 //			return chap;
@@ -79,30 +79,6 @@ public class ChapDAO {
 		return chap;
 	}
 
-	public List<Chap> getChaps(String sortByCondition, String filterCondition, int offSet, int limit) throws Exception {
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		List<Chap> result = new LinkedList<>();
-//		String query = "SELECT * FROM LN WHERE ID IN(" + "SELECT ID FROM LN"
-//				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " group by ID order by ID offset "
-//				+ offSet + " rows fetch next " + limit + " rows only)"
-//				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
-
-		String query = "SELECT ID FROM CHAP WHERE ID IN(" + "SELECT ID FROM CHAP "
-				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + "order by DATEUP DESC OFFSET " + offSet
-				+ " rows fetch next " + limit + " rows only " + ")"
-				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
-		stmt = cnn.prepareStatement(query);
-		rs = stmt.executeQuery();
-		while (rs.next()) {
-			result.add(getPartOfChapsByChapId((rs.getInt("ID"))));
-		}
-
-		rs.close();
-		stmt.close();
-
-		return result;
-	}
 
 	public List<Chap> getEntireChapsByVolId(int volID) throws Exception {
 		LinkedList<Chap> listChap = new LinkedList<>();
@@ -285,14 +261,14 @@ public class ChapDAO {
 		}
 	}
 
-	public void deleteChapByVolID(int chapID) throws Exception {
+	public void deleteChapByVolID(int volId) throws Exception {
 		PreparedStatement stmt = null;
 		String querry = "DELETE FROM CHAP WHERE ID_VOL = ?";
 
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(querry);
-			stmt.setInt(1, chapID);
+			stmt.setInt(1, volId);
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
@@ -347,25 +323,6 @@ public class ChapDAO {
 			if (stmt != null)
 				stmt.close();
 		}
-	}
-
-	public LinkedList<Chap> getCencoringChap(int offset, int limit) throws Exception {
-		LinkedList<Chap> listChap = new LinkedList<>();
-		PreparedStatement stmt = null;
-		String query = "SELECT CHAP.ID,CHAP.TITLE,CHAP.CONTENT,CHAP.DATEUP FROM CHAP INNER JOIN CENSORING ON CHAP.ID = CENSORING.TARGET_ID WHERE CENSORING.IS_PUBLISHED = 'False'"
-				+ "  order by CHAP.DATEUP DESC OFFSET " + offset * limit + " rows fetch next " + limit + " rows only";
-
-		stmt = cnn.prepareStatement(query);
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Chap chap = new Chap();
-			chap.setId(rs.getInt(1));
-			chap.setTitle(rs.getString(2));
-			chap.setContent(rs.getString(3));
-			chap.setDateUp(rs.getTimestamp(4));
-			listChap.add(chap);
-		}
-		return listChap;
 	}
 
 	public int getNextID() throws Exception {
