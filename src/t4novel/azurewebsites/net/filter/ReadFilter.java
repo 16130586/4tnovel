@@ -10,9 +10,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.DAO.ViewDAO;
+import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
 
@@ -31,8 +34,12 @@ public class ReadFilter implements Filter {
 			Chap chap = (Chap) request.getAttribute("chap");
 			Novel novel = chap.getNovelOwner();
 			NovelDAO novelDao = new NovelDAO(cnn);
+			ViewDAO viewDao = new ViewDAO(cnn);
 			try {
 				novelDao.increaseView(novel);
+				Account acc = (Account) ((HttpServletRequest) request).getSession().getAttribute("account");
+				viewDao.inserNewView(acc == null ? -1 : acc.getId(), "chapter", chap.getId());
+				viewDao.inserNewView(acc == null ? -1 : acc.getId(), "novel", novel.getId());
 			} catch (SQLException e) {
 				System.out.println(e.getMessage() + " at ReadFilter");
 				System.out.println("canot increase view of " + novel.getId() + " " + novel.getName());

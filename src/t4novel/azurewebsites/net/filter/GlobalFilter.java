@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 import javax.sql.DataSource;
 
+import t4novel.azurewebsites.net.DAO.ViewDAO;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.sercurities.Role;
 import t4novel.azurewebsites.net.sercurities.SercureURLEngine;
@@ -45,29 +46,30 @@ public class GlobalFilter implements Filter {
 			throws IOException, ServletException {
 		// khi vao 1 url -> co quyen truy cap khong da ?
 		// quyen truy cap lay tu dau ? tu account
+
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
 		HttpServletResponse servletResponse = (HttpServletResponse) response;
-		boolean isNeedLoginUrl = SercureURLEngine.isNeedLoginUrl(servletRequest.getServletPath(),
-				servletRequest.getMethod());
-		boolean isNeedDbConnection = SercureURLEngine.isNeedDbConnection(servletRequest.getServletPath(),
-				servletRequest.getMethod());
+		String path = servletRequest.getServletPath();
+		boolean isNeedLoginUrl = SercureURLEngine.isNeedLoginUrl(path, servletRequest.getMethod());
+		boolean isNeedDbConnection = SercureURLEngine.isNeedDbConnection(path, servletRequest.getMethod());
 		Account account = (Account) servletRequest.getSession().getAttribute("account");
 		if (isNeedLoginUrl && account == null) {
 			servletResponse.sendRedirect("login");
 			return;
 		}
-		// di dc toi day gom 2 th, 1 la url k can login va account == null, 2 la k can login va account != null
+		// di dc toi day gom 2 th, 1 la url k can login va account == null, 2 la k can
+		// login va account != null
 		boolean isAllowedToAccess = false;
-		// default for GUESS 
-		if(account == null) {
-			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(Role.GUESS, servletRequest.getServletPath());
+		// default for GUESS
+		if (account == null) {
+			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(Role.GUESS, path);
 		}
 		// other type of user
-		else  {
-			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), servletRequest.getServletPath());
+		else {
+			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), path);
 		}
 		if (isNeedLoginUrl && account != null && !isAllowedToAccess) {
-			System.out.println("sedding on bad request! " + servletRequest.getServletPath());
+			System.out.println("sedding on bad request! " + path);
 			servletResponse.sendError(404);
 			return;
 		}
@@ -88,21 +90,38 @@ public class GlobalFilter implements Filter {
 				e.printStackTrace();
 				((HttpServletResponse) response).sendError(408);
 				return;
-			} 
+			}
 		}
 
-			// pass the request along the filter chain
-			chain.doFilter(request, response);
-			if (cnn != null && isNeedDbConnection) {
+		// pass the request along the filter chain
+		chain.doFilter(request, response);
+
+		// increasing the view
+		if (path != null && !path.startsWith("/resources"))
+			if (cnn == null) {
+				ds = (DataSource) request.getServletContext().getAttribute("datasource");
 				try {
-					cnn.close();
-					cnn = null;
+					cnn = ds.getConnection();
+					ViewDAO viewDao = new ViewDAO(cnn);
+					int accid = account == null ? -1 : account.getId();
+
+					viewDao.inserNewView(accid, "global", -1);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
 			}
-		
+
+		// end increasing the view
+		if (cnn != null && isNeedDbConnection) {
+			try {
+				cnn.close();
+				cnn = null;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 	/**
