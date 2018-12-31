@@ -81,4 +81,13 @@ public class CensoringDAO {
 		stmt.executeUpdate();
 		stmt.close();
 	}
+	
+	public void unCensoringAllNovelByAccountID(int accountID) throws SQLException {
+		String query = "UPDATE CENSORING SET IS_PUBLISHED=? WHERE OWNER_ID=?";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setBoolean(1, false);
+		stmt.setInt(2, accountID);
+		stmt.executeUpdate();
+		stmt.close();
+	}
 }
