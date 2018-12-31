@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Group;
@@ -344,5 +346,26 @@ public class AccountDAO {
 
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
+	}
+
+	public java.util.List<Account> getBasicInformationAccounts() throws SQLException {
+		List<Account> accounts = new LinkedList<>();
+		String query = "SELECT * FROM ACCOUNT";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		Account loader = null;
+		while (rs.next()) {
+			loader = new Account();
+			loader.setId(rs.getInt("ID"));
+			loader.setUserName(rs.getString("USERNAME"));
+			loader.setGmail(rs.getString("EMAIL"));
+			loader.setDateCreate(rs.getTimestamp("DATECREATE"));
+			loader.setRole(Role.getRole(rs.getInt("ROLE")));
+			loader.setAutoPassPushlishment("NO".equalsIgnoreCase(rs.getString("ISAUTO").trim()) ? false : true);
+			loader.setPin("NO".equalsIgnoreCase(rs.getString("ISPIN").trim())  ? false : true);
+			loader.setBan("NO".equalsIgnoreCase(rs.getString("ISBAN").trim())  ? false : true);
+			accounts.add(loader);
+		}
+		return accounts;
 	}
 }

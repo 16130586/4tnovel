@@ -258,4 +258,17 @@ public class GroupDAO {
 	public int getNextID() throws Exception {
 		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);
 	}
+
+	public List<Group> getAllGroups() throws SQLException {
+		List<Group> ret = new LinkedList<>();
+		String query= "SELECT ID FROM GROUPACC";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			ret.add(getGroup(rs.getInt("ID")));
+		}
+		rs.close();
+		stmt.close();
+		return ret;
+	}
 }

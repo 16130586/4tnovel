@@ -236,6 +236,11 @@ input:-moz-placeholder {
 .u-no--margin {
   margin: 0 !important; }
 
+.u-text--danger {
+  color: tomato;
+  font-size: 1.5rem;
+  font-weight: 600; }
+
 .card--white {
   background-color: #FFF0F5; }
 

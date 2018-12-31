@@ -54,7 +54,7 @@ public class GlobalFilter implements Filter {
 		boolean isNeedDbConnection = SercureURLEngine.isNeedDbConnection(path, servletRequest.getMethod());
 		Account account = (Account) servletRequest.getSession().getAttribute("account");
 		if (isNeedLoginUrl && account == null) {
-			servletResponse.sendRedirect("login");
+			servletResponse.sendRedirect(request.getServletContext().getContextPath() + "/login");
 			return;
 		}
 		// di dc toi day gom 2 th, 1 la url k can login va account == null, 2 la k can
@@ -68,7 +68,7 @@ public class GlobalFilter implements Filter {
 		else {
 			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), path);
 		}
-		if (isNeedLoginUrl && account != null && !isAllowedToAccess) {
+		if (isNeedLoginUrl && !isAllowedToAccess) {
 			System.out.println("sedding on bad request! " + path);
 			servletResponse.sendError(404);
 			return;
@@ -76,12 +76,11 @@ public class GlobalFilter implements Filter {
 
 		DataSource ds = null;
 		Connection cnn = (Connection) servletRequest.getAttribute("connection");
-
-		if (isNeedDbConnection) {
+		if (isNeedDbConnection && cnn == null) {
 			try {
 				ds = (DataSource) request.getServletContext().getAttribute("datasource");
 				cnn = ds.getConnection();
-				request.setAttribute("connection", cnn);
+				servletRequest.setAttribute("connection", cnn);
 			} catch (NoSuchElementException e) {
 				System.out.println(servletRequest.getRequestURI() + "waiting too long!");
 				e.printStackTrace();
@@ -102,6 +101,7 @@ public class GlobalFilter implements Filter {
 				ds = (DataSource) request.getServletContext().getAttribute("datasource");
 				try {
 					cnn = ds.getConnection();
+					System.out.println("try to get connection ? at url : " + path);
 					ViewDAO viewDao = new ViewDAO(cnn);
 					int accid = account == null ? -1 : account.getId();
 

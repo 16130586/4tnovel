@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
+encoding//WebContent/jsps/components/_admin-new.side-bar.jsp=UTF-8
 encoding//WebContent/jsps/components/_header.navigation-desktop.jsp=UTF-8
 encoding//WebContent/jsps/components/_header.navigation-mobile.jsp=UTF-8
+encoding//WebContent/jsps/pages/admin-new.all-novel.jsp=UTF-8
 encoding//WebContent/jsps/pages/chap.jsp=UTF-8
 encoding//WebContent/jsps/pages/forum.jsp=UTF-8
 encoding//src/t4novel/azurewebsites/net/forms/AbstractMappingForm.java=UTF-8

@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 
 import com.google.gson.annotations.Expose;
 
-
 public class Novel implements Serializable {
 	/**
 	 * 
@@ -44,6 +43,7 @@ public class Novel implements Serializable {
 	private Group group;
 	@Expose
 	private String encodeImg;
+
 	public int getCoverId() {
 		return coverId;
 	}
@@ -60,8 +60,6 @@ public class Novel implements Serializable {
 		this.group = group;
 		this.groupId = group.getId();
 	}
-
-	
 
 	public Novel() {
 	}
@@ -278,7 +276,18 @@ public class Novel implements Serializable {
 		this.view = fixedNovel.getView();
 		this.vols = fixedNovel.getVols();
 		this.coverId = fixedNovel.getCoverId();
-		
+
 	}
 
+	public int getTotalVols() {
+		return this.vols.size();
+	}
+
+	public int getTotalChaps() {
+		int total = 0;
+		for (Vol v : vols) {
+			total += v.getChaps() == null ? 0 : v.getChaps().size();
+		}
+		return total;
+	}
 }

@@ -99,4 +99,7 @@ public class Group implements Serializable {
 	public int getOwnerId() {
 		return this.ownerId;
 	}
+	public int getTotalMemembers() {
+		return this.accounts == null ? 0 : this.accounts.size();
+	}
 }
