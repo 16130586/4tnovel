@@ -10,6 +10,7 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
+                        	<li><a href="#"><i class="fa fa-line-chart"></i><span>Thống kê</span></a></li>
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-book"></i><span>Tác phẩm</span></a>
                                 <ul class="collapse">
@@ -32,7 +33,7 @@
                                     <li><a href="${pageContext.request.contextPath}/manage/admin/dashboard-accounts">Danh sách tài khoản</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#"><i class="fa fa-shield"></i><span>Kiểm duyệt</span></a></li>
+                            <li><a href="${pageContext.request.contextPath}/manage/admin/dashboard-censoring"><i class="fa fa-shield"></i><span>Kiểm duyệt</span></a></li>
                             <li><a href="#"><i class="fa fa-send-o"></i><span>Thông báo</span></a></li>
                             <li><a href="#"><i class="fa fa-sticky-note-o"></i><span>Thư tố cáo</span></a></li>
                         </ul>
