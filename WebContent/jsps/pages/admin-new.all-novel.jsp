@@ -123,10 +123,10 @@
 													<td>&nbsp;${novel.dateUp}</td>
 													<td>
 														<button type="button" class="btn btn-danger btn-small"
-															data-toggle="modal" data-target="#delete1">
+															data-toggle="modal" data-target="#delete${novel.id}">
 															<i class="fa fa-trash"></i>
 														</button> <!-- Modal -->
-														<div id="delete1" class="modal fade" role="dialog">
+														<div id="delete${novel.id }" class="modal fade" role="dialog">
 															<div class="modal-dialog">
 
 																<!-- Modal content-->
