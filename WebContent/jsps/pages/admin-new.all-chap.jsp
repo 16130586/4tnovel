@@ -142,16 +142,27 @@
 																							data-toggle="collapse"
 																							data-target=".seeChap${novel.id}-${vol.id}">&nbsp;${vol.title }
 																						</p> <c:forEach var="chap" items="${vol.chaps }">
-																							<div style="margin-left: 1rem; border-top: 1px solid #00000026"
+																							<div
+																								style="margin-left: 1rem; border-top: 1px solid #00000026"
 																								class="collapse seeChap${novel.id }-${vol.id}"
 																								onload="this.style.backgroundColor=this.previousSibling.style.backgroundColor">
 																								<a target="_blank"
 																									style="text-decoration: none; color: black; width: 80%; display: inline-block;"
 																									title="${chap.title }"
 																									href="${pageContext.request.contextPath}/read?id=${chap.id}">&nbsp;${chap.title }</a>
+																								<form style="display: inline-block;"
+																									action="${pageContext.request.contextPath}/manage/admin/dashboard-chaps"
+																									method="post">
+																									<input type="hidden" name="action" value="fix">
+																									<input type="hidden" name="id-chap"
+																										value="${chap.id }">
+																									<button class="btn btn-primary">
+																										<i class="fa fa-edit"></i>
+																									</button>
+																								</form>
 																								<button type="button"
 																									style="display: inline-block;"
-																									class="btn btn-danger" data-toggle="modal"
+																									class="btn btn-secondary" data-toggle="modal"
 																									data-target="#delete${chap.id }">
 																									<i class="fa fa-trash"></i>
 																								</button>
@@ -173,9 +184,15 @@
 																												</p>
 																											</div>
 																											<div class="modal-footer">
-																												<button type="button"
-																													class="btn btn-danger btn-medium"
-																													data-dismiss="modal">Xóa</button>
+																												<form
+																													action="${pageContext.request.contextPath}/delete-chap"
+																													method="post">
+																													<input type="hidden" name="admin" value="1">
+																													<input type="hidden" name="id-chap"
+																														value="${chap.id }">
+																													<button type="submit"
+																														class="btn btn-danger btn-medium">Xóa</button>
+																												</form>
 																												<button
 																													onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)"
 																													class="btn btn-default btn-small">Hủy</button>
@@ -183,15 +200,6 @@
 																										</div>
 																									</div>
 																								</div>
-																								<form style="display: inline-block;"
-																									action="${pageContext.request.contextPath}/manage/admin/dashboard-chaps"
-																									method="post">
-																									<input type="hidden" name="action" value="fix">
-																									<input type="hidden" name="id-chap" value="${chap.id }">
-																									<button class="btn btn-primary">
-																										<i class="fa fa-edit"></i>
-																									</button>
-																								</form>
 																							</div>
 																						</c:forEach>
 																					</td>
