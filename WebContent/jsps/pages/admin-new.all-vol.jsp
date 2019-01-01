@@ -142,6 +142,59 @@
 																						<td>&nbsp;${vol.title }</td>
 																						<td>
 																							<button type="button"
+																								class="btn btn-primary btn-small"
+																								data-toggle="modal"
+																								data-target="#edit${vol.id }">
+																								<i class="fa fa-edit"></i>
+																							</button>
+																							<div id="edit${vol.id }" class="modal fade">
+																								<div class="modal-dialog"
+																									style="max-width: 100%">
+																									<div class="modal-content"
+																										style="max-width: 768px; margin: auto">
+																										<div class="modal-header">
+																											<h5 class="modal-title">Sửa tập</h5>
+																											<button type="button" class="close"
+																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">
+																												<span>&times;</span>
+																											</button>
+																										</div>
+																										<form method="post"
+																											action="${pageContext.request.contextPath}/fix-vol">
+																											<input type="hidden" name="admin" value="1">
+																											<input type="hidden" name="fixedVolID"
+																												value="${vol.id }">
+																											<div class="modal-body">
+																												<table class="table"
+																													style="margin: auto; width: 95%">
+																													<tr>
+																														<td
+																															style="width: 15%; padding-top: 15px; text-align: right; vertical-align: middle;"><label>Tiêu
+																																đề: <span style="color: red">*</span>
+																														</label></td>
+																														<td><input name="title" type="text"
+																															style="padding: .5rem; width: 100%"
+																															required value="${vol.title}"></td>
+																													</tr>
+																													<tr>
+																														<td style="text-align: right;"><label>Tóm
+																																tắt:</label></td>
+																														<td><textarea name="description"
+																																style="padding: .5rem; width: 100%"
+																																rows="7">${vol.description}</textarea></td>
+																													</tr>
+																												</table>
+																											</div>
+																											<div class="modal-footer">
+																												<button type="submit"
+																													class="btn btn-primary"
+																													style="margin: auto">Sửa</button>
+																											</div>
+																										</form>
+																									</div>
+																								</div>
+																							</div>
+																							<button type="button"
 																								class="btn btn-secondary btn-small"
 																								data-toggle="modal"
 																								data-target="#delete${vol.id }">
@@ -165,9 +218,13 @@
 																											</p>
 																										</div>
 																										<div class="modal-footer">
-																											<button type="button"
+																										<form method="post" action="${pageContext.request.contextPath}/delete-vol">
+																											<input name="admin" value="1" type="hidden">
+																											<input name="id-vol" value="${vol.id }" type="hidden">
+																											<button type="submit"
 																												class="btn btn-danger btn-medium"
-																												data-dismiss="modal">Xóa hết</button>
+																												>Xóa hết</button>
+																										</form>
 																											<button
 																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)"
 																												class="btn btn-default btn-small">Hủy</button>
@@ -175,54 +232,7 @@
 																									</div>
 																								</div>
 																							</div>
-																							<button type="button"
-																								class="btn btn-primary btn-small"
-																								data-toggle="modal"
-																								data-target="#edit${vol.id }">
-																								<i class="fa fa-edit"></i>
-																							</button>
-																							<div id="edit${vol.id }" class="modal fade">
-																								<div class="modal-dialog"
-																									style="max-width: 100%">
-																									<div class="modal-content"
-																										style="max-width: 768px; margin: auto">
-																										<div class="modal-header">
-																											<h5 class="modal-title">Sửa tập</h5>
-																											<button type="button" class="close"
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">
-																												<span>&times;</span>
-																											</button>
-																										</div>
-																										<form method="post" action="${pageContext.request.contextPath}/fix-vol">
-																											<div class="modal-body">
-																												<table class="table"
-																													style="margin: auto; width: 95%">
-																													<tr>
-																														<td
-																															style="width: 15%; padding-top: 15px; text-align: right; vertical-align: middle;"><label>Tiêu
-																																đề: <span style="color: red">*</span>
-																														</label></td>
-																														<td><input name="title" type="text"
-																															style="padding: .5rem; width: 100%"
-																															required value="${vol.title}"></td>
-																													</tr>
-																													<tr>
-																														<td style="text-align: right;"><label>Tóm
-																																tắt:</label></td>
-																														<td><textarea name="description"
-																																style="padding: .5rem; width: 100%"
-																																rows="7">${vol.description}</textarea></td>
-																													</tr>
-																												</table>
-																											</div>
-																											<div class="modal-footer">
-																												<button type="submit" class="btn btn-primary"
-																													style="margin: auto">Sửa</button>
-																											</div>
-																										</form>
-																									</div>
-																								</div>
-																							</div>
+
 																						</td>
 																					</tr>
 																				</c:forEach>

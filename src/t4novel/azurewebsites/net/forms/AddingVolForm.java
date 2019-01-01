@@ -15,8 +15,13 @@ public class AddingVolForm extends AbstractMappingForm {
 
 	public AddingVolForm(HttpServletRequest request) {
 		setTitle(request.getParameter("title"));
-		setNovelOwnerId(request.getParameter("in-novel"));
 		setDescription(request.getParameter("description"));
+		if (request.getParameter("admin") == null)
+			setNovelOwnerId(request.getParameter("in-novel"));
+		else {
+			setNovelOwnerId(0);
+		}
+
 	}
 
 	public AddingVolForm() {

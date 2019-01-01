@@ -46,14 +46,20 @@ public class DeletingVolServlet extends HttpServlet {
 		Connection cnn = (Connection) request.getAttribute("connection");
 		ChapDAO chapDAO = new CensoredChapDAO(cnn);
 		VolDAO volDAO = new VolDAO(cnn);
-		Account account = (Account) request.getSession().getAttribute("account");
+		String isAdmin = request.getParameter("admin");
 		try {
 			int volID = Integer.parseInt(request.getParameter("id-vol"));
-			account.deleteVol(volID);
 			volDAO.deleteVolByID(volID, chapDAO);
+			if (isAdmin == null) {
+				Account account = (Account) request.getSession().getAttribute("account");
+				account.deleteVol(volID);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("myNovel");
+		if (isAdmin == null)
+			response.sendRedirect("myNovel");
+		else
+			response.sendRedirect("manage/admin/dashboard-chaps");
 	}
 }

@@ -50,11 +50,12 @@ public class FixingVolServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String action = request.getParameter("action");
-		Account account = (Account) request.getSession().getAttribute("account");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		VolDAO volDAO = new VolDAO(cnn);
+		Account account = (Account) request.getSession().getAttribute("account");
+		String isAdmin = request.getParameter("admin");
 
-		if (action.equals("fix-vol")) {
+		if ("fix-vol".equals(action)) {
 			int volID = Integer.parseInt(request.getParameter("id-vol"));
 			Vol fixingVol = account.getOwnerVol(volID);
 			Novel novel = account.getANovel(fixingVol.getNovelOwnerId());
@@ -65,19 +66,22 @@ public class FixingVolServlet extends HttpServlet {
 			AbstractMappingForm form = new AddingVolForm(request);
 			if (!form.isOnError()) {
 				Vol fixedVol = (Vol) form.getMappingData();
-
 				try {
 					int volID = Integer.parseInt(request.getParameter("fixedVolID"));
 					fixedVol.setId(volID);
 					volDAO.updateVol(fixedVol);
-					account.setOwnerVol(fixedVol);
+					if (isAdmin == null)
+						account.setOwnerVol(fixedVol);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
 				form.applyErrorsToUI(request);
 			}
-			response.sendRedirect("myNovel");
+			if (isAdmin == null)
+				response.sendRedirect("myNovel");
+			else
+				response.sendRedirect("manage/admin/dashboard-vols");
 		}
 	}
 
