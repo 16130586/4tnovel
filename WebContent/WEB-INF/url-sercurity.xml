@@ -603,7 +603,6 @@
 			<role>2</role>
 		</method>
 	</url>
-<<<<<<< HEAD
 	<url pattern="/manage/admin/dashboard-vols">
 		<method name="get">
 			<login>true</login>
