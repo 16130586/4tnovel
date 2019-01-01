@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class BookMark {
 	private int id, bookmarkFolderId;
-	private String description;
+	private String detail;
 	private String url;
 	private Timestamp time;
 	private String title;
@@ -34,12 +34,12 @@ public class BookMark {
 		this.bookmarkFolderId = bookmarkFolderId;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
 	public String getUrl() {

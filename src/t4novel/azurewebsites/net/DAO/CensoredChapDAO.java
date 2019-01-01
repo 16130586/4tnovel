@@ -19,7 +19,7 @@ public class CensoredChapDAO extends ChapDAO {
 		Chap chap = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String querry = "SELECT * FROM CHAP INNER JOIN CENSORING ON CENSORING.TARGET_ID = CHAP.ID WHERE CENSORING.STREAM='chapter' AND CENSORING.IS_PUBLISHED=1 AND CHAP.ID=?";
+		String querry = "SELECT * FROM CHAP where ID=?";
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chapID);
@@ -49,7 +49,7 @@ public class CensoredChapDAO extends ChapDAO {
 		Chap chap = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String querry = "SELECT * FROM CHAP INNER JOIN CENSORING ON CENSORING.TARGET_ID = CHAP.ID WHERE CENSORING.STREAM='chapter' AND CENSORING.IS_PUBLISHED=1 AND CHAP.ID=?";
+		String querry = "SELECT * FROM CHAP where ID=?";
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chapId);
@@ -76,7 +76,7 @@ public class CensoredChapDAO extends ChapDAO {
 	@Override
 	public List<Chap> getPartOfChapsByVolId(int volId) throws SQLException {
 		List<Chap> chaps = new LinkedList<>();
-		String query = "SELECT * FROM CHAP INNER JOIN CENSORING ON CENSORING.TARGET_ID = CHAP.ID WHERE CENSORING.STREAM='chapter' AND CENSORING.IS_PUBLISHED=1 AND CHAP.ID_VOL=?";
+		String query = "SELECT * FROM CHAP where ID_VOL=?";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, volId);
 		ResultSet rs = stmt.executeQuery();
@@ -96,7 +96,7 @@ public class CensoredChapDAO extends ChapDAO {
 	@Override
 	public List<Chap> getEntireChapsByVolId(int volID) throws Exception {
 		List<Chap> chaps = new LinkedList<>();
-		String query = "SELECT * FROM CHAP INNER JOIN CENSORING ON CENSORING.TARGET_ID = CHAP.ID WHERE CENSORING.STREAM='chapter' AND CENSORING.IS_PUBLISHED=1 AND CHAP.ID_VOL=?";
+		String query = "SELECT * FROM CHAP where ID_VOL=?";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, volID);
 		ResultSet rs = stmt.executeQuery();
@@ -170,8 +170,9 @@ public class CensoredChapDAO extends ChapDAO {
 
 	@Override
 	public List<Chap> getLatestChap(int offSet, int limit) throws SQLException {
-		String query = "select target_id from CENSORING where CENSORING.STREAM='chapter' and CENSORING.IS_PUBLISHED = 1 "
-				+ "order by OUT_DATE desc offset ? rows fetch next ? rows only";
+		String query = "select max(ID) as TARGET_ID from CHAP inner join CENSORING on CHAP.ID = CENSORING.TARGET_ID \r\n" + 
+				"where CENSORING.STREAM = 'chapter' and CENSORING.IS_PUBLISHED = 1\r\n" + 
+				"group by ID_NOVEL order by max(OUT_DATE) desc offset ? rows fetch next ? rows only";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, offSet);
 		stmt.setInt(2, limit);

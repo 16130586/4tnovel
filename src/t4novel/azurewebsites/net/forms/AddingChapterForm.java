@@ -14,16 +14,21 @@ public class AddingChapterForm extends AbstractMappingForm {
 	public AddingChapterForm(HttpServletRequest request) {
 		setTitle(request.getParameter("title"));
 		setContent(request.getParameter("content"));
-		try {
-			setInNovel(Integer.parseInt(request.getParameter("in-novel")));
-			setInVol(Integer.parseInt(request.getParameter("in-vol")));
-		} catch (Exception e) {
-			errors.put("inNovelNumberFormat", "Please format inNovel!");
-			errors.put("inVolNumberFormat", "Please format inVol!");
-			e.printStackTrace();
+		if (!"begin-fix".equals(request.getParameter("action")))
+			try {
+				setInNovel(Integer.parseInt(request.getParameter("in-novel")));
+				setInVol(Integer.parseInt(request.getParameter("in-vol")));
+			} catch (Exception e) {
+				errors.put("inNovelNumberFormat", "Please format inNovel!");
+				errors.put("inVolNumberFormat", "Please format inVol!");
+				e.printStackTrace();
+			}
+		else {
+			setInNovel(0);
+			setInVol(0);
 		}
 	}
-	
+
 	public AddingChapterForm() {
 	}
 

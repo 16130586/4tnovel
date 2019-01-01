@@ -3,6 +3,7 @@ package t4novel.azurewebsites.net.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,10 @@ import t4novel.azurewebsites.net.models.BookMarkFolder;
 
 public class BookmarkFolderDAO {
 	private Connection cnn;
-
+	private static final NextIdGenrator NEXT_ID_GENRATOR;
+	static {
+		NEXT_ID_GENRATOR = new NextIdGenrator("BMFOLDER");
+	}
 	public BookmarkFolderDAO(Connection databaseConnection) {
 		this.cnn = databaseConnection;
 	}
@@ -74,7 +78,7 @@ public class BookmarkFolderDAO {
 		return listBookmarkFolder;
 	}
 
-	public void insertBookmarkFolder(BookMarkFolder bookmarkFolder) throws Exception {
+	public void insertBookmarkFolder(BookMarkFolder bookmarkFolder) throws SQLException {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO BMFOLDER (ID_ACC, TITLE) VALUES (?, ?)";
 
@@ -86,7 +90,7 @@ public class BookmarkFolderDAO {
 			stmt.executeUpdate();
 			cnn.commit();
 			System.out.println("Insert bookmark folder completed!");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			cnn.rollback();
 			e.printStackTrace();
 		} finally {
@@ -136,5 +140,8 @@ public class BookmarkFolderDAO {
 			if (stmt != null)
 				stmt.close();
 		}
+	}
+	public int getNextId() throws Exception {
+		return NEXT_ID_GENRATOR.nextAutoIncrementId(cnn);	
 	}
 }

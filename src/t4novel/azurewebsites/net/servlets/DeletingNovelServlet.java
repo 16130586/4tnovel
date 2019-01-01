@@ -46,20 +46,25 @@ public class DeletingNovelServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Connection cnn = (Connection) request.getAttribute("connection");
-		Account account = (Account) request.getSession().getAttribute("account");
 		NovelDAO novelDAO = new NovelDAO(cnn);
 		VolDAO volDAO = new VolDAO(cnn);
 		ChapDAO chapDAO = new CensoredChapDAO(cnn);
 		GenreDAO genreDAO = new GenreDAO(cnn);
+		String isAdmin = request.getParameter("admin");
 
 		try {
 			int novelID = Integer.parseInt(request.getParameter("id-novel"));
-			account.deleteNovel(novelID);
 			novelDAO.delNovelById(novelID, volDAO, chapDAO, genreDAO);
+			if (isAdmin == null) {
+				Account account = (Account) request.getSession().getAttribute("account");
+				account.deleteNovel(novelID);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("myNovel");
+		if (isAdmin == null)
+			response.sendRedirect("myNovel");
+		else			
+			response.sendRedirect("manage/admin/dashboard-novels");
 	}
-
 }

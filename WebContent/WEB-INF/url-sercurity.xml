@@ -558,6 +558,14 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/bookmark">
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 	<url pattern="/resources/imgs">
 		<method name="get">
 			<login>false</login>
@@ -592,6 +600,30 @@
 		</method>
 	</url>
 	<url pattern="/manage/admin/dashboard-novels">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/admin/dashboard-vols">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/admin/dashboard-chaps">
 		<method name="get">
 			<login>true</login>
 			<connection>true</connection>

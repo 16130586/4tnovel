@@ -17,10 +17,10 @@
 	href="https://fonts.googleapis.com/css?family=Exo:400,400i,500,500i,800&amp;subset=vietnamese"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="resources/vendors/css/bootstrap-customize.css">
-<link rel="stylesheet" href="resources/local/css/style.css" />
+	href="${pageContext.request.contextPath}/resources/vendors/css/bootstrap-customize.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/local/css/style.css" />
 </head>
-<body onload="openVol(document.getElementById('novel').selectedIndex)">
+<body>
 	<div class="account-manage">
 		<%@ include file="/jsps/components/_account-manage.header.jsp"%>
 		<div class="add">
@@ -29,7 +29,7 @@
 				<p class="u-paragraph--sucessed">${sucessed}</p>
 			</div>
 
-			<form action="fix-chap" method="post">
+			<form action="${pageContext.request.contextPath}/fix-chap" method="post">
 				<table class="table u-2x u-centered u-width--95">
 					<tr>
 						<td class="u-width--15 u-align-right u-vertical-align--middle"><label>Tiêu
@@ -39,38 +39,10 @@
 							style="padding: .5rem" required value="${fixingChap.title}"></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td><input id="pin" type="checkbox"><label
-							class="u-margin-left--2rem" for="pin">Ghim bài lên top</label></td>
-					</tr>
-					<tr>
-						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
-								truyện: <span style="color: red">*</span>
-						</label></td>
-						<td><select id="novel" name="in-novel" style="padding: .5rem"
-							onchange="openVol(this.selectedIndex)">
-								<c:forEach var="novel" items="${account.ownNovels}">
-									<option value="${novel.id }">${novel.name }</option>
-								</c:forEach>
-						</select></td>
-					</tr>
-					<tr>
-						<td class="u-align-right u-vertical-align--middle"><label>Thuộc
-								tập: <span style="color: red">*</span>
-						</label></td>
-						<td><c:forEach var="novel" items="${account.ownNovels}">
-								<select name="in-vol" style="padding: .5rem">
-									<c:forEach var="vol" items="${novel.vols}">
-										<option value="${vol.id}">${vol.title}</option>
-									</c:forEach>
-								</select>
-							</c:forEach></td>
-					</tr>
-					<tr>
 						<td class="u-align-right"><label>Nội dung: <span
 								style="color: red">*</span></label></td>
 						<td><textarea name="content" class="u-width--full"
-								style="padding: .5rem" rows="8" required>${fixingChap.content}</textarea></td>
+								style="padding: .5rem" rows="15" required>${fixingChap.content}</textarea></td>
 					</tr>
 				</table>
 				<div class="u-align-center u-color-white">
@@ -78,25 +50,11 @@
 						thay đổi</button>
 					<input name="action" type="hidden" value="begin-fix"></input> <input
 						name="fixingChapID" type="hidden" value="${fixingChap.id}"></input>
+						<input name="admin" value="${admin }" type="hidden">
 					<a href="myNovel" type="button" class="btn btn-danger u-2x">Hủy</a>
 				</div>
 			</form>
 		</div>
-
-		<script>
-			function openVol(x) {
-				var vols = document.getElementsByName('in-vol');
-				for (var i = 0; i < vols.length; i++) {
-					if (i == x) {
-						vols[i].style.display = 'block';
-						vols[i].selectedIndex = 0;
-						continue;
-					}
-					vols[i].style.display = 'none';
-					vols[i].selectedIndex = -1;
-				}
-			}
-		</script>
 	</div>
 </body>
 </html>

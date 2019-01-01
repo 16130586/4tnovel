@@ -66,26 +66,29 @@ public class FixingChapterServlet extends HttpServlet {
 			request.setAttribute("fixingChap", fixingChap);
 			getServletContext().getRequestDispatcher("/jsps/pages/fix-chapter.jsp").forward(request, response);
 		} else {
-			System.out.println(request.getParameter("in-novel"));
-			System.out.println(request.getParameter("in-vol"));
 			AbstractMappingForm form = new AddingChapterForm(request);
+			String isAdmin = request.getParameter("admin");
 			if (!form.isOnError()) {
 				Chap chapter = (Chap) form.getMappingData();
-
 				try {
 					int chapID = Integer.parseInt(request.getParameter("fixingChapID"));
 					chapter.setId(chapID);
 					chapDAO.updateChap(chapter);
-					account.setOwnerChap(chapter);
-					Chap fixingChap = account.getOwnerChap(chapID);
-					System.out.println("title : " + fixingChap.getTitle());
+					if (isAdmin == null) {
+						account.setOwnerChap(chapter);
+						Chap fixingChap = account.getOwnerChap(chapID);
+						System.out.println("title : " + fixingChap.getTitle());
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
 				form.applyErrorsToUI(request);
 			}
-			response.sendRedirect("myNovel");
+			if (isAdmin == null)
+				response.sendRedirect("myNovel");
+			else
+				response.sendRedirect("manage/admin/dashboard-chaps");
 		}
 	}
 }

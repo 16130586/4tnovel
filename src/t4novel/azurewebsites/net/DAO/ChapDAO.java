@@ -303,16 +303,14 @@ public class ChapDAO {
 
 	public void updateChap(Chap chap) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "UPDATE CHAP set ID_VOL = ? , ID_NOVEL = ? , TITLE = ? , CONTENT = ? WHERE ID = ?";
+		String query = "UPDATE CHAP set TITLE = ? , CONTENT = ? WHERE ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, chap.getVolOwnerId());
-			stmt.setInt(2, chap.getNovelOwnerId());
-			stmt.setString(3, chap.getTitle());
-			stmt.setString(4, chap.getContent());
-			stmt.setInt(5, chap.getId());
+			stmt.setString(1, chap.getTitle());
+			stmt.setString(2, chap.getContent());
+			stmt.setInt(3, chap.getId());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {

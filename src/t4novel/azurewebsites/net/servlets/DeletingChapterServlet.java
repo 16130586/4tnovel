@@ -45,15 +45,21 @@ public class DeletingChapterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		Connection cnn = (Connection) request.getAttribute("connection");
 		ChapDAO chapDAO = new CensoredChapDAO(cnn);
-		Account account = (Account) request.getSession().getAttribute("account");
+		String isAdmin = request.getParameter("admin");
 		try {
 			int chapID = Integer.parseInt(request.getParameter("id-chap"));
-			account.deleteOwnerChap(chapID);
 			chapDAO.deleteChapByID(chapID);
+			if (isAdmin == null) {
+				Account account = (Account) request.getSession().getAttribute("account");
+				account.deleteOwnerChap(chapID);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("myNovel");
+		if (isAdmin == null)
+			response.sendRedirect("myNovel");
+		else
+			response.sendRedirect("manage/admin/dashboard-chaps");
 	}
 
 }
