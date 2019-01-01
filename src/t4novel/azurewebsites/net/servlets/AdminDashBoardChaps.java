@@ -70,9 +70,6 @@ public class AdminDashBoardChaps extends HttpServlet {
 		String action =  request.getParameter("action");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		ChapDAO chapDAO = new ChapDAO(cnn);
-		if ("delete".equals(action)) {
-			
-		}
 		if ("fix".equals(action)) {
 			int chapID = Integer.parseInt(request.getParameter("id-chap"));
 			try {

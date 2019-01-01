@@ -105,6 +105,8 @@
 										<thead class="text-capitalize">
 											<tr>
 												<th>&nbsp;Tên</th>
+												<th>&nbsp;Số tập</th>
+												<th>Số chương</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -212,6 +214,9 @@
 															</div>
 														</div>
 													</td>
+													<td>&nbsp;${novel.getTotalVols() }</td>
+													<td>${novel.getTotalChaps() }</td>
+												
 												</tr>
 											</c:forEach>
 										</tbody>

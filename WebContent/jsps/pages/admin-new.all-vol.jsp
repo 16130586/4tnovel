@@ -105,11 +105,7 @@
 										<thead class="text-capitalize">
 											<tr>
 												<th>&nbsp;Tên</th>
-												<th>Nhóm dịch</th>
 												<th>&nbsp;Số tập</th>
-												<th>Số chương</th>
-												<th>Sở hữu</th>
-												<th>&nbsp;Ngày đăng</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -146,7 +142,7 @@
 																						<td>&nbsp;${vol.title }</td>
 																						<td>
 																							<button type="button"
-																								class="btn btn-danger btn-small"
+																								class="btn btn-secondary btn-small"
 																								data-toggle="modal"
 																								data-target="#delete${vol.id }">
 																								<i class="fa fa-trash"></i>
@@ -237,11 +233,7 @@
 															</div>
 														</div>
 													</td>
-													<td>${novel.group.name }</td>
 													<td>&nbsp;${novel.getTotalVols() }</td>
-													<td>${novel.getTotalChaps() }</td>
-													<td>${novel.owner.userName}</td>
-													<td>&nbsp;${novel.dateUp}</td>
 												</tr>
 											</c:forEach>
 										</tbody>

@@ -122,7 +122,7 @@
 													<td>${novel.owner.userName}</td>
 													<td>&nbsp;${novel.dateUp}</td>
 													<td>
-														<button type="button" class="btn btn-danger btn-small"
+														<button type="button" class="btn btn-secondary btn-small"
 															data-toggle="modal" data-target="#delete1">
 															<i class="fa fa-trash"></i>
 														</button> <!-- Modal -->
