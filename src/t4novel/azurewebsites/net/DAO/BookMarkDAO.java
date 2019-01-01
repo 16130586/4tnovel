@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class BookMarkDAO {
 		LinkedList<BookMark> listBookmark = new LinkedList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM BM WHERE ID_BMFOLDER = ?";
+		String query = "SELECT * FROM BM WHERE ID_BMFOLDER = ? ORDER BY TIME_BM DESC";
 
 		try {
 			stmt = cnn.prepareStatement(query);
@@ -33,6 +34,7 @@ public class BookMarkDAO {
 				bm.setUrl(rs.getString(3));
 				bm.setTime(rs.getTimestamp(4));
 				bm.setTitle(rs.getString(5));
+				bm.setDetail(rs.getString(6));
 				listBookmark.add(bm);
 			}
 			rs.close();
@@ -48,20 +50,20 @@ public class BookMarkDAO {
 		return listBookmark;
 	}
 
-	public void insertBookmark(BookMark bookmark) throws Exception {
+	public void insertBookmark(BookMark bookmark) throws SQLException {
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO BOOKMARK (ID_BMFOLDER, URL, TIME_BM, TITLE) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO BM (ID_BMFOLDER, URL, TITLE, DETAIL) VALUES (?, ?, ?, ?)";
 
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, bookmark.getBookmarkFolderId());
 			stmt.setString(2, bookmark.getUrl());
-			stmt.setDate(3, new Date(bookmark.getTime().getTime()));
-			stmt.setString(4, bookmark.getTitle());
+			stmt.setString(3, bookmark.getTitle());
+			stmt.setString(4, bookmark.getDetail());
 			stmt.executeUpdate();
 			stmt.close();
 			System.out.println("Insert bookmark completed!");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (stmt != null)
