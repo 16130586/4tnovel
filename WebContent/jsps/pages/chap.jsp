@@ -82,7 +82,7 @@
 							<i class="fas fa-font"></i>
 						</button></li>
 					<c:if test="${not empty account }">
-						<li><button class="btn btn-secondary"><i class="fa fa-bookmark"></i></button></li>
+						<li><button class="btn btn-secondary" onclick="bookmark(this)"><i class="fa fa-bookmark"></i></button></li>
 					</c:if>
 					<li>
 						<c:if test="${not empty nextChap}">
@@ -336,6 +336,47 @@
 
 		function hideSetting() {
 			document.getElementById('setting').style.display = 'none';
+		}
+	</script>
+	<script>
+		var url = location.origin.concat('${pageContext.request.contextPath}').concat('/bookmark');
+		var xhttp = new XMLHttpRequest();
+		function bookmark(btn) {
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					btn.className += " u-disabled";
+					alert("Đã bookmark: ${chap.novelOwner.name} \n${chap.title}!!")
+					createBM();
+				}
+			}
+			xhttp.open('POST', url);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("title=${chap.novelOwner.name}&detail=${chap.title}&url=${pageContext.request.contextPath}/read?id=${chap.id}");
+		}
+		function createBM() {
+			var bmLine = document.createElement("div");
+			bmLine.style.borderBottom = "1px solid #00000029";
+			bmLine.style.padding = ".7rem";
+			
+			var href = document.createElement("a");
+			href.className = "u-text-overflow--hidden";
+			href.style.color = "#444";
+			href.style.display = "block";
+			href.style.fontSize = "1.7rem";
+			href.href = "${pageContext.request.contextPath}/read?id=${chap.id}";
+			href.title = "${chap.novelOwner.name} - ${chap.title}";
+			href.innerHTML = "${chap.novelOwner.name} <br>";
+			var span = document.createElement("span");
+			span.style.fontSize = "1.5rem";
+			span.style.paddingLeft = "1.5rem";
+			span.style.color = "#10b591";
+			span.innerHTML = "${chap.title}";
+			href.appendChild(span);
+			bmLine.appendChild(href);
+			
+			var bmBox = document.getElementById("boorkmark-content");
+			bmBox.insertBefore(bmLine, bmBox.firstChild);
+			
 		}
 	</script>
 </body>
