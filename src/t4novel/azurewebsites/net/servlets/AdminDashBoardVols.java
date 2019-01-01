@@ -1,0 +1,73 @@
+package t4novel.azurewebsites.net.servlets;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import t4novel.azurewebsites.net.DAO.AccountDAO;
+import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.GroupDAO;
+import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.DAO.VolDAO;
+import t4novel.azurewebsites.net.models.Novel;
+import t4novel.azurewebsites.net.models.Vol;
+
+/**
+ * Servlet implementation class AdminDashBoardVols
+ */
+@WebServlet("/manage/admin/dashboard-vols")
+public class AdminDashBoardVols extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AdminDashBoardVols() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection cnn = (Connection) request.getAttribute("connection");
+		NovelDAO novelDao = new NovelDAO(cnn);
+		try {
+			List<Novel> novels = novelDao.getNovels(null, null, 0, Integer.MAX_VALUE);
+			AccountDAO accDao = new AccountDAO(cnn);
+			VolDAO volDao = new VolDAO(cnn);
+			ChapDAO chapDao = new ChapDAO(cnn);
+			GroupDAO groupDao = new GroupDAO(cnn);
+			for (Novel n : novels) {
+				n.setOwner(accDao.getAccountByID(n.getAccountOwnerId()));
+				n.setGroup(groupDao.getGroup(n.getGroupId()));
+				n.setVols(volDao.getVolsOfNovel(n.getId()));
+				for (Vol v : n.getVols()) {
+					v.setChaps(chapDao.getPartOfChapsByVolId(v.getId()));
+				}
+			}
+			request.setAttribute("novels", novels);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		request.getServletContext().getRequestDispatcher("/jsps/pages/admin-new.all-vol.jsp").forward(request,
+				response);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
