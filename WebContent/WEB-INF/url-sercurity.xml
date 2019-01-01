@@ -603,4 +603,28 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/manage/admin/dashboard-vols">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/admin/dashboard-chaps">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+	</url>
 </url-sercutiry> 
