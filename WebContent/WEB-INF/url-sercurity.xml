@@ -615,4 +615,11 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/manage/admin/statistics/behavior">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
+	</url>
 </url-sercutiry> 
