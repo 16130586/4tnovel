@@ -138,7 +138,7 @@
 													<div class="row mb-2">
 														<div class="col-md-6">Gmail:</div>
 														<div class="col-md-6">
-															<input required type="email" name="mail" class="w-100">
+															<input required type="email" name="email" class="w-100">
 														</div>
 													</div>
 													<div class="row mb-2">
@@ -172,14 +172,15 @@
 														<div class="col-md-6">Quyền hạn:</div>
 														<div class="col-md-6">
 															<select name="role" class="w-100">
-																<option value="user" selected>Người dùng</option>
-																<option value="administrator" >Quản trị viên</option>
+																<option value="1" selected>Người dùng</option>
+																<option value="2" >Quản trị viên</option>
 															</select>
 														</div>
 													</div>
 												</div>
 											</div>
 											<div class="modal-footer">
+												<input type="hidden" name="agreement" value="agree">
 												<input type="hidden" name="action" value="create">
 												<button type="submit" class="btn btn-sucess"
 													>Tạo mới</button>
@@ -328,14 +329,14 @@
 																						<c:choose>
 																							<c:when test="${ac.role.toString() eq 'USER'}">
 																								<select name="role" class="w-100">
-																									<option value="user" selected>User</option>
-																									<option value="administrator">Administrator</option>
+																									<option value="1" selected>User</option>
+																									<option value="2">Administrator</option>
 																								</select>
 																							</c:when>
 																							<c:otherwise>
 																								<select name="role" class="w-100">
-																									<option value="user">User</option>
-																									<option value="administrator" selected>Administrator</option>
+																									<option value="1">User</option>
+																									<option value="2" selected>Administrator</option>
 																								</select>
 																							</c:otherwise>
 																						</c:choose>
@@ -374,7 +375,7 @@
 																		</div>
 																		<div class="modal-body">
 																			<p>
-																				Bạn muốn xóa tài khoản <span class="btn-danger">${ac.userName}</span>
+																				Bạn muốn khóa tài khoản <span class="btn-danger">${ac.userName}</span>
 																				và toàn bộ tài sản của tài khoản này?
 																			</p>
 																		</div>

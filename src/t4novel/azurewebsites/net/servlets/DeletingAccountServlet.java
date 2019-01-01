@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
+import t4novel.azurewebsites.net.DAO.CensoringDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 
@@ -48,7 +49,7 @@ public class DeletingAccountServlet extends HttpServlet {
 		int accountID = Integer.parseInt(request.getParameter("accountID"));
 
 		try {
-			accountDAO.deleteAccount(accountDAO.getAccountByID(accountID), new NovelDAO(cnn), new GroupDAO(cnn));
+			accountDAO.deleteAccount(accountDAO.getAccountByID(accountID), new NovelDAO(cnn), new GroupDAO(cnn), new CensoringDAO(cnn));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

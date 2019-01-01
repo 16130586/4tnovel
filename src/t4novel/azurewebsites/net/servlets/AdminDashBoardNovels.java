@@ -2,7 +2,9 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,6 +56,9 @@ public class AdminDashBoardNovels extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		for(Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
+		}
 		doGet(request, response);
 	}
 

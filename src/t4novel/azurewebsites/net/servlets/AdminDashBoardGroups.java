@@ -40,7 +40,6 @@ public class AdminDashBoardGroups extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		request.getServletContext().getRequestDispatcher("/jsps/pages/admin-new.translation-groups.jsp")
@@ -51,6 +50,15 @@ public class AdminDashBoardGroups extends HttpServlet {
 			throws ServletException, IOException {
 		for(Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
 			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
+		}
+		Connection cnn = (Connection) request.getAttribute("connection");
+		GroupDAO groupDAO = new GroupDAO(cnn);
+		int groupID = Integer.parseInt(request.getParameter("id"));
+		try {
+			groupDAO.removeAllMemberFromGroup(groupID);
+			groupDAO.deleteGroupByID(groupID);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		doGet(request, response);
 	}

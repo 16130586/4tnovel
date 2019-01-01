@@ -36,9 +36,9 @@ public class AccountDAO {
 			stmt.setString(3, account.getPassword());
 			stmt.setString(4, account.getGmail());
 			stmt.setInt(5, account.getRole().getIntValue());
-			stmt.setString(6, "NO");
-			stmt.setString(7, "NO");
-			stmt.setString(8, "NO");
+			stmt.setString(6, account.isAutoPassPushlishment() ? "YES" : "NO");
+			stmt.setString(7, account.isPin() ? "YES" : "NO");
+			stmt.setString(8, account.isBan() ? "YES" : "NO");
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class AccountDAO {
 
 	public void updateAccount(Account account) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, EMAIL= ?, ISAUTO = ?, ISPIN = ?, ISBAN = ? WHERE ID = ?";
+		String query = "UPDATE ACCOUNT SET DISPLAYEDNAME = ?, PASSWORD = ?, EMAIL= ?, ISAUTO = ?, ISPIN = ?, ISBAN = ?, ROLE = ? WHERE ID = ?";
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, account.getDisplayedName());
@@ -59,7 +59,8 @@ public class AccountDAO {
 			stmt.setString(4, account.isAutoPassPushlishment() ? "YES" : "NO");
 			stmt.setString(5, account.isPin() ? "YES" : "NO");
 			stmt.setString(6, account.isBan() ? "YES" : "NO");
-			stmt.setInt(7, account.getId());
+			stmt.setInt(7, account.getRole().getIntValue());
+			stmt.setInt(8, account.getId());
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,9 +235,10 @@ public class AccountDAO {
 		return account;
 	}
 
-	public void deleteAccount(Account account, NovelDAO novelDAO, GroupDAO groupDAO) throws Exception {
+	public void deleteAccount(Account account, NovelDAO novelDAO, GroupDAO groupDAO, CensoringDAO censoringDAO)
+			throws Exception {
 		PreparedStatement stmt = null;
-		String query = "DELETE FROM ACCOUNT WHERE ID = ?";
+		String query = "UPDATE ACCOUNT SET ISBAN = 'YES', ISPIN = 'NO', ISAUTO = 'NO' WHERE ID = ?";
 
 		account.setOwnNovels(novelDAO.getNovelsByUserId(account.getId()));
 		for (Novel novel : account.getOwnNovels()) {
@@ -248,6 +250,8 @@ public class AccountDAO {
 		}
 		groupDAO.deleteGroupsByGroupOwnerID(account.getId());
 
+		censoringDAO.unCensoringAllNovelByAccountID(account.getId());
+		
 		try {
 			cnn.setAutoCommit(false);
 			stmt = cnn.prepareStatement(query);
@@ -362,8 +366,8 @@ public class AccountDAO {
 			loader.setDateCreate(rs.getTimestamp("DATECREATE"));
 			loader.setRole(Role.getRole(rs.getInt("ROLE")));
 			loader.setAutoPassPushlishment("NO".equalsIgnoreCase(rs.getString("ISAUTO").trim()) ? false : true);
-			loader.setPin("NO".equalsIgnoreCase(rs.getString("ISPIN").trim())  ? false : true);
-			loader.setBan("NO".equalsIgnoreCase(rs.getString("ISBAN").trim())  ? false : true);
+			loader.setPin("NO".equalsIgnoreCase(rs.getString("ISPIN").trim()) ? false : true);
+			loader.setBan("NO".equalsIgnoreCase(rs.getString("ISBAN").trim()) ? false : true);
 			accounts.add(loader);
 		}
 		return accounts;

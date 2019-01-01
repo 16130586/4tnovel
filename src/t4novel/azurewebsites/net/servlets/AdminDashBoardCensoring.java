@@ -1,4 +1,4 @@
-package t4novel.azurewebsites.net.servlets.ajax;
+package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,32 +21,44 @@ import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
 
 /**
- * Servlet implementation class CensorAjaxServlet
+ * Servlet implementation class CencoringServlet
  */
-@WebServlet("/ajax-censor")
-public class CensorAjaxServlet extends HttpServlet {
+@WebServlet("/manage/admin/dashboard-censoring")
+public class AdminDashBoardCensoring extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CensorAjaxServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	public AdminDashBoardCensoring() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Connection cnn = (Connection) request.getAttribute("connection");
+		List<CensorEntity> entities = null;
+		try {
+			entities = new CensoringDAO(cnn).getAllUnCensoringEntities();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("censorList", entities);
+
+		getServletContext().getRequestDispatcher("/jsps/pages/admin-new.censoring.jsp").forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		int idEntity = Integer.parseInt(request.getParameter("id"));
 		int isAccept = Integer.parseInt(request.getParameter("isAccept"));
 		String stream = request.getParameter("stream");
@@ -93,6 +105,7 @@ public class CensorAjaxServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		System.out.println(isAccept);
-	
+		doGet(request, response);
 	}
+
 }
