@@ -123,12 +123,11 @@
 													<td>&nbsp;${novel.dateUp}</td>
 													<td>
 														<button type="button" class="btn btn-secondary btn-small"
-															data-toggle="modal" data-target="#delete1">
+															data-toggle="modal" data-target="#delete${novel.id }">
 															<i class="fa fa-trash"></i>
 														</button> <!-- Modal -->
-														<div id="delete1" class="modal fade" role="dialog">
+														<div id="delete${novel.id }" class="modal fade" role="dialog">
 															<div class="modal-dialog">
-
 																<!-- Modal content-->
 																<div class="modal-content">
 																	<div class="modal-header">
@@ -141,9 +140,13 @@
 																			tập và chương?</p>
 																	</div>
 																	<div class="modal-footer">
-																		<button type="button"
+																	<form action="${pageContext.request.contextPath}/delete-novel">
+																		<input name="admin" value="1" type="hidden">
+																		<input name="id-novel" value="${novel.id }" type="hidden">
+																		<button type="submit"
 																			class="btn btn-danger btn-medium"
-																			data-dismiss="modal">Xóa hết</button>
+																			>Xóa hết</button>
+																	</form>
 																		<button type="button"
 																			class="btn btn-default btn-small"
 																			data-dismiss="modal">Hủy</button>
@@ -154,8 +157,6 @@
 														</div>
 													</td>
 												</tr>
-
-
 											</c:forEach>
 										</tbody>
 									</table>
@@ -208,6 +209,12 @@
 		src="${pageContext.request.contextPath}/resources/template/admin-dashboard/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/template/admin-dashboard/js/scripts.js"></script>
+	<script>
+		function hideModal(x) {
+			var id = '#' + x.id;
+			$(id).modal('hide');
+		}
+	</script>
 </body>
 
 </html>
