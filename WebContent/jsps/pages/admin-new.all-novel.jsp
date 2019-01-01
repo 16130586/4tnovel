@@ -100,7 +100,7 @@
 							<div class="card-body">
 								<h4 class="header-title">Danh sách tác phẩm</h4>
 								<div class="data-tables datatable-dark">
-									<table id="dataTable3" style="width: 100%;text-align:left;">
+									<table class="table-striped" id="dataTable3" style="width: 100%;text-align:left;">
 										<thead class="text-capitalize">
 											<tr>
 												<th>&nbsp;Tên</th>

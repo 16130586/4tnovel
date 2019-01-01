@@ -13,8 +13,8 @@
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-book"></i><span>Tác phẩm</span></a>
                                 <ul class="collapse">
-                                    <li><a href="#">Danh sách chương</a></li>
-                                    <li><a href="#">Danh sách tập</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/manage/admin/dashboard-chaps"">Danh sách chương</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/manage/admin/dashboard-vols">Danh sách tập</a></li>
                                     <li><a href="${pageContext.request.contextPath}/manage/admin/dashboard-novels">Danh sách tác phẩm</a></li>
                                 </ul>
                             </li>
