@@ -177,6 +177,7 @@
 .u-disabled {
 	cursor: default !important;
 	color: rgb(175, 175, 173) !important;
+	pointer-events: none !important;
 }
 .u-rounded--tag{
 	padding: 0 1rem;
