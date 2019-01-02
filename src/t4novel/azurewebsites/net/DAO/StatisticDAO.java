@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -301,5 +302,72 @@ public class StatisticDAO {
 		}
 		return ret;
 	}
+	
+	
+	public List<Pair<String, Integer>> statisticNovelOverDays(String startDate, String endDate) throws SQLException{
+		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN " + 
+				"WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";	
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		List<Pair<String, Integer>> ret = new LinkedList<>();
 
+		stmt.setString(1, startDate);
+		stmt.setString(2, endDate);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+		}
+		return ret;
+	}
+	
+	public List<Pair<String, Integer>> statisticChapOverDays(String startDate, String endDate) throws SQLException{
+		String query = "SELECT FORMAT(CHAP.DATEUP,'yyyy-MM-dd') as _day, COUNT(CHAP.DATEUP) as _chaps FROM CHAP " + 
+				"WHERE CHAP.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(CHAP.DATEUP,'yyyy-MM-dd')";	
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		List<Pair<String, Integer>> ret = new LinkedList<>();
+
+		stmt.setString(1, startDate);
+		stmt.setString(2, endDate);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+		}
+		
+		return ret;
+	}
+	
+	public List<Pair<String, Integer>> statisticAccountOverDays(String startDate, String endDate) throws SQLException{
+		String query = "SELECT FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd') as _day, COUNT(ACCOUNT.DATECREATE) as _novels FROM ACCOUNT " + 
+				"WHERE ACCOUNT.DATECREATE BETWEEN ? AND ? GROUP BY FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd')";	
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		List<Pair<String, Integer>> ret = new LinkedList<>();
+
+		stmt.setString(1, startDate);
+		stmt.setString(2, endDate);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+		}
+		
+		return ret;
+	}
+	
+	public List<Pair<String, Integer>> statisticThreadOverDays(String startDate, String endDate) throws SQLException{
+		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN " + 
+				"WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";	
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		List<Pair<String, Integer>> ret = new LinkedList<>();
+
+		stmt.setString(1, startDate);
+		stmt.setString(2, endDate);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+		}
+		
+		return ret;
+	}
 }
