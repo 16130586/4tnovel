@@ -52,8 +52,8 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[1] = 0;
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 10));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,10));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
 		}
 		return ret;
 	}
@@ -90,8 +90,8 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[1] = 0;
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 10));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,20));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
 		}
 		return ret;
 	}
@@ -128,8 +128,8 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[1] = 0;
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 10));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,100));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
 		}
 		return ret;
 	}
@@ -200,8 +200,8 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[1] = 0;
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 10));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,100));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
 		}
 		return ret;
 	}

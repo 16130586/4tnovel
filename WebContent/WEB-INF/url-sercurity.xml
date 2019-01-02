@@ -653,5 +653,10 @@
 			<connection>true</connection>
 			<role>2</role>
 		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>2</role>
+		</method>
 	</url>
 </url-sercutiry> 
