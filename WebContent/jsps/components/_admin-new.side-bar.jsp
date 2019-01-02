@@ -10,7 +10,13 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                        	<li><a href="${pageContext.request.contextPath}/manage/admin/statistics/behavior"><i class="fa fa-line-chart"></i><span>Thống kê</span></a></li>
+                        	<li>
+                        		<a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-line-chart"></i><span>Thống kê</span></a>
+                                <ul class="collapse">
+                                    <li><a href="${pageContext.request.contextPath}/manage/admin/statistics/behavior">Hành vi người dùng</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/manage/admin/statistics/system">Trạng thái hệ thống</a></li>
+                                </ul>
+                        	</li>
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-book"></i><span>Tác phẩm</span></a>
                                 <ul class="collapse">

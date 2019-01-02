@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,20 +43,26 @@ public class StatisticDAO {
 		}
 		stmt.close();
 		rs.close();
-		
-		if(ret.isEmpty()) {
-			Integer[] combineToTimeOfDateStart = new Integer[4] , combineToTimeOfDateEndDay = new Integer[4];
+
+		if (ret.isEmpty()) {
+			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
 			combineToTimeOfDateStart[1] = 0;
 			combineToTimeOfDateStart[2] = 0;
 			combineToTimeOfDateStart[3] = 0;
-			combineToTimeOfDateEndDay[0] =23;
+			combineToTimeOfDateEndDay[0] = 23;
 			combineToTimeOfDateEndDay[1] = 0;
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
 			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay, 0));
 		}
+		Collections.sort(ret, new Comparator<Pair<Integer[], Integer>>() {
+			@Override
+			public int compare(Pair<Integer[], Integer> o1, Pair<Integer[], Integer> o2) {
+				return o1.k[0].compareTo(o2.k[0]);
+			}
+		});
 		return ret;
 	}
 
@@ -80,8 +88,8 @@ public class StatisticDAO {
 		}
 		stmt.close();
 		rs.close();
-		if(ret.isEmpty()) {
-			Integer[] combineToTimeOfDateStart = new Integer[4] , combineToTimeOfDateEndDay = new Integer[4];
+		if (ret.isEmpty()) {
+			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
 			combineToTimeOfDateStart[1] = 0;
 			combineToTimeOfDateStart[2] = 0;
@@ -91,8 +99,14 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
 			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay, 0));
 		}
+		Collections.sort(ret, new Comparator<Pair<Integer[], Integer>>() {
+			@Override
+			public int compare(Pair<Integer[], Integer> o1, Pair<Integer[], Integer> o2) {
+				return o1.k[0].compareTo(o2.k[0]);
+			}
+		});
 		return ret;
 	}
 
@@ -118,8 +132,8 @@ public class StatisticDAO {
 		}
 		stmt.close();
 		rs.close();
-		if(ret.isEmpty()) {
-			Integer[] combineToTimeOfDateStart = new Integer[4] , combineToTimeOfDateEndDay = new Integer[4];
+		if (ret.isEmpty()) {
+			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
 			combineToTimeOfDateStart[1] = 0;
 			combineToTimeOfDateStart[2] = 0;
@@ -129,8 +143,14 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
 			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay, 0));
 		}
+		Collections.sort(ret, new Comparator<Pair<Integer[], Integer>>() {
+			@Override
+			public int compare(Pair<Integer[], Integer> o1, Pair<Integer[], Integer> o2) {
+				return o1.k[0].compareTo(o2.k[0]);
+			}
+		});
 		return ret;
 	}
 
@@ -139,17 +159,55 @@ public class StatisticDAO {
 		List<Pair<Integer[], Integer>> guest = statisticDetailGuestView(startDate, endDate);
 		List<Pair<Integer[], Integer>> user = statisticDetailUserView(startDate, endDate);
 		List<Tripple<Integer[], Integer, Integer>> combineForTwoLineChart = combineOnSameKey(guest, user);
+		Collections.sort(combineForTwoLineChart, new Comparator<Tripple<Integer[], Integer, Integer>>() {
+			@Override
+			public int compare(Tripple<Integer[], Integer, Integer> o1, Tripple<Integer[], Integer, Integer> o2) {
+				return o1.k[0].compareTo(o2.k[0]);
+			}
+		});
 		return combineForTwoLineChart;
 	}
 
 	private List<Tripple<Integer[], Integer, Integer>> combineOnSameKey(List<Pair<Integer[], Integer>> guest,
 			List<Pair<Integer[], Integer>> user) {
 		List<Tripple<Integer[], Integer, Integer>> ret = new ArrayList<>(guest.size());
-		Pair<Integer[], Integer> pair;
-		for (int i = 0; i < guest.size(); i++) {
-			pair = guest.get(i);
-			ret.add(new Tripple<Integer[], Integer, Integer>(pair.k, pair.v, user.get(i).v));
+
+		// combine algorithm
+		Tripple<Integer[], Integer, Integer> entry;
+		Pair<Integer[], Integer> temp;
+		int i = 0, j = 0;
+		while (i < guest.size() && j < user.size()) {
+			entry = new Tripple<Integer[], Integer, Integer>();
+			temp = guest.get(i);
+			entry.k = temp.k;
+			if (guest.get(i).k[0].equals(user.get(j).k[0])) {
+				entry.v1 = user.get(j).v;
+				entry.v2 = temp.v;
+				j++;
+			} else {
+				entry.v1 = temp.v;
+				entry.v2 = 0;
+			}
+			i++;
+			ret.add(entry);
 		}
+		while (i < guest.size()) {
+			temp = guest.get(i);
+			entry = new Tripple<>(temp.k, 0, temp.v);
+			if (!ret.contains(entry))
+				ret.add(entry);
+			i++;
+		}
+
+		while (j < user.size()) {
+			temp = user.get(j);
+			entry = new Tripple<>(temp.k, temp.v, 0);
+			if (!ret.contains(entry))
+				ret.add(entry);
+			j++;
+		}
+
+		// end combine algorithm
 		return ret;
 	}
 
@@ -190,8 +248,8 @@ public class StatisticDAO {
 		}
 		stmt.close();
 		rs.close();
-		if(ret.isEmpty()) {
-			Integer[] combineToTimeOfDateStart = new Integer[4] , combineToTimeOfDateEndDay = new Integer[4];
+		if (ret.isEmpty()) {
+			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
 			combineToTimeOfDateStart[1] = 0;
 			combineToTimeOfDateStart[2] = 0;
@@ -201,11 +259,11 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
 			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay, 0));
 		}
 		return ret;
 	}
-	
+
 	public List<Pair<Integer[], Integer>> statisticDetailOverFollow(String startDate, String endDate)
 			throws SQLException {
 		String query = "select datepart(hour, FOLLOW.DATEUP) as _Hour, count(FOLLOW.DATEUP) / DATEDIFF(day, ?, ?) AS _Follow from FOLLOW where FOLLOW.DATEUP between ? and ? and FOLLOW.STREAM = ? group by datepart(hour, FOLLOW.DATEUP)";
@@ -228,8 +286,8 @@ public class StatisticDAO {
 		}
 		stmt.close();
 		rs.close();
-		if(ret.isEmpty()) {
-			Integer[] combineToTimeOfDateStart = new Integer[4] , combineToTimeOfDateEndDay = new Integer[4];
+		if (ret.isEmpty()) {
+			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
 			combineToTimeOfDateStart[1] = 0;
 			combineToTimeOfDateStart[2] = 0;
@@ -239,8 +297,9 @@ public class StatisticDAO {
 			combineToTimeOfDateEndDay[2] = 0;
 			combineToTimeOfDateEndDay[3] = 0;
 			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateStart, 0));
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay,0));
+			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDateEndDay, 0));
 		}
 		return ret;
 	}
+
 }

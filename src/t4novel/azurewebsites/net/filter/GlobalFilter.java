@@ -96,22 +96,33 @@ public class GlobalFilter implements Filter {
 		chain.doFilter(request, response);
 
 		// increasing the view
-		if (path != null && !path.startsWith("/resources"))
-			if (cnn == null) {
+		if (path != null && !path.startsWith("/resources") && !path.startsWith("/jsps")) {
+			if (ds == null) {
 				ds = (DataSource) request.getServletContext().getAttribute("datasource");
+			}
+			if(cnn == null) {
 				try {
 					cnn = ds.getConnection();
-					System.out.println("try to get connection ? at url : " + path);
-					ViewDAO viewDao = new ViewDAO(cnn);
-					int accid = account == null ? -1 : account.getId();
-
-					viewDao.inserNewView(accid, "global", -1);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
+			try {
+//				System.out.println("try to get connection ? at url : " + path);
+				ViewDAO viewDao = new ViewDAO(cnn);
+				int accid = account == null ? -1 : account.getId();
+
+				viewDao.inserNewView(accid, "global", -1);
+				cnn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
 		// end increasing the view
+		
+		
+		//ensure this is request path need, not mistaken close cnn of forward request
 		if (cnn != null && isNeedDbConnection) {
 			try {
 				cnn.close();
@@ -129,5 +140,4 @@ public class GlobalFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
-
 }

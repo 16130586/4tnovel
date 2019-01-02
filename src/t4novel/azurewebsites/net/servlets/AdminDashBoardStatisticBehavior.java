@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import t4novel.azurewebsites.net.DAO.StatisticDAO;
 import t4novel.azurewebsites.net.data.structure.Pair;
 import t4novel.azurewebsites.net.data.structure.Tripple;
+import t4novel.azurewebsites.net.utils.DateExporter;
 import t4novel.azurewebsites.net.utils.EnumAdapterFactory;
 
 @WebServlet("/manage/admin/statistics/behavior")
@@ -47,77 +48,90 @@ public class AdminDashBoardStatisticBehavior extends HttpServlet {
 		Type type;
 
 		LocalDate currenVnesDate = LocalDate.now(ZoneId.of("Asia/Ho_Chi_Minh"));
-		
-		LocalDate startDate = null , endDate = null;
+
+		LocalDate startDate = null, endDate = null;
 		// start validation logic of start and end date
-		if(rawStartDate == null || rawEndDate == null) {
+			// default choice
+		if (rawStartDate == null || rawEndDate == null) {
 			rawStartDate = rawEndDate = currenVnesDate.format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 			startDate = endDate = currenVnesDate;
 		}
+		// end default choice
 		
-		if(startDate == null || endDate == null) {
-			startDate = extractDate(rawStartDate);
-			endDate = extractDate(rawEndDate);
+		// extract raw date to comparable date
+		if (startDate == null || endDate == null) {
+			startDate = DateExporter.extractDate(rawStartDate);
+			endDate = DateExporter.extractDate(rawEndDate);
 		}
-		if(endDate.compareTo(currenVnesDate) > 0) {
+		// end extract raw date
+		
+		if (endDate.compareTo(currenVnesDate) > 0) {
 			endDate = currenVnesDate;
 			rawEndDate = endDate.format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 		}
-		if(startDate.compareTo(endDate) > 0) {
+		if (startDate.compareTo(endDate) > 0) {
 			startDate = endDate;
 			rawStartDate = startDate.format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 		}
-		//end validation logic for start and end date
-		
+		// end validation logic for start and end date
+
 		statisticDao = new StatisticDAO(cnn);
 		try {
+			List<Pair<Integer[], Integer>> overviewViewBehaviorData , detailOverLike, detailOverFollow;
+			List<Tripple<Integer[], Integer, Integer>> detailViewBehaviorData;
+			String jsonOverviewViewBehavior , jsonDetailViewBehavior , jsonDetailOverLike , jsonDetailOverFollow;
 			DateTimeFormatter fitToDBQueryFmter = DateTimeFormatter.ofPattern("MM-dd-YYYY");
+			
+			// reformat for the using of query
 			String fitStartDate = startDate.format(fitToDBQueryFmter);
 			String fitEndDate = endDate.plusDays(1).format(fitToDBQueryFmter);
-			List<Pair<Integer[], Integer>> overviewViewBehaviorData = statisticDao
+			
+			//end format
+			
+			// loading raw data
+			 overviewViewBehaviorData = statisticDao
 					.statisticOverViewViewBehavior(fitStartDate, fitEndDate);
 
-			type = new TypeToken<List<Pair<Integer[], Integer>>>() {
+			 detailViewBehaviorData = statisticDao
+						.statisticDetailViewBehavior(fitStartDate, fitEndDate);
+			 
+			 detailOverLike = statisticDao.statisticDetailOverLike(fitStartDate,
+						fitEndDate);
+			 
+			 detailOverFollow = statisticDao.statisticDetailOverFollow(fitStartDate,
+						fitEndDate);
+			 
+			// end loading raw data
+			 
+			 // start parsing to json for the chart's input
+			 type = new TypeToken<List<Pair<Integer[], Integer>>>() {
 			}.getType();
-			String jsonOverviewViewBehavior = gson.toJson(overviewViewBehaviorData, type);
-
-			List<Tripple<Integer[], Integer, Integer>> detailViewBehaviorData = statisticDao
-					.statisticDetailViewBehavior(fitStartDate, fitEndDate);
+			
+			jsonOverviewViewBehavior = gson.toJson(overviewViewBehaviorData, type);
+			jsonDetailOverLike = gson.toJson(detailOverLike, type);
+			jsonDetailOverFollow = gson.toJson(detailOverFollow, type);
+		
+			
 			type = new TypeToken<List<Tripple<Integer[], Integer, Integer>>>() {
 			}.getType();
-			String jsonDetailViewBehavior = gson.toJson(detailViewBehaviorData, type);
-
-			List<Pair<Integer[], Integer>> detailOverLike = statisticDao.statisticDetailOverLike(fitStartDate,
-					fitEndDate);
-			type = new TypeToken<List<Pair<Integer[], Integer>>>() {
-			}.getType();
-			String jsonDetailOverLike = gson.toJson(detailOverLike, type);
-
-			List<Pair<Integer[], Integer>> detailOverFollow = statisticDao.statisticDetailOverFollow(fitStartDate,
-					fitEndDate);
-			String jsonDetailOverFollow = gson.toJson(detailOverFollow, type);
-
+			jsonDetailViewBehavior = gson.toJson(detailViewBehaviorData, type);
+			// end
+			
+			//passing json to chart on the view
 			request.setAttribute("dataOverviewViewBehavior", jsonOverviewViewBehavior);
 			request.setAttribute("dataDetailViewBehavior", jsonDetailViewBehavior);
 			request.setAttribute("dataDetailOverLike", jsonDetailOverLike);
 			request.setAttribute("dataDetailOverFollow", jsonDetailOverFollow);
-		
-		
+			
+			// end
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		request.setAttribute("startDate", rawStartDate);
 		request.setAttribute("endDate", rawEndDate);
 		request.getServletContext().getRequestDispatcher("/jsps/pages/admin-new.statistic.user-behavior.jsp")
 				.forward(request, response);
-	}
-	
-
-	// YYYY-MM-dd for input format
-	private LocalDate extractDate(String src) {
-		return LocalDate.of(Integer.parseInt(src.substring(0, 4)), Integer.parseInt(src.substring(5, 7)),
-				Integer.parseInt(src.substring(8, 10)));
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
