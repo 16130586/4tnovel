@@ -102,13 +102,16 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			jsonDetailAccountOverDays = gson.toJson(detailAccountOverDays, type);
 
 			// end
-
+			System.out.println(jsonDetailNovelOverDays);
+			System.out.println(jsonDetailChapOverDays);
+			System.out.println(jsonDetailAccountOverDays);
+			
 			// passing json to chart on the view
 			request.setAttribute("dataDetailNovelOverDays", jsonDetailNovelOverDays);
 			request.setAttribute("dataDetailChapOverDays", jsonDetailChapOverDays);
 			request.setAttribute("dataDetailAccountOverDays", jsonDetailAccountOverDays);
-			System.out.println(jsonDetailChapOverDays);
-			System.out.println(jsonDetailAccountOverDays);
+			
+			
 			// end
 		} catch (Exception e) {
 			e.printStackTrace();

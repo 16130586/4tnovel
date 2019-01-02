@@ -313,7 +313,7 @@
 		}
 		document.addEventListener("DOMContentLoaded", function() {
 			google.charts.load('current', {packages: ['corechart', 'line']});
-			
+			google.charts.load('current', {packages: ['corechart', 'bar']});
 			google.charts.setOnLoadCallback(drawNewNovelChart);
 			google.charts.setOnLoadCallback(drawNewChapChart);
 			google.charts.setOnLoadCallback(drawNewAccountChart);
@@ -324,9 +324,8 @@
 			      var data = new google.visualization.DataTable();
 			      data.addColumn('date', 'Ngày');
 			      data.addColumn('number', 'Số truyện');
-
-			      data.addRows(extractOnPairJSONDate(${dataDetailNovelOverDays}));
-
+				  var arrayDateTable = extractOnPairJSONDate(${dataDetailNovelOverDays});
+			      data.addRows(arrayDateTable);
 			      var options = {
 			        hAxis: {
 			          title: 'Ngày'
@@ -335,8 +334,12 @@
 			          title: 'Số lượng truyện'
 			        }
 			      };
-
-			      var chart = new google.visualization.LineChart(document.getElementById('newNovelChart'));
+				 var chart = null;
+			     if(arrayDateTable.length <= 4){
+			    	 chart = new google.visualization.ColumnChart(document.getElementById('newNovelChart'));
+			     }
+				 if(arrayDateTable.length > 4)
+				  	chart = new google.visualization.LineChart(document.getElementById('newNovelChart'));
 
 			      chart.draw(data, options);
 			    }
