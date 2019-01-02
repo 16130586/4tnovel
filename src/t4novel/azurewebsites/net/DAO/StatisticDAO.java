@@ -355,16 +355,18 @@ public class StatisticDAO {
 	}
 	
 	public List<Pair<String, Integer>> statisticThreadOverDays(String startDate, String endDate) throws SQLException{
-		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN " + 
-				"WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";	
+		String query = "SELECT FORMAT(THREAD.DATEUP,'yyyy-MM-dd') as _day, COUNT(THREAD.DATEUP) as _novels FROM THREAD " + 
+				"WHERE THREAD.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(THREAD.DATEUP,'yyyy-MM-dd')";	
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		List<Pair<String, Integer>> ret = new LinkedList<>();
 
 		stmt.setString(1, startDate);
 		stmt.setString(2, endDate);
 		ResultSet rs = stmt.executeQuery();
+		System.out.println("aaas");
 		
 		while(rs.next()) {
+			System.out.println(rs.getString(1));
 			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
 		

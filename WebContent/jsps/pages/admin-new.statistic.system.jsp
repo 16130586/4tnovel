@@ -394,10 +394,7 @@
 			      data.addColumn('date', 'Ngày');
 			      data.addColumn('number', 'Số bài thảo luận');
 
-			      data.addRows([
-			        [new Date(2019-1-1),100],
-			        [new Date(2019-1-3),200]
-			      ]);
+			      data.addRows(extractOnPairJSONDate(${dataDetailThreadOverDays}));
 
 			      var options = {
 			        hAxis: {
