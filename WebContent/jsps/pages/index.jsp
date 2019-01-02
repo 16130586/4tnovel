@@ -42,28 +42,30 @@
 		<c:set var="chap" value="${currentRead }"/>
 		<c:set var="novel" value="${chap.novelOwner }"/>
 		<section class="section section-current-read">
-			<h2 class="section__title">Current read</h2>
+			<h2 class="section__title">Đang đọc</h2>
 				<div class="section__content">
 					<%@include file="/jsps/components/_card-novel.jsp"%>
 				</div>
 		</section>
 		</c:if>
-
+		
+		<c:if test="${not empty topFiveNewestThreads }">
 		<section class="section section-threads">
-			<h2 class="section__title">Threads</h2>
+			<h2 class="section__title">Thảo luận</h2>
 			<div class="section__content">
-				<!-- //c:forEach var="thread" items="topFiveNewestThreads" -->
-				<%@include file="/jsps/components/_index.section.content.thread.jsp"%>
+				<c:forEach var="thread" items="${topFiveNewestThreads }">
+					<%@include file="/jsps/components/_index.section.content.thread.jsp"%>
+				</c:forEach>
 			</div>
 		</section>
+		</c:if>
 		
-		<c:if test="${ not empty newTrends }">
+		<c:if test="${ not empty newTrendingNovels }">
 		<section class="section section-new-trending">
-			<h2 class="section__title">New trending</h2>
+			<h2 class="section__title">Tác phẩm mới nổi</h2>
 			<div class="section__content">
-				<!-- //c:forEach var="novel" items="newTrendingNovels" -->
 				<ul class="vertical-menu--showcase">
-					<c:forEach begin="1" end="5">
+					<c:forEach var="novel" items="${newTrendingNovels }">
 						<li class="menu-item u-margin-bottom--2rem"><%@ include
 								file="/jsps/components/_card-novel.jsp"%>
 						</li>
@@ -73,13 +75,12 @@
 		</section>
 		</c:if>
 		
-		<c:if test="${not empty weeklyTop }">
+		<c:if test="${not empty weeklyTopNovels }">
 		<section class="section section-weekly-top">
-			<h2 class="section__title">Weekly top</h2>
+			<h2 class="section__title">Tác phẩm hot trong tuần</h2>
 			<div class="section__content">
-				<!-- //c:forEach var="novel" items="weeklyTopNovels" -->
 				<ul class="vertical-menu--showcase">
-					<c:forEach begin="1" end="3">
+					<c:forEach var="novel" items="${weeklyTopNovels }">
 						<li class="menu-item u-margin-bottom--2rem"><%@ include
 								file="/jsps/components/_card-novel.jsp"%>
 						</li>
@@ -90,9 +91,8 @@
 		</c:if>
 		
 		<section class="section section-lastest-update">
-			<h2 class="section__title">Lastest update</h2>
+			<h2 class="section__title">Tác phẩm mới cập nhật</h2>
 			<div class="section__content" >
-				<!-- c:forEach var="novel" items="lastestUpdateNovels" -->
 				<ul id="lastestUpdateContent" class="vertical-menu--showcase">
 					<c:forEach var="chap" items="${newChaps }">
 					<c:set var="novel" value="${chap.novelOwner }"/>
@@ -103,25 +103,23 @@
 				</ul>
 			</div>
 			<div class="u-container-full--width u-align-center ">
-				<button id="loadMoreLastestUpdateBtn" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">Load more..
+				<button id="loadMoreLastestUpdateBtn" class="btn btn-info u-margin-bottom--2rem u-color-white u-margin-right--2rem">Xem thêm...
 					</button>
-				<a href="see2" class="btn btn-info u-margin-bottom--2rem u-color-white">See all</a>
+				<a href="see2" class="btn btn-info u-margin-bottom--2rem u-color-white">Xem tất cả</a>
 			</div>
 		</section>
 	</div>
 	<div class="right-container col-lg-4">
 		<section class="section section-hot-comments">
-			<h2 class="section__title">Hot comments</h2>
+			<h2 class="section__title">Bình luận nổi bật</h2>
 			<div class="section__content" id="hotCommentContent">
-				<!-- //c:forEch var="comment" items="comments" -->
-				<c:forEach var="comment" begin="1" end="5">
+				<c:forEach var="comment" items="${comments }">
 					<%@include
 						file="/jsps/components/_index.section.content.hot-comments.comment.jsp"%>
 				</c:forEach>
 			</div>
 			<div class="u-container-full--width u-align-center ">
-				<button id="loadMoreHotComments" class="btn btn-info u-margin-bottom--2rem u-color-white">5 interesting
-					comment</button>
+				<button id="loadMoreHotComments" class="btn btn-info u-margin-bottom--2rem u-color-white">Xem thêm...</button>
 			</div>
 		</section>
 	</div>

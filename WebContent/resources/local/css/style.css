@@ -220,7 +220,8 @@ input:-moz-placeholder {
 
 .u-disabled {
   cursor: default !important;
-  color: #afafad !important; }
+  color: #afafad !important;
+  pointer-events: none !important; }
 
 .u-rounded--tag {
   padding: 0 1rem;
