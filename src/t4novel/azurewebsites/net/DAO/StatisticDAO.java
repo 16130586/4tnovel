@@ -363,7 +363,6 @@ public class StatisticDAO {
 		stmt.setString(1, startDate);
 		stmt.setString(2, endDate);
 		ResultSet rs = stmt.executeQuery();
-		System.out.println("aaas");
 		
 		while(rs.next()) {
 			System.out.println(rs.getString(1));
