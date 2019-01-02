@@ -3,6 +3,7 @@ package t4novel.azurewebsites.net.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.InboxDAO;
 import t4novel.azurewebsites.net.DAO.LikeDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
+import t4novel.azurewebsites.net.DAO.ViewDAO;
 import t4novel.azurewebsites.net.models.Account;
 import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Novel;
@@ -118,7 +120,30 @@ public class IndexServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
+		
+		//  wtf is trending... load top 10 novel by view in week
+		ViewDAO viewDao = new ViewDAO(cnn);
+		List<Novel> newTrendingNovels = new LinkedList<>();
+		try {
+			for (Integer i : viewDao.getTopViewNovelsId(7, 0, 10)) {
+				newTrendingNovels.add(novelDao.getNovelById(i));
+			}
+			request.setAttribute("newTrendingNovels", newTrendingNovels);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// load top 10 novel by view in month
+		List<Novel> monthlyTopNovels = new LinkedList<>();
+		try {
+			for (Integer i : viewDao.getTopViewNovelsId(30, 0, 10)) {
+				monthlyTopNovels.add(novelDao.getNovelById(i));
+			}
+			request.setAttribute("monthlyTopNovels", monthlyTopNovels);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
 

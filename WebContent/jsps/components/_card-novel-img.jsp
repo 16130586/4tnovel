@@ -16,8 +16,10 @@
 		<h4 class="u-text-overflow--hidden" style="margin-bottom: .5rem">
 			<a href="detail?id=${novel.id }" title="${novel.name }" class="link">${novel.name }</a>
 		</h4>
+		<c:if test="${not empty chap }">
 		<h5 class="u-text-overflow--hidden" style="color: #43f2cc">
 			<a href="read?id=${chap.id }" title="${chap.title }" class="link">${chap.title }</a>
 		</h5>
+		</c:if>
 	</div>
 </div>

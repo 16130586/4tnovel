@@ -34,8 +34,9 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String rawStartDate = null;
-		String rawEndDate = null;
+		String rawStartDate = request.getParameter("startDate");
+		String rawEndDate = request.getParameter("endDate");
+		System.out.println(rawStartDate + " " + rawEndDate);
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 		StatisticDAO statisticDao;
@@ -50,7 +51,7 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 		LocalDate startDate = null, endDate = null;
 		// start validation logic of start and end date
 		// default choice
-		
+
 		if (rawStartDate == null || rawEndDate == null) {
 			rawStartDate = rawEndDate = currenVnesDate.format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 			startDate = endDate = currenVnesDate;
@@ -76,8 +77,9 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 
 		statisticDao = new StatisticDAO(cnn);
 		try {
-			List<Pair<String, Integer>> detailNovelOverDays, detailChapOverDays, detailAccountOverDays;
-			String jsonDetailNovelOverDays, jsonDetailChapOverDays, jsonDetailAccountOverDays;
+			List<Pair<String, Integer>> detailNovelOverDays, detailChapOverDays, detailAccountOverDays,
+					detailThreadOverDays;
+			String jsonDetailNovelOverDays, jsonDetailChapOverDays, jsonDetailAccountOverDays, jsonDetailThreadOverDays;
 			DateTimeFormatter fitToDBQueryFmter = DateTimeFormatter.ofPattern("MM-dd-YYYY");
 
 			// reformat for the using of query
@@ -90,6 +92,7 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			detailNovelOverDays = statisticDao.statisticNovelOverDays(fitStartDate, fitEndDate);
 			detailChapOverDays = statisticDao.statisticChapOverDays(fitStartDate, fitEndDate);
 			detailAccountOverDays = statisticDao.statisticAccountOverDays(fitStartDate, fitEndDate);
+			detailThreadOverDays = statisticDao.statisticThreadOverDays(fitStartDate, fitEndDate);
 
 			// end loading raw data
 
@@ -100,18 +103,21 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			jsonDetailNovelOverDays = gson.toJson(detailNovelOverDays, type);
 			jsonDetailChapOverDays = gson.toJson(detailChapOverDays, type);
 			jsonDetailAccountOverDays = gson.toJson(detailAccountOverDays, type);
+			jsonDetailThreadOverDays = gson.toJson(detailThreadOverDays, type);
 
 			// end
 			System.out.println(jsonDetailNovelOverDays);
 			System.out.println(jsonDetailChapOverDays);
 			System.out.println(jsonDetailAccountOverDays);
+			System.out.println(jsonDetailThreadOverDays);
 			
 			// passing json to chart on the view
 			request.setAttribute("dataDetailNovelOverDays", jsonDetailNovelOverDays);
 			request.setAttribute("dataDetailChapOverDays", jsonDetailChapOverDays);
 			request.setAttribute("dataDetailAccountOverDays", jsonDetailAccountOverDays);
+			request.setAttribute("dataDetailThreadOverDays", jsonDetailThreadOverDays);
 			
-			
+
 			// end
 		} catch (Exception e) {
 			e.printStackTrace();

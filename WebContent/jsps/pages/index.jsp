@@ -63,29 +63,23 @@
 		<c:if test="${ not empty newTrendingNovels }">
 		<section class="section section-new-trending">
 			<h2 class="section__title">Tác phẩm mới nổi</h2>
-			<div class="section__content">
-				<ul class="vertical-menu--showcase">
-					<c:forEach var="novel" items="${newTrendingNovels }">
-						<li class="menu-item u-margin-bottom--2rem"><%@ include
-								file="/jsps/components/_card-novel.jsp"%>
-						</li>
-					</c:forEach>
-				</ul>
+			<div class="section__content u-align-center" style="background-color: #f9f9f9">
+				<c:set var="chap" value="${null }"/>
+				<c:forEach var="novel" items="${newTrendingNovels }">
+					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
+				</c:forEach>
 			</div>
 		</section>
 		</c:if>
 		
-		<c:if test="${not empty weeklyTopNovels }">
+		<c:if test="${not empty monthlyTopNovels }">
 		<section class="section section-weekly-top">
-			<h2 class="section__title">Tác phẩm hot trong tuần</h2>
-			<div class="section__content">
-				<ul class="vertical-menu--showcase">
-					<c:forEach var="novel" items="${weeklyTopNovels }">
-						<li class="menu-item u-margin-bottom--2rem"><%@ include
-								file="/jsps/components/_card-novel.jsp"%>
-						</li>
-					</c:forEach>
-				</ul>
+			<h2 class="section__title">Tác phẩm nổi bật trong tháng</h2>
+			<div class="section__content u-align-center" style="background-color: #f9f9f9">
+				<c:set var="chap" value="${null }"/>
+				<c:forEach var="novel" items="${monthlyTopNovels }">
+					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
+				</c:forEach>
 			</div>
 		</section>
 		</c:if>
