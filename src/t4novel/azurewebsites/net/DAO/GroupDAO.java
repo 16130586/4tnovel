@@ -33,7 +33,6 @@ public class GroupDAO {
 			stmt.setInt(3, group.getOwner().getId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Insert group completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -54,12 +53,10 @@ public class GroupDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, groupID);
 			rs = stmt.executeQuery();
-			System.out.println("on loading all member of group " + groupID);
 			while (rs.next()) {
 				Account account = new Account();
 				account.setId(rs.getInt(1));
 				listAccount.add(account);
-				System.out.println(account.getId() + " in group " + groupID);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,7 +107,6 @@ public class GroupDAO {
 			stmt.setInt(2, group.getId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Insert member completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -132,7 +128,6 @@ public class GroupDAO {
 			stmt.setInt(2, group.getId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Remove member completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -157,7 +152,6 @@ public class GroupDAO {
 				removeAllMemberFromGroup(groupID);
 				deleteGroupByID(groupID);
 			}
-			System.out.println("Delete groups by owner completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -178,7 +172,6 @@ public class GroupDAO {
 			stmt.setInt(1, groupID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Remove all member completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -200,10 +193,8 @@ public class GroupDAO {
 			stmt.setInt(2, groupID);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				System.out.println("Check existed completed");
 				return true;
 			}
-			System.out.println("Check existed completed");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -225,7 +216,6 @@ public class GroupDAO {
 			stmt.setInt(1, groupID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Delete group completed");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

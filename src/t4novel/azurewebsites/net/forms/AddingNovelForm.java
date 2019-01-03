@@ -91,9 +91,9 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "TÃªn truyá»‡n khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
+			errors.put("titleEmpty", "Tên truyện không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "HÃ£y xÃ³a dáº¥u khoáº£ng tráº¯ng vÃ  Ä‘iá»�n tÃªn truyá»‡n!");
+			errors.put("titleAllSpace", "Tên truyện không được là ký tự trắng!");
 		} else {
 			this.title = title.trim();
 		}
@@ -105,9 +105,9 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setDescription(String description) {
 		if (description == null || description.isEmpty()) {
-			errors.put("descriptionEmpty", "MÃ´ táº£ khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
+			errors.put("descriptionEmpty", "Mô tả không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(description)) {
-			errors.put("descriptionAllSpace", "XÃ³a táº¥t cáº£ dáº¥u khoáº£ng tráº¯ng vÃ  Ä‘iá»�n vÃ o mÃ´ táº£!");
+			errors.put("descriptionAllSpace", "Mô tả không được là ký tự trắng!");
 		} else {
 			this.description = description.trim();
 		}
@@ -143,7 +143,7 @@ public class AddingNovelForm extends AbstractMappingForm {
 
 	public void setGenres(List<NovelGenre> genres) {
 		if (genres == null || genres.isEmpty()) {
-			errors.put("genreEmpty", "Pháº£i chá»�n Ã­t nháº¥t má»™t thá»ƒ loáº¡i!");
+			errors.put("genreEmpty", "Phải chọn thể loại!");
 		} else
 			this.genres = genres;
 	}

@@ -66,7 +66,6 @@ public class GenreDAO {
 		String query = "insert into GENRE (IDNOVEL, VALUE) values (?, ?)";
 		try {
 			cnn.setAutoCommit(false);
-			System.out.println(idNovel  + " on insert new genre");
 			stmt = cnn.prepareStatement(query);
 			stmt.setInt(1, idNovel);
 

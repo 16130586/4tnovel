@@ -12,7 +12,6 @@ public class NextIdGenrator {
 	}
 
 	public synchronized int nextAutoIncrementId(Connection cnn) throws Exception {
-		System.out.println("table name " + tableName);
 		int result = -1;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

@@ -36,11 +36,9 @@ public class NotificationAjaxServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("getting ajax");
 		try {
 
 			int requestingPage = Integer.parseInt(request.getParameter("page-number"));
-			System.out.println("request page : " + requestingPage + " on notifycation inbox");
 			Account hostAcc = (Account) request.getSession().getAttribute("account");
 			Connection cnn = (Connection) request.getAttribute("connection");
 			InboxDAO inboxDao = new InboxDAO(cnn);

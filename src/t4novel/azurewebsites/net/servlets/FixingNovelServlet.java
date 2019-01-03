@@ -50,7 +50,6 @@ public class FixingNovelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Account account = (Account) request.getSession().getAttribute("account");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		int novelID = Integer.parseInt(request.getParameter("id-novel"));
 		Novel fixingNovel = null;
@@ -121,12 +120,9 @@ public class FixingNovelServlet extends HttpServlet {
 				if (fileImage.getInputStream().available() > 0) {
 					imgDAO.updateImage(fileImage.getInputStream() , oldNovel.getCoverId());
 					fixedNovel.setCoverId(oldNovel.getCoverId());
-				} else {
-					System.out.println("null nha be oi!!!!! nho them anh khi sua lai");
 				}
 				// end new logic
 				oldNovel.update(fixedNovel);
-				System.out.println("oldnovel : " + oldNovel.getId() + " submit novel : " + fixedNovel.getId());
 				// update dtb
 				novelDAO.updateNovel(oldNovel);
 				novelDAO.updateGenres(oldNovel.getId(), oldNovel.getGenres(), genreDAO);

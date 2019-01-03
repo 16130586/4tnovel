@@ -44,7 +44,7 @@ public class ChangePasswordServlet extends HttpServlet {
 			}
 			// write to ram
 			request.getSession().setAttribute("account", account);
-			request.setAttribute("sucessed", "Changed password successfully!");
+			request.setAttribute("sucessed", "Đổi mật khẩu thành công!");
 			response.sendRedirect("manage");
 		}
 		// mapping loi toi user interface

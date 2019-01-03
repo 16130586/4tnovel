@@ -60,7 +60,7 @@ public class ChangeEmailServlet extends HttpServlet {
 			// write to ram
 			MailUtils.remove(account.getId());
 			request.getSession().setAttribute("account", account);
-			request.setAttribute("sucessed", "Changed email successfully!");
+			request.setAttribute("sucessed", "Đổi mail thành công!");
 			
 			response.sendRedirect("manage");
 			

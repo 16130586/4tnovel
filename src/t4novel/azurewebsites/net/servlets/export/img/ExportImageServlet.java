@@ -57,7 +57,6 @@ public class ExportImageServlet extends HttpServlet {
 
 				// case 1 , still good then set 304
 				if (validateOldDataInClientCache(request, dbEtag, dbDateUp)) {
-					System.out.println(imgId + " is still good!");
 					response.setHeader("etag", dbEtag);
 					response.setStatus(304);
 					return;
@@ -102,10 +101,6 @@ public class ExportImageServlet extends HttpServlet {
 		if (clientModifiedSince == null || clientNoneMatch == null)
 			return false;
 		// checking di chu
-		System.out.println(dbEtag + " : of img " + imgId);
-		System.out.println("dbTag equal clientNoneMatch ? " + clientNoneMatch.equals(dbEtag) + " imgId: " + imgId);
-		System.out.println("clientModified <= dbLastModified ? " + (Long.compare(clientModified, dbLastModified) <= 0)
-				+ " imgId: " + imgId);
 		return clientNoneMatch.equals(dbEtag) && Long.compare(clientModified, dbLastModified) <= 0;
 	}
 

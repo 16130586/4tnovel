@@ -29,7 +29,6 @@ public class CommentDAO {
 			stmt.setDate(3, new Date(comment.getTime().getTime()));
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Insert comment completed!");
 		} catch (SQLException e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -109,7 +108,6 @@ public class CommentDAO {
 			stmt.setInt(2, comment.getId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Update comment completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -130,7 +128,6 @@ public class CommentDAO {
 			stmt.setInt(1, commentID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -151,7 +148,6 @@ public class CommentDAO {
 			stmt.setInt(1, userID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Delete comment completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

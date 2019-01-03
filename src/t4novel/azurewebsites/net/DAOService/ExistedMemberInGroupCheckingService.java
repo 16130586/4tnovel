@@ -14,7 +14,6 @@ public class ExistedMemberInGroupCheckingService extends BaseDaoService implemen
 	public boolean check(String idAcc, String idGroup, String onQuery) {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		System.out.println("Checking");
 		
 		try {
 			stmt = cnn.prepareStatement(onQuery);

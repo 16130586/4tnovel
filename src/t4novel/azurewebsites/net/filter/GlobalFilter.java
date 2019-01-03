@@ -69,7 +69,6 @@ public class GlobalFilter implements Filter {
 			isAllowedToAccess = SercureURLEngine.isOnAllowedUrl(account.getRole(), path);
 		}
 		if (isNeedLoginUrl && !isAllowedToAccess) {
-			System.out.println("sedding on bad request! " + path);
 			servletResponse.sendError(404);
 			return;
 		}
@@ -82,10 +81,8 @@ public class GlobalFilter implements Filter {
 				cnn = ds.getConnection();
 				servletRequest.setAttribute("connection", cnn);
 			} catch (NoSuchElementException e) {
-				System.out.println(servletRequest.getRequestURI() + "waiting too long!");
 				e.printStackTrace();
 			} catch (SQLException e) {
-				System.out.println("Some error then send code 500 " + e.getMessage());
 				e.printStackTrace();
 				((HttpServletResponse) response).sendError(408);
 				return;
@@ -108,7 +105,6 @@ public class GlobalFilter implements Filter {
 				}
 			}
 			try {
-//				System.out.println("try to get connection ? at url : " + path);
 				ViewDAO viewDao = new ViewDAO(cnn);
 				int accid = account == null ? -1 : account.getId();
 

@@ -33,9 +33,6 @@ public class FollowServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		for (Entry<String, String[]> e : request.getParameterMap().entrySet()) {
-			System.out.println(e.getKey() + " " + Arrays.toString(e.getValue()));
-		}
 		String action = request.getParameter("action");
 		if (action == null) {
 			response.sendError(404);
@@ -46,7 +43,7 @@ public class FollowServlet extends HttpServlet {
 		try {
 			targetId = Integer.parseInt(request.getParameter("targetId"));
 		}catch (Exception e) {
-			System.out.println("not in form of target id");
+			e.printStackTrace();
 			response.sendError(404);
 			return;
 		}
@@ -57,26 +54,22 @@ public class FollowServlet extends HttpServlet {
 		if ("subcribe".equals(action) && "novel".equals(stream)) {
 			followDao.subcribe(stream , targetId , hostAcc.getId());
 			hostAcc.followNovel(targetId);
-			System.out.println(hostAcc + " follow novel " + targetId );
 		}
 		if ("subcribe".equals(action) && "thread".equals(stream)) {
 			followDao.subcribe(stream , targetId , hostAcc.getId());
 			hostAcc.unFollowThread(targetId);
-			System.out.println(hostAcc + " follow thread" + targetId );
 		}
 		if ("unSubcribe".equals(action) && "novel".equals(stream)) {
 			followDao.unSubcribe(stream , targetId , hostAcc.getId());
 			hostAcc.unFollowNovel(targetId);
-			System.out.println(hostAcc + " unfollow novel " + targetId );
 		}
 		if ("unSubcribe".equals(action) && "thread".equals(stream)) {
 			followDao.unSubcribe(stream , targetId , hostAcc.getId());
 			hostAcc.unFollowThread(targetId);
-			System.out.println(hostAcc + " unfollow thread " + targetId );
 		}
 		}catch (Exception e) {
-			System.out.println(e.getMessage());
 			response.sendError(500);
+			e.printStackTrace();
 			return;
 		}
 		String url = "";

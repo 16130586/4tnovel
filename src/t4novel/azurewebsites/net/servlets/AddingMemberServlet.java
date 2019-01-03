@@ -46,7 +46,6 @@ public class AddingMemberServlet extends HttpServlet {
 	private void blindOnwerGroups(HttpServletRequest request) {
 		Account hostAccount = (Account) request.getSession().getAttribute("account");
 		request.setAttribute("ownerGroups", hostAccount.getOwnerGroups());
-		System.out.println("forward and reset owner groups");
 	}
 
 	/**
@@ -78,8 +77,6 @@ public class AddingMemberServlet extends HttpServlet {
 			Account targetAccount = new Account(targetAccountId),
 					hostAccount = (Account) request.getSession().getAttribute("account");
 			Group targetGroup = hostAccount.getGroup(rootGroupId);
-			System.out
-					.println(rootGroupId + " " + hostAccount.getUserName() + " target group " + targetGroup.getName());
 			// write to db
 			try {
 				groupDao.insertMemberToGroup(targetAccount, targetGroup);
@@ -88,7 +85,7 @@ public class AddingMemberServlet extends HttpServlet {
 			}
 			// write to ram
 			targetGroup.addMember(targetAccount);
-			request.setAttribute("sucessed", "Adding a new member to a group is done!");
+			request.setAttribute("sucessed", "Đã thành viên vào nhóm!");
 
 		} else {
 			form.applyErrorsToUI(request);

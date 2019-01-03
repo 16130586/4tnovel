@@ -27,7 +27,6 @@ public class ThreadDAO {
 			stmt.setInt(3, thread.getAccountOwnerId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Insert thread completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -109,7 +108,6 @@ public class ThreadDAO {
 			stmt.executeUpdate();
 			stmt.close();
 			cnn.commit();
-			System.out.println("Update thread completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -159,7 +157,6 @@ public class ThreadDAO {
 			stmt.executeUpdate();
 			stmt.close();
 			cnn.commit();
-			System.out.println("Delete thread completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

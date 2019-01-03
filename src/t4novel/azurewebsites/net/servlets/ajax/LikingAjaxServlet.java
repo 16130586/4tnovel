@@ -65,7 +65,6 @@ public class LikingAjaxServlet extends HttpServlet {
 					PrintWriter netOut = new PrintWriter(response.getOutputStream(), true);
 					netOut.println(newestLike + "");
 					netOut.flush();
-					System.out.println("accId: "  + ac.getId() + " " + action + " then newest like: " + newestLike);
 					netOut.close();
 				}
 			} catch (Exception e) {

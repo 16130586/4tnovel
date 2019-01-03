@@ -98,13 +98,10 @@ public class AdminDashBoardCensoring extends HttpServlet {
 					msgBuilder = MessageBuilderFactory.create(censorEntity);
 					msg = msgBuilder.getData();
 					NotifycationSystem.notifyToListUser(followersId, msg);
-					System.out.println("notify to follower: with ownertarget : " + censorEntity.getOwnerTargetId()
-							+ " with msg \n " + msg.getContent());
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		System.out.println(isAccept);
 		doGet(request, response);
 	}
 

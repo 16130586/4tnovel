@@ -69,9 +69,6 @@ public class AdminDashBoardChaps extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
-		}
 		doGet(request, response);
 	}
 }

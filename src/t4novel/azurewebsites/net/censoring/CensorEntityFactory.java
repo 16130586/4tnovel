@@ -15,10 +15,8 @@ public class CensorEntityFactory {
 	public CensorEntity create(ResultSet rs, Connection cnn) throws SQLException {
 		CensorEntity ret = null;
 		String stream = rs.getString("STREAM").trim();
-		System.out.println("STREAM " + stream);
 		if ("chapter".equals(stream)) {
 			try {
-				System.out.println("come here");
 				ret = new ChapDAO(cnn).getChapByID(rs.getInt("TARGET_ID"));
 			} catch (Exception e) {
 				e.printStackTrace();

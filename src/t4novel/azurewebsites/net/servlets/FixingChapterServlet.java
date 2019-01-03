@@ -76,7 +76,6 @@ public class FixingChapterServlet extends HttpServlet {
 //		} else {
 			AbstractMappingForm form = new AddingChapterForm(request);
 			String admin = request.getParameter("admin");
-			System.out.println(admin);
 			if (!form.isOnError()) {
 				Chap chapter = (Chap) form.getMappingData();
 				try {
@@ -87,7 +86,6 @@ public class FixingChapterServlet extends HttpServlet {
 						Account account = (Account) request.getSession().getAttribute("account");
 						account.setOwnerChap(chapter);
 						Chap fixingChap = account.getOwnerChap(chapID);
-						System.out.println("title : " + fixingChap.getTitle());
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -97,11 +95,9 @@ public class FixingChapterServlet extends HttpServlet {
 			}
 			if (!"1".equals(admin)) {
 				response.sendRedirect("manage/account/dashboard-chaps");
-				System.out.println("not admin");
 			}
 			else {
 				response.sendRedirect("manage/admin/dashboard-chaps");
-				System.out.println("admin");
 			}
 		}
 //	}

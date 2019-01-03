@@ -46,7 +46,6 @@ public class FollowDAO {
 			ids.add(rs.getInt("TARGET_ID"));
 		}
 		for(Integer i : ids)
-			System.out.println("account : " + accountId +  "  follows " + i);
 		stmt.close();
 		return ids;
 	}

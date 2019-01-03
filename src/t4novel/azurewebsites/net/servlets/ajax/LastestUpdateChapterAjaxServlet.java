@@ -38,7 +38,6 @@ public class LastestUpdateChapterAjaxServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			int pageNumber = Integer.parseInt(request.getParameter("page-number"));
-			System.out.println("somebody want to get more at page : " + pageNumber);
 
 			Connection cnn = (Connection) request.getAttribute("connection");
 			List<Chap> newChaps = null;
@@ -68,7 +67,7 @@ public class LastestUpdateChapterAjaxServlet extends HttpServlet {
 			netOut.println(json);
 			netOut.close();
 		} catch (NumberFormatException e) {
-			System.out.println("bad requesting next lastest update page");
+			e.printStackTrace();
 			response.sendError(404);
 			return;
 		} catch (Exception e) {

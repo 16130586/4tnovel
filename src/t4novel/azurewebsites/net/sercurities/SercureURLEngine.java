@@ -39,7 +39,6 @@ public class SercureURLEngine {
 			e.printStackTrace();
 		}
 		if (doc == null) {
-			System.out.println("cannot loading url-sercurity Engine then shutting down server");
 			System.exit(1);
 		}
 

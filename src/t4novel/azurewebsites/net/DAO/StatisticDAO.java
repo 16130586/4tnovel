@@ -364,7 +364,6 @@ public class StatisticDAO {
 		ResultSet rs = stmt.executeQuery();
 
 		while (rs.next()) {
-			System.out.println(rs.getString(1));
 			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
 

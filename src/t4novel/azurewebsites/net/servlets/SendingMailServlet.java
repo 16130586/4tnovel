@@ -54,7 +54,6 @@ public class SendingMailServlet extends HttpServlet {
 			MailUtils.remember(hostAccount.getId(), verifyCode);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			System.out.println("chua cau hinh init param cho sendingMail domain trong xml");
 			onError = true;
 		} catch (MessagingException e) {
 			e.printStackTrace();

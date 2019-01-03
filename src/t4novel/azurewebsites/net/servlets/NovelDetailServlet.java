@@ -43,7 +43,6 @@ public class NovelDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("detail doGet");
 		int novelId = -1;
 		try {
 			novelId = Integer.parseInt(request.getParameter("id"));
@@ -100,7 +99,6 @@ public class NovelDetailServlet extends HttpServlet {
 			request.setAttribute("isLikeThisNovel", isLikeThisNovel);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
 			response.setStatus(500);
 			response.sendError(500);
 			return;

@@ -43,9 +43,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	public void setTitle(String title) {
 		if (title == null || title.isEmpty()) {
-			errors.put("titleEmpty", "TÃªn chÆ°Æ¡ng khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
+			errors.put("titleEmpty", "Tên chương không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(title)) {
-			errors.put("titleAllSpace", "XÃ³a táº¥t cáº£ khoáº£ng tráº¯ng vÃ  Ä‘iá»�n tÃªn chÆ°Æ¡ng!");
+			errors.put("titleAllSpace", "Tên chương không được là kí tự trắng!");
 		} else {
 			this.title = title.trim();
 		}
@@ -57,9 +57,9 @@ public class AddingChapterForm extends AbstractMappingForm {
 
 	public void setContent(String content) {
 		if (content == null || content.isEmpty()) {
-			errors.put("contentEmpty", "Ná»™i dung chÆ°Æ¡ng khÃ´ng Ä‘Æ°á»£c bá»� trá»‘ng!");
+			errors.put("contentEmpty", "Nội dung không được bỏ trống!");
 		} else if (StringUtil.isAllSpace(content)) {
-			errors.put("contentAllSpace", "XÃ³a táº¥t cáº£ khoáº£ng tráº¯ng vÃ  Ä‘iá»�n ná»™i dung chÆ°Æ¡ng!");
+			errors.put("contentAllSpace", "Nội dung không được là kí tự trắng!");
 		} else {
 			this.content = content.trim();
 		}

@@ -33,7 +33,6 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 
 	@Override
 	public void contextInitialized(ServletContextEvent ev) {
-		System.out.println("server loading");
 		ContextHelper.setContext(ev.getServletContext());
 
 		SercureURLEngine.loadURLPatterns(ev.getServletContext().getRealPath(URL_SERCURITY_PATH));
@@ -50,7 +49,6 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 			//
 			int totalNovels = novelDao.getTotalNovels(null);
 			int totalChaps = chapDao.getTotalChaps(null);
-			System.out.println(totalChaps + " on life cicle");
 			//
 			ev.getServletContext().setAttribute("totalNovels", totalNovels);
 			ev.getServletContext().setAttribute("totalChaps", totalChaps);
@@ -64,9 +62,7 @@ public class ConfigurationOnLifeContainerLifeCircle implements ServletContextLis
 		}
 		CensoringSystem.init();
 		boolean isUsingCensorintBot = new Boolean(ev.getServletContext().getInitParameter("isUsingCensoringBot"));
-		System.out.println("isUsingBot : " + isUsingCensorintBot);
 		long censoringPeriodOfBot = Long.parseLong(ev.getServletContext().getInitParameter("censoringPeriodOfBot"));
-		System.out.println("period bot: " + censoringPeriodOfBot);
 		if (isUsingCensorintBot) {
 			CensoringSystem.getSystem()
 					.setAutoCensoringBot(new SimpleCensoringBot(CensoringSystem.getSystem(), censoringPeriodOfBot));

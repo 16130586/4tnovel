@@ -87,9 +87,6 @@ public class FixingVolServlet extends HttpServlet {
 				}
 			} else {
 				form.applyErrorsToUI(request);
-				for(Entry<String, String> er : form.getErrors().entrySet()) {
-					System.out.println(er.getKey() + "  " + er.getValue());
-				}
 			}
 			if (!"1".equals(isAdmin))
 				response.sendRedirect("manage/account/dashboard-vols");

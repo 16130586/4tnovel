@@ -159,7 +159,6 @@ public class ImageDAO {
 			stmt = cnn.prepareStatement(query);
 			stmt.setBlob(1, inputStream);
 			stmt.setTimestamp(2, new Timestamp(new Date().getTime()));
-			System.out.println("cover id : " + coverId);
 			stmt.setInt(3, coverId);
 			stmt.executeUpdate();
 			IMGS_CACHE.remove(coverId);

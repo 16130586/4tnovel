@@ -65,7 +65,6 @@ public class AddingVolServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				ownNovel.setVols(volsOfCurrentNovel);
-				System.out.println("novel " + ownNovel.getName() + " have " + volsOfCurrentNovel.size() + " vols");
 			}
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-vol.jsp").forward(request, response);

@@ -33,7 +33,6 @@ public class ChangePasswordForm extends AbstractMappingForm {
 		if (currentPassword == null || currentPassword.isEmpty()) {
 			errors.put("currentPasswordEmpty", "Hãy điền vào mật khẩu hiện tại!");
 		} else {
-			// TODO write query to check correctPassword
 			boolean isCorrectPassword = this.currentAccount.getPassword().equals(currentPassword);
 			if (!isCorrectPassword) {
 				errors.put("currentPasswordInCorrect", "Sai mật khẩu hiện tại!");

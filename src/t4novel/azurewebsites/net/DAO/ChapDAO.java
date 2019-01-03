@@ -250,7 +250,6 @@ public class ChapDAO {
 			stmt.setInt(1, chapID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Delete chap completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

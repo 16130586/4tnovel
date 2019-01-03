@@ -25,8 +25,7 @@ public class LoginForm extends AbstractMappingForm {
 
 	public void setUserName(String username) {
 		if (username == null || username.isEmpty()) {
-			errors.put("userNameEmpty", "HÃ£y Ä‘iá»�n vÃ o tÃ i khoáº£n!");
-			System.out.println("emptyUsername");
+			errors.put("userNameEmpty", "Nhập vào tài khoản!");
 		} else {
 			this.userName = username;
 		}
@@ -38,7 +37,7 @@ public class LoginForm extends AbstractMappingForm {
 
 	public void setPassword(String password) {
 		if (password == null || password.isEmpty()) {
-			errors.put("passwordEmpty", "HÃ£y Ä‘iá»�n vÃ o máº­t kháº©u!");
+			errors.put("passwordEmpty", "Nhập vào mật khẩu!");
 		} else {
 			boolean existed = loginCheckingService.check(userName, password,
 					"SELECT ID FROM ACCOUNT WHERE USERNAME = ? AND PASSWORD = ?");
@@ -46,7 +45,7 @@ public class LoginForm extends AbstractMappingForm {
 			if (existed == true) {
 				this.password = password;
 			} else {
-				errors.put("passwordWrong", "Sai tÃ i khoáº£n hoáº·c máº­t kháº©u!");
+				errors.put("passwordWrong", "Sai tài khoản hoặc mật khẩu!");
 			}
 		}
 	}
