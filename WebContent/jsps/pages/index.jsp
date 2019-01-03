@@ -36,6 +36,7 @@
 </head>
 <body>
 	<%@ include file="/jsps/components/_header.jsp"%>
+	<div class="container">
 	<div class="row u-margin-top--2rem">
 		<div class="left-container col-lg-8">
 		<c:if test="${not empty currentRead }">
@@ -55,30 +56,6 @@
 			<div class="section__content">
 				<c:forEach var="thread" items="${topFiveNewestThreads }">
 					<%@include file="/jsps/components/_index.section.content.thread.jsp"%>
-				</c:forEach>
-			</div>
-		</section>
-		</c:if>
-		
-		<c:if test="${ not empty newTrendingNovels }">
-		<section class="section section-new-trending">
-			<h2 class="section__title">Tác phẩm mới nổi</h2>
-			<div class="section__content u-align-center" style="background-color: #f9f9f9">
-				<c:set var="chap" value="${null }"/>
-				<c:forEach var="novel" items="${newTrendingNovels }">
-					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
-				</c:forEach>
-			</div>
-		</section>
-		</c:if>
-		
-		<c:if test="${not empty monthlyTopNovels }">
-		<section class="section section-weekly-top">
-			<h2 class="section__title">Tác phẩm nổi bật trong tháng</h2>
-			<div class="section__content u-align-center" style="background-color: #f9f9f9">
-				<c:set var="chap" value="${null }"/>
-				<c:forEach var="novel" items="${monthlyTopNovels }">
-					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
 				</c:forEach>
 			</div>
 		</section>
@@ -104,6 +81,30 @@
 		</section>
 	</div>
 	<div class="right-container col-lg-4">
+		<c:if test="${ not empty newTrendingNovels }">
+		<section class="section section-new-trending">
+			<h2 class="section__title">Tác phẩm mới nổi</h2>
+			<div class="section__content u-align-center" style="background-color: #f9f9f9">
+				<c:set var="chap" value="${null }"/>
+				<c:forEach var="novel" items="${newTrendingNovels }">
+					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
+				</c:forEach>
+			</div>
+		</section>
+		</c:if>
+		
+		<c:if test="${not empty monthlyTopNovels }">
+		<section class="section section-weekly-top">
+			<h2 class="section__title">Tác phẩm nổi bật trong tháng</h2>
+			<div class="section__content u-align-center" style="background-color: #f9f9f9">
+				<c:set var="chap" value="${null }"/>
+				<c:forEach var="novel" items="${monthlyTopNovels }">
+					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
+				</c:forEach>
+			</div>
+		</section>
+		</c:if>
+		
 		<section class="section section-hot-comments">
 			<h2 class="section__title">Bình luận nổi bật</h2>
 			<div class="section__content" id="hotCommentContent">
@@ -118,7 +119,7 @@
 		</section>
 	</div>
 	</div>
-	
+	</div>
 	<%@include file="/jsps/components/_footer.jsp"%>
 </body>
 <script>
@@ -169,8 +170,8 @@
 		
 		cardNovel.className="row card-novel"
 		
-		left.className="col-lg-4 novel-img--box u-align-center"
-		right.className="col-lg-8 novel-info--box"
+		left.className="col-md-4 novel-img--box u-align-center"
+		right.className="col-md-8 novel-info--box"
 		btm.className="row u-width--full"
 		
 		
@@ -179,9 +180,7 @@
 		clickableImg.className="img-linking"
 		var img = document.createElement("img")
 		img.className="novel-hero"
-		img.style.width="80%"
-		img.style.height="100%"
-		img.style.padding="1.5rem"
+		img.style.width="200px"
 		img.src = location.origin.concat('${pageContext.request.contextPath}').concat('/resources/imgs?id=').concat(data.novelOwner.coverId)
 		clickableImg.appendChild(img)
 		left.appendChild(clickableImg)

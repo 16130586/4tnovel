@@ -121,11 +121,11 @@ public class IndexServlet extends HttpServlet {
 			}
 		}
 		
-		//  wtf is trending... load top 10 novel by view in week
+		//  wtf is trending... load top 6 novel by view in week
 		ViewDAO viewDao = new ViewDAO(cnn);
 		List<Novel> newTrendingNovels = new LinkedList<>();
 		try {
-			for (Integer i : viewDao.getTopViewNovelsId(7, 0, 10)) {
+			for (Integer i : viewDao.getTopViewNovelsId(7, 0, 6)) {
 				newTrendingNovels.add(novelDao.getNovelById(i));
 			}
 			request.setAttribute("newTrendingNovels", newTrendingNovels);
@@ -133,10 +133,10 @@ public class IndexServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		// load top 10 novel by view in month
+		// load top 6 novel by view in month
 		List<Novel> monthlyTopNovels = new LinkedList<>();
 		try {
-			for (Integer i : viewDao.getTopViewNovelsId(30, 0, 10)) {
+			for (Integer i : viewDao.getTopViewNovelsId(30, 0, 6)) {
 				monthlyTopNovels.add(novelDao.getNovelById(i));
 			}
 			request.setAttribute("monthlyTopNovels", monthlyTopNovels);

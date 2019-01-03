@@ -58,8 +58,8 @@ public class DeletingVolServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (isAdmin == null)
-			response.sendRedirect("myNovel");
+			response.sendRedirect("manage/account/dashboard-vols");
 		else
-			response.sendRedirect("manage/admin/dashboard-chaps");
+			response.sendRedirect("manage/admin/dashboard-vols");
 	}
 }

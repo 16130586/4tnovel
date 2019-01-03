@@ -1,8 +1,13 @@
 package t4novel.azurewebsites.net.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BookMarkFolder {
+public class BookMarkFolder implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -543784176214358276L;
 	private int id, accountOnwerID;
 	private List<BookMark> bookMarks;
 	private String title;

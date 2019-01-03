@@ -2,14 +2,17 @@
     background-color: #fafafa;
     &__top {
         height: auto;
-        width: 75vw;
         background-color: #f1f1f1;
         &-cover {
             padding-top: 2rem; 
             padding-bottom: 2rem;
-            text-align: right;
             .img-cover {
-                width: 100%; 
+            	margin: auto;
+                width: 230px; 
+                height: 325px;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
             }
         }
         &-info {
@@ -25,7 +28,6 @@
     }   
     
     &__body {
-        width: 75vw;
         padding-bottom: 2rem;
         padding-top: 2rem;
         .tab {

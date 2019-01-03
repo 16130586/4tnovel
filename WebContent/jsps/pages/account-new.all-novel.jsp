@@ -142,7 +142,6 @@
 																	</div>
 																	<div class="modal-footer">
 																	<form action="${pageContext.request.contextPath}/deletingNovelForUser">
-																		<input name="admin" value="1" type="hidden">
 																		<input name="id-novel" value="${novel.id }" type="hidden">
 																		<button type="submit"
 																			class="btn btn-danger btn-medium"
