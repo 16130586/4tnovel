@@ -1,8 +1,13 @@
 package t4novel.azurewebsites.net.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class BookMark {
+public class BookMark implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7768180560413700320L;
 	private int id, bookmarkFolderId;
 	private String detail;
 	private String url;
