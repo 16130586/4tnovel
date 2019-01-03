@@ -398,6 +398,20 @@
 			<role>2</role>
 		</method>
 	</url>
+	<url pattern="/deletingNovelForUser">
+		<method name="get">
+			<login>false</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
 	<url pattern="/refact">
 		<method name="get">
 			<login>false</login>
@@ -571,6 +585,62 @@
 			<login>false</login>
 			<connection>true</connection>
 			<role>0</role>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/account/dashboard-novels">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/account/dashboard-chaps">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/account/dashboard-vols">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+	</url>
+	<url pattern="/manage/account/dashboard-groups">
+		<method name="get">
+			<login>true</login>
+			<connection>true</connection>
+			<role>1</role>
+			<role>2</role>
+		</method>
+		<method name="post">
+			<login>true</login>
+			<connection>true</connection>
 			<role>1</role>
 			<role>2</role>
 		</method>

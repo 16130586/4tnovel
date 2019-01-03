@@ -334,7 +334,7 @@ public class NovelDAO {
 		List<Novel> result = new LinkedList<>();
 
 		String query = "SELECT ID FROM LN WHERE ID IN(" + "SELECT ID FROM LN "
-				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + "order by DATEUP DESC OFFSET " + offSet
+				+ (filterCondition == null ? "" : " WHERE " + filterCondition) + " order by DATEUP DESC OFFSET " + offSet
 				+ " rows fetch next " + limit + " rows only " + ")"
 				+ (sortByCondition == null ? "" : " order by " + sortByCondition);
 		stmt = cnn.prepareStatement(query);

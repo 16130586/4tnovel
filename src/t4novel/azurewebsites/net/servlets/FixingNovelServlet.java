@@ -111,6 +111,9 @@ public class FixingNovelServlet extends HttpServlet {
 					imgDAO.updateImage(fileImage.getInputStream() , oldNovel.getCoverId());
 					fixedNovel.setCoverId(oldNovel.getCoverId());
 				}
+				if(fileImage == null) {
+					System.out.println("null nha be oi!!!!! nho them anh khi sua lai");
+				}
 				// end new logic
 				oldNovel.update(fixedNovel);
 				System.out.println("oldnovel : " + oldNovel.getId() + " submit novel : " + fixedNovel.getId());
@@ -131,7 +134,7 @@ public class FixingNovelServlet extends HttpServlet {
 		} else {
 			form.applyErrorsToUI(request);
 		}
-		response.sendRedirect("myNovel");
+		response.sendRedirect("manage/account/dashboard-novels");
 	}
 
 }

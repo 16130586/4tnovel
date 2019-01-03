@@ -21,7 +21,7 @@
                 </div>
             </li>
             <c:if test="${account.role.name() eq 'ADMINISTRATOR'}">
-            	<li class="menu-item u-margin-left--1rem "><a class="link " href="admin">Admin</a></li>
+            	<li class="menu-item u-margin-left--1rem "><a class="link" href="manage/admin/statistics/system">Quản trị</a></li>
             </c:if>
         </ul>
     </div>

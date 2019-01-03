@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html class="no-js" lang="en">
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -87,7 +86,7 @@
 						<div class="breadcrumbs-area clearfix">
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
-								<li><a href="index.html">Giao diện chính</a></li>
+								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
 								<li><span>Thống kê trạng thái hệ thống</span></li>
 							</ul>
 						</div>
@@ -96,32 +95,45 @@
 			</div>
 			<!-- page title area end -->
 			<div class="main-content-inner">
-				<div class="row  my-4 card">	
+				<div class="row  my-4 card">
 					<div class="row col-md-12 my-2">
 						<h3 class="mx-2">Trình trạng hệ thống trong ngày</h3>
 					</div>
 					<div class="row col-md-12 my-2">
 						<div class="row col-md-12">
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #9673d3;">a</div>
+								style="height: 15vh; background-color:#9673d3; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số truyện mới:</h3>
+								<h1 style="text-align: center; margin-top: 15px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataNovelOneDay}</h1>
+							</div>
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #00897b;">b</div>
+								style="height: 15vh; background-color:#00897b; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số chương mới:</h3>
+								<h1 style="text-align: center; margin-top: 20px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataChapOneDay}</h1>
+							</div>
 						</div>
 						<div class="row col-md-12" style="height: 10px;">
 							<span style="opacity: 0;">a</span>
 						</div>
 						<div class="row col-md-12">
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #e53935;">c</div>
+								style="height: 15vh; background-color: #e53935; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số tài khoản mới:</h3>
+								<h1 style="text-align: center; margin-top: 15px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataAccountOneDay}</h1>
+							</div>
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #ff9800;">d</div>
+								style="height: 15vh; background-color: #ff9800; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số thảo luận mới:</h3>
+								<h1 style="text-align: center; margin-top: 15px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataThreadOneDay}</h1>
+							</div>
 						</div>
 					</div>
 
 				</div>
 
 				<div class="row  my-4">
-					<form class="card col-md-12">
+					<form id="detailNovel" class="card col-md-12"
+						data-startdateid="novelDate1" data-enddateid="novelDate2">
 						<div class="row mt-3 ">
 							<div class="row col-md-12 my-2">
 								<h4 class="mx-2">Biểu đồ tác phẩm mới</h4>
@@ -129,16 +141,14 @@
 							<div class="row col-md-12">
 								<div class="col-md-6">
 									<span>Từ ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="startDate" type="date" value="${startDate}"
-										id="example-date-input">
+										type="date" value="${startDate}" id="novelDate1">
 								</div>
 								<div class="col-md-6">
 									<span>Đến ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="endDate" type="date" value="${endDate}"
-										id="example-date-input">
+										type="date" value="${endDate}" id="novelDate2">
 								</div>
 								<div class="row col-md-12 mt-2" style="text-align: right;">
-									<button type="submit" class="btn btn-success"
+									<button id="btnSsNovel" type="button" class="btn btn-success"
 										style="margin-left: auto;">Thống kê</button>
 								</div>
 							</div>
@@ -149,7 +159,8 @@
 					</form>
 				</div>
 				<div class="row  my-4">
-				<form class="card col-md-12">
+					<form id="detailChap" class="card col-md-12"
+						data-startdateid="chapDate1" data-enddateid="chapDate2">
 						<div class="row mt-3 ">
 							<div class="row col-md-12 my-2">
 								<h4 class="mx-2">Biểu đồ chương mới</h4>
@@ -157,16 +168,14 @@
 							<div class="row col-md-12">
 								<div class="col-md-6">
 									<span>Từ ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="startDate" type="date" value="${startDate}"
-										id="example-date-input">
+										type="date" value="${startDate}" id="chapDate1">
 								</div>
 								<div class="col-md-6">
 									<span>Đến ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="endDate" type="date" value="${endDate}"
-										id="example-date-input">
+										type="date" value="${endDate}" id="chapDate2">
 								</div>
 								<div class="row col-md-12 mt-2" style="text-align: right;">
-									<button type="submit" class="btn btn-success"
+									<button id="btnSsChap" type="button" class="btn btn-success"
 										style="margin-left: auto;">Thống kê</button>
 								</div>
 							</div>
@@ -177,7 +186,8 @@
 					</form>
 				</div>
 				<div class="row  my-4">
-					<form class="card col-md-12">
+					<form id="detailAccount" class="card col-md-12"
+						data-startdateid="accountDate1" data-enddateid="accountDate2">
 						<div class="row mt-3 ">
 							<div class="row col-md-12 my-2">
 								<h4 class="mx-2">Biểu đồ tài khoản mới</h4>
@@ -185,16 +195,14 @@
 							<div class="row col-md-12">
 								<div class="col-md-6">
 									<span>Từ ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="startDate" type="date" value="${startDate}"
-										id="example-date-input">
+										type="date" value="${startDate}" id="accountDate1">
 								</div>
 								<div class="col-md-6">
 									<span>Đến ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="endDate" type="date" value="${endDate}"
-										id="example-date-input">
+										type="date" value="${endDate}" id="accountDate2">
 								</div>
 								<div class="row col-md-12 mt-2" style="text-align: right;">
-									<button type="submit" class="btn btn-success"
+									<button id="btnSsAccount" type="button" class="btn btn-success"
 										style="margin-left: auto;">Thống kê</button>
 								</div>
 							</div>
@@ -205,7 +213,8 @@
 					</form>
 				</div>
 				<div class="row  my-4">
-					<form class="card col-md-12">
+					<form id="detailThread" class="card col-md-12"
+						data-startdateid="threadDate1" data-enddateid="threadDate2">
 						<div class="row mt-3">
 							<div class="row col-md-12 my-2">
 								<h4 class="mx-4">Biểu đồ thảo luận mới</h4>
@@ -213,16 +222,14 @@
 							<div class="row col-md-12">
 								<div class="col-md-6">
 									<span>Từ ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="startDate" type="date" value="${startDate}"
-										id="example-date-input">
+										type="date" value="${startDate}" id="threadDate1">
 								</div>
 								<div class="col-md-6">
 									<span>Đến ngày(MM/dd/YYYY):</span> <input class="form-control"
-										name="endDate" type="date" value="${endDate}"
-										id="example-date-input">
+										type="date" value="${endDate}" id="threadDate2">
 								</div>
 								<div class="row col-md-12 mt-2" style="text-align: right;">
-									<button type="submit" class="btn btn-success"
+									<button id="btnSsThread" type="button" class="btn btn-success"
 										style="margin-left: auto;">Thống kê</button>
 								</div>
 							</div>
@@ -311,9 +318,70 @@
 			}
 			return finalDataForChart;
 		}
-		document.addEventListener("DOMContentLoaded", function() {
-			google.charts.load('current', {packages: ['corechart', 'line']});
+		function doAjaxAndRedrawChart(formId , chart){
+			document.body.style.cursor = 'wait'
+			var form = document.getElementById(formId)
+			var startDateInput = document.getElementById(form.getAttribute('data-startdateid'))
+			var endDateInput = document.getElementById(form.getAttribute('data-enddateid'))
+			var startDate = $('#'.concat(startDateInput.getAttribute('id'))).val()
+			var endDate = $('#'.concat(endDateInput.getAttribute('id'))).val()
 			
+			$.ajax(
+					   {
+					      type: 'post',
+					      url: '${pageContext.request.contextPath}/manage/admin/statistics/system',
+					      data: { 
+					        "startDate": startDate,
+					        "endDate": endDate,
+					        "action" : formId
+					      },
+					      success: function (response) {
+					    	  var json = JSON.parse(response)
+					    	  var validStartDate = json.k;
+					    	  var validEndDate = json.v1;
+					    	  var arrayDataTable = extractOnPairJSONDate(json.v2)
+					    	  
+					    	  startDateInput.value = validStartDate;
+					    	  endDateInput.value = validEndDate;
+					    	  $('#'.concat(startDateInput.getAttribute('id'))).attr("value", validStartDate)
+					    	  $('#'.concat(endDateInput.getAttribute('id'))).attr("value", validEndDate)
+					    	  
+					    	  if(arrayDataTable.length > 0){
+						      	  var oldDataTable = chart.getDataTable()
+						      	  oldDataTable.removeRows(0, oldDataTable.getNumberOfRows());
+						    	  oldDataTable.addRows(arrayDataTable)
+						    	  chart.setDataTable(oldDataTable)
+						    	  chart.draw()
+					    	  }
+					    	  else {
+					    		  alert('Khoảng thời gian bạn chọn không có dữ liệu để hiển thị, xin chọn khoảng thời gian khác!')
+					    	  }
+					    	  document.body.style.cursor='default'  
+					      },
+					      error: function () {
+					        alert("Vui lòng kiểm tra kết nối mạng!");
+					      }
+					   }
+					);
+		}
+		var detailNovelChart,  detailChapChart , detailAccountChart , detailThreadChart
+		document.addEventListener("DOMContentLoaded", function() {
+			
+			document.getElementById('btnSsNovel').onclick = function(){
+				doAjaxAndRedrawChart('detailNovel' ,detailNovelChart )
+			}
+			document.getElementById('btnSsChap').onclick = function(){
+				doAjaxAndRedrawChart('detailChap' ,detailChapChart )
+			}
+			document.getElementById('btnSsAccount').onclick = function(){
+				doAjaxAndRedrawChart('detailAccount' ,detailAccountChart )
+			}
+			document.getElementById('btnSsThread').onclick = function(){
+				doAjaxAndRedrawChart('detailThread' ,detailThreadChart )
+			}
+			
+			 google.charts.load('current');
+			 
 			google.charts.setOnLoadCallback(drawNewNovelChart);
 			google.charts.setOnLoadCallback(drawNewChapChart);
 			google.charts.setOnLoadCallback(drawNewAccountChart);
@@ -324,9 +392,8 @@
 			      var data = new google.visualization.DataTable();
 			      data.addColumn('date', 'Ngày');
 			      data.addColumn('number', 'Số truyện');
-
-			      data.addRows(extractOnPairJSONDate(${dataDetailNovelOverDays}));
-
+				  var arrayDateTable = extractOnPairJSONDate(${dataDetailNovelOverDays});
+			      data.addRows(arrayDateTable);
 			      var options = {
 			        hAxis: {
 			          title: 'Ngày'
@@ -335,20 +402,32 @@
 			          title: 'Số lượng truyện'
 			        }
 			      };
+			     var charType = '';
+			     if(arrayDateTable.length <= 4)
+			     	charType='ColumnChart'
+			     else
+			    	 charType='LineChart'
 
-			      var chart = new google.visualization.LineChart(document.getElementById('newNovelChart'));
-
-			      chart.draw(data, options);
-			    }
+			    
+			     
+			     detailNovelChart = new google.visualization.ChartWrapper({
+			          chartType: charType,
+			          dataTable: data,
+			          options: options,
+			          containerId: 'newNovelChart'
+			        });
+			     detailNovelChart.draw();    
+			}
 			
 			
 			function drawNewChapChart() {
 
 			      var data = new google.visualization.DataTable();
-			      data.addColumn('date', 'Ngày');
-			      data.addColumn('number', 'Số chương');
-
-			      data.addRows(extractOnPairJSONDate(${dataDetailChapOverDays}));
+			      data.addColumn('date', 'Ngày')
+			      data.addColumn('number', 'Số chương')
+					
+			      var arrayTableData = extractOnPairJSONDate(${dataDetailChapOverDays})
+			      data.addRows(arrayTableData);
 
 			      var options = {
 			        hAxis: {
@@ -358,20 +437,25 @@
 			          title: 'Số lượng chương'
 			        }
 			      };
-
-			      var chart = new google.visualization.LineChart(document.getElementById('newChapChart'));
-
-			      chart.draw(data, options);
+			      var charType = '';
+				     if(arrayTableData.length <= 4)
+				     	charType='ColumnChart'
+				     else
+				    	 charType='LineChart'
+				    detailChapChart = new google.visualization.ChartWrapper({
+				          chartType: charType,
+				          dataTable: data,
+				          options: options,
+				          containerId: 'newChapChart'
+				        });
+				     detailChapChart.draw();    
 			    }
-			
-			
 			function drawNewAccountChart() {
-
 			      var data = new google.visualization.DataTable();
 			      data.addColumn('date', 'Ngày');
 			      data.addColumn('number', 'Số tài khoản');
-
-			      data.addRows(extractOnPairJSONDate(${dataDetailAccountOverDays}));
+				  var arrayTableData = 	extractOnPairJSONDate(${dataDetailAccountOverDays});
+			      data.addRows(arrayTableData);
 
 			      var options = {
 			        hAxis: {
@@ -381,10 +465,18 @@
 			          title: 'Số lượng tài khoản'
 			        }
 			      };
-
-			      var chart = new google.visualization.LineChart(document.getElementById('newAccountChart'));
-
-			      chart.draw(data, options);
+			      var charType = '';
+				     if(arrayTableData.length <= 4)
+				     	charType='ColumnChart'
+				     else
+				    	 charType='LineChart'
+				    detailAccountChart = new google.visualization.ChartWrapper({
+				          chartType: charType,
+				          dataTable: data,
+				          options: options,
+				          containerId: 'newAccountChart'
+				        });
+				     detailAccountChart.draw();    
 			    }
 			
 			
@@ -393,11 +485,8 @@
 			      var data = new google.visualization.DataTable();
 			      data.addColumn('date', 'Ngày');
 			      data.addColumn('number', 'Số bài thảo luận');
-
-			      data.addRows([
-			        [new Date(2019-1-1),100],
-			        [new Date(2019-1-3),200]
-			      ]);
+			      var arrayTableData = 	extractOnPairJSONDate(${dataDetailThreadOverDays})
+			      data.addRows(arrayTableData)
 
 			      var options = {
 			        hAxis: {
@@ -407,10 +496,18 @@
 			          title: 'Số bài thảo luận'
 			        }
 			      };
-
-			      var chart = new google.visualization.LineChart(document.getElementById('newThreadChart'));
-
-			      chart.draw(data, options);
+			      var charType = '';
+				     if(arrayTableData.length <= 4)
+				     	charType='ColumnChart'
+				     else
+				    	 charType='LineChart'
+				    detailThreadChart = new google.visualization.ChartWrapper({
+				          chartType: charType,
+				          dataTable: data,
+				          options: options,
+				          containerId: 'newThreadChart'
+				        });
+				     detailThreadChart.draw();    
 			    }
 		})
 	</script>

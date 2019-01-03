@@ -302,72 +302,124 @@ public class StatisticDAO {
 		}
 		return ret;
 	}
-	
-	
-	public List<Pair<String, Integer>> statisticNovelOverDays(String startDate, String endDate) throws SQLException{
-		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN " + 
-				"WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";	
+
+	public List<Pair<String, Integer>> statisticNovelOverDays(String startDate, String endDate) throws SQLException {
+		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN "
+				+ "WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		List<Pair<String, Integer>> ret = new LinkedList<>();
 
 		stmt.setString(1, startDate);
 		stmt.setString(2, endDate);
 		ResultSet rs = stmt.executeQuery();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
 		return ret;
 	}
-	
-	public List<Pair<String, Integer>> statisticChapOverDays(String startDate, String endDate) throws SQLException{
-		String query = "SELECT FORMAT(CHAP.DATEUP,'yyyy-MM-dd') as _day, COUNT(CHAP.DATEUP) as _chaps FROM CHAP " + 
-				"WHERE CHAP.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(CHAP.DATEUP,'yyyy-MM-dd')";	
+
+	public List<Pair<String, Integer>> statisticChapOverDays(String startDate, String endDate) throws SQLException {
+		String query = "SELECT FORMAT(CHAP.DATEUP,'yyyy-MM-dd') as _day, COUNT(CHAP.DATEUP) as _chaps FROM CHAP "
+				+ "WHERE CHAP.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(CHAP.DATEUP,'yyyy-MM-dd')";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		List<Pair<String, Integer>> ret = new LinkedList<>();
 
 		stmt.setString(1, startDate);
 		stmt.setString(2, endDate);
 		ResultSet rs = stmt.executeQuery();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
-		
+
 		return ret;
 	}
-	
-	public List<Pair<String, Integer>> statisticAccountOverDays(String startDate, String endDate) throws SQLException{
-		String query = "SELECT FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd') as _day, COUNT(ACCOUNT.DATECREATE) as _novels FROM ACCOUNT " + 
-				"WHERE ACCOUNT.DATECREATE BETWEEN ? AND ? GROUP BY FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd')";	
+
+	public List<Pair<String, Integer>> statisticAccountOverDays(String startDate, String endDate) throws SQLException {
+		String query = "SELECT FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd') as _day, COUNT(ACCOUNT.DATECREATE) as _novels FROM ACCOUNT "
+				+ "WHERE ACCOUNT.DATECREATE BETWEEN ? AND ? GROUP BY FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd')";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		List<Pair<String, Integer>> ret = new LinkedList<>();
 
 		stmt.setString(1, startDate);
 		stmt.setString(2, endDate);
 		ResultSet rs = stmt.executeQuery();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
-		
+
 		return ret;
 	}
-	
-	public List<Pair<String, Integer>> statisticThreadOverDays(String startDate, String endDate) throws SQLException{
-		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN " + 
-				"WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";	
+
+	public List<Pair<String, Integer>> statisticThreadOverDays(String startDate, String endDate) throws SQLException {
+		String query = "SELECT FORMAT(THREAD.DATEUP,'yyyy-MM-dd') as _day, COUNT(THREAD.DATEUP) as _novels FROM THREAD "
+				+ "WHERE THREAD.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(THREAD.DATEUP,'yyyy-MM-dd')";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		List<Pair<String, Integer>> ret = new LinkedList<>();
 
 		stmt.setString(1, startDate);
 		stmt.setString(2, endDate);
 		ResultSet rs = stmt.executeQuery();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
+			System.out.println(rs.getString(1));
 			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
-		
+
 		return ret;
+	}
+
+	public int statisticNovelOneDay(String currentDate) throws SQLException {
+		String query = "SELECT COUNT(LN.DATEUP) AS NOVELES FROM LN WHERE LN.DATEUP >= ? AND LN.DATEUP < dateadd(day,1, ?)";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setString(1, currentDate);
+		stmt.setString(2, currentDate);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		rs.close();
+		stmt.close();
+		return result;
+	}
+
+	public int statisticChapOneDay(String currentDate) throws SQLException {
+		String query = "SELECT COUNT(CHAP.DATEUP) AS CHAPS FROM CHAP WHERE CHAP.DATEUP >= ? AND CHAP.DATEUP < dateadd(day,1, ?)";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setString(1, currentDate);
+		stmt.setString(2, currentDate);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		rs.close();
+		stmt.close();
+		return result;
+	}
+	
+	public int statisticAccountOneDay(String currentDate) throws SQLException {
+		String query = "SELECT COUNT(ACCOUNT.DATECREATE) AS ACCOUNTS FROM ACCOUNT WHERE ACCOUNT.DATECREATE >= ? AND ACCOUNT.DATECREATE < dateadd(day,1, ?)";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setString(1, currentDate);
+		stmt.setString(2, currentDate);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		rs.close();
+		stmt.close();
+		return result;
+	}
+	
+	public int statisticThreadOneDay(String currentDate) throws SQLException {
+		String query = "SELECT COUNT(THREAD.DATEUP) AS THREAD FROM THREAD WHERE THREAD.DATEUP >= ? AND THREAD.DATEUP < dateadd(day,1, ?)";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setString(1, currentDate);
+		stmt.setString(2, currentDate);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		rs.close();
+		stmt.close();
+		return result;
 	}
 }
