@@ -90,4 +90,13 @@ public class CensoringDAO {
 		stmt.executeUpdate();
 		stmt.close();
 	}
+	
+	public void unCensoringAllNovelByGroupID(int groupID) throws SQLException {
+		String query = "UPDATE CENSORING SET IS_PUBLISHED= ? FROM CHAP INNER JOIN LN ON CHAP.ID_NOVEL = LN.ID INNER JOIN CENSORING ON CHAP.ID = CENSORING.TARGET_ID WHERE LN.IDGROUP = ? AND CENSORING.STREAM='chapter';";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setBoolean(1, false);
+		stmt.setInt(2, groupID);
+		stmt.executeUpdate();
+		stmt.close();
+	}
 }

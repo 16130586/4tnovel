@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
+import t4novel.azurewebsites.net.DAO.CensoringDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.models.Group;
 
@@ -53,10 +54,12 @@ public class AdminDashBoardGroups extends HttpServlet {
 		}
 		Connection cnn = (Connection) request.getAttribute("connection");
 		GroupDAO groupDAO = new GroupDAO(cnn);
+		CensoringDAO censoringDAO = new CensoringDAO(cnn);
 		int groupID = Integer.parseInt(request.getParameter("id"));
 		try {
 			groupDAO.removeAllMemberFromGroup(groupID);
 			groupDAO.deleteGroupByID(groupID);
+			censoringDAO.unCensoringAllNovelByGroupID(groupID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

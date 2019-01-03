@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.protocol.ResponseDate;
-
+import t4novel.azurewebsites.net.DAO.CensoringDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 
 /**
@@ -48,10 +47,12 @@ public class DeletingGroupForUserServlet extends HttpServlet {
 		}
 		Connection cnn = (Connection) request.getAttribute("connection");
 		GroupDAO groupDAO = new GroupDAO(cnn);
+		CensoringDAO censoringDAO = new CensoringDAO(cnn);
 		int groupID = Integer.parseInt(request.getParameter("id"));
 		try {
 			groupDAO.removeAllMemberFromGroup(groupID);
 			groupDAO.deleteGroupByID(groupID);
+			censoringDAO.unCensoringAllNovelByGroupID(groupID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
