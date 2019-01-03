@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,9 +78,12 @@ public class FixingVolServlet extends HttpServlet {
 				}
 			} else {
 				form.applyErrorsToUI(request);
+				for(Entry<String, String> er : form.getErrors().entrySet()) {
+					System.out.println(er.getKey() + "  " + er.getValue());
+				}
 			}
 			if (isAdmin == null)
-				response.sendRedirect("myNovel");
+				response.sendRedirect("manage/account/dashboard-vols");
 			else
 				response.sendRedirect("manage/admin/dashboard-vols");
 		}
