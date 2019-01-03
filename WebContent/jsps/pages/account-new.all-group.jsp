@@ -60,9 +60,9 @@
 	</div>
 	<!-- preloader area end -->
 	<!-- page container area start -->
-	<div class="page-container ">
+	<div class="page-container">
 		<!-- sidebar menu area start -->
-		<%@ include file="/jsps/components/_admin-new.side-bar.jsp"%>
+		<%@ include file="/jsps/components/_account-manage-new.side-bar.jsp"%>
 		<!-- main content area start -->
 		<div class="main-content">
 			<!-- header area start -->
@@ -71,7 +71,7 @@
 					<!-- nav and search button -->
 					<div class="col-md-6 col-sm-8 clearfix">
 						<div class="nav-btn pull-left">
-							<span></span><span></span> <span></span>
+							<span></span> <span></span> <span></span>
 						</div>
 					</div>
 				</div>
@@ -85,7 +85,7 @@
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
 								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
-								<li><span>Kiếm duyệt</span></li>
+								<li><span>Nhóm dịch</span></li>
 							</ul>
 						</div>
 					</div>
@@ -98,64 +98,64 @@
 					<div class="col-12 mt-5">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="header-title">Danh sách cần kiểm duyệt</h4>
+								<h4 class="header-title">Danh sách nhóm dịch</h4>
 								<div class="data-tables datatable-dark">
-									<table id="dataTable3" style="width: 100%; text-align: left;">
+									<table id="dataTable3" style="width: 100%; text-align:left;">
 										<thead class="text-capitalize">
 											<tr>
 												<th>&nbsp;Tên</th>
-												<th>&nbsp;Ngày đăng</th>
+												<th>Trưởng nhóm</th>
+												<th>Số thành viên</th>
+												<th>Ngày tạo</th>
+												<th>Thao tác</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="entity" items="${censorList}">
-												<tr data-toggle="modal"
-													data-target="#censor${entity.getCensorId()}"
-													style="cursor: pointer;">
-													<td>&nbsp;${entity.getTitle()}</td>
-													<td>&nbsp;${entity.getCreatedDate()}</td>
-												</tr>
-												<div class="modal" id="censor${entity.getCensorId()}">
-													<div class="modal-dialog"
-														style="max-width: 1140px; margin: auto;">
-														<div class="modal-content">
+											<c:forEach var="group" items="${groups}">
+												<tr>
+													<td>&nbsp;${group.name}</td>
+													<td>${group.owner.userName }</td>
+													<td>${group.getTotalMemembers() }</td>
+													<td>${group.dateCreate }</td>
+													<td>
+														<!-- Trigger the modal with a button -->
+														<button type="button" class="btn btn-danger btn-small"
+															data-toggle="modal" data-target="#delete${group.id}">
+															<i class="fa fa-trash-o"></i>
+														</button> <!-- Modal -->
+														<div id="delete${group.id}" class="modal fade" role="dialog"
+															style="text-align: left;">
+															<div class="modal-dialog">
 
-															<!-- Modal Header -->
-															<div class="modal-header">
-																<h4 class="modal-title">${entity.getTitle()}</h4>
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-															</div>
+																<!-- Modal content-->
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h4 class="modal-title">Cảnh báo!!!</h4>
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
 
-															<!-- Modal body -->
-															<div class="modal-body">
-																<div style="overflow-y: scroll;">
-																	<p style="max-height: 75vh;">${entity.getContent()}</p>
+																	</div>
+																	<div class="modal-body">
+																		<p>Bạn có chắc muốn xóa nhóm <span class="btn-danger">${group.name}</span> và toàn
+																			bộ cống hiến của nhóm này?</p>
+																	</div>
+																	<div class="modal-footer">
+																	<form action="${pageContext.request.contextPath}//manage/admin/dashboard-groups" method="post">
+																		<input type="hidden" name="action" value="delete">
+																		<input type="hidden" name="id" value="${group.id}">
+																		<button type="submit" class="btn btn-danger">Xóa
+																			hết</button>
+																		</form>
+																		<button type="button" class="btn btn-default"
+																			data-dismiss="modal">Hủy</button>
+																	</div>
 																</div>
-															</div>
 
-															<!-- Modal footer -->
-															<div class="modal-footer">
-																<form
-																	action="${pageContext.request.contextPath}/manage/admin/dashboard-censoring"
-																	method="post">
-																	<input name="id" type="hidden" value="${entity.getCensorId()}">
-																	<input name="isAccept" type="hidden" value="1">
-																	<input name="stream" type="hidden" value="${entity.getClass().getSimpleName()}">
-																	<button  type="submit" class="btn btn-success">Duyệt</button>
-																</form>
-																<form
-																	action="${pageContext.request.contextPath}/manage/admin/dashboard-censoring"
-																	method="post">
-																	<input name="id" type="hidden" value="${entity.getCensorId()}">
-																	<input name="isAccept" type="hidden" value="0">
-																	<input name="stream" type="hidden" value="${entity.getClass().getSimpleName()}">
-																	<button type="submit" class="btn btn-default">Từ
-																		chối</button>
-																</form>
 															</div>
 														</div>
-													</div>
-												</div>
+													</td>
+												</tr>
+
 											</c:forEach>
 										</tbody>
 									</table>

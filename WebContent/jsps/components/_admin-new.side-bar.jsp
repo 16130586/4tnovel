@@ -10,6 +10,7 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
+                        	 <li><a href="${pageContext.request.contextPath}/index"><i class="fa fa-home"></i><span>Trang chủ</span></a></li>
                         	<li>
                         		<a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-line-chart"></i><span>Thống kê</span></a>
                                 <ul class="collapse">

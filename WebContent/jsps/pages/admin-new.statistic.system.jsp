@@ -86,7 +86,7 @@
 						<div class="breadcrumbs-area clearfix">
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
-								<li><a href="index.html">Giao diện chính</a></li>
+								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
 								<li><span>Thống kê trạng thái hệ thống</span></li>
 							</ul>
 						</div>
@@ -307,6 +307,7 @@
 			return finalDataForChart;
 		}
 		function doAjaxAndRedrawChart(formId , chart){
+			document.body.style.cursor = 'wait'
 			var form = document.getElementById(formId)
 			var startDateInput = document.getElementById(form.getAttribute('data-startdateid'))
 			var endDateInput = document.getElementById(form.getAttribute('data-enddateid'))
@@ -338,10 +339,12 @@
 						      	  oldDataTable.removeRows(0, oldDataTable.getNumberOfRows());
 						    	  oldDataTable.addRows(arrayDataTable)
 						    	  chart.setDataTable(oldDataTable)
-						    	  chart.draw()}
+						    	  chart.draw()
+					    	  }
 					    	  else {
 					    		  alert('Khoảng thời gian bạn chọn không có dữ liệu để hiển thị, xin chọn khoảng thời gian khác!')
 					    	  }
+					    	  document.body.style.cursor='default'  
 					      },
 					      error: function () {
 					        alert("Vui lòng kiểm tra kết nối mạng!");

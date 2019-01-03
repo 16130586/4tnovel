@@ -87,7 +87,7 @@
 						<div class="breadcrumbs-area clearfix">
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
-								<li><a href="index.html">Giao diện chính</a></li>
+								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
 								<li><span>Thống kê hành vi người dùng</span></li>
 							</ul>
 						</div>

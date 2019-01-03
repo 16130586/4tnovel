@@ -62,7 +62,7 @@
 	<!-- page container area start -->
 	<div class="page-container">
 		<!-- sidebar menu area start -->
-		<%@ include file="/jsps/components/_admin-new.side-bar.jsp"%>
+		<%@ include file="/jsps/components/_account-manage-new.side-bar.jsp"%>
 		<!-- main content area start -->
 		<div class="main-content">
 			<!-- header area start -->
@@ -85,7 +85,7 @@
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
 								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
-								<li><span>Tập</span></li>
+								<li><span>Chương</span></li>
 							</ul>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 					<div class="col-12 mt-5">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="header-title">Danh sách tập của tác phẩm</h4>
+								<h4 class="header-title">Danh sách tác phẩm</h4>
 								<div class="data-tables datatable-dark">
 									<table class="table-striped" id="dataTable3"
 										style="width: 100%; text-align: left;">
@@ -106,18 +106,20 @@
 											<tr>
 												<th>&nbsp;Tên</th>
 												<th>&nbsp;Số tập</th>
+												<th>Số chương</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="novel" items="${novels}">
 												<tr>
 													<td>
-														<p style="width: 100%; cursor: pointer;"
-															data-toggle="modal" data-target="#seeVol${novel.id }">&nbsp;&nbsp;${novel.name }</p>
-
-														<div class="modal fade" id="seeVol${novel.id}">
+														<p style="cursor: pointer; width: 100%"
+															data-toggle="modal" data-target="#seeVol${novel.id }">&nbsp;${novel.name }</p>
+														<div id="seeVol${novel.id }" class="modal fade"
+															role="dialog">
 															<div class="modal-dialog"
 																style="max-width: 100%; height: 90vh">
+																<!-- Modal content-->
 																<div class="modal-content"
 																	style="max-width: 1140px; margin: auto">
 																	<div class="modal-header">
@@ -130,120 +132,91 @@
 																	</div>
 																	<div class="modal-body"
 																		style="height: 80vh; overflow-y: auto">
-																		<div class="data-tables datatable-dark">
-																			<table class="table-striped"
-																				style="width: 90%; margin: auto">
+																		<table class="table-striped"
+																			style="width: 90%; margin: auto">
+																			<tr>
+																				<th>&nbsp;Tên</th>
+																			</tr>
+																			<c:forEach var="vol" items="${novel.vols }">
 																				<tr>
-																					<th>&nbsp;Tên</th>
-																					<th style="width: 20%; margin: auto">Thao tác</th>
-																				</tr>
-																				<c:forEach var="vol" items="${novel.vols }">
-																					<tr>
-																						<td>&nbsp;${vol.title }</td>
-																						<td>
-																							<button type="button"
-																								class="btn btn-primary btn-small"
-																								data-toggle="modal"
-																								data-target="#edit${vol.id }">
-																								<i class="fa fa-edit"></i>
-																							</button>
-																							<div id="edit${vol.id }" class="modal fade">
-																								<div class="modal-dialog"
-																									style="max-width: 100%">
-																									<div class="modal-content"
-																										style="max-width: 768px; margin: auto">
-																										<div class="modal-header">
-																											<h5 class="modal-title">Sửa tập</h5>
-																											<button type="button" class="close"
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">
-																												<span>&times;</span>
-																											</button>
-																										</div>
-																										<form method="post"
-																											action="${pageContext.request.contextPath}/fix-vol">
-																											<input type="hidden" name="admin" value="1">
-																											<input type="hidden" name="fixedVolID"
-																												value="${vol.id }">
+																					<td>
+																						<p style="cursor: pointer; width: 100%;"
+																							data-toggle="collapse"
+																							data-target=".seeChap${novel.id}-${vol.id}">&nbsp;${vol.title }
+																						</p> <c:forEach var="chap" items="${vol.chaps }">
+																							<div
+																								style="margin-left: 1rem; border-top: 1px solid #00000026"
+																								class="collapse seeChap${novel.id }-${vol.id}"
+																								onload="this.style.backgroundColor=this.previousSibling.style.backgroundColor">
+																								<a target="_blank"
+																									style="text-decoration: none; color: black; width: 80%; display: inline-block;"
+																									title="${chap.title }"
+																									href="${pageContext.request.contextPath}/read?id=${chap.id}">&nbsp;${chap.title }</a>
+																								<form style="display: inline-block;"
+																									action="${pageContext.request.contextPath}/manage/admin/dashboard-chaps"
+																									method="post">
+																									<input type="hidden" name="action" value="fix">
+																									<input type="hidden" name="id-chap"
+																										value="${chap.id }">
+																									<button class="btn btn-primary">
+																										<i class="fa fa-edit"></i>
+																									</button>
+																								</form>
+																								<button type="button"
+																									style="display: inline-block;"
+																									class="btn btn-secondary" data-toggle="modal"
+																									data-target="#delete${chap.id }">
+																									<i class="fa fa-trash"></i>
+																								</button>
+																								<!-- Modal -->
+																								<div id="delete${chap.id }" class="modal fade"
+																									role="dialog">
+																									<div class="modal-dialog">
+																										<!-- Modal content-->
+																										<div class="modal-content">
+																											<div class="modal-header">
+																												<h4 class="modal-title">Cảnh báo!!!</h4>
+																												<button type="button" class="close"
+																													onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">&times;</button>
+																											</div>
 																											<div class="modal-body">
-																												<table class="table"
-																													style="margin: auto; width: 95%">
-																													<tr>
-																														<td
-																															style="width: 15%; padding-top: 15px; text-align: right; vertical-align: middle;"><label>Tiêu
-																																đề: <span style="color: red">*</span>
-																														</label></td>
-																														<td><input name="title" type="text"
-																															style="padding: .5rem; width: 100%"
-																															required value="${vol.title}"></td>
-																													</tr>
-																													<tr>
-																														<td style="text-align: right;"><label>Tóm
-																																tắt:</label></td>
-																														<td><textarea name="description"
-																																style="padding: .5rem; width: 100%"
-																																rows="7">${vol.description}</textarea></td>
-																													</tr>
-																												</table>
+																												<p>
+																													Bạn muốn xóa chương <span
+																														class="btn-danger">${chap.title}</span> ?
+																												</p>
 																											</div>
 																											<div class="modal-footer">
-																												<button type="submit"
-																													class="btn btn-primary"
-																													style="margin: auto">Sửa</button>
+																												<form
+																													action="${pageContext.request.contextPath}/delete-chap"
+																													method="post">
+																													<input type="hidden" name="admin" value="1">
+																													<input type="hidden" name="id-chap"
+																														value="${chap.id }">
+																													<button type="submit"
+																														class="btn btn-danger btn-medium">Xóa</button>
+																												</form>
+																												<button
+																													onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)"
+																													class="btn btn-default btn-small">Hủy</button>
 																											</div>
-																										</form>
-																									</div>
-																								</div>
-																							</div>
-																							<button type="button"
-																								class="btn btn-secondary btn-small"
-																								data-toggle="modal"
-																								data-target="#delete${vol.id }">
-																								<i class="fa fa-trash"></i>
-																							</button> <!-- Modal -->
-																							<div id="delete${vol.id }" class="modal fade"
-																								role="dialog">
-																								<div class="modal-dialog">
-
-																									<!-- Modal content-->
-																									<div class="modal-content">
-																										<div class="modal-header">
-																											<h4 class="modal-title">Cảnh báo!!!</h4>
-																											<button type="button" class="close"
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">&times;</button>
-																										</div>
-																										<div class="modal-body">
-																											<p>
-																												Bạn muốn xóa tập <span class="btn-danger">${vol.title}</span>
-																												cùng toàn bộ chương?
-																											</p>
-																										</div>
-																										<div class="modal-footer">
-																										<form method="post" action="${pageContext.request.contextPath}/delete-vol">
-																											<input name="admin" value="1" type="hidden">
-																											<input name="id-vol" value="${vol.id }" type="hidden">
-																											<button type="submit"
-																												class="btn btn-danger btn-medium"
-																												>Xóa hết</button>
-																										</form>
-																											<button
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)"
-																												class="btn btn-default btn-small">Hủy</button>
 																										</div>
 																									</div>
 																								</div>
 																							</div>
-
-																						</td>
-																					</tr>
-																				</c:forEach>
-																			</table>
-																		</div>
+																						</c:forEach>
+																					</td>
+																				</tr>
+																			</c:forEach>
+																		</table>
 																	</div>
+																	<div class="modal-footer"></div>
 																</div>
 															</div>
 														</div>
 													</td>
 													<td>&nbsp;${novel.getTotalVols() }</td>
+													<td>${novel.getTotalChaps() }</td>
+												
 												</tr>
 											</c:forEach>
 										</tbody>

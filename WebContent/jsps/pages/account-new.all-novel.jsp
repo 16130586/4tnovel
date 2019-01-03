@@ -62,7 +62,7 @@
 	<!-- page container area start -->
 	<div class="page-container">
 		<!-- sidebar menu area start -->
-		<%@ include file="/jsps/components/_admin-new.side-bar.jsp"%>
+		<%@ include file="/jsps/components/_account-manage-new.side-bar.jsp"%>
 		<!-- main content area start -->
 		<div class="main-content">
 			<!-- header area start -->
@@ -85,7 +85,7 @@
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
 								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
-								<li><span>Tập</span></li>
+								<li><span>Tác phẩm</span></li>
 							</ul>
 						</div>
 					</div>
@@ -98,152 +98,65 @@
 					<div class="col-12 mt-5">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="header-title">Danh sách tập của tác phẩm</h4>
+								<h4 class="header-title">Danh sách tác phẩm</h4>
 								<div class="data-tables datatable-dark">
-									<table class="table-striped" id="dataTable3"
-										style="width: 100%; text-align: left;">
+									<table class="table-striped" id="dataTable3" style="width: 100%;text-align:left;">
 										<thead class="text-capitalize">
 											<tr>
 												<th>&nbsp;Tên</th>
+												<th>Nhóm dịch</th>
 												<th>&nbsp;Số tập</th>
+												<th>Số chương</th>
+												<th>Sở hữu</th>
+												<th>&nbsp;Ngày đăng</th>
+												<th>Thao tác</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="novel" items="${novels}">
 												<tr>
+													<td>&nbsp;${novel.name }</td>
+													<td>${novel.group.name }</td>
+													<td>&nbsp;${novel.getTotalVols() }</td>
+													<td>${novel.getTotalChaps() }</td>
+													<td>${novel.owner.userName}</td>
+													<td>&nbsp;${novel.dateUp}</td>
 													<td>
-														<p style="width: 100%; cursor: pointer;"
-															data-toggle="modal" data-target="#seeVol${novel.id }">&nbsp;&nbsp;${novel.name }</p>
-
-														<div class="modal fade" id="seeVol${novel.id}">
-															<div class="modal-dialog"
-																style="max-width: 100%; height: 90vh">
-																<div class="modal-content"
-																	style="max-width: 1140px; margin: auto">
+														<a href="${pageContext.request.contextPath}/fix-novel?action=fix-novel&id-novel=${novel.id}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+														<button type="button" class="btn btn-secondary btn-small"
+															data-toggle="modal" data-target="#delete${novel.id }">
+															<i class="fa fa-trash"></i>
+														</button> <!-- Modal -->
+														<div id="delete${novel.id }" class="modal fade" role="dialog">
+															<div class="modal-dialog">
+																<!-- Modal content-->
+																<div class="modal-content">
 																	<div class="modal-header">
-																		<h5 class="modal-title">Danh sách tập của tác
-																			phẩm: ${novel.name }</h5>
+																		<h4 class="modal-title">Cảnh báo!!!</h4>
 																		<button type="button" class="close"
-																			data-dismiss="modal">
-																			<span>&times;</span>
-																		</button>
+																			data-dismiss="modal">&times;</button>
 																	</div>
-																	<div class="modal-body"
-																		style="height: 80vh; overflow-y: auto">
-																		<div class="data-tables datatable-dark">
-																			<table class="table-striped"
-																				style="width: 90%; margin: auto">
-																				<tr>
-																					<th>&nbsp;Tên</th>
-																					<th style="width: 20%; margin: auto">Thao tác</th>
-																				</tr>
-																				<c:forEach var="vol" items="${novel.vols }">
-																					<tr>
-																						<td>&nbsp;${vol.title }</td>
-																						<td>
-																							<button type="button"
-																								class="btn btn-primary btn-small"
-																								data-toggle="modal"
-																								data-target="#edit${vol.id }">
-																								<i class="fa fa-edit"></i>
-																							</button>
-																							<div id="edit${vol.id }" class="modal fade">
-																								<div class="modal-dialog"
-																									style="max-width: 100%">
-																									<div class="modal-content"
-																										style="max-width: 768px; margin: auto">
-																										<div class="modal-header">
-																											<h5 class="modal-title">Sửa tập</h5>
-																											<button type="button" class="close"
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">
-																												<span>&times;</span>
-																											</button>
-																										</div>
-																										<form method="post"
-																											action="${pageContext.request.contextPath}/fix-vol">
-																											<input type="hidden" name="admin" value="1">
-																											<input type="hidden" name="fixedVolID"
-																												value="${vol.id }">
-																											<div class="modal-body">
-																												<table class="table"
-																													style="margin: auto; width: 95%">
-																													<tr>
-																														<td
-																															style="width: 15%; padding-top: 15px; text-align: right; vertical-align: middle;"><label>Tiêu
-																																đề: <span style="color: red">*</span>
-																														</label></td>
-																														<td><input name="title" type="text"
-																															style="padding: .5rem; width: 100%"
-																															required value="${vol.title}"></td>
-																													</tr>
-																													<tr>
-																														<td style="text-align: right;"><label>Tóm
-																																tắt:</label></td>
-																														<td><textarea name="description"
-																																style="padding: .5rem; width: 100%"
-																																rows="7">${vol.description}</textarea></td>
-																													</tr>
-																												</table>
-																											</div>
-																											<div class="modal-footer">
-																												<button type="submit"
-																													class="btn btn-primary"
-																													style="margin: auto">Sửa</button>
-																											</div>
-																										</form>
-																									</div>
-																								</div>
-																							</div>
-																							<button type="button"
-																								class="btn btn-secondary btn-small"
-																								data-toggle="modal"
-																								data-target="#delete${vol.id }">
-																								<i class="fa fa-trash"></i>
-																							</button> <!-- Modal -->
-																							<div id="delete${vol.id }" class="modal fade"
-																								role="dialog">
-																								<div class="modal-dialog">
-
-																									<!-- Modal content-->
-																									<div class="modal-content">
-																										<div class="modal-header">
-																											<h4 class="modal-title">Cảnh báo!!!</h4>
-																											<button type="button" class="close"
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)">&times;</button>
-																										</div>
-																										<div class="modal-body">
-																											<p>
-																												Bạn muốn xóa tập <span class="btn-danger">${vol.title}</span>
-																												cùng toàn bộ chương?
-																											</p>
-																										</div>
-																										<div class="modal-footer">
-																										<form method="post" action="${pageContext.request.contextPath}/delete-vol">
-																											<input name="admin" value="1" type="hidden">
-																											<input name="id-vol" value="${vol.id }" type="hidden">
-																											<button type="submit"
-																												class="btn btn-danger btn-medium"
-																												>Xóa hết</button>
-																										</form>
-																											<button
-																												onclick="hideModal(this.parentNode.parentNode.parentNode.parentNode)"
-																												class="btn btn-default btn-small">Hủy</button>
-																										</div>
-																									</div>
-																								</div>
-																							</div>
-
-																						</td>
-																					</tr>
-																				</c:forEach>
-																			</table>
-																		</div>
+																	<div class="modal-body">
+																		<p>Bạn muốn xóa tác phẩm <span class="btn-danger">${novel.name}</span> cùng toàn bộ
+																			tập và chương?</p>
+																	</div>
+																	<div class="modal-footer">
+																	<form action="${pageContext.request.contextPath}/deletingNovelForUser">
+																		<input name="admin" value="1" type="hidden">
+																		<input name="id-novel" value="${novel.id }" type="hidden">
+																		<button type="submit"
+																			class="btn btn-danger btn-medium"
+																			>Xóa hết</button>
+																	</form>
+																		<button type="button"
+																			class="btn btn-default btn-small"
+																			data-dismiss="modal">Hủy</button>
 																	</div>
 																</div>
+
 															</div>
 														</div>
 													</td>
-													<td>&nbsp;${novel.getTotalVols() }</td>
 												</tr>
 											</c:forEach>
 										</tbody>

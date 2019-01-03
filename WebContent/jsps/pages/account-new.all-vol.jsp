@@ -62,7 +62,7 @@
 	<!-- page container area start -->
 	<div class="page-container">
 		<!-- sidebar menu area start -->
-		<%@ include file="/jsps/components/_admin-new.side-bar.jsp"%>
+		<%@ include file="/jsps/components/_account-manage-new.side-bar.jsp"%>
 		<!-- main content area start -->
 		<div class="main-content">
 			<!-- header area start -->
