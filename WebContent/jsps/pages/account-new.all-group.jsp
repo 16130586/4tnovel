@@ -84,7 +84,8 @@
 						<div class="breadcrumbs-area clearfix">
 							<h4 class="page-title pull-left">Quản lý</h4>
 							<ul class="breadcrumbs pull-left">
-								<li><a href="${pageContext.request.contextPath}/manage">Giao diện chính</a></li>
+								<li><a href="${pageContext.request.contextPath}/manage">Giao
+										diện chính</a></li>
 								<li><span>Nhóm dịch</span></li>
 							</ul>
 						</div>
@@ -100,7 +101,7 @@
 							<div class="card-body">
 								<h4 class="header-title">Danh sách nhóm dịch</h4>
 								<div class="data-tables datatable-dark">
-									<table id="dataTable3" style="width: 100%; text-align:left;">
+									<table id="dataTable3" style="width: 100%; text-align: left;">
 										<thead class="text-capitalize">
 											<tr>
 												<th>&nbsp;Tên</th>
@@ -119,12 +120,68 @@
 													<td>${group.dateCreate }</td>
 													<td>
 														<!-- Trigger the modal with a button -->
+														<button type="button" class="btn btn-default btn-small"
+															data-toggle="modal" data-target="#fix${group.id}">
+															<i class="fa fa-cog"></i>
+														</button> <!-- The Modal -->
+														<div id="fix${group.id}" class="modal fade" role="dialog">
+															<div class="modal-dialog">
+
+																<!-- Modal content-->
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h4 class="modal-title">Nhóm ${group.name}</h4>
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
+																	</div>
+																	<div class="modal-body">
+																		<div class="data-tables datatable-dark">
+																			<table id="dataTable3"
+																				style="width: 100%; text-align: left;">
+																				<tbody>
+																					<tr>
+																						<td>Nickname</td>
+																						<td>Username</td>
+																						<td>Email</td>
+																						<td>Thao tác</td>
+																					</tr>
+																					<c:forEach var="account" items="${group.accounts}">
+																						<tr>
+																							<td>${account.displayedName}</td>
+																							<td>${account.userName}</td>
+																							<td>${account.gmail}</td>
+																							<td><form
+																									action="${pageContext.request.contextPath}/manage/account/dashboard-groups"
+																									method="post">
+																									<button type="submit"
+																										class="btn btn-danger btn-small">
+																										<i class="fa fa-trash-o"></i>
+																									</button>
+																									<input type="hidden" value="${account.id}"
+																										name="memberID"> <input type="hidden"
+																										value="${group.id}" name="groupID">
+																								</form></td>
+																						</tr>
+																					</c:forEach>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-default"
+																			data-dismiss="modal">Close</button>
+																	</div>
+																</div>
+
+															</div>
+														</div>
+
 														<button type="button" class="btn btn-danger btn-small"
 															data-toggle="modal" data-target="#delete${group.id}">
 															<i class="fa fa-trash-o"></i>
 														</button> <!-- Modal -->
-														<div id="delete${group.id}" class="modal fade" role="dialog"
-															style="text-align: left;">
+														<div id="delete${group.id}" class="modal fade"
+															role="dialog" style="text-align: left;">
 															<div class="modal-dialog">
 
 																<!-- Modal content-->
@@ -136,15 +193,19 @@
 
 																	</div>
 																	<div class="modal-body">
-																		<p>Bạn có chắc muốn xóa nhóm <span class="btn-danger">${group.name}</span> và toàn
-																			bộ cống hiến của nhóm này?</p>
+																		<p>
+																			Bạn có chắc muốn xóa nhóm <span class="btn-danger">${group.name}</span>
+																			và toàn bộ cống hiến của nhóm này?
+																		</p>
 																	</div>
 																	<div class="modal-footer">
-																	<form action="${pageContext.request.contextPath}//manage/admin/dashboard-groups" method="post">
-																		<input type="hidden" name="action" value="delete">
-																		<input type="hidden" name="id" value="${group.id}">
-																		<button type="submit" class="btn btn-danger">Xóa
-																			hết</button>
+																		<form
+																			action="${pageContext.request.contextPath}/deletingGroupForUserServlet"
+																			method="post">
+																			<input type="hidden" name="action" value="delete">
+																			<input type="hidden" name="id" value="${group.id}">
+																			<button type="submit" class="btn btn-danger">Xóa
+																				hết</button>
 																		</form>
 																		<button type="button" class="btn btn-default"
 																			data-dismiss="modal">Hủy</button>

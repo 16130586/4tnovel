@@ -271,4 +271,18 @@ public class GroupDAO {
 		stmt.close();
 		return ret;
 	}
+	
+	public List<Group> getAllGroupsByOwnerID(int ownerID) throws SQLException {
+		List<Group> ret = new LinkedList<>();
+		String query= "SELECT ID FROM GROUPACC WHERE IDOWNER = ?";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		stmt.setInt(1, ownerID);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			ret.add(getGroup(rs.getInt("ID")));
+		}
+		rs.close();
+		stmt.close();
+		return ret;
+	}
 }
