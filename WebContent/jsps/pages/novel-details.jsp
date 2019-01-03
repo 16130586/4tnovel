@@ -34,14 +34,15 @@
 		value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
 	<%@ include file="/jsps/components/_header.jsp"%>
 	<div class="detail">
+	<div class="container">
 		<div class="detail__top u-centered">
 			<div class="row">
-				<div class="col-md-3 detail__top-cover">
-					<img class="img-cover"
-						src="${baseURL}/resources/imgs?id=${novel.coverId }"
-						alt="đoán xem">
+				<div class="col-lg-3 detail__top-cover">
+					<div class="img-cover"
+						style="background-image: url(${baseURL}/resources/imgs?id=${novel.coverId })"
+						></div>
 				</div>
-				<div class="col-md-9 detail__top-info">
+				<div class="col-lg-9 detail__top-info">
 					<div>
 						<h2 class="u-color-blue">
 							<a class="link">${novel.name}!</a>
@@ -120,7 +121,7 @@
 					</div>
 					<div class="u-margin-top--1rem u-padding-left--1rem"
 						id="description"
-						style="max-height: 150px; overflow: hidden; border-left: 4px solid rgb(16, 181, 145)">
+						style="max-height: 90px; overflow: hidden; border-left: 4px solid rgb(16, 181, 145)">
 						<c:set var="newLine" value="\n" />
 						<c:set var="paragraphs"
 							value="${novel.description.split(newLine) }" />
@@ -128,8 +129,7 @@
 							<p>${paragraph }</p>
 						</c:forEach>
 					</div>
-					<div id="btn-seemore-hide" class="u-align-right u-width--full"
-						style="margin: 1rem">
+					<div id="btn-seemore-hide" class="u-align-right u-width--full" style="margin-top: 1rem">
 						<button onclick="seeMoreOrHide(this)"
 							class="btn u-color-white u-padding--05rem"
 							style="background-color: #3f8296; width: 110px">
@@ -163,6 +163,7 @@
 			</c:forEach>
 		</div>
 	</div>
+	</div>
 	<script>
 		var btnLike = null
 		window.onload = function() {
@@ -180,12 +181,12 @@
 
 		function seeMoreOrHide(x) {
 			var des = document.getElementById('description');
-			if (des.style.maxHeight == "150px") {
+			if (des.style.maxHeight == "90px") {
 				setBtnSeeMoreOrHide(true, x);
 				des.style.maxHeight = null;
 			} else {
 				setBtnSeeMoreOrHide(false, x);
-				des.style.maxHeight = "150px";
+				des.style.maxHeight = "90px";
 			}
 		}
 
