@@ -13,6 +13,8 @@
         height: 100%;
         width: 100%;
         background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
     }
     &-detail {
         position: absolute;

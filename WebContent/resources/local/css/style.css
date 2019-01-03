@@ -430,7 +430,9 @@ input:-moz-placeholder {
     display: block;
     height: 100%;
     width: 100%;
-    background-size: cover !important; }
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important; }
   .card-detail {
     position: absolute;
     width: 100%;
