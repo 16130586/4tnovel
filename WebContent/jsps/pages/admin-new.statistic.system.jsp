@@ -102,18 +102,30 @@
 					<div class="row col-md-12 my-2">
 						<div class="row col-md-12">
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #9673d3;">a</div>
+								style="height: 15vh; background-color:#9673d3; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số truyện mới:</h3>
+								<h1 style="text-align: center; margin-top: 15px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataNovelOneDay}</h1>
+							</div>
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #00897b;">b</div>
+								style="height: 15vh; background-color:#00897b; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số chương mới:</h3>
+								<h1 style="text-align: center; margin-top: 20px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataChapOneDay}</h1>
+							</div>
 						</div>
 						<div class="row col-md-12" style="height: 10px;">
 							<span style="opacity: 0;">a</span>
 						</div>
 						<div class="row col-md-12">
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #e53935;">c</div>
+								style="height: 15vh; background-color: #e53935; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số tài khoản mới:</h3>
+								<h1 style="text-align: center; margin-top: 15px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataAccountOneDay}</h1>
+							</div>
 							<div class="col-md-4 m-auto"
-								style="height: 15vh; background-color: #ff9800;">d</div>
+								style="height: 15vh; background-color: #ff9800; color: white">
+								<h3 style="margin-top: 5px; font-weight: 400;">Số thảo luận mới:</h3>
+								<h1 style="text-align: center; margin-top: 15px; font-weight: 400;"><i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;${dataThreadOneDay}</h1>
+							</div>
 						</div>
 					</div>
 
