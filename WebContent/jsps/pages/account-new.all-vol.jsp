@@ -161,9 +161,10 @@
 																										</div>
 																										<form method="post"
 																											action="${pageContext.request.contextPath}/fix-vol">
-																											<input type="hidden" name="admin" value="1">
 																											<input type="hidden" name="fixedVolID"
 																												value="${vol.id }">
+																												<input type="hidden" name="in-novel"
+																												value="${vol.ownerNovel.id}">
 																											<div class="modal-body">
 																												<table class="table"
 																													style="margin: auto; width: 95%">
@@ -219,7 +220,6 @@
 																										</div>
 																										<div class="modal-footer">
 																										<form method="post" action="${pageContext.request.contextPath}/delete-vol">
-																											<input name="admin" value="1" type="hidden">
 																											<input name="id-vol" value="${vol.id }" type="hidden">
 																											<button type="submit"
 																												class="btn btn-danger btn-medium"
