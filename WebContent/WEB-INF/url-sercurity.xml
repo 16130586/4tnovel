@@ -429,7 +429,7 @@
 	<url pattern="/fix-chap">
 		<method name="get">
 			<login>true</login>
-			<connection>false</connection>
+			<connection>true</connection>
 			<role>1</role>
 			<role>2</role>
 		</method>
@@ -443,7 +443,7 @@
 	<url pattern="/fix-vol">
 		<method name="get">
 			<login>true</login>
-			<connection>false</connection>
+			<connection>true</connection>
 			<role>1</role>
 			<role>2</role>
 		</method>
@@ -457,7 +457,7 @@
 	<url pattern="/fix-novel">
 		<method name="get">
 			<login>true</login>
-			<connection>false</connection>
+			<connection>true</connection>
 			<role>1</role>
 			<role>2</role>
 		</method>
