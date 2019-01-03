@@ -280,7 +280,7 @@
 		listGenre.className="horizontal-menu--showcase text-centered"
 		
 		var genreDatas = data.novelOwner.genres;
-		var maxDisplay  = (genreDatas.length > 4 ? 4 : genreDatas.length);
+		var maxDisplay  = (genreDatas.length > 3 ? 3 : genreDatas.length);
 		for(var i = 0 ; i < maxDisplay ; i ++){
 			var li = document.createElement('li')
 			li.className = "menu-item u-margin-right--2rem u-rounded--tag"
