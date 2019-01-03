@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -83,11 +84,14 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			List<Pair<String, Integer>> detailNovelOverDays, detailChapOverDays, detailAccountOverDays,
 					detailThreadOverDays;
 			String jsonDetailNovelOverDays, jsonDetailChapOverDays, jsonDetailAccountOverDays, jsonDetailThreadOverDays;
+			int dataNovelOneDay, dataChapOneDay, dataAccountOneDay, dataThreadOneDay;
 			DateTimeFormatter fitToDBQueryFmter = DateTimeFormatter.ofPattern("MM-dd-YYYY");
 
 			// reformat for the using of query
+			Date currentDate = new Date();
 			String fitStartDate = startDate.format(fitToDBQueryFmter);
 			String fitEndDate = endDate.plusDays(1).format(fitToDBQueryFmter);
+			String fitCurrentDate = fitToDBQueryFmter.format(currenVnesDate);
 
 			// end format
 
@@ -96,6 +100,11 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			detailChapOverDays = statisticDao.statisticChapOverDays(fitStartDate, fitEndDate);
 			detailAccountOverDays = statisticDao.statisticAccountOverDays(fitStartDate, fitEndDate);
 			detailThreadOverDays = statisticDao.statisticThreadOverDays(fitStartDate, fitEndDate);
+			
+			dataNovelOneDay = statisticDao.statisticNovelOneDay(fitCurrentDate);
+			dataChapOneDay = statisticDao.statisticChapOneDay(fitCurrentDate);
+			dataAccountOneDay = statisticDao.statisticAccountOneDay(fitCurrentDate);
+			dataThreadOneDay = statisticDao.statisticThreadOneDay(fitCurrentDate);
 
 			// end loading raw data
 
@@ -114,13 +123,19 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			System.out.println(jsonDetailAccountOverDays);
 			System.out.println(jsonDetailThreadOverDays);
 
-			// passing json to chart on the view
+			// passing data to chart on the view
 			request.setAttribute("dataDetailNovelOverDays", jsonDetailNovelOverDays);
 			request.setAttribute("dataDetailChapOverDays", jsonDetailChapOverDays);
 			request.setAttribute("dataDetailAccountOverDays", jsonDetailAccountOverDays);
 			request.setAttribute("dataDetailThreadOverDays", jsonDetailThreadOverDays);
-
+			
+			request.setAttribute("dataNovelOneDay", dataNovelOneDay);
+			request.setAttribute("dataChapOneDay", dataChapOneDay);
+			request.setAttribute("dataAccountOneDay", dataAccountOneDay);
+			request.setAttribute("dataThreadOneDay", dataThreadOneDay);
 			// end
+			
+			//
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
