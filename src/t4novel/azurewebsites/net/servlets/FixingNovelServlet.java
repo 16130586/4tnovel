@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import t4novel.azurewebsites.net.DAO.GenreDAO;
+import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAO.ImageDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.forms.AbstractMappingForm;
@@ -49,8 +51,17 @@ public class FixingNovelServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Account account = (Account) request.getSession().getAttribute("account");
+		Connection cnn = (Connection) request.getAttribute("connection");
 		int novelID = Integer.parseInt(request.getParameter("id-novel"));
-		Novel fixingNovel = account.getANovel(novelID);
+		Novel fixingNovel = null;
+		try {
+			fixingNovel = new NovelDAO(cnn).getNovelById(novelID);
+			GroupDAO groupDao = new GroupDAO(cnn);
+			fixingNovel.setGroup(groupDao.getGroup(fixingNovel.getGroupId()));
+			fixingNovel.setGenres(new GenreDAO(cnn).getGenres(novelID));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		request.setAttribute("fixingNovel", fixingNovel);
 		getServletContext().getRequestDispatcher("/jsps/pages/fix-novel.jsp").forward(request, response);
 	}
@@ -107,11 +118,10 @@ public class FixingNovelServlet extends HttpServlet {
 
 				// new logic
 				FileItem fileImage = (FileItem) request.getAttribute("fileImage");
-				if (fileImage != null) {
+				if (fileImage.getInputStream().available() > 0) {
 					imgDAO.updateImage(fileImage.getInputStream() , oldNovel.getCoverId());
 					fixedNovel.setCoverId(oldNovel.getCoverId());
-				}
-				if(fileImage == null) {
+				} else {
 					System.out.println("null nha be oi!!!!! nho them anh khi sua lai");
 				}
 				// end new logic

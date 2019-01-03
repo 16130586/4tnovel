@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
+import t4novel.azurewebsites.net.DAO.GenreDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.DAO.VolDAO;
@@ -36,26 +37,24 @@ public class AccountDashBoardNovels extends HttpServlet {
 		List<Novel> novels = null;
 		Account hostAcc = (Account) request.getSession().getAttribute("account");
 		try {
-			
-			if (hostAcc.getOwnNovels() == null) {
-				 novels = novelDao.getNovels(null, "IDOWNER=" + hostAcc.getId(), 0, Integer.MAX_VALUE);
-				AccountDAO accDao = new AccountDAO(cnn);
-				VolDAO volDao = new VolDAO(cnn);
-				ChapDAO chapDao = new ChapDAO(cnn);
-				GroupDAO groupDao = new GroupDAO(cnn);
-				for (Novel n : novels) {
-					hostAcc.addNewOwnerNovel(n);
-					n.setOwner(accDao.getAccountByID(n.getAccountOwnerId()));
-					n.setGroup(groupDao.getGroup(n.getGroupId()));
-					n.setVols(volDao.getVolsOfNovel(n.getId()));
-					for (Vol v : n.getVols()) {
-						v.setChaps(chapDao.getPartOfChapsByVolId(v.getId()));
-					}
+			novels = novelDao.getNovels(null, "IDOWNER=" + hostAcc.getId(), 0, Integer.MAX_VALUE);
+			AccountDAO accDao = new AccountDAO(cnn);
+			VolDAO volDao = new VolDAO(cnn);
+			ChapDAO chapDao = new ChapDAO(cnn);
+			GroupDAO groupDao = new GroupDAO(cnn);
+			GenreDAO genreDao = new GenreDAO(cnn);
+			hostAcc.setJoinGroup(groupDao.getJoinGroups(hostAcc.getId()));
+			for (Novel n : novels) {
+				hostAcc.addNewOwnerNovel(n);
+				n.setOwner(accDao.getAccountByID(n.getAccountOwnerId()));
+				n.setGroup(groupDao.getGroup(n.getGroupId()));
+				n.setVols(volDao.getVolsOfNovel(n.getId()));
+				n.setGenres(genreDao.getGenres(n.getId()));
+				for (Vol v : n.getVols()) {
+					v.setChaps(chapDao.getPartOfChapsByVolId(v.getId()));
 				}
 			}
-			else {
-				novels = hostAcc.getOwnNovels();
-			}
+
 			request.setAttribute("novels", novels);
 		} catch (Exception e) {
 			e.printStackTrace();

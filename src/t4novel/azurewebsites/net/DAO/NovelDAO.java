@@ -208,7 +208,7 @@ public class NovelDAO {
 
 	public void updateNovel(Novel novel) throws Exception {
 		PreparedStatement stmt = null;
-		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ? , COVERID = ? , TOTAL_VIEW = ? where ID = ?";
+		String query = "update LN set NAME = ?, DESCRIBE = ?, KIND = ?, STATUS = ?, TOTAL_VIEW = ? where ID = ?";
 
 		try {
 			cnn.setAutoCommit(false);
@@ -217,9 +217,8 @@ public class NovelDAO {
 			stmt.setString(2, novel.getDescription());
 			stmt.setString(3, novel.getKind().toText());
 			stmt.setInt(4, novel.getStatus().getValue());
-			stmt.setInt(5, novel.getCoverId());
-			stmt.setInt(6, novel.getView());
-			stmt.setInt(7, novel.getId());
+			stmt.setInt(5, novel.getView());
+			stmt.setInt(6, novel.getId());
 			stmt.executeUpdate();
 			cnn.commit();
 		} catch (Exception e) {
