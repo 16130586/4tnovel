@@ -6,7 +6,6 @@
         <ul class="horizontal-menu--showcase ">
             <li class="menu-item u-margin-left--1rem "><a class="link " href="index">Trang chủ</a></li>
             <li class="menu-item u-margin-left--1rem "><a class="link " href="manage">Thông tin</a></li>
-            <li class="menu-item u-margin-left--1rem "><a class="link " href="myNovel">Truyện của tui</a></li>
             <li class="menu-item u-margin-left--1rem dropdown-menu">
                 <a class="link " href="#">Thêm</a>
                 <div class="dropdown-content--bottom">
@@ -23,6 +22,9 @@
             <c:if test="${account.role.name() eq 'ADMINISTRATOR'}">
             	<li class="menu-item u-margin-left--1rem "><a class="link" href="manage/admin/statistics/system">Quản trị</a></li>
             </c:if>
+            <c:if test="${account.role.name() ne 'ADMINISTRATOR'}">
+            	<li class="menu-item u-margin-left--1rem"><a class="link" href="manage/account/dashboard-novels">Quản trị</a></li>
+        	</c:if>
         </ul>
     </div>
     <div class="col-md-2 dropdown-menu ">
