@@ -704,14 +704,17 @@ input:-moz-placeholder {
   background-color: #fafafa; }
   .detail__top {
     height: auto;
-    width: 75vw;
     background-color: #f1f1f1; }
     .detail__top-cover {
       padding-top: 2rem;
-      padding-bottom: 2rem;
-      text-align: right; }
+      padding-bottom: 2rem; }
       .detail__top-cover .img-cover {
-        width: 100%; }
+        margin: auto;
+        width: 230px;
+        height: 325px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center; }
     .detail__top-info {
       padding-top: 1rem;
       padding-bottom: 2rem; }
@@ -720,7 +723,6 @@ input:-moz-placeholder {
       .detail__top-info .genre {
         text-transform: lowercase; }
   .detail__body {
-    width: 75vw;
     padding-bottom: 2rem;
     padding-top: 2rem; }
     .detail__body .tab .tab-btn {

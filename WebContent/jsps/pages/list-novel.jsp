@@ -28,16 +28,26 @@
 <link rel="stylesheet"
 	href="resources/vendors/css/bootstrap-customize.css">
 <link rel="stylesheet" href="resources/local/css/style.css" />
+<style type="text/css">
+	.opt {
+		display: block;
+	}
+	@media only screen and (max-width: 768px) {
+		.opt {
+			display: inline-block;
+		}	
+	}
+	
+</style>
 </head>
 <body>
 	<%@ include file="/jsps/components/_header.jsp"%>
 	<div style="background: white;">
-		<div class="u-width--80 u-centered">
-			<h2 class="u-margin-bottom--2rem" style="padding-top: 2rem">DANH
-				SÁCH TRUYỆN #${searchString}</h2>
-		</div>
-		<div class="row u-width--80 u-centered">
-			<div class="col-3">
+	<div class="container">
+		<h2 class="u-margin-bottom--2rem" style="padding-top: 2rem">DANH
+			SÁCH TRUYỆN #${searchString}</h2>
+		<div class="row">
+			<div class="col-md-3">
 				<section class="u-margin-bottom--2rem u-padding--05rem">
 					<div class="sec-title"
 						style="color: #61a4ad; text-transform: uppercase; font-weight: bold; font-size: 1.8rem;">
@@ -45,11 +55,11 @@
 					</div>
 					<div class="u-margin-left--2rem">
 						<a href="see3?kind=TRANSLATE"
-							class="link u-block u-padding--05rem">Truyện dịch</a> <a
+							class="link opt u-padding--05rem">Truyện dịch</a> <a
 							href="see3?kind=COMPOSE"
-							class="link u-block u-padding--05rem">Truyện sáng tác</a> <a
+							class="link opt u-padding--05rem">Truyện sáng tác</a> <a
 							href="see3?"
-							class="link u-block u-padding--05rem">Tất cả</a>
+							class="link opt u-padding--05rem">Tất cả</a>
 					</div>
 				</section>
 				<section class="u-margin-bottom--2rem u-padding--05rem">
@@ -59,13 +69,13 @@
 					</div>
 					<div class="u-margin-left--2rem">
 						<a href="see3?status=1"
-							class="link u-block u-padding--05rem">Đang tiến hành</a> <a
+							class="link opt u-padding--05rem">Đang tiến hành</a> <a
 							href="see3?status=2"
-							class="link u-block u-padding--05rem">Tạm ngưng</a> <a
+							class="link opt u-padding--05rem">Tạm ngưng</a> <a
 							href="see3?status=0"
-							class="link u-block u-padding--05rem">Đã hoàn thành</a> <a
+							class="link opt u-padding--05rem">Đã hoàn thành</a> <a
 							href="see3?"
-							class="link u-block u-padding--05rem">Tất cả</a>
+							class="link opt u-padding--05rem">Tất cả</a>
 					</div>
 				</section>
 				<section class="u-margin-bottom--2rem u-padding--05rem">
@@ -74,67 +84,67 @@
 						<span style="border-bottom: 3px solid #10b591">Thể loại</span>
 					</div>
 					<div class="u-margin-left--2rem">
-						<a href="see3" class="link u-block u-padding--05rem">All</a> <a
+						<a href="see3" class="link opt u-padding--05rem">All</a> <a
 							href="see3?genre=0"
-							class="link u-block u-padding--05rem">Action</a> <a
+							class="link opt u-padding--05rem">Action</a> <a
 							href="see3?genre=8"
-							class="link u-block u-padding--05rem">Adult</a> <a
+							class="link opt u-padding--05rem">Adult</a> <a
 							href="see3?genre=15"
-							class="link u-block u-padding--05rem">Adventure</a> <a
+							class="link opt u-padding--05rem">Adventure</a> <a
 							href="see3?genre=22"
-							class="link u-block u-padding--05rem">Comedy</a> <a
+							class="link opt u-padding--05rem">Comedy</a> <a
 							href="see3?genre=1"
-							class="link u-block u-padding--05rem">Drama</a> <a
+							class="link opt u-padding--05rem">Drama</a> <a
 							href="see3?genre=9"
-							class="link u-block u-padding--05rem">Ecchi</a> <a
+							class="link opt u-padding--05rem">Ecchi</a> <a
 							href="see3?genre=16"
-							class="link u-block u-padding--05rem">Fantasy</a> <a
+							class="link opt u-padding--05rem">Fantasy</a> <a
 							href="see3?genre=23"
-							class="link u-block u-padding--05rem">Gender Bender</a> <a
+							class="link opt u-padding--05rem">Gender Bender</a> <a
 							href="see3?genre=17"
-							class="link u-block u-padding--05rem">Horror</a> <a
+							class="link opt u-padding--05rem">Horror</a> <a
 							href="see3?genre=10"
-							class="link u-block u-padding--05rem">Incest</a> <a
+							class="link opt u-padding--05rem">Incest</a> <a
 							href="see3?genre=2"
-							class="link u-block u-padding--05rem">Isekai</a> <a
+							class="link opt u-padding--05rem">Isekai</a> <a
 							href="see3?genre=24"
-							class="link u-block u-padding--05rem">Josei</a> <a
+							class="link opt u-padding--05rem">Josei</a> <a
 							href="see3?genre=3"
-							class="link u-block u-padding--05rem">Mature</a> <a
+							class="link opt u-padding--05rem">Mature</a> <a
 							href="see3?genre=11"
-							class="link u-block u-padding--05rem">Mecha</a> <a
+							class="link opt u-padding--05rem">Mecha</a> <a
 							href="see3?genre=18"
-							class="link u-block u-padding--05rem">Mystery</a> <a
+							class="link opt u-padding--05rem">Mystery</a> <a
 							href="see3?genre=4"
-							class="link u-block u-padding--05rem">School Life</a> <a
+							class="link opt u-padding--05rem">School Life</a> <a
 							href="see3?genre=5"
-							class="link u-block u-padding--05rem">Slice of Life</a> <a
+							class="link opt u-padding--05rem">Slice of Life</a> <a
 							href="see3?genre=14"
-							class="link u-block u-padding--05rem">Supernatural</a> <a
+							class="link opt u-padding--05rem">Supernatural</a> <a
 							href="see3?genre=20"
-							class="link u-block u-padding--05rem">Shounen</a> <a
+							class="link opt u-padding--05rem">Shounen</a> <a
 							href="see3?genre=6"
-							class="link u-block u-padding--05rem">Super Power</a> <a
+							class="link opt u-padding--05rem">Super Power</a> <a
 							href="see3?genre=26"
-							class="link u-block u-padding--05rem">Seinen</a> <a
+							class="link opt u-padding--05rem">Seinen</a> <a
 							href="see3?genre=13"
-							class="link u-block u-padding--05rem">Sports</a> <a
+							class="link opt u-padding--05rem">Sports</a> <a
 							href="see3?genre=12"
-							class="link u-block u-padding--05rem">Shoujo ai</a> <a
+							class="link opt u-padding--05rem">Shoujo ai</a> <a
 							href="see3?genre=19"
-							class="link u-block u-padding--05rem">Shoujo</a> <a
+							class="link opt u-padding--05rem">Shoujo</a> <a
 							href="see3?genre=21"
-							class="link u-block u-padding--05rem">Suspense</a> <a
+							class="link opt u-padding--05rem">Suspense</a> <a
 							href="see3?genre=25"
-							class="link u-block u-padding--05rem">Romance</a> <a
+							class="link opt u-padding--05rem">Romance</a> <a
 							href="see3?genre=28"
-							class="link u-block u-padding--05rem">Tragedy</a> <a
+							class="link opt u-padding--05rem">Tragedy</a> <a
 							href="see3?genre=27"
-							class="link u-block u-padding--05rem">Shounen ai</a>
+							class="link opt u-padding--05rem">Shounen ai</a>
 					</div>
 				</section>
 			</div>
-			<div class="col-9 u-align-center">
+			<div class="col-md-9 u-align-center">
 				<c:forEach var="novel" items="${novelList}">
 					<%@ include file="/jsps/components/_card-novel-img.jsp"%>
 				</c:forEach>
@@ -174,6 +184,7 @@
 			</div>
 		</div>
 	</div>
+	</div>	
 	<%@include file="/jsps/components/_footer.jsp"%>
 
 </body>

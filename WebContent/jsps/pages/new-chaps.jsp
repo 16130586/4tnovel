@@ -30,9 +30,9 @@
 <body>
 	<%@ include file="/jsps/components/_header.jsp" %>
 	<div style="background: white;">	
-	<div class="u-width--80 u-centered">
+	<div class="container">
         <h2 class="u-margin-bottom--2rem" style="padding-top: 2rem">NHỮNG CHƯƠNG MỚI NHẤT</h2>
-        <div class="u-align-center u-width--95 u-centered">
+        <div class="u-align-center">
         	<c:forEach var="chap" items="${newChaps }">
        			<c:set var="novel" value="${chap.novelOwner }"/>
         		<%@ include file="/jsps/components/_card-novel-img.jsp" %>
