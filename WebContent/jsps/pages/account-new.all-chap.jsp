@@ -152,16 +152,9 @@
 																									style="text-decoration: none; color: black; width: 80%; display: inline-block;"
 																									title="${chap.title }"
 																									href="${pageContext.request.contextPath}/read?id=${chap.id}">&nbsp;${chap.title }</a>
-																								<form style="display: inline-block;"
-																									action="${pageContext.request.contextPath}/manage/admin/dashboard-chaps"
-																									method="post">
-																									<input type="hidden" name="action" value="fix">
-																									<input type="hidden" name="id-chap"
-																										value="${chap.id }">
-																									<button class="btn btn-primary">
-																										<i class="fa fa-edit"></i>
-																									</button>
-																								</form>
+																								<a style="display: inline-block;" href="${pageContext.request.contextPath}/fix-chap?id-chap=${chap.id }" class="btn btn-primary">
+																									<i class="fa fa-edit"></i>
+																								</a>
 																								<button type="button"
 																									style="display: inline-block;"
 																									class="btn btn-secondary" data-toggle="modal"
@@ -189,7 +182,6 @@
 																												<form
 																													action="${pageContext.request.contextPath}/delete-chap"
 																													method="post">
-																													<input type="hidden" name="admin" value="1">
 																													<input type="hidden" name="id-chap"
 																														value="${chap.id }">
 																													<button type="submit"

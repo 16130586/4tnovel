@@ -162,6 +162,7 @@
 																										<form method="post"
 																											action="${pageContext.request.contextPath}/fix-vol">
 																											<input type="hidden" name="admin" value="1">
+																											<input type="hidden" name="action" value="fix">
 																											<input type="hidden" name="fixedVolID"
 																												value="${vol.id }">
 																											<div class="modal-body">
@@ -186,6 +187,7 @@
 																												</table>
 																											</div>
 																											<div class="modal-footer">
+																											<input type="hidden" name="admin" value="1">
 																												<button type="submit"
 																													class="btn btn-primary"
 																													style="margin: auto">Sửa</button>

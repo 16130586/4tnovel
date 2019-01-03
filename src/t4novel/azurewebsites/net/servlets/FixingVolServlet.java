@@ -38,6 +38,15 @@ public class FixingVolServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Account account = (Account) request.getSession().getAttribute("account");
+
+		int volID = Integer.parseInt(request.getParameter("id-vol"));
+		Vol fixingVol = account.getOwnerVol(volID);
+		Novel novel = account.getANovel(fixingVol.getNovelOwnerId());
+		request.setAttribute("novel", novel);
+		request.setAttribute("fixingVol", fixingVol);
+		getServletContext().getRequestDispatcher("/jsps/pages/fix-vol.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -50,20 +59,18 @@ public class FixingVolServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 		
-		String action = request.getParameter("action");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		VolDAO volDAO = new VolDAO(cnn);
-		Account account = (Account) request.getSession().getAttribute("account");
 		String isAdmin = request.getParameter("admin");
 
-		if ("fix-vol".equals(action)) {
-			int volID = Integer.parseInt(request.getParameter("id-vol"));
-			Vol fixingVol = account.getOwnerVol(volID);
-			Novel novel = account.getANovel(fixingVol.getNovelOwnerId());
-			request.setAttribute("novel", novel);
-			request.setAttribute("fixingVol", fixingVol);
-			getServletContext().getRequestDispatcher("/jsps/pages/fix-vol.jsp").forward(request, response);
-		} else {
+//		if ("fix-vol".equals(action)) {
+//			int volID = Integer.parseInt(request.getParameter("id-vol"));
+//			Vol fixingVol = account.getOwnerVol(volID);
+//			Novel novel = account.getANovel(fixingVol.getNovelOwnerId());
+//			request.setAttribute("novel", novel);
+//			request.setAttribute("fixingVol", fixingVol);
+//			getServletContext().getRequestDispatcher("/jsps/pages/fix-vol.jsp").forward(request, response);
+//		} else {
 			AbstractMappingForm form = new AddingVolForm(request);
 			if (!form.isOnError()) {
 				Vol fixedVol = (Vol) form.getMappingData();
@@ -71,8 +78,10 @@ public class FixingVolServlet extends HttpServlet {
 					int volID = Integer.parseInt(request.getParameter("fixedVolID"));
 					fixedVol.setId(volID);
 					volDAO.updateVol(fixedVol);
-					if (isAdmin == null)
+					if (!"1".equals(isAdmin)) {
+						Account account = (Account) request.getSession().getAttribute("account");
 						account.setOwnerVol(fixedVol);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,11 +91,10 @@ public class FixingVolServlet extends HttpServlet {
 					System.out.println(er.getKey() + "  " + er.getValue());
 				}
 			}
-			if (isAdmin == null)
+			if (!"1".equals(isAdmin))
 				response.sendRedirect("manage/account/dashboard-vols");
 			else
 				response.sendRedirect("manage/admin/dashboard-vols");
 		}
-	}
-
+//	}
 }

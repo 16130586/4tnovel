@@ -67,6 +67,7 @@
 					<button name="action" type="submit" class="btn btn-primary u-2x"
 						value="begin-fix">Lưu thay đổi</button>
 					<input name="fixedVolID" type="hidden" value="${fixingVol.id}"></input>
+					<input name="admin" type="hidden" value="${admin }">
 					<a href="myNovel" type="button" class="btn btn-danger u-2x">Hủy</a>
 				</div>
 			</form>

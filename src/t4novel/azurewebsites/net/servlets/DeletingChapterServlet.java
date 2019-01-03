@@ -49,15 +49,15 @@ public class DeletingChapterServlet extends HttpServlet {
 		try {
 			int chapID = Integer.parseInt(request.getParameter("id-chap"));
 			chapDAO.deleteChapByID(chapID);
-			if (isAdmin == null) {
+			if (!"1".equals(isAdmin)) {
 				Account account = (Account) request.getSession().getAttribute("account");
 				account.deleteOwnerChap(chapID);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (isAdmin == null)
-			response.sendRedirect("myNovel");
+		if (!"1".equals(isAdmin))
+			response.sendRedirect("manage/account/dashboard-chaps");
 		else
 			response.sendRedirect("manage/admin/dashboard-chaps");
 	}

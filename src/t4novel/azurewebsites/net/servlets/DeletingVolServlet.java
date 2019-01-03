@@ -50,14 +50,14 @@ public class DeletingVolServlet extends HttpServlet {
 		try {
 			int volID = Integer.parseInt(request.getParameter("id-vol"));
 			volDAO.deleteVolByID(volID, chapDAO);
-			if (isAdmin == null) {
+			if (!"1".equals(isAdmin)) {
 				Account account = (Account) request.getSession().getAttribute("account");
 				account.deleteVol(volID);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (isAdmin == null)
+		if (!"1".equals(isAdmin))
 			response.sendRedirect("manage/account/dashboard-vols");
 		else
 			response.sendRedirect("manage/admin/dashboard-vols");

@@ -14,7 +14,7 @@ public class AddingChapterForm extends AbstractMappingForm {
 	public AddingChapterForm(HttpServletRequest request) {
 		setTitle(request.getParameter("title"));
 		setContent(request.getParameter("content"));
-		if (!"begin-fix".equals(request.getParameter("action")))
+		if (request.getParameter("action") == null)
 			try {
 				setInNovel(Integer.parseInt(request.getParameter("in-novel")));
 				setInVol(Integer.parseInt(request.getParameter("in-vol")));

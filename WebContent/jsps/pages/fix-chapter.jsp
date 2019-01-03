@@ -48,10 +48,11 @@
 				<div class="u-align-center u-color-white">
 					<button type="submit" class="btn btn-primary u-2x">Lưu
 						thay đổi</button>
-					<input name="action" type="hidden" value="begin-fix"></input> <input
+					<input
 						name="fixingChapID" type="hidden" value="${fixingChap.id}"></input>
 						<input name="admin" value="${admin }" type="hidden">
-					<a href="myNovel" type="button" class="btn btn-danger u-2x">Hủy</a>
+						<input type="hidden" name="action" value="fix">
+					<a href="manage/account/dashboard-chaps" type="button" class="btn btn-danger u-2x">Hủy</a>
 				</div>
 			</form>
 		</div>

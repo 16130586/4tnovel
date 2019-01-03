@@ -55,15 +55,15 @@ public class DeletingNovelServlet extends HttpServlet {
 		try {
 			int novelID = Integer.parseInt(request.getParameter("id-novel"));
 			novelDAO.delNovelById(novelID, volDAO, chapDAO, genreDAO);
-			if (isAdmin == null) {
+			if (!"1".equals(isAdmin)) {
 				Account account = (Account) request.getSession().getAttribute("account");
 				account.deleteNovel(novelID);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (isAdmin == null)
-			response.sendRedirect("myNovel");
+		if (!"1".equals(isAdmin))
+			response.sendRedirect("manage/account/dashboard-novels");
 		else			
 			response.sendRedirect("manage/admin/dashboard-novels");
 	}

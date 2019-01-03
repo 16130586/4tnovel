@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +36,16 @@ public class FixingChapterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: doget").append(request.getContextPath());
+		Connection cnn = (Connection) request.getAttribute("connection");
+		ChapDAO chapDAO = new ChapDAO(cnn);
+		int chapID = Integer.parseInt(request.getParameter("id-chap"));
+		try {
+			Chap fixingChap = chapDAO.getChapByID(chapID);;
+			request.setAttribute("fixingChap", fixingChap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		getServletContext().getRequestDispatcher("/jsps/pages/fix-chapter.jsp").forward(request, response);
 	}
 
 	/**
@@ -48,33 +58,33 @@ public class FixingChapterServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 
-		String action = request.getParameter("action");
-		Account account = (Account) request.getSession().getAttribute("account");
 		Connection cnn = (Connection) request.getAttribute("connection");
 		ChapDAO chapDAO = new ChapDAO(cnn);
 
-		if (action.equals("fix-chap")) {
-			int chapID = Integer.parseInt(request.getParameter("id-chap"));
-			Chap fixingChap = account.getOwnerChap(chapID);
-			try {
-				if (fixingChap.getContent() == null) {
-					fixingChap.setContent(chapDAO.getContentOfChap(fixingChap));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			request.setAttribute("fixingChap", fixingChap);
-			getServletContext().getRequestDispatcher("/jsps/pages/fix-chapter.jsp").forward(request, response);
-		} else {
+//		if (action.equals("fix-chap")) {
+//			int chapID = Integer.parseInt(request.getParameter("id-chap"));
+//			Chap fixingChap = account.getOwnerChap(chapID);
+//			try {
+//				if (fixingChap.getContent() == null) {
+//					fixingChap.setContent(chapDAO.getContentOfChap(fixingChap));
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			request.setAttribute("fixingChap", fixingChap);
+//			getServletContext().getRequestDispatcher("/jsps/pages/fix-chapter.jsp").forward(request, response);
+//		} else {
 			AbstractMappingForm form = new AddingChapterForm(request);
-			String isAdmin = request.getParameter("admin");
+			String admin = request.getParameter("admin");
+			System.out.println(admin);
 			if (!form.isOnError()) {
 				Chap chapter = (Chap) form.getMappingData();
 				try {
 					int chapID = Integer.parseInt(request.getParameter("fixingChapID"));
 					chapter.setId(chapID);
 					chapDAO.updateChap(chapter);
-					if (isAdmin == null) {
+					if (!"1".equals(admin)) {
+						Account account = (Account) request.getSession().getAttribute("account");
 						account.setOwnerChap(chapter);
 						Chap fixingChap = account.getOwnerChap(chapID);
 						System.out.println("title : " + fixingChap.getTitle());
@@ -85,10 +95,14 @@ public class FixingChapterServlet extends HttpServlet {
 			} else {
 				form.applyErrorsToUI(request);
 			}
-			if (isAdmin == null)
-				response.sendRedirect("myNovel");
-			else
+			if (!"1".equals(admin)) {
+				response.sendRedirect("manage/account/dashboard-chaps");
+				System.out.println("not admin");
+			}
+			else {
 				response.sendRedirect("manage/admin/dashboard-chaps");
+				System.out.println("admin");
+			}
 		}
-	}
+//	}
 }

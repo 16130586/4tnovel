@@ -3,7 +3,9 @@ package t4novel.azurewebsites.net.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,20 +69,9 @@ public class AdminDashBoardChaps extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action =  request.getParameter("action");
-		Connection cnn = (Connection) request.getAttribute("connection");
-		ChapDAO chapDAO = new ChapDAO(cnn);
-		if ("fix".equals(action)) {
-			int chapID = Integer.parseInt(request.getParameter("id-chap"));
-			try {
-				Chap fixingChap = chapDAO.getChapByID(chapID);
-				request.setAttribute("fixingChap", fixingChap);
-				request.setAttribute("admin", 1);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			getServletContext().getRequestDispatcher("/jsps/pages/fix-chapter.jsp").forward(request, response);
+		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
 		}
+		doGet(request, response);
 	}
-
 }
