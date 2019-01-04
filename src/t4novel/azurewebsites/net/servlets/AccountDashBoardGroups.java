@@ -55,9 +55,6 @@ public class AccountDashBoardGroups extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
-		}
 		Connection cnn = (Connection) request.getAttribute("connection");
 		GroupDAO groupDao = new GroupDAO(cnn);
 		AccountDAO accDao = new AccountDAO(cnn);

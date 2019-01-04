@@ -50,7 +50,6 @@ public abstract class AbstractBot implements CensoringBot, Runnable {
 					Thread.sleep(period);
 					continue;
 				}
-				System.out.println("bot get : " + en.getTitle());
 				boolean isEntityPass = censor(en);
 				Connection cnn = null;
 				try {
@@ -65,7 +64,6 @@ public abstract class AbstractBot implements CensoringBot, Runnable {
 				en.setAcceptedByCensorSystem(isEntityPass);
 				try {
 					censorDao.onCensoringEventUpdate(en);
-					System.out.println("bot accepted or non accepted");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -73,8 +71,6 @@ public abstract class AbstractBot implements CensoringBot, Runnable {
 				MessageBuilder msgBuilder = new EntityAcceptByCensoringMessageBuilder(en);
 				Message msg = msgBuilder.getData();
 				NotifycationSystem.notifyToUser(en.getOwnerAccountId(), msg, cnn);
-				System.out.println("bot notify to owner user: owneraccout :" + en.getOwnerAccountId() + " with msg \n"
-						+ msg.getContent());
 
 				if (en.isAccepted()) {
 					ContextHelper.increasePaginationNumber(en);
@@ -89,12 +85,9 @@ public abstract class AbstractBot implements CensoringBot, Runnable {
 						msgBuilder = MessageBuilderFactory.create(en);
 						msg = msgBuilder.getData();
 						NotifycationSystem.notifyToListUser(followersId, msg);
-						System.out.println("bot notify to follower: with ownertarget : " + en.getOwnerTargetId()
-								+ " with msg \n " + msg.getContent());
 					}
 					
 				}
-				System.out.println("bot sleep on period");
 				cnn.close();
 				Thread.sleep(period);
 			} catch (InterruptedException e) {

@@ -58,7 +58,7 @@ public class ChangeDisplayedNameServlet extends HttpServlet {
 			}
 			// write to caches
 			request.getSession().setAttribute("account", account);
-			request.setAttribute("sucessed", "Change new display name done!");
+			request.setAttribute("sucessed", "Đổi tên thành công!");
 			response.sendRedirect("manage");
 		}
 		// mapping loi toi user interface

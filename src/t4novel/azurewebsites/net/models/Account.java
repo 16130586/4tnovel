@@ -206,7 +206,6 @@ public class Account implements Serializable {
 
 	public void setJoinGroup(List<Group> jointGroup) {
 		this.joinGroups = jointGroup;
-		System.out.println("is joint group null ? " + (jointGroup == null));
 	}
 
 	public Group getGroup(int rootGroupId) {
@@ -370,7 +369,6 @@ public class Account implements Serializable {
 	}
 
 	public boolean isFollowNovel(int novelId) {
-		System.out.println("checking " + getId() + " is follow " + novelId);
 		if (this.novelFollowsId == null || this.novelFollowsId.isEmpty())
 			return false;
 		for (Integer f : this.novelFollowsId)

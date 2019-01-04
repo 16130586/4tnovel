@@ -53,7 +53,6 @@ public class AddingGroupServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 
-		System.out.println("post adding group");
 		Connection databaseConnection = (Connection) request.getAttribute("connection");
 		DAOService existedGroupNameChecker = new ExisteddNameCheckingService(databaseConnection);
 		AbstractMappingForm submitedForm = new AddingGroupForm(request, existedGroupNameChecker);
@@ -79,7 +78,6 @@ public class AddingGroupServlet extends HttpServlet {
 
 				databaseConnection.commit();
 				databaseConnection.setAutoCommit(true);
-				System.out.println("NEW GROUP DONE!");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				try {
@@ -89,8 +87,7 @@ public class AddingGroupServlet extends HttpServlet {
 				}
 			}
 			// try catch => xay ra loi trong chuoi hanh dong => roll back lai het
-			System.out.println("ok not error then set success");
-			request.setAttribute("sucessed", "Thêm nhóm thành công!");
+			request.setAttribute("sucessed", "ThÃªm nhÃ³m thÃ nh cÃ´ng!");
 		} else {
 			System.out.println("on error");
 			submitedForm.applyErrorsToUI(request);

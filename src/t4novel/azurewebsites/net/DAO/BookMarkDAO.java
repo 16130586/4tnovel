@@ -62,7 +62,6 @@ public class BookMarkDAO {
 			stmt.setString(4, bookmark.getDetail());
 			stmt.executeUpdate();
 			stmt.close();
-			System.out.println("Insert bookmark completed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -84,7 +83,6 @@ public class BookMarkDAO {
 			stmt.executeUpdate();
 			stmt.close();
 			cnn.commit();
-			System.out.println("Update bookmark completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -106,7 +104,6 @@ public class BookMarkDAO {
 			stmt.executeUpdate();
 			stmt.close();
 			cnn.commit();
-			System.out.println("Delete bookmark completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

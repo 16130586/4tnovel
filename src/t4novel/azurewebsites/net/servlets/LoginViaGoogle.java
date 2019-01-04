@@ -32,7 +32,6 @@ public class LoginViaGoogle extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String code = request.getParameter("code");
 	    String url = "";
-	    System.out.println("pass here");
 		if (code == null || code.isEmpty()) {
 	        url = "/jsps/pages/login.jsp";
 	      } else {

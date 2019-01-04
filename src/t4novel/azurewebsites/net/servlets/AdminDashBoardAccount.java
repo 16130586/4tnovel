@@ -54,9 +54,6 @@ public class AdminDashBoardAccount extends HttpServlet {
 		AccountDAO accountDao = new AccountDAO(cnn);
 
 		String action = request.getParameter("action");
-		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
-		}
 		if ("delete".equals(action)) {
 			int accountID = Integer.parseInt(request.getParameter("id"));
 			try {
@@ -86,14 +83,9 @@ public class AdminDashBoardAccount extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else {
-				for (Entry<String, String> e : form.getErrors().entrySet()) {
-					System.out.println(e.getKey() + "    " + e.getValue());
-				}
-			}
+			} 
 		}
 		if ("edit".equals(action)) {
-			System.out.println("Need to edit : " + request.getParameter("id"));
 			String pin = request.getParameter("pin");
 			String autoPassPublishment = request.getParameter("autoPassPublishment");
 			String ban = request.getParameter("ban");

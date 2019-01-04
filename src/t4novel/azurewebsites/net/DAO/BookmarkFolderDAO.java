@@ -89,7 +89,6 @@ public class BookmarkFolderDAO {
 			stmt.setString(2, bookmarkFolder.getTitle());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Insert bookmark folder completed!");
 		} catch (SQLException e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -110,7 +109,6 @@ public class BookmarkFolderDAO {
 			stmt.setInt(1, folderID);
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Delete bookmark folder completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();
@@ -131,7 +129,6 @@ public class BookmarkFolderDAO {
 			stmt.setInt(2, bookmakFolder.getId());
 			stmt.executeUpdate();
 			cnn.commit();
-			System.out.println("Update bookmark folder completed!");
 		} catch (Exception e) {
 			cnn.rollback();
 			e.printStackTrace();

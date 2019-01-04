@@ -40,7 +40,6 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			throws ServletException, IOException {
 		String rawStartDate = request.getParameter("startDate");
 		String rawEndDate = request.getParameter("endDate");
-		System.out.println(rawStartDate + " " + rawEndDate);
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 		StatisticDAO statisticDao;
@@ -118,10 +117,6 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 			jsonDetailThreadOverDays = gson.toJson(detailThreadOverDays, type);
 
 			// end
-			System.out.println(jsonDetailNovelOverDays);
-			System.out.println(jsonDetailChapOverDays);
-			System.out.println(jsonDetailAccountOverDays);
-			System.out.println(jsonDetailThreadOverDays);
 
 			// passing data to chart on the view
 			request.setAttribute("dataDetailNovelOverDays", jsonDetailNovelOverDays);
@@ -148,9 +143,6 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			System.out.println(entry.getKey() + "  " + Arrays.toString(entry.getValue()));
-		}
 		String action = request.getParameter("action");
 		if (action == null) {
 			response.sendError(404);
@@ -253,7 +245,6 @@ public class AdminDashBoardStatisticSystem extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(action + " " + json);
 		response.setStatus(200);
 		response.setContentType("text/plain");
 		response.getWriter().println(json);

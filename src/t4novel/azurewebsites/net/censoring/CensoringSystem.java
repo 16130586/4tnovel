@@ -60,14 +60,11 @@ public class CensoringSystem {
 				NotifycationSystem.notifyToListUser(followersId, msg);
 			}
 
-			System.out.println("adding new censor and notifycation message by autoPass choice");
-
 		}
 		// using bot
 		else if (isTurnOnCensoringBot()) {
 			try {
 				CensoringSystem.entities.put(entity);
-				System.out.println("adding new censor data by bot choice");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -43,7 +43,6 @@ public class SeeNovelServletVer2 extends HttpServlet {
 
 		int limit = Integer.parseInt(getServletContext().getInitParameter("viewAllLastestLimitPagination"));
 		int totalChaps = (int) getServletContext().getAttribute("totalChaps");
-		System.out.println(totalChaps + " on see servlet");
 		int totalPage = totalChaps % limit > 0 ? (totalChaps / limit) + 1 : (totalChaps / limit);
 		// default page number
 		if (null == pageNumber)
@@ -61,7 +60,6 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		List<Chap> newChaps = null;
 
 		try {
-			System.out.println("want to get on offset: " + offSet + " , limit " + limit);
 			newChaps = chapDao.getLatestChap(offSet, limit);
 			for (Chap chap : newChaps) {
 				chap.setNovelOwner(novelDao.getNovelById(chap.getNovelOwnerId()));

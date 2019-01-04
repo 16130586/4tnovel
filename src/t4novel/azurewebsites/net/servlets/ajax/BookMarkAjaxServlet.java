@@ -52,9 +52,6 @@ public class BookMarkAjaxServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String detail = request.getParameter("detail");
 		String url = request.getParameter("url");
-		System.out.println(title);
-		System.out.println(detail);
-		System.out.println(url);
 		
 		Connection cnn = (Connection) request.getAttribute("connection");
 		Account account = (Account) request.getSession().getAttribute("account");

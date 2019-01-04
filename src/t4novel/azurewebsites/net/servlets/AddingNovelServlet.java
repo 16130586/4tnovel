@@ -60,7 +60,6 @@ public class AddingNovelServlet extends HttpServlet {
 				e.printStackTrace();
 				response.sendError(500);
 			}
-		System.out.println("forward here");
 		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
 	}
 
@@ -137,8 +136,6 @@ public class AddingNovelServlet extends HttpServlet {
 			// ram
 			hostAccount.addNewOwnerNovel(novel);
 
-			System.out.println("adding novel sucessed!	");
-			System.out.println("sucessed");
 			// TODO if success then set sucess for user
 			request.setAttribute("sucessed", "Thêm truyện thành công!");
 
@@ -149,8 +146,6 @@ public class AddingNovelServlet extends HttpServlet {
 			// ending logic for pagintion
 		} else {
 			form.applyErrorsToUI(request);
-			System.out.println("error!");
-			System.out.println(form.getErrors().entrySet().iterator().next());
 		}
 		getServletContext().getRequestDispatcher("/jsps/pages/add-novel.jsp").forward(request, response);
 	}
