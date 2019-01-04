@@ -130,12 +130,12 @@ public class SearchServlet extends HttpServlet {
 		}
 		int maxPaging = maxPage % limit > 0 ? (maxPage / limit) + 1 : (maxPage / limit);
 
-		request.setAttribute("searchResultNovel", novelList);
+		request.setAttribute("novelList", novelList);
 		request.setAttribute("totalPage", maxPaging);
 		request.setAttribute("currentPage", pageNumber);
 		request.setAttribute("url", pushBackUrl);
 
-		getServletContext().getRequestDispatcher("/jsps/pages/search-result.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/jsps/pages/list-novel.jsp").forward(request, response);
 	}
 
 }
