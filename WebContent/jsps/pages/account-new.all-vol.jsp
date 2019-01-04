@@ -99,6 +99,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="header-title">Danh sách tập của tác phẩm</h4>
+								<a href="${pageContext.request.contextPath}/add-vol" style="float:right" target="_blank" class="btn btn-success">Thêm tập</a>
 								<div class="data-tables datatable-dark">
 									<table class="table-striped" id="dataTable3"
 										style="width: 100%; text-align: left;">

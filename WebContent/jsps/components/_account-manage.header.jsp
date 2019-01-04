@@ -19,13 +19,12 @@
                     </ul>
                 </div>
             </li>
+                 	<li class="menu-item u-margin-left--1rem"><a class="link" href="manage/account/dashboard-novels">Quản lý</a></li>
+      
             <c:if test="${account.role.name() eq 'ADMINISTRATOR'}">
             	<li class="menu-item u-margin-left--1rem "><a class="link" href="manage/admin/statistics/system">Quản trị</a></li>
             </c:if>
-            <c:if test="${account.role.name() ne 'ADMINISTRATOR'}">
-            	<li class="menu-item u-margin-left--1rem"><a class="link" href="manage/account/dashboard-novels">Quản trị</a></li>
-        	</c:if>
-        </ul>
+         </ul>
     </div>
     <div class="col-md-2 dropdown-menu ">
         <a class="link " href="# ">Tài khoản</a>

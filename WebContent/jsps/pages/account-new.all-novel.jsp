@@ -99,6 +99,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="header-title">Danh sách tác phẩm</h4>
+								<a href="${pageContext.request.contextPath}/add-novel" style="float:right" target="_blank" class="btn btn-success">Thêm tác phẩm</a>
 								<div class="data-tables datatable-dark">
 									<table class="table-striped" id="dataTable3" style="width: 100%;text-align:left;">
 										<thead class="text-capitalize">
@@ -122,7 +123,7 @@
 													<td>${novel.owner.userName}</td>
 													<td>&nbsp;${novel.dateUp}</td>
 													<td>
-														<a href="${pageContext.request.contextPath}/fix-novel?action=fix-novel&id-novel=${novel.id}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+														<a href="${pageContext.request.contextPath}/fix-novel?action=fix-novel&id-novel=${novel.id}" class="btn btn-success" target="_blank"><i class="fa fa-edit"></i></a>
 														<button type="button" class="btn btn-secondary btn-small"
 															data-toggle="modal" data-target="#delete${novel.id }">
 															<i class="fa fa-trash"></i>

@@ -100,6 +100,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="header-title">Danh sách nhóm dịch</h4>
+								<a href="${pageContext.request.contextPath}/add-group" style="float:right" class="btn btn-success" target="_blank">Thêm nhóm</a>
 								<div class="data-tables datatable-dark">
 									<table id="dataTable3" style="width: 100%; text-align: left;">
 										<thead class="text-capitalize">
@@ -168,6 +169,10 @@
 																		</div>
 																	</div>
 																	<div class="modal-footer">
+																		<a
+																			href="${pageContext.request.contextPath}/add-member"
+																			class="btn btn-success" target="_blank">Thêm
+																			thành viên</a>
 																		<button type="button" class="btn btn-default"
 																			data-dismiss="modal">Close</button>
 																	</div>

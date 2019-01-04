@@ -99,6 +99,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="header-title">Danh sách tác phẩm</h4>
+								<a href="${pageContext.request.contextPath}/add-chapter" style="float:right" target="_blank" class="btn btn-success">Thêm chương</a>
 								<div class="data-tables datatable-dark">
 									<table class="table-striped" id="dataTable3"
 										style="width: 100%; text-align: left;">
