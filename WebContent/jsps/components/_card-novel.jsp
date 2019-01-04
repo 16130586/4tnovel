@@ -17,12 +17,12 @@
 			<h2 class="u-text-overflow--hidden">
 				<a class="novel__title" title="${novel.name }" href="detail?id=${novel.id }">${novel.name }</a>
 			</h2>
-			<div class="u-text-overflow--hidden">
-				<h3 class="u-text-overflow--hidden">
-				<a href="read?id=${chap.id }" title="${chap.title }" class="link"
-					style="color: #10b591">
-					${chap.title }
-				</a>
+			<div>
+				<h3 class=" u-text-overflow--hidden">
+					<a href="read?id=${chap.id }" title="${chap.title }" class="link"
+						style="color: #10b591">
+						${chap.title }
+					</a>
 				</h3>
 			</div>
 			<c:set var="description" value="${novel.description }" />

@@ -170,19 +170,18 @@
 		
 		cardNovel.className="row card-novel"
 		
-		left.className="col-md-4 novel-img--box u-align-center"
+		left.className="col-md-4 novel-img--box"
 		right.className="col-md-8 novel-info--box"
 		btm.className="row u-width--full"
 		
 		
 		// left with clickable hero img
+		left.style.width = "198px"
+		left.style.height = "285px"
+		left.style.margin = "auto"
 		var clickableImg = document.createElement("a")
-		clickableImg.className="img-linking"
-		var img = document.createElement("img")
-		img.className="novel-hero"
-		img.style.width="200px"
-		img.src = location.origin.concat('${pageContext.request.contextPath}').concat('/resources/imgs?id=').concat(data.novelOwner.coverId)
-		clickableImg.appendChild(img)
+		clickableImg.style.background = "url("+"${pageContext.request.contextPath}"+"/resources/imgs?id="+data.novelOwner.coverId+")"
+		clickableImg.className = "card-img"
 		left.appendChild(clickableImg)
 		//end
 		
@@ -202,21 +201,21 @@
 		novelTitle.appendChild(clickableNovelTitle)
 		
 		var chapTitleBox = document.createElement("div")
-		chapTitleBox.className="u-text-overflow--hidden"
-		
-		var clickableChapTitle = document.createElement("a")
-		clickableChapTitle.className="link u-text-overflow--hidden"
-		clickableChapTitle.style.color="#10b591"
-		clickableChapTitle.href = "read?id=".concat(data.id)
 		
 		var chapTitle = document.createElement("h3")
-		chapTitle.innerHTML=data.title
+		chapTitle.className="u-text-overflow--hidden"
 		
-		clickableChapTitle.appendChild(chapTitle)
-		chapTitleBox.appendChild(clickableChapTitle)
+		var clickableChapTitle = document.createElement("a")
+		clickableChapTitle.className = "link";
+		clickableChapTitle.style.color ="#10b591"
+		clickableChapTitle.href = "read?id=".concat(data.id)
+		clickableChapTitle.innerHTML=data.title
+		
+		chapTitle.appendChild(clickableChapTitle)
+		chapTitleBox.appendChild(chapTitle)
 		
 		var novelDescription = document.createElement("span")
-		novelDescription.innerHTML= data.novelOwner.description.substring(0,400).concat('..')
+		novelDescription.innerHTML= data.novelOwner.description.substring(0,240).concat('..')
 		
 		novelInfoBox.appendChild(novelTitle)
 		novelInfoBox.appendChild(chapTitleBox)
