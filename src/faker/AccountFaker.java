@@ -1,6 +1,7 @@
 package faker;
 
 import java.sql.Connection;
+import java.util.Random;
 
 import com.github.javafaker.Faker;
 
@@ -19,7 +20,7 @@ public class AccountFaker {
 			acc.setPassword(faker.internet().password(8, 30, true, true));
 			acc.setGmail(faker.internet().emailAddress());
 			acc.setRole(Role.USER);
-			acc.setAutoPassPushlishment(true);
+			acc.setAutoPassPushlishment(new Random().nextInt(10) > 5 ? true : false);
 			System.out.println("inserted[" + acc + "]");
 			accDao.insertAccount(acc);
 			acc.setId(accDao.getNextID() - 1);

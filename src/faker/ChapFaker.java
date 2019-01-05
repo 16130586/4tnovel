@@ -42,9 +42,14 @@ public class ChapFaker {
 			chap.setId(chapDAO.getNextID());
 			chapDAO.insertChap(chap);
 			CensoringDAO censorDao = new CensoringDAO(cnn);
-			chap.setAcceptedByCensorSystem(true);
+			
+			chap.setAcceptedByCensorSystem(false);
 			censorDao.insertCensor(chap);
-			censorDao.onCensoringEventUpdate(chap);
+			if(ownerAcc.isAutoPassPushlishment()) {
+				chap.setAcceptedByCensorSystem(true);
+				censorDao.onCensoringEventUpdate(chap);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

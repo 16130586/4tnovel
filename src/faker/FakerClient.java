@@ -32,7 +32,7 @@ public class FakerClient extends JFrame {
 	private String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private String connectionString = "jdbc:sqlserver://mafteru.database.windows.net:1433;database=4T;user=mafteru@mafteru;password={nnt09021998!@#};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
-	private long period = 10 * 60 * 1000;
+	private long period = 30 * 60 * 1000;
 	Thread runningThread;
 	boolean isRunning = true;
 	private JTextArea console;
