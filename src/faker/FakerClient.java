@@ -110,7 +110,7 @@ public class FakerClient extends JFrame {
 
 					// ten minutes for 1 fake
 					Faker faker = new Faker();
-
+					int	sleepTime = rd.nextInt((int) period);
 					while (isRunning) {
 
 						if (cnn == null)
@@ -124,14 +124,14 @@ public class FakerClient extends JFrame {
 						for (int i = 0; i < maxChap; i++) {
 							chapFaker.fake(cnn, faker, novel, vol, ac);
 						}
-						toMesssage("\n insert success : [" + ac + "]" + "\n and \n 1 novel: [" + novel.getName()
+						toMesssage("\n insert  success : [" + ac + "]" + "\n and \n 1 novel: [" + novel.getName()
 								+ "] with : " + maxChap + " chaps!");
-						toMesssage("\n next insert after: " + period + "ms!");
+						toMesssage("\n next insert after: " + sleepTime + "ms!");
 						toMesssage("\n\n");
 						cnn.close();
 						cnn = null;
 						System.gc();
-						Thread.sleep(period);
+						Thread.sleep(sleepTime);
 					}
 				} catch (ClassNotFoundException | SQLException | InterruptedException e) {
 					e.printStackTrace();
@@ -146,4 +146,7 @@ public class FakerClient extends JFrame {
 		console.append(text + "\n");
 	}
 
+	public static void main(String[] args) {
+		new FakerClient();
+	}
 }
