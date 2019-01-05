@@ -61,6 +61,7 @@ public class RegisterServlet extends HttpServlet {
 				accDAO.insertAccount(account);
 				account.setId(accDAO.getNextID() - 1);
 			} catch (Exception e) {
+				response.sendError(500);
 				e.printStackTrace();
 			}
 

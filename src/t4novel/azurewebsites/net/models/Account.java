@@ -401,4 +401,8 @@ public class Account implements Serializable {
 	public void addNewMessage(Message message) {
 		this.messages.add(0, message);
 	}
+	@Override
+	public String toString() {
+		return "username: " + userName + ", password: " + password + ", displayName: " + displayedName + ", gmail: " + gmail;
+	}
 }

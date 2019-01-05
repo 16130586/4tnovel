@@ -27,5 +27,10 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-2.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.websocket-api-1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/faker-java/generex-1.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/faker-java/javafaker-0.16-javadoc.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/faker-java/javafaker-0.16.jar" sourcepath="WebContent/WEB-INF/lib/faker-java/javafaker-0.16-sources.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/faker-java/snakeyaml-1.20.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/faker-java/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
