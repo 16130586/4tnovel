@@ -2,6 +2,7 @@ package t4novel.azurewebsites.net.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,9 +41,16 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		String pageNumber = request.getParameter("page-number");
 
 		Connection cnn = (Connection) request.getAttribute("connection");
-
+		NovelDAO novelDao = new NovelDAO(cnn);
+		ChapDAO chapDao = new CensoredChapDAO(cnn);
+		
 		int limit = Integer.parseInt(getServletContext().getInitParameter("viewAllLastestLimitPagination"));
-		int totalChaps = (int) getServletContext().getAttribute("totalChaps");
+		int totalChaps = 0;
+		try {
+			totalChaps = chapDao.getTotalNewChaps();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		int totalPage = totalChaps % limit > 0 ? (totalChaps / limit) + 1 : (totalChaps / limit);
 		// default page number
 		if (null == pageNumber)
@@ -55,10 +63,7 @@ public class SeeNovelServletVer2 extends HttpServlet {
 		// computes offset
 		int offSet = (Integer.parseInt(pageNumber) - 1) * limit;
 
-		NovelDAO novelDao = new NovelDAO(cnn);
-		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		List<Chap> newChaps = null;
-
 		try {
 			newChaps = chapDao.getLatestChap(offSet, limit);
 			for (Chap chap : newChaps) {
