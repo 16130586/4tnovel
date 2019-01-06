@@ -39,7 +39,7 @@ public class IndexServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
@@ -49,24 +49,23 @@ public class IndexServlet extends HttpServlet {
 		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		NovelDAO novelDao = new NovelDAO(cnn);
 		GenreDAO genreDao = new GenreDAO(cnn);
-		ImageDAO imgDao = new ImageDAO(cnn);
+		LikeDAO likeDao = new LikeDAO(cnn);
+//		ImageDAO imgDao = new ImageDAO(cnn);
 		int limit = Integer.parseInt(getServletContext().getInitParameter("indexLimitChapterPagination"));
 
 		try {
 			newChaps = chapDao.getLatestChap(0, limit);
 			for (Chap chap : newChaps) {
 				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());
-				novel.setCoverImg(novelDao.getEncodeImageById(chap.getNovelOwnerId(), imgDao));
 				novel.setGenres(novelDao.getGenres(chap.getNovelOwnerId(), genreDao));
 				chap.setNovelOwner(novel);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		LikeDAO likeDao = new LikeDAO(cnn);
+	
 		// loading like and view for newschap
 		try {
-
 			for (Chap c : newChaps) {
 				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
 			}
@@ -139,6 +138,8 @@ public class IndexServlet extends HttpServlet {
 //		}
 //		
 		// load top 6 novel by view in month
+		
+		
 		try {
 			List<Novel> monthlyTopNovels = viewDao.getTopViewNovels(30, 0, 6 , novelDao);
 			request.setAttribute("monthlyTopNovels", monthlyTopNovels);
@@ -153,7 +154,6 @@ public class IndexServlet extends HttpServlet {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
 

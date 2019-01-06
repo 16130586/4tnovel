@@ -117,7 +117,6 @@ public class GlobalFilter implements Filter {
 
 		// end increasing the view
 		
-		
 		//ensure this is request path need, not mistaken close cnn of forward request
 		if (cnn != null && isNeedDbConnection) {
 			try {
