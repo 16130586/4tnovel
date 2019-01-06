@@ -125,6 +125,18 @@
 <script>
 	
 	document.addEventListener("DOMContentLoaded" , function(){
+		
+		var loadImageOfCardImg = function(){
+			var cardImgs = document.getElementsByClassName('card-img');
+			for(var i = 0 ; i < cardImgs.length ; i ++){
+				var url = cardImgs[i].getAttribute('data-background-url')
+				if(url == null)
+					continue
+				cardImgs[i].style.backgroundImage = "url('"+ url + "')";
+			}
+		}
+		loadImageOfCardImg()
+		
 		var loadMoreLastestUpdateBtn = document.getElementById('loadMoreLastestUpdateBtn')
 		var lastestUpdateContent = document.getElementById('lastestUpdateContent')
 		var pageNumber = 1;

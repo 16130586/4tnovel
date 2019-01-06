@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.ImageDAO;
-import t4novel.azurewebsites.net.utils.StringUtil;
 
 @WebServlet("/resources/imgs")
 public class ExportImageServlet extends HttpServlet {
@@ -85,16 +84,16 @@ public class ExportImageServlet extends HttpServlet {
 				System.out.println(cacheStatus);
 			}
 		} catch (NumberFormatException e) {
-			System.out.println("bad requesting img");
+//			System.out.println("bad requesting img");
 			response.sendError(400);
 		} catch (Exception e) {
-			System.out.println("client abort " + e.getMessage());
+//			System.out.println("client abort " + e.getMessage());
 		}
 	}
 
 	private synchronized boolean validateOldDataInClientCache(HttpServletRequest request, String dbEtag,
 			long dbLastModified) {
-		String imgId = request.getParameter("id");
+//		String imgId = request.getParameter("id");
 		String clientModifiedSince = request.getHeader("if-modified-since");
 		String clientNoneMatch = request.getHeader("if-none-match");
 		long clientModified = request.getDateHeader("if-modified-since");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/4TNOVEL">
     <Resource name="jdbc/sqlserver" auth="Container" type="javax.sql.DataSource"
-               maxTotal="10" maxIdle="3" maxWaitMillis="10000"
+               maxTotal="10" maxIdle="5" maxWaitMillis="10000"
                username="mafteru" password="nnt09021998!@#" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                url="jdbc:sqlserver://mafteru.database.windows.net:1433;databaseName=4T"/>
     

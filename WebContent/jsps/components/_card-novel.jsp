@@ -8,7 +8,7 @@
 <div class="row card-novel">
 	<div class="col-md-4 novel-img--box">
 		<div style="width: 190px; height: 280px; margin: auto">
-			<a href="detail?id=${novel.id }" class="card-img" style="background: url(${baseURL}/resources/imgs?id=${novel.coverId})">
+			<a href="detail?id=${novel.id }" class="card-img" data-background-url="${baseURL}/resources/imgs?id=${novel.coverId}">
 			</a>
 		</div>
 	</div>

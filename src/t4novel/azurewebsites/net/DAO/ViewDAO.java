@@ -57,10 +57,10 @@ public class ViewDAO {
 			lastMakeStatisticQuery = now;
 			statisticNovelByDateDiffMap.put(day, result);
 			lastMakeStatisticQueryMap.put(day, lastMakeStatisticQuery);
-			System.out.println("reload or exprie on query day: " + day);
+//			System.out.println("reload or exprie on query day: " + day);
 		} else {
 			result = statisticNovelByDateDiffMap.get(day);
-			System.out.println("cache hit on query day: " + day);
+//			System.out.println("cache hit on query day: " + day);
 			return result;
 		}
 
