@@ -153,7 +153,7 @@
 						<ul class="horizontal-menu--showcase">
 							<c:if test="${currentPage != 1}">
 								<li class="menu-item"><a
-									href="${url}page-number=${currentPage-1}" class="btn btn-dark">Previous</a></li>
+									href="${url}&page-number=${currentPage-1}" class="btn btn-dark">Previous</a></li>
 							</c:if>
 							<li class="menu-item"><a class="btn btn-dark"
 								style="color: red;">${currentPage}</a></li>
@@ -161,19 +161,19 @@
 								<c:forEach var="i" begin="1" end="2">
 									<c:if test="${currentPage +  i  <= totalPage}">
 										<li class="menu-item"><a
-											href="${url}page-number=${currentPage + i}"
+											href="${url}&page-number=${currentPage + i}"
 											class="btn btn-dark">${currentPage + i}</a></li>
 									</c:if>
 								</c:forEach>
 							</c:if>
 							<c:if test="${totalPage - currentPage > 2 }">
 								<li class="menu-item"><a
-									href="${url}page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
+									href="${url}&page-number=${totalPage}" class="btn btn-dark">${totalPage}</a></li>
 							</c:if>
 							<c:if
 								test="${totalPage != currentPage && totalPage - currentPage > 4}">
 								<li class="menu-item"><a
-									href="${url}page-number=${totalPage}" class="btn btn-dark">Last</a></li>
+									href="${url}&page-number=${totalPage}" class="btn btn-dark">Last</a></li>
 							</c:if>
 						</ul>
 					</div>
