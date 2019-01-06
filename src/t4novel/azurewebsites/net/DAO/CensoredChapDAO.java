@@ -185,6 +185,19 @@ public class CensoredChapDAO extends ChapDAO {
 		stmt.close();
 		return chaps;
 	}
+	
+	@Override
+	public int getTotalNewChaps() throws SQLException {
+		int result = 0;
+		String query = "select max(ID) from CHAP inner join CENSORING on CHAP.ID = CENSORING.TARGET_ID where CENSORING.STREAM = 'chapter' and CENSORING.IS_PUBLISHED = 1 group by ID_NOVEL";
+		PreparedStatement stmt = cnn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next())
+			result++;
+		rs.close();
+		stmt.close();
+		return result;
+	}
 
 	@Override
 	public int getTotalChaps(String filterCondition) throws SQLException {

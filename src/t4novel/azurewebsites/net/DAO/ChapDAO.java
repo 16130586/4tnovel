@@ -339,5 +339,8 @@ public class ChapDAO {
 		}
 		return total;
 	}
-
+	
+	public int getTotalNewChaps() throws SQLException {
+		return 0;
+	}
 }
