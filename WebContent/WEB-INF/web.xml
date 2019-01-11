@@ -68,6 +68,6 @@
   </context-param>
   <context-param>
     <param-name>censoringPeriodOfBot</param-name>
-    <param-value>4000</param-value>
+    <param-value>10000</param-value>
   </context-param>
 </web-app>

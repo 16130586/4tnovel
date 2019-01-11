@@ -39,7 +39,7 @@ public class IndexServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
@@ -49,24 +49,23 @@ public class IndexServlet extends HttpServlet {
 		ChapDAO chapDao = new CensoredChapDAO(cnn);
 		NovelDAO novelDao = new NovelDAO(cnn);
 		GenreDAO genreDao = new GenreDAO(cnn);
-		ImageDAO imgDao = new ImageDAO(cnn);
+		LikeDAO likeDao = new LikeDAO(cnn);
+//		ImageDAO imgDao = new ImageDAO(cnn);
 		int limit = Integer.parseInt(getServletContext().getInitParameter("indexLimitChapterPagination"));
 
 		try {
 			newChaps = chapDao.getLatestChap(0, limit);
 			for (Chap chap : newChaps) {
 				Novel novel = novelDao.getNovelById(chap.getNovelOwnerId());
-				novel.setCoverImg(novelDao.getEncodeImageById(chap.getNovelOwnerId(), imgDao));
 				novel.setGenres(novelDao.getGenres(chap.getNovelOwnerId(), genreDao));
 				chap.setNovelOwner(novel);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		LikeDAO likeDao = new LikeDAO(cnn);
+	
 		// loading like and view for newschap
 		try {
-
 			for (Chap c : newChaps) {
 				c.getNovelOwner().setLike(likeDao.getLike(c.getNovelOwner().getId(), "novel"));
 			}
@@ -123,27 +122,38 @@ public class IndexServlet extends HttpServlet {
 		
 		//  wtf is trending... load top 6 novel by view in week
 		ViewDAO viewDao = new ViewDAO(cnn);
-		List<Novel> newTrendingNovels = new LinkedList<>();
 		try {
-			for (Integer i : viewDao.getTopViewNovelsId(7, 0, 6)) {
-				newTrendingNovels.add(novelDao.getNovelById(i));
-			}
+			List<Novel> newTrendingNovels = viewDao.getTopViewNovels(7, 0, 6 , novelDao);
 			request.setAttribute("newTrendingNovels", newTrendingNovels);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
-		
+//		try {
+//			for (Integer i : ) {
+//				newTrendingNovels.add(novelDao.getNovelById(i));
+//			}
+//			request.setAttribute("newTrendingNovels", newTrendingNovels);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
 		// load top 6 novel by view in month
-		List<Novel> monthlyTopNovels = new LinkedList<>();
+		
+		
 		try {
-			for (Integer i : viewDao.getTopViewNovelsId(30, 0, 6)) {
-				monthlyTopNovels.add(novelDao.getNovelById(i));
-			}
+			List<Novel> monthlyTopNovels = viewDao.getTopViewNovels(30, 0, 6 , novelDao);
 			request.setAttribute("monthlyTopNovels", monthlyTopNovels);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+//		try {
+//			for (Integer i : viewDao.getTopViewNovels(30, 0, 6)) {
+//				monthlyTopNovels.add(novelDao.getNovelById(i));
+//			}
+//			request.setAttribute("monthlyTopNovels", monthlyTopNovels);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		getServletContext().getRequestDispatcher("/jsps/pages/index.jsp").forward(request, response);
 	}
 

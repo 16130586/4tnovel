@@ -170,8 +170,8 @@ public class CensoredChapDAO extends ChapDAO {
 
 	@Override
 	public List<Chap> getLatestChap(int offSet, int limit) throws SQLException {
-		String query = "select max(ID) as TARGET_ID from CHAP inner join CENSORING on CHAP.ID = CENSORING.TARGET_ID \r\n" + 
-				"where CENSORING.STREAM = 'chapter' and CENSORING.IS_PUBLISHED = 1\r\n" + 
+		String query = "select max(ID) as TARGET_ID from CHAP inner join CENSORING on CHAP.ID = CENSORING.TARGET_ID " + 
+				"where CENSORING.STREAM = 'chapter' and CENSORING.IS_PUBLISHED = 1 " + 
 				"group by ID_NOVEL order by max(OUT_DATE) desc offset ? rows fetch next ? rows only";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, offSet);

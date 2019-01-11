@@ -79,7 +79,6 @@ public class ChapDAO {
 		return chap;
 	}
 
-
 	public List<Chap> getEntireChapsByVolId(int volID) throws Exception {
 		LinkedList<Chap> listChap = new LinkedList<>();
 		PreparedStatement stmt = null;
@@ -188,6 +187,16 @@ public class ChapDAO {
 		return chap;
 	}
 
+	public Chap getPartOfChapsByChapId(ResultSet rs) throws SQLException {
+		Chap chap = new Chap();
+		chap.setId(rs.getInt("ID"));
+		chap.setVolOwnerId(rs.getInt("ID_VOL"));
+		chap.setNovelOwnerId(rs.getInt("ID_NOVEL"));
+		chap.setTitle(rs.getString("TITLE"));
+		chap.setDateUp(rs.getTimestamp("DATEUP"));
+		return chap;
+	}
+
 	public String getContentOfChap(Chap chap) throws Exception {
 		if (chap.getContent() != null) {
 			return chap.getContent();
@@ -219,7 +228,7 @@ public class ChapDAO {
 
 	public List<Chap> getLatestChap(int offSet, int limit) throws SQLException {
 		List<Chap> result = new LinkedList<>();
-		String query = "select ID  from CHAP  order by DATEUP  desc offset ? rows fetch next ? rows only";
+		String query = "select ID , ID_VOL , ID_NOVEL,TITLE,DATEUP  from CHAP  order by DATEUP  desc offset ? rows fetch next ? rows only";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -228,7 +237,7 @@ public class ChapDAO {
 			stmt.setInt(2, limit);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				result.add(getPartOfChapsByChapId(rs.getInt("ID")));
+				result.add(getPartOfChapsByChapId(rs));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -339,7 +348,7 @@ public class ChapDAO {
 		}
 		return total;
 	}
-	
+
 	public int getTotalNewChaps() throws SQLException {
 		return 0;
 	}
