@@ -56,7 +56,10 @@
 				<c:if test="${fn:length(novel.genres) > 3 }">
 					<c:set var="length" value="3" />
 				</c:if>
-					<c:forEach var="i" begin="0" end="${length-1 }">
+				<c:if test="${length > 1 }">
+					<c:set var="length" value="${length-1 }" />
+				</c:if>
+					<c:forEach var="i" begin="0" end="${length}">
 						<li class="menu-item u-margin-right--2rem u-rounded--tag">
 							<a class="btn btn-belike-a" href="see3?genre=${novel.genres[i].value }">${novel.genres[i].getDisplayName()}</a>
 						</li>

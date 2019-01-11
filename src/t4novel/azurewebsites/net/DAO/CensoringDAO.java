@@ -24,7 +24,7 @@ public class CensoringDAO {
 	public List<CensorEntity> getAllUnCensoringEntities() throws SQLException {
 		CensorEntityFactory censorFactory = CensorEntityFactory.getInstance();
 		List<CensorEntity> ret = new LinkedList<>();
-		String query = "SELECT * FROM CENSORING WHERE OUT_DATE IS NULL";
+		String query = "SELECT * FROM CENSORING WHERE OUT_DATE IS NULL ORDER BY CAME_DATE ASC";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
