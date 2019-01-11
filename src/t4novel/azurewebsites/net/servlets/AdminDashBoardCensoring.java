@@ -102,7 +102,6 @@ public class AdminDashBoardCensoring extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		doGet(request, response);
 	}
 
 }

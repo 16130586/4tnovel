@@ -111,7 +111,7 @@
 											<c:forEach var="entity" items="${censorList}">
 												<tr data-toggle="modal"
 													data-target="#censor${entity.getCensorId()}"
-													style="cursor: pointer;">
+													style="cursor: pointer;" id="row${entity.getCensorId() }">
 													<td>&nbsp;${entity.getTitle()}</td>
 													<td>&nbsp;${entity.getCreatedDate()}</td>
 												</tr>
@@ -128,30 +128,20 @@
 
 															<!-- Modal body -->
 															<div class="modal-body">
-																<div style="overflow-y: scroll;">
-																	<p style="max-height: 75vh;">${entity.getContent()}</p>
+																<div style="overflow-y: scroll; max-height: 75vh">
+																	<!-- <p style="max-height: 75vh;">${entity.getContent()}</p> -->
+																	<c:set var="newLine" value="\n"/>
+																	<c:set var="paragraphs" value="${entity.getContent().split(newLine) }" />
+																	<c:forEach var="paragraph" items="${paragraphs }">
+																		<p>${paragraph }</p>
+																	</c:forEach>
 																</div>
 															</div>
 
 															<!-- Modal footer -->
 															<div class="modal-footer">
-																<form
-																	action="${pageContext.request.contextPath}/manage/admin/dashboard-censoring"
-																	method="post">
-																	<input name="id" type="hidden" value="${entity.getCensorId()}">
-																	<input name="isAccept" type="hidden" value="1">
-																	<input name="stream" type="hidden" value="${entity.getClass().getSimpleName()}">
-																	<button  type="submit" class="btn btn-success">Duyệt</button>
-																</form>
-																<form
-																	action="${pageContext.request.contextPath}/manage/admin/dashboard-censoring"
-																	method="post">
-																	<input name="id" type="hidden" value="${entity.getCensorId()}">
-																	<input name="isAccept" type="hidden" value="0">
-																	<input name="stream" type="hidden" value="${entity.getClass().getSimpleName()}">
-																	<button type="submit" class="btn btn-default">Từ
-																		chối</button>
-																</form>
+																<button class="btn btn-success" value="${entity.getCensorId() }" name="${entity.getClass().getSimpleName() }" onclick="censor(this, 1)" data-dismiss="modal">Duyệt</button>
+																<button class="btn btn-default" value="${entity.getCensorId() }" name="${entity.getClass().getSimpleName() }" onclick="censor(this, 0)" data-dismiss="modal">Từ chối</button>
 															</div>
 														</div>
 													</div>
@@ -208,6 +198,27 @@
 		src="${pageContext.request.contextPath}/resources/template/admin-dashboard/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/template/admin-dashboard/js/scripts.js"></script>
+	<script>
+	function removeOneRow(x) {
+		x.parentNode.removeChild(x);
+	}
+	var url = location.origin.concat('${pageContext.request.contextPath}').concat('/manage/admin/dashboard-censoring');
+	var xhttp = new XMLHttpRequest();
+
+	function censor(x, isAccept) {
+		xhttp.onreadystatechange = function() {
+			if(xhttp.readyState == 4) {document.body.style.cursor='default'}
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				//removeOneRow(x.parentNode.parentNode.parentNode.parentNode);
+				document.getElementById('row'.concat(x.value)).style.cursor = "default";		
+				document.getElementById('row'.concat(x.value)).style.backgroundColor = "#e8e8e8";		
+			}
+		}
+		xhttp.open('POST', url);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send('id='+x.value+'&isAccept='+isAccept+'&stream='+x.attributes.getNamedItem("name").value);
+	}
+	</script>
 </body>
 
 </html>
