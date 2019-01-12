@@ -7,10 +7,10 @@
 	<h2 class="login-form__title">Đăng nhập</h2>
 	<hr>
 	<div class="login-form__social-login">
-		<a href="#" class="u-margin-right--2rem"><i
+		<a href="https://www.facebook.com/dialog/oauth?client_id=364583107662411&redirect_uri=https://tieuthuyetonline.azurewebsites.net/login-facebook&scope=email" class="u-margin-right--2rem"><i
 			class="fab fa-facebook u-5x u-color-blue"> </i></a> <a
-			href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=<%=SocialAccessConstants.GOOGLE_REDIRECT_URI%>&response_type=code
-    &client_id=<%=SocialAccessConstants.GOOGLE_CLIENT_ID%>&approval_prompt=force"><i
+			href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=https://tieuthuyetonline.azurewebsites.net/login-google&response_type=code
+    &client_id=901230047480-kgieqoea1ee4qi0kkb1ins51al2pko2t.apps.googleusercontent.com&approval_prompt=force"><i
 			class="fab fa-google-plus-square u-5x u-color-red"></i></a>
 	</div>
 	<hr>
