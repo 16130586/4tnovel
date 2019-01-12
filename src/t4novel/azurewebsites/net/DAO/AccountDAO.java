@@ -70,6 +70,42 @@ public class AccountDAO {
 			cnn.setAutoCommit(true);
 		}
 	}
+	
+	public void updateAccountFacebookID(int userID, String facebookID) throws Exception {
+		PreparedStatement stmt = null;
+		String query = "UPDATE ACCOUNT SET FB_ID = ? WHERE ID = ?";
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, facebookID);
+			stmt.setInt(2, userID);
+			stmt.executeUpdate();
+			System.out.println("facebook id updated!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
+		}
+	}
+	
+	public void updateAccountGoogleID(int userID, String googleID) throws Exception {
+		PreparedStatement stmt = null;
+		String query = "UPDATE ACCOUNT SET GG_ID = ? WHERE ID = ?";
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, googleID);
+			stmt.setInt(2, userID);
+			stmt.executeUpdate();
+			System.out.println("google id updated!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			cnn.setAutoCommit(true);
+		}
+	}
 
 	public Account getAccountByUsername(String username) throws Exception {
 		Account account = null;
@@ -162,6 +198,88 @@ public class AccountDAO {
 		try {
 			stmt = cnn.prepareStatement(query);
 			stmt.setString(1, email);
+			rs = stmt.executeQuery();
+			if (!rs.next())
+				return account;
+			if (rs.getString(3) != null) {
+//				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
+//				if (account != null) {
+//					return account;
+//				}
+				account = new Account();
+				account.setId(rs.getInt(1));
+				account.setDisplayedName(rs.getString(2));
+				account.setUserName(rs.getString(3));
+				account.setPassword(rs.getString(4));
+				account.setGmail(rs.getString(5));
+				account.setDateCreate(rs.getTimestamp(6));
+				account.setRole(Role.getRole(rs.getInt(7)));
+				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
+				account.setPin(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(10).equals("YES") ? true : false);
+//				ACCOUNTS_CACHE.put(account.getId(), account);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
+		return account;
+	}
+	
+	public Account getAccountByFacebookID(String facebookID) throws Exception {
+		Account account = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM ACCOUNT WHERE FB_ID = ?";
+
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, facebookID);
+			rs = stmt.executeQuery();
+			if (!rs.next())
+				return account;
+			if (rs.getString(3) != null) {
+//				account = ACCOUNTS_CACHE.get(rs.getInt("ID"));
+//				if (account != null) {
+//					return account;
+//				}
+				account = new Account();
+				account.setId(rs.getInt(1));
+				account.setDisplayedName(rs.getString(2));
+				account.setUserName(rs.getString(3));
+				account.setPassword(rs.getString(4));
+				account.setGmail(rs.getString(5));
+				account.setDateCreate(rs.getTimestamp(6));
+				account.setRole(Role.getRole(rs.getInt(7)));
+				account.setAutoPassPushlishment(rs.getString(8).equals("YES") ? true : false);
+				account.setPin(rs.getString(9).equals("YES") ? true : false);
+				account.setBan(rs.getString(10).equals("YES") ? true : false);
+//				ACCOUNTS_CACHE.put(account.getId(), account);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+		}
+		return account;
+	}
+	
+	public Account getAccountByGoogleID(String googleID) throws Exception {
+		Account account = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM ACCOUNT WHERE GG_ID = ?";
+
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, googleID);
 			rs = stmt.executeQuery();
 			if (!rs.next())
 				return account;
