@@ -58,40 +58,26 @@ public class SeeNovelServletVer3 extends HttpServlet {
 
 		if (searchKind == null)
 			searchKind = "all";
+		else if (!searchKind.equals("all")) {
+			searchString = NovelKind.getNovelKind(searchKind).getDisplayedName();
+		}
 
 		if (searchStatus == null)
 			searchStatus = "all";
+		else if (!searchStatus.equals("all")) {
+			searchString += NovelStatus.getNovelStatus(Integer.parseInt(searchStatus)).toText();
+		}
 
 		if (searchGenre == null)
 			searchGenre = "all";
+		else if (!searchGenre.equals("all")) {
+			searchString += NovelGenre.getGenre(Integer.parseInt(searchGenre)).getDisplayName();
+		}
 
 		pushBackUrl = "?status=" + searchStatus + "&kind=" + searchKind + "&genre=" + searchGenre + "&";
 		request.setAttribute("kind", searchKind);
 		request.setAttribute("status", searchStatus);
 		request.setAttribute("genre", searchGenre);
-		// create query
-		if (searchKind.equals("all")) {
-			searchKind = "(S.KIND = 'COMPOSE' OR S.KIND = 'TRANSLATE')";
-		} else {
-			searchString = NovelKind.getNovelKind(searchKind).getDisplayedName();
-			searchKind = "(S.KIND = '" + searchKind + "')";
-		}
-
-		if (searchStatus.equals("all")) {
-			searchStatus = "(S.STATUS = 0 OR S.STATUS = 1 OR S.STATUS = 2)";
-		} else {
-			searchString = NovelStatus.getNovelStatus(Integer.parseInt(searchStatus)).toText();
-			searchStatus = "(S.STATUS = '" + searchStatus + "')";
-		}
-
-		if (!searchGenre.equals("all")) {
-			searchString = NovelGenre.getGenre(Integer.parseInt(searchGenre)).getDisplayName();
-			searchGenre = "AND (GENRE.VALUE=" + searchGenre + ")";
-		} else {
-			searchGenre = "";
-		}
-		query = "SELECT * FROM LN INNER JOIN (SELECT DISTINCT ID FROM (select * from LN) S  INNER JOIN GENRE ON GENRE.IDNOVEL = S.ID WHERE "
-				+ searchKind + " AND " + searchStatus + searchGenre + " ) A ON A.ID = LN.ID";
 
 		Connection cnn = (Connection) request.getAttribute("connection");
 		NovelDAO novelDAO = new NovelDAO(cnn);
@@ -100,6 +86,7 @@ public class SeeNovelServletVer3 extends HttpServlet {
 		LinkedList<Novel> novelList = new LinkedList<>();
 
 		try {
+			query = novelDAO.generateQueryForViewing(searchGenre, searchKind, searchStatus);
 			novelList = (LinkedList<Novel>) novelDAO.searchNovelsByQuery(query, Integer.parseInt(pageNumber) - 1,
 					limit);
 			maxPage = novelDAO.countNovelsByQuery(query);

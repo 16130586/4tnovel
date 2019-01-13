@@ -73,38 +73,23 @@ public class SearchServlet extends HttpServlet {
 		int limit = Integer.parseInt(getServletContext().getInitParameter("searchLimitPagination"));
 
 		if (type.equals("normal") && pageNumber == null) {
-			query = "SELECT * FROM LN INNER JOIN (SELECT DISTINCT ID FROM (select * from LN where NAME like N'%" + input
-					+ "%') S  INNER JOIN GENRE ON GENRE.IDNOVEL = S.ID) A ON A.ID = LN.ID";
+			try {
+				query = novelDAO.generateQueryForSearching("normal", input, null, null, null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			request.getSession().setAttribute("search-query", query);
 		}
 		if (!type.equals("normal") && pageNumber == null) {
 			String searchKind = request.getParameter("kind");
 			String searchStatus = request.getParameter("status");
-			String searchGenre = "";
 			String[] genre = request.getParameterValues("genre");
 
-			if (searchKind.equals("all")) {
-				searchKind = "(S.KIND = 'COMPOSE' OR S.KIND = 'TRANSLATE')";
-			} else {
-				searchKind = "(S.KIND = '" + searchKind + "')";
+			try {
+				novelDAO.generateQueryForSearching("advanced", input, searchStatus, searchKind, genre);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-			if (searchStatus.equals("all")) {
-				searchStatus = "(S.STATUS = 0 OR S.STATUS = 1 OR S.STATUS = 2)";
-			} else {
-				searchStatus = "(S.STATUS = " + searchStatus + ")";
-			}
-
-			if (genre != null) {
-				searchGenre = "AND (GENRE.VALUE=" + genre[0];
-				for (int i = 1; i < genre.length; i++) {
-					searchGenre += "OR GENRE.VALUE =" + genre[i];
-				}
-				searchGenre += ")";
-			}
-			query = "SELECT * FROM LN INNER JOIN (SELECT DISTINCT ID FROM (select * from LN where NAME like N'%" + input
-					+ "%') S  INNER JOIN GENRE ON GENRE.IDNOVEL = S.ID WHERE " + searchKind + " AND " + searchStatus
-					+ searchGenre + " ) A ON A.ID = LN.ID";
 			request.getSession().setAttribute("search-query", query);
 		}
 		if (pageNumber == null) {
