@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.AccountDAO;
+import t4novel.azurewebsites.net.DAO.CensoredChapDAO;
 import t4novel.azurewebsites.net.DAO.ChapDAO;
 import t4novel.azurewebsites.net.DAO.GroupDAO;
 import t4novel.azurewebsites.net.DAO.NovelDAO;
@@ -47,7 +48,7 @@ public class AdminDashBoardChaps extends HttpServlet {
 			List<Novel> novels = novelDao.getNovels(null, null, 0, Integer.MAX_VALUE);
 			AccountDAO accDao = new AccountDAO(cnn);
 			VolDAO volDao = new VolDAO(cnn);
-			ChapDAO chapDao = new ChapDAO(cnn);
+			ChapDAO chapDao = new CensoredChapDAO(cnn);
 			GroupDAO groupDao = new GroupDAO(cnn);
 			for (Novel n : novels) {
 				n.setOwner(accDao.getAccountByID(n.getAccountOwnerId()));

@@ -76,7 +76,7 @@ public class CensoredChapDAO extends ChapDAO {
 	@Override
 	public List<Chap> getPartOfChapsByVolId(int volId) throws SQLException {
 		List<Chap> chaps = new LinkedList<>();
-		String query = "SELECT * FROM CHAP where ID_VOL=?";
+		String query = "SELECT CHAP.ID , CHAP.ID_NOVEL , CHAP.TITLE, CENSORING.IS_PUBLISHED from CHAP inner join CENSORING on CHAP.ID = CENSORING.TARGET_ID where CHAP.ID_VOL=? and CENSORING.STREAM='chapter'";
 		PreparedStatement stmt = cnn.prepareStatement(query);
 		stmt.setInt(1, volId);
 		ResultSet rs = stmt.executeQuery();
@@ -84,10 +84,10 @@ public class CensoredChapDAO extends ChapDAO {
 		while (rs.next()) {
 			temp = new Chap();
 			temp.setId(rs.getInt("ID"));
-			temp.setVolOwnerId(rs.getInt("ID_VOL"));
+			temp.setVolOwnerId(volId);
 			temp.setNovelOwnerId(rs.getInt("ID_NOVEL"));
 			temp.setTitle(rs.getString("TITLE"));
-			temp.setDateUp(rs.getTimestamp("DATEUP"));
+			temp.setAcceptedByCensorSystem(rs.getInt("IS_PUBLISHED") == 1 ? true : false);
 			chaps.add(temp);
 		}
 		return chaps;

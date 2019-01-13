@@ -38,9 +38,11 @@ public class FixingChapterServlet extends HttpServlet {
 		Connection cnn = (Connection) request.getAttribute("connection");
 		ChapDAO chapDAO = new ChapDAO(cnn);
 		int chapID = Integer.parseInt(request.getParameter("id-chap"));
+		String admin = request.getParameter("admin");
 		try {
 			Chap fixingChap = chapDAO.getChapByID(chapID);;
 			request.setAttribute("fixingChap", fixingChap);
+			request.setAttribute("admin", admin);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,7 +86,6 @@ public class FixingChapterServlet extends HttpServlet {
 					if (!"1".equals(admin)) {
 						Account account = (Account) request.getSession().getAttribute("account");
 						account.setOwnerChap(chapter);
-						Chap fixingChap = account.getOwnerChap(chapID);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
