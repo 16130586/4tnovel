@@ -25,25 +25,33 @@ public class StatisticDAO {
 	public List<Pair<Integer[], Integer>> statisticOverViewViewBehavior(String startDate, String endDate)
 			throws SQLException {
 		String query = "select datepart(hour, VIEWING.VIEWDATE) AS E, count(VIEWING.VIEWDATE) / DATEDIFF(day, ?, ?) AS C from VIEWING where VIEWING.VIEWDATE between ? and ? and VIEWING.STREAM = ? group by datepart(hour, VIEWING.VIEWDATE)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<Integer[], Integer>> ret = new LinkedList<>();
-
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		stmt.setString(3, startDate);
-		stmt.setString(4, endDate);
-		stmt.setString(5, "global");
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Integer[] combineToTimeOfDate = new Integer[4];
-			combineToTimeOfDate[0] = rs.getInt(1);
-			combineToTimeOfDate[1] = 0;
-			combineToTimeOfDate[2] = 0;
-			combineToTimeOfDate[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			stmt.setString(3, startDate);
+			stmt.setString(4, endDate);
+			stmt.setString(5, "global");
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Integer[] combineToTimeOfDate = new Integer[4];
+				combineToTimeOfDate[0] = rs.getInt(1);
+				combineToTimeOfDate[1] = 0;
+				combineToTimeOfDate[2] = 0;
+				combineToTimeOfDate[3] = 0;
+				ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			rs.close();
 		}
-		stmt.close();
-		rs.close();
+		
 
 		if (ret.isEmpty()) {
 			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
@@ -70,25 +78,33 @@ public class StatisticDAO {
 	private List<Pair<Integer[], Integer>> statisticDetailGuestView(String startDate, String endDate)
 			throws SQLException {
 		String query = "select datepart(hour, VIEWING.VIEWDATE) AS E, count(VIEWING.VIEWDATE) / DATEDIFF(day, ?, ?) AS C from VIEWING where VIEWING.VIEWDATE between ? and ? and VIEWING.STREAM = ? and VIEWING.ACCID < 0 group by datepart(hour, VIEWING.VIEWDATE)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<Integer[], Integer>> ret = new LinkedList<>();
-
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		stmt.setString(3, startDate);
-		stmt.setString(4, endDate);
-		stmt.setString(5, "global");
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Integer[] combineToTimeOfDate = new Integer[4];
-			combineToTimeOfDate[0] = rs.getInt(1);
-			combineToTimeOfDate[1] = 0;
-			combineToTimeOfDate[2] = 0;
-			combineToTimeOfDate[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			stmt.setString(3, startDate);
+			stmt.setString(4, endDate);
+			stmt.setString(5, "global");
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Integer[] combineToTimeOfDate = new Integer[4];
+				combineToTimeOfDate[0] = rs.getInt(1);
+				combineToTimeOfDate[1] = 0;
+				combineToTimeOfDate[2] = 0;
+				combineToTimeOfDate[3] = 0;
+				ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			rs.close();
 		}
-		stmt.close();
-		rs.close();
+		
 		if (ret.isEmpty()) {
 			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
@@ -114,25 +130,33 @@ public class StatisticDAO {
 	private List<Pair<Integer[], Integer>> statisticDetailUserView(String startDate, String endDate)
 			throws SQLException {
 		String query = "select datepart(hour, VIEWING.VIEWDATE) AS E, count(VIEWING.VIEWDATE) / DATEDIFF(day, ?, ?) AS C from VIEWING where VIEWING.VIEWDATE between ? and ? and VIEWING.STREAM = ? and VIEWING.ACCID >= 0 group by datepart(hour, VIEWING.VIEWDATE)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<Integer[], Integer>> ret = new LinkedList<>();
-
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		stmt.setString(3, startDate);
-		stmt.setString(4, endDate);
-		stmt.setString(5, "global");
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Integer[] combineToTimeOfDate = new Integer[4];
-			combineToTimeOfDate[0] = rs.getInt(1);
-			combineToTimeOfDate[1] = 0;
-			combineToTimeOfDate[2] = 0;
-			combineToTimeOfDate[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			stmt.setString(3, startDate);
+			stmt.setString(4, endDate);
+			stmt.setString(5, "global");
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Integer[] combineToTimeOfDate = new Integer[4];
+				combineToTimeOfDate[0] = rs.getInt(1);
+				combineToTimeOfDate[1] = 0;
+				combineToTimeOfDate[2] = 0;
+				combineToTimeOfDate[3] = 0;
+				ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			rs.close();
 		}
-		stmt.close();
-		rs.close();
+		
 		if (ret.isEmpty()) {
 			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
@@ -230,25 +254,33 @@ public class StatisticDAO {
 			throws SQLException {
 		String query = "select datepart(hour, LIKING.DATEUP) as _Days, count(LIKING.DATEUP) / DATEDIFF(day, ?, ?) AS _Likes "
 				+ "from LIKING where LIKING.DATEUP between ? and ? and LIKING.STREAM = ? group by datepart(hour, LIKING.DATEUP)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<Integer[], Integer>> ret = new LinkedList<>();
-
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		stmt.setString(3, startDate);
-		stmt.setString(4, endDate);
-		stmt.setString(5, "novel");
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Integer[] combineToTimeOfDate = new Integer[4];
-			combineToTimeOfDate[0] = rs.getInt(1);
-			combineToTimeOfDate[1] = 0;
-			combineToTimeOfDate[2] = 0;
-			combineToTimeOfDate[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			stmt.setString(3, startDate);
+			stmt.setString(4, endDate);
+			stmt.setString(5, "novel");
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Integer[] combineToTimeOfDate = new Integer[4];
+				combineToTimeOfDate[0] = rs.getInt(1);
+				combineToTimeOfDate[1] = 0;
+				combineToTimeOfDate[2] = 0;
+				combineToTimeOfDate[3] = 0;
+				ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.fillInStackTrace();
+		} finally {
+			stmt.close();
+			rs.close();
 		}
-		stmt.close();
-		rs.close();
+		
 		if (ret.isEmpty()) {
 			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
@@ -268,25 +300,33 @@ public class StatisticDAO {
 	public List<Pair<Integer[], Integer>> statisticDetailOverFollow(String startDate, String endDate)
 			throws SQLException {
 		String query = "select datepart(hour, FOLLOW.DATEUP) as _Hour, count(FOLLOW.DATEUP) / DATEDIFF(day, ?, ?) AS _Follow from FOLLOW where FOLLOW.DATEUP between ? and ? and FOLLOW.STREAM = ? group by datepart(hour, FOLLOW.DATEUP)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<Integer[], Integer>> ret = new LinkedList<>();
-
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		stmt.setString(3, startDate);
-		stmt.setString(4, endDate);
-		stmt.setString(5, "novel");
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Integer[] combineToTimeOfDate = new Integer[4];
-			combineToTimeOfDate[0] = rs.getInt(1);
-			combineToTimeOfDate[1] = 0;
-			combineToTimeOfDate[2] = 0;
-			combineToTimeOfDate[3] = 0;
-			ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			stmt.setString(3, startDate);
+			stmt.setString(4, endDate);
+			stmt.setString(5, "novel");
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Integer[] combineToTimeOfDate = new Integer[4];
+				combineToTimeOfDate[0] = rs.getInt(1);
+				combineToTimeOfDate[1] = 0;
+				combineToTimeOfDate[2] = 0;
+				combineToTimeOfDate[3] = 0;
+				ret.add(new Pair<Integer[], Integer>(combineToTimeOfDate, rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+			rs.close();
 		}
-		stmt.close();
-		rs.close();
+		
 		if (ret.isEmpty()) {
 			Integer[] combineToTimeOfDateStart = new Integer[4], combineToTimeOfDateEndDay = new Integer[4];
 			combineToTimeOfDateStart[0] = 0;
@@ -306,31 +346,50 @@ public class StatisticDAO {
 	public List<Pair<String, Integer>> statisticNovelOverDays(String startDate, String endDate) throws SQLException {
 		String query = "SELECT FORMAT(LN.DATEUP,'yyyy-MM-dd') as _day, COUNT(LN.DATEUP) as _novels FROM LN "
 				+ "WHERE LN.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(LN.DATEUP,'yyyy-MM-dd')";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<String, Integer>> ret = new LinkedList<>();
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			rs = stmt.executeQuery();
 
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		ResultSet rs = stmt.executeQuery();
-
-		while (rs.next()) {
-			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			while (rs.next()) {
+				ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
 		}
+
 		return ret;
 	}
 
 	public List<Pair<String, Integer>> statisticChapOverDays(String startDate, String endDate) throws SQLException {
 		String query = "SELECT FORMAT(CHAP.DATEUP,'yyyy-MM-dd') as _day, COUNT(CHAP.DATEUP) as _chaps FROM CHAP "
 				+ "WHERE CHAP.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(CHAP.DATEUP,'yyyy-MM-dd')";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<String, Integer>> ret = new LinkedList<>();
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			rs = stmt.executeQuery();
 
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		ResultSet rs = stmt.executeQuery();
-
-		while (rs.next()) {
-			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			while (rs.next()) {
+				ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
 		}
 
 		return ret;
@@ -339,15 +398,24 @@ public class StatisticDAO {
 	public List<Pair<String, Integer>> statisticAccountOverDays(String startDate, String endDate) throws SQLException {
 		String query = "SELECT FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd') as _day, COUNT(ACCOUNT.DATECREATE) as _novels FROM ACCOUNT "
 				+ "WHERE ACCOUNT.DATECREATE BETWEEN ? AND ? GROUP BY FORMAT(ACCOUNT.DATECREATE,'yyyy-MM-dd')";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<String, Integer>> ret = new LinkedList<>();
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			rs = stmt.executeQuery();
 
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		ResultSet rs = stmt.executeQuery();
-
-		while (rs.next()) {
-			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			while (rs.next()) {
+				ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
 		}
 
 		return ret;
@@ -356,15 +424,24 @@ public class StatisticDAO {
 	public List<Pair<String, Integer>> statisticThreadOverDays(String startDate, String endDate) throws SQLException {
 		String query = "SELECT FORMAT(THREAD.DATEUP,'yyyy-MM-dd') as _day, COUNT(THREAD.DATEUP) as _novels FROM THREAD "
 				+ "WHERE THREAD.DATEUP BETWEEN ? AND ? GROUP BY FORMAT(THREAD.DATEUP,'yyyy-MM-dd')";
-		PreparedStatement stmt = cnn.prepareStatement(query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		List<Pair<String, Integer>> ret = new LinkedList<>();
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, startDate);
+			stmt.setString(2, endDate);
+			rs = stmt.executeQuery();
 
-		stmt.setString(1, startDate);
-		stmt.setString(2, endDate);
-		ResultSet rs = stmt.executeQuery();
-
-		while (rs.next()) {
-			ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			while (rs.next()) {
+				ret.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
 		}
 
 		return ret;
@@ -372,53 +449,89 @@ public class StatisticDAO {
 
 	public int statisticNovelOneDay(String currentDate) throws SQLException {
 		String query = "SELECT COUNT(LN.DATEUP) AS NOVELES FROM LN WHERE LN.DATEUP >= ? AND LN.DATEUP < dateadd(day,1, ?)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setString(1, currentDate);
-		stmt.setString(2, currentDate);
-		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		rs.close();
-		stmt.close();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, currentDate);
+			stmt.setString(2, currentDate);
+			rs = stmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
+		}
 		return result;
 	}
 
 	public int statisticChapOneDay(String currentDate) throws SQLException {
 		String query = "SELECT COUNT(CHAP.DATEUP) AS CHAPS FROM CHAP WHERE CHAP.DATEUP >= ? AND CHAP.DATEUP < dateadd(day,1, ?)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setString(1, currentDate);
-		stmt.setString(2, currentDate);
-		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		rs.close();
-		stmt.close();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, currentDate);
+			stmt.setString(2, currentDate);
+			rs = stmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
+		}
 		return result;
 	}
 	
 	public int statisticAccountOneDay(String currentDate) throws SQLException {
 		String query = "SELECT COUNT(ACCOUNT.DATECREATE) AS ACCOUNTS FROM ACCOUNT WHERE ACCOUNT.DATECREATE >= ? AND ACCOUNT.DATECREATE < dateadd(day,1, ?)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setString(1, currentDate);
-		stmt.setString(2, currentDate);
-		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		rs.close();
-		stmt.close();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, currentDate);
+			stmt.setString(2, currentDate);
+			rs = stmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
+		}
 		return result;
 	}
 	
 	public int statisticThreadOneDay(String currentDate) throws SQLException {
 		String query = "SELECT COUNT(THREAD.DATEUP) AS THREAD FROM THREAD WHERE THREAD.DATEUP >= ? AND THREAD.DATEUP < dateadd(day,1, ?)";
-		PreparedStatement stmt = cnn.prepareStatement(query);
-		stmt.setString(1, currentDate);
-		stmt.setString(2, currentDate);
-		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		rs.close();
-		stmt.close();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		
+		try {
+			stmt = cnn.prepareStatement(query);
+			stmt.setString(1, currentDate);
+			stmt.setString(2, currentDate);
+			rs = stmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			stmt.close();
+		}
 		return result;
 	}
 }

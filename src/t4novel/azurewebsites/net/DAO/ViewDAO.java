@@ -26,12 +26,19 @@ public class ViewDAO {
 	}
 
 	public void inserNewView(int accId, String stream, int targetId) throws SQLException {
-		PreparedStatement stmt = cnn.prepareStatement(insertQuery);
-		stmt.setInt(1, accId);
-		stmt.setString(2, stream);
-		stmt.setInt(3, targetId);
-		stmt.executeUpdate();
-		stmt.close();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = cnn.prepareStatement(insertQuery);
+			stmt.setInt(1, accId);
+			stmt.setString(2, stream);
+			stmt.setInt(3, targetId);
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stmt.close();
+		}
 	}
 
 	public List<Novel> getTopViewNovels(int day, int offset, int limit, NovelDAO novelDao) throws Exception {
@@ -44,16 +51,25 @@ public class ViewDAO {
 		if (nextQueryMakeDate.compareTo(now) <= 0) {
 			result = new LinkedList<>();
 			String query = "select target_id, count(target_id) as [view] from viewing where stream ='novel' and viewdate > DATEADD(DAY, -?, getdate() AT TIME ZONE 'SE Asia Standard Time') group by target_id order by [view] desc offset ? rows fetch next ? rows only";
-			PreparedStatement stmt = cnn.prepareStatement(query);
-			stmt.setInt(1, day);
-			stmt.setInt(2, offset);
-			stmt.setInt(3, limit);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				result.add(novelDao.getNovelById(rs.getInt("TARGET_ID")));
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+				stmt = cnn.prepareStatement(query);
+				stmt.setInt(1, day);
+				stmt.setInt(2, offset);
+				stmt.setInt(3, limit);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					result.add(novelDao.getNovelById(rs.getInt("TARGET_ID")));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
 			}
-			rs.close();
-			stmt.close();
+			
 			lastMakeStatisticQuery = now;
 			statisticNovelByDateDiffMap.put(day, result);
 			lastMakeStatisticQueryMap.put(day, lastMakeStatisticQuery);
