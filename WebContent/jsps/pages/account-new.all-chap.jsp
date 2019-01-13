@@ -38,6 +38,8 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
 <!-- style css -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/template/admin-dashboard/css/typography.css">
 <link rel="stylesheet"
@@ -150,10 +152,17 @@
 																								style="margin-left: 1rem; border-top: 1px solid #00000026"
 																								class="collapse seeChap${novel.id }-${vol.id}"
 																								onload="this.style.backgroundColor=this.previousSibling.style.backgroundColor">
+																								<c:if test="${chap.isAccepted() eq true }">
 																								<a target="_blank"
 																									style="text-decoration: none; color: black; width: 80%; display: inline-block;"
 																									title="${chap.title }"
-																									href="${pageContext.request.contextPath}/read?id=${chap.id}">&nbsp;${chap.title }</a>
+																									href="${pageContext.request.contextPath}/read?id=${chap.id}"><i title="Đã được kiểm duyệt" class="fas fa-check" style="color: #13e613"></i>&nbsp;${chap.title }</a>
+																								</c:if>
+																								<c:if test="${chap.isAccepted() eq false }">
+																								<a style="text-decoration: none; color: black; width: 80%; display: inline-block;"
+																									title="${chap.title }"
+																									><i title="Chưa thông qua kiểm duyệt" class="fas fa-times" style="color:red"></i>&nbsp;${chap.title }</a>
+																								</c:if>
 																								<a style="display: inline-block;" href="${pageContext.request.contextPath}/fix-chap?id-chap=${chap.id }" class="btn btn-primary">
 																									<i class="fa fa-edit"></i>
 																								</a>
