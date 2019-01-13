@@ -99,7 +99,7 @@
 					<div class="col-12 mt-5">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="header-title">Danh sách tập của tác phẩm</h4>
+								<h4 class="header-title">Danh sách tác phẩm</h4>
 								<a href="${pageContext.request.contextPath}/add-vol" style="float:right" target="_blank" class="btn btn-success">Thêm tập</a>
 								<div class="data-tables datatable-dark">
 									<table class="table-striped" id="dataTable3"
@@ -163,10 +163,9 @@
 																										</div>
 																										<form method="post"
 																											action="${pageContext.request.contextPath}/fix-vol">
+																											<input type="hidden" name="action" value="fixVol">
 																											<input type="hidden" name="fixedVolID"
 																												value="${vol.id }">
-																												<input type="hidden" name="in-novel"
-																												value="${vol.ownerNovel.id}">
 																											<div class="modal-body">
 																												<table class="table"
 																													style="margin: auto; width: 95%">
