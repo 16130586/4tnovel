@@ -566,7 +566,7 @@ input:-moz-placeholder {
 
 .chap {
   width: 80vw;
-  margin: 1rem auto; }
+  margin: auto; }
   .chap__header {
     padding: .5rem .5rem;
     margin-bottom: 1rem; }
@@ -576,14 +576,12 @@ input:-moz-placeholder {
       padding: 1.5rem;
       margin: 1rem 0;
       font-size: 1.5rem; }
-  .chap__comment {
-    height: 50vh;
-    border: inset; }
   .chap__setup {
     width: auto;
     position: fixed;
     top: 40vh;
-    right: 0; }
+    right: 0;
+    z-index: 1000; }
     .chap__setup ul {
       list-style: none;
       padding: 0; }
@@ -599,7 +597,8 @@ input:-moz-placeholder {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #f6f6f6; }
+  background-color: #f6f6f6;
+  z-index: 10000; }
   .setting-box .main {
     padding: 1rem; }
   .setting-box_label {
@@ -607,7 +606,7 @@ input:-moz-placeholder {
 
 @media screen and (max-device-width: 578px) {
   #chap {
-    width: 95%; }
+    width: 100%; }
   .setting-box {
     width: 350px;
     top: 50%;
@@ -621,7 +620,7 @@ input:-moz-placeholder {
 
 @media screen and (max-width: 578px) {
   #chap {
-    width: 95%; }
+    width: 100%; }
   .setting-box {
     width: 340px;
     top: 50%;

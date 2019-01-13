@@ -43,8 +43,9 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
-	<%@ include file="/jsps/components/_header.jsp"%>
 	<div id="onTop"></div>
+	<%@ include file="/jsps/components/_header.jsp"%>
+	<div id="body">
 	<div id="chap" class="chap">
 		<div class="chap__header u-align-center u-margin-bottom--1rem">
 			<h1>${chap.novelOwner.name }</h1>
@@ -66,10 +67,6 @@
 						<p>${paragraph }</p>
 					</c:forEach>
 				</div>
-			</div>
-
-			<div class="chap__comment">
-				<div class="fb-comments" data-href="http://tieuthuyetonline.azurewebsites.net/read?id=${chap.id}" data-numposts="5" data-width="100%"></div>
 			</div>
 
 			<div id="set-up" style="display: block"
@@ -115,7 +112,10 @@
 
 		</div>
 	</div>
-
+	</div>
+	<div style="background-color: white; text-align: center">
+		<div style="max-width: 1140px" class="fb-comments" data-href="http://tieuthuyetonline.azurewebsites.net/read?id=${chap.id}" data-numposts="5" data-width="100%"></div>
+	</div>
 	<div id="setting" class="setting-box u-border-full"
 		style="display: none">
 		<div class="main">
@@ -211,7 +211,7 @@
 			document.getElementById('line-height').value = lineHeight + "px";
 			setSize(fontSize);
 			setLineHeight(lineHeight);
-			document.body.style.backgroundColor = backGroundColor;
+			document.getElementById('body').style.backgroundColor = backGroundColor;
 			setTextColor();
 			setChoiceColor();
 
@@ -283,7 +283,7 @@
 
 		function selectColor(x) {
 			backGroundColor = x.style.backgroundColor;
-			document.body.style.backgroundColor = backGroundColor;
+			document.getElementById('body').style.backgroundColor = backGroundColor;
 			setTextColor();
 			setChoiceColor();
 		}
