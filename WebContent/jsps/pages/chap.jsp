@@ -45,7 +45,7 @@
 	</script>
 	<div id="onTop"></div>
 	<%@ include file="/jsps/components/_header.jsp"%>
-	<div id="body">
+	<div id="body" onclick="showHideSetup()">
 	<div id="chap" class="chap">
 		<div class="chap__header u-align-center u-margin-bottom--1rem">
 			<h1>${chap.novelOwner.name }</h1>
@@ -58,7 +58,7 @@
 				value="${chap.volOwner.getPreviousChap(chap.id)}" />
 			<c:set var="nextChap" scope="request"
 				value="${chap.volOwner.getNextChap(chap.id)}" />
-			<div class="chap__body__content" onclick="showHideSetup()">
+			<div class="chap__body__content" >
 				<div id="content">
 				<c:set var="newLine" value="\n"/>
 				<c:set var="paragraphs" value="${chap.content.split(newLine) }" />
@@ -68,53 +68,51 @@
 					</c:forEach>
 				</div>
 			</div>
-
-			<div id="set-up" style="display: block"
-				class="chap__setup u-centered u-color-white">
-				<ul>
-					<li><a href="#onTop" class="btn btn-secondary"><i
-							class="fas fa-arrow-up"></i></a></li>
-					<li>
-						<c:if test="${not empty previousChap}">
-							<a id="preChap" href="read?id=${previousChap.id}"
-								class="btn btn-secondary"><i class="fa fa-backward"></i></a>
-						</c:if>
-						<c:if test="${empty previousChap }">
-							<a href="/" onclick="return false;"
-								class="btn btn-secondary u-disabled" ><i class="fa fa-backward"></i></a>
-						</c:if>
-					</li>
-					<li>
-						<a href="detail?id=${chap.novelOwner.id}"
-						class="btn btn-secondary"><i class="fa fa-home"></i></a>
-					</li>
-					<li><button id="btnFontChoice" onclick="showSetting()"
-							class="btn btn-secondary">
-							<i class="fas fa-font"></i>
-						</button></li>
-					<c:if test="${not empty account }">
-						<li><button class="btn btn-secondary" onclick="bookmark(this)"><i class="fa fa-bookmark"></i></button></li>
-					</c:if>
-					<li>
-						<c:if test="${not empty nextChap}">
-							<a id="nextChap" href="read?id=${nextChap.id}"
-								class="btn btn-secondary"><i class="fa fa-forward"></i></a>
-						</c:if>
-						<c:if test="${empty nextChap }">
-							<a href="/" onclick="return false;"
-								class="btn btn-secondary u-disabled"><i class="fa fa-forward"></i></a>
-						</c:if>
-					</li>
-					<li><a href="#onBottom" class="btn btn-secondary"><i
-							class="fas fa-arrow-down"></i></a></li>
-				</ul>
-			</div>
-
 		</div>
 	</div>
 	</div>
 	<div style="background-color: white; text-align: center">
 		<div style="max-width: 1140px" class="fb-comments" data-href="http://tieuthuyetonline.azurewebsites.net/read?id=${chap.id}" data-numposts="5" data-width="100%"></div>
+	</div>
+	<div id="set-up" style="display: block"
+		class="chap__setup u-centered u-color-white">
+		<ul>
+			<li><a href="#onTop" class="btn btn-secondary"><i
+					class="fas fa-arrow-up"></i></a></li>
+			<li>
+				<c:if test="${not empty previousChap}">
+					<a id="preChap" href="read?id=${previousChap.id}"
+						class="btn btn-secondary"><i class="fa fa-backward"></i></a>
+				</c:if>
+				<c:if test="${empty previousChap }">
+					<a href="/" onclick="return false;"
+						class="btn btn-secondary u-disabled" ><i class="fa fa-backward"></i></a>
+				</c:if>
+			</li>
+			<li>
+				<a href="detail?id=${chap.novelOwner.id}"
+				class="btn btn-secondary"><i class="fa fa-home"></i></a>
+			</li>
+			<li><button id="btnFontChoice" onclick="showSetting()"
+					class="btn btn-secondary">
+					<i class="fas fa-font"></i>
+				</button></li>
+			<c:if test="${not empty account }">
+				<li><button class="btn btn-secondary" onclick="bookmark(this)"><i class="fa fa-bookmark"></i></button></li>
+			</c:if>
+			<li>
+				<c:if test="${not empty nextChap}">
+					<a id="nextChap" href="read?id=${nextChap.id}"
+						class="btn btn-secondary"><i class="fa fa-forward"></i></a>
+				</c:if>
+				<c:if test="${empty nextChap }">
+					<a href="/" onclick="return false;"
+						class="btn btn-secondary u-disabled"><i class="fa fa-forward"></i></a>
+				</c:if>
+			</li>
+			<li><a href="#onBottom" class="btn btn-secondary"><i
+					class="fas fa-arrow-down"></i></a></li>
+		</ul>
 	</div>
 	<div id="setting" class="setting-box u-border-full"
 		style="display: none">

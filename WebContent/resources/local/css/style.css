@@ -576,19 +576,20 @@ input:-moz-placeholder {
       padding: 1.5rem;
       margin: 1rem 0;
       font-size: 1.5rem; }
-  .chap__setup {
-    width: auto;
-    position: fixed;
-    top: 40vh;
-    right: 0;
-    z-index: 1000; }
-    .chap__setup ul {
-      list-style: none;
-      padding: 0; }
-      .chap__setup ul li {
-        padding-top: .2rem; }
-        .chap__setup ul li .btn {
-          width: 50px; }
+
+.chap__setup {
+  width: auto;
+  position: fixed;
+  top: 40vh;
+  right: 0;
+  z-index: 1000; }
+  .chap__setup ul {
+    list-style: none;
+    padding: 0; }
+    .chap__setup ul li {
+      padding-top: .2rem; }
+      .chap__setup ul li .btn {
+        width: 50px; }
 
 .setting-box {
   height: auto;
