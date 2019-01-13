@@ -23,10 +23,10 @@ public class AddingMemberForm extends AbstractMappingForm {
 			String type = request.getParameter("type");
 			switch (type) {
 			case "user-name":
-				type = "tài khoản";
+				type = "Tài khoản";
 				break;
 			case "display-name":
-				type = "biệt danh";
+				type = "Biệt danh";
 				break;
 			default:
 				break;

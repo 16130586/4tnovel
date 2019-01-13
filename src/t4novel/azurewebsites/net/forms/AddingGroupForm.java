@@ -54,7 +54,7 @@ public class AddingGroupForm extends AbstractMappingForm {
 			// TODO write query to check correctPassword
 			boolean isExistedGroupName = existedGroupNameChecker.check(name, "SELECT ID FROM GROUPACC WHERE NAME = ?");
 			if (isExistedGroupName) {
-				errors.put("nameExisted", "Tên nhóm đã tồn tại! Vui lòng sử dụng tên nhóm khác!");
+				errors.put("nameExisted", "Tên nhóm đã được sử dụng, xin hãy sử dụng tên khác!");
 			} else
 				this.name = name;
 		}

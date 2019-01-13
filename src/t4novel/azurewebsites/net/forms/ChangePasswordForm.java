@@ -31,11 +31,11 @@ public class ChangePasswordForm extends AbstractMappingForm {
 
 	public void setCurrentPassword(String currentPassword) {
 		if (currentPassword == null || currentPassword.isEmpty()) {
-			errors.put("currentPasswordEmpty", "Hãy điền vào mật khẩu hiện tại!");
+			errors.put("currentPasswordEmpty", "Hãy điền vào mật khẩu!");
 		} else {
 			boolean isCorrectPassword = this.currentAccount.getPassword().equals(currentPassword);
 			if (!isCorrectPassword) {
-				errors.put("currentPasswordInCorrect", "Sai mật khẩu hiện tại!");
+				errors.put("currentPasswordInCorrect", "Sai mật khẩu!");
 			} else
 				this.currentPassword = currentPassword;
 		}
@@ -49,7 +49,7 @@ public class ChangePasswordForm extends AbstractMappingForm {
 		if (newPassword == null || newPassword.isEmpty()) {
 			errors.put("newPasswordEmpty", "Hãy điền vào mật khẩu mới!");
 		} else if (newPassword.length() < 8) {
-			errors.put("newPasswordTooShort", "Hãy chọn mật khẩu mạnh hơn!");
+			errors.put("newPasswordTooShort", "Mật khẩu mới quá ngắn!");
 		} else
 			this.newPassword = newPassword;
 	}
@@ -65,7 +65,7 @@ public class ChangePasswordForm extends AbstractMappingForm {
 			errors.put("reNewPasswordEmpty", "Hãy nhập lại mật khẩu mới!");
 		} else if (!reEnteredPassword.equals(newPassword)) {
 			System.out.println(reEnteredPassword + " --><---" + this.newPassword);
-			errors.put("reNewPasswordNotMatch", "Nhập lại mật khẩu không trùng khớp");
+			errors.put("reNewPasswordNotMatch", "Mật khẩu mới không trùng khớp!");
 		}
 	}
 

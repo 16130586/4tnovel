@@ -42,12 +42,12 @@ public class ChangeDisplayedNameForm extends AbstractMappingForm {
 
 	public void setNewDisplayName(String newDisplayName) {
 		if (newDisplayName == null || newDisplayName.isEmpty()) {
-			errors.put("newDisplayNameEmpty", "Hãy điền vào bí danh mới!S");
+			errors.put("newDisplayNameEmpty", "Hãy điền vào biệt danh mới!");
 		} else {
 			boolean isExistedDisplayName = isExistedDisplayedNameChecker.check(newDisplayName,
 					"SELECT USERNAME FROM ACCOUNT WHERE DISPLAYEDNAME = ?");
 			if (isExistedDisplayName) {
-				errors.put("newDisplayNameExisted", "Bí danh đã tồn tại!");
+				errors.put("newDisplayNameExisted", "Biệt danh đã được sử dụng!");
 			} else
 				this.newDisplayName = newDisplayName;
 		}
