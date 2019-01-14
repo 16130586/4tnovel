@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import t4novel.azurewebsites.net.DAO.CensoringDAO;
 import t4novel.azurewebsites.net.DAO.FollowDAO;
+import t4novel.azurewebsites.net.DAO.NovelDAO;
 import t4novel.azurewebsites.net.censoring.CensorEntity;
 import t4novel.azurewebsites.net.censoring.MessageBuilderFactory;
+import t4novel.azurewebsites.net.models.Chap;
 import t4novel.azurewebsites.net.models.Message;
+import t4novel.azurewebsites.net.models.Novel;
+import t4novel.azurewebsites.net.web.container.lifecircle.ContextHelper;
 import t4novel.azurewebsites.net.ws.notifycation.EntityAcceptByCensoringMessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.MessageBuilder;
 import t4novel.azurewebsites.net.ws.notifycation.NotifycationSystem;
@@ -72,36 +76,34 @@ public class AdminDashBoardCensoring extends HttpServlet {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		MessageBuilder msgBuilder = new EntityAcceptByCensoringMessageBuilder(censorEntity);
-		Message msg = msgBuilder.getData();
-		NotifycationSystem.notifyToUser(censorEntity.getOwnerAccountId(), msg, cnn);
-
-		if (isAccept == 0) 
-			try {
+		ContextHelper.increasePaginationNumber(censorEntity);
+		try {
+			if (isAccept == 0)
 				censorEntity.setAcceptedByCensorSystem(false);
-				censorDao.onCensoringEventUpdate(censorEntity);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		if (isAccept == 1)
-			try {
+			if (isAccept == 1)
 				censorEntity.setAcceptedByCensorSystem(true);
-				censorDao.onCensoringEventUpdate(censorEntity);
+			censorDao.onCensoringEventUpdate(censorEntity);
+			
+			MessageBuilder msgBuilder = new EntityAcceptByCensoringMessageBuilder(censorEntity);
+			Message msg = msgBuilder.getData();
+			NotifycationSystem.notifyToUser(censorEntity.getOwnerAccountId(), msg, cnn);
+			
+			if (censorEntity.isAccepted()) {
 				FollowDAO followDao = new FollowDAO(cnn);
-				List<Integer> followersId = null;
-				try {
-					followersId = followDao.getFollowersId(censorEntity.getOwnerTargetId());
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				List<Integer> followersId = followDao.getFollowersId(censorEntity.getOwnerTargetId());
+				
 				if (!followersId.isEmpty()) {
-					msgBuilder = MessageBuilderFactory.create(censorEntity);
+					NovelDAO novelDao = new NovelDAO(cnn);
+					Novel novelOwnerEntity = novelDao.getNovelById(censorEntity.getOwnerTargetId());
+					Chap chap = (Chap) censorEntity;
+					chap.setNovelOwner(novelOwnerEntity);
+					msgBuilder = MessageBuilderFactory.create(chap);
 					msg = msgBuilder.getData();
 					NotifycationSystem.notifyToListUser(followersId, msg);
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
 }

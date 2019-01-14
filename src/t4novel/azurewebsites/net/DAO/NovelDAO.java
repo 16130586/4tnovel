@@ -148,7 +148,7 @@ public class NovelDAO {
 		return result;
 	}
 
-	public Novel getNovelById(int idNovel) throws Exception {
+	public Novel getNovelById(int idNovel) throws SQLException {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 //		Novel result = NOVELS_CACHE.get(idNovel);
