@@ -19,7 +19,7 @@ public class CensoredChapDAO extends ChapDAO {
 		Chap chap = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String querry = "SELECT * FROM CHAP where ID=?";
+		String querry = "SELECT CHAP.ID, CHAP.ID_VOL, CHAP.ID_NOVEL, CHAP.TITLE, CHAP.CONTENT, CHAP.DATEUP from CHAP inner join CENSORING on CHAP.ID = CENSORING.TARGET_ID where CHAP.ID=? and CENSORING.STREAM='chapter' and CENSORING.IS_PUBLISHED = 1";
 		try {
 			stmt = cnn.prepareStatement(querry);
 			stmt.setInt(1, chapID);

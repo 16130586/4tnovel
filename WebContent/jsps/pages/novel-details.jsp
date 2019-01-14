@@ -168,8 +168,10 @@
 						</div>
 						<div id="${vol.id }" class="tab-content" style="display: block">
 							<c:forEach var="chap" items="${vol.chaps}">
+							<c:if test="${chap.isAccepted() eq true }">
 								<a class="link u-block u-text-overflow--hidden"
 									href="read?id=${chap.id}">${chap.title}</a>
+							</c:if>
 							</c:forEach>
 						</div>
 					</section>

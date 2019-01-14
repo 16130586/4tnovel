@@ -40,7 +40,7 @@ public class ReadServlet extends HttpServlet {
 			int chapId = Integer.parseInt(request.getParameter("id"));
 			Connection cnn = (Connection) request.getAttribute("connection");
 
-			ChapDAO chapDao = new ChapDAO(cnn);
+			ChapDAO chapDao = new CensoredChapDAO(cnn);
 			Chap acquireChap = chapDao.getChapByID(chapId);
 			if (acquireChap == null) {
 				response.sendError(404);
