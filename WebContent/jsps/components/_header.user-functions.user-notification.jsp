@@ -32,7 +32,7 @@
 		    return template.content.firstChild;
 		}
 		
-		var baseWsUrl = "ws://".concat(location.hostname).concat(':').concat(location.port).concat('${pageContext.request.contextPath}');
+		var baseWsUrl = "ws://".concat(location.hostname).concat(':').concat(location.port == undefined ? 80 : location.port).concat('${pageContext.request.contextPath}');
 		var wsUrl = baseWsUrl.concat('/notify-system').concat('/${account.id}')
 		document.addEventListener("DOMContentLoaded", function (){
 			var emptyMessage = document.getElementById('emptyMessage')
