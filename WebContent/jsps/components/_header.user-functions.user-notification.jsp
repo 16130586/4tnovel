@@ -31,8 +31,8 @@
 		    template.innerHTML = html;
 		    return template.content.firstChild;
 		}
-		
-		var baseWsUrl = "ws://".concat(location.hostname).concat(':').concat(location.port == undefined ? 80 : location.port).concat('${pageContext.request.contextPath}');
+		var protocol = location.protocol === 'https:' ? 'wss' : 'ws'
+		var baseWsUrl = protocol.concat("://").concat(location.hostname).concat(':').concat(location.port == undefined ? 80 : location.port).concat('${pageContext.request.contextPath}');
 		var wsUrl = baseWsUrl.concat('/notify-system').concat('/${account.id}')
 		document.addEventListener("DOMContentLoaded", function (){
 			var emptyMessage = document.getElementById('emptyMessage')
